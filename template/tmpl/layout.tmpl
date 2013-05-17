@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title> <?js= systemName ?> <?js= title ?></title>
+
+
+   <link type="text/css" rel="stylesheet" href="styles/site.css">
+   <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+</head>
+
+<body>
+<div class="container-fluid">
+<div class="navbar">
+  <div class="navbar-inner">
+  <a class="brand" ><?js= systemName ?></a>
+    <ul class="nav">
+
+    <?js Object.keys(this.nav).forEach(function(navItem){ ?>
+    	<li><a href="<?js= navItem ?>__.list.html"><?js= navItem ?></a></li>
+    <?js }); ?>
+    </ul>
+  </div>
+</div>
+	<div class="row-fluid">
+		<div class="span8">
+			<div id="main">
+
+			    <h1 class="page-title"><?js= title ?></h1>
+
+			    <?js= content ?>
+			</div>
+		</div>
+        <div class="span4">
+			<nav>
+			<ul class="nav nav-list">
+				<?js if (this.nav[docType] && this.nav[docType].length && this.nav[docType].forEach) {?>
+			    <?js this.nav[docType].forEach(function(nav){ ?>
+			    <li><?js= nav ?></li>
+			    <?js}); ?></ul>
+			    <?js } ?>
+			</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<br clear="both">
+
+<footer>
+	<small>Copyright &copy; 2013 Terry Weiss. All rights reserved.</small>
+
+</footer>
+
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <script src="scripts/jquery.min.js"> </script>
+    <script src="scripts/bootstrap-tab.js"> </script>
+    <script src="scripts/URI.js"> </script>
+
+    <script>
+        prettyPrint();
+    </script>
+    <script>
+    $(document).ready(function(){
+         var uri = URI(window.location.href);
+         var filename = uri.filename();
+         var link = $(".nav li>a[href='" + filename + "']");
+
+         if (link.length > 0){
+           link.parents("li:first").addClass("active");
+           var paneid = link.parents(".tab-pane").addClass("active").attr("id");
+
+           $(".nav-tabs li>a[href='#"+paneid+"']").parents("li:first").addClass("active");
+         }
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "ink-docstrap",
+  "version": "0.0.0",
+  "dependencies": {
+    "bootstrap": "~2.3.1"
+  }
+}
