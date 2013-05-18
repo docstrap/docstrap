@@ -11,9 +11,48 @@ var template = require( 'jsdoc/template' ),
 	resolveAuthorLinks = helper.resolveAuthorLinks,
 	scopeToPunc = helper.scopeToPunc,
 	hasOwnProp = Object.prototype.hasOwnProperty,
+	conf = env.conf.templates || {},
 	data,
 	view,
 	outdir = env.opts.destination;
+
+var globalUrl = helper.getUniqueFilename( 'global' );
+var indexUrl = helper.getUniqueFilename( 'index' );
+
+var navigationMaster = {
+	global    : {
+		title : "Global",
+		link  : globalUrl
+	},
+	index     : {
+		title : conf.systemName || "Documentation",
+		link  : indexUrl
+	},
+	class     : {
+		title : "Classes",
+		link  : helper.getUniqueFilename( 'classes.list' )
+	},
+	module    : {
+		title : "Modules",
+		link  : helper.getUniqueFilename( "modules.list" )
+	},
+	namespace : {
+		title : "Namespaces",
+		link  : helper.getUniqueFilename( "namespaces.list" )
+	},
+	mixin     : {
+		title : "Mixins",
+		link  : helper.getUniqueFilename( "mixins.list" )
+	},
+	external  : {
+		title : "Externals",
+		link  : helper.getUniqueFilename( "externals.list" )
+	},
+	tutorial  : {
+		title : "Tutorials",
+		link  : helper.getUniqueFilename( "tutorials.list" )
+	}
+};
 
 function find( spec ) {
 	return helper.find( data, spec );
@@ -112,12 +151,12 @@ function getPathFromDoclet( doclet ) {
 function generate( docType, title, docs, filename, resolveLinks ) {
 	resolveLinks = resolveLinks === false ? false : true;
 
-	var conf = env.conf.templates || {};
 	var docData = {
-		title      : title,
-		docs       : docs,
-		systemName : conf.systemName,
-		docType    : docType
+		title            : title,
+		docs             : docs,
+		systemName       : conf.systemName,
+		docType          : docType,
+		navigationMaster : navigationMaster
 	};
 
 	var outpath = path.join( outdir, filename ),
@@ -231,7 +270,7 @@ function buildNav( members ) {
 		} );
 
 		if ( classes.length > 0 ) {
-			nav.class= classes;
+			nav.class = classes;
 		}
 	}
 
@@ -311,10 +350,10 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 
 	// claim some special filenames in advance, so the All-Powerful Overseer of Filename Uniqueness
 	// doesn't try to hand them out later
-	var indexUrl = helper.getUniqueFilename( 'index' );
+//	var indexUrl = helper.getUniqueFilename( 'index' );
 	// don't call registerLink() on this one! 'index' is also a valid longname
 
-	var globalUrl = helper.getUniqueFilename( 'global' );
+//	var globalUrl = helper.getUniqueFilename( 'global' );
 	helper.registerLink( 'global', globalUrl );
 
 	// set up templating
@@ -461,6 +500,42 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		generate( 'global', 'Global', [
 			{kind : 'globalobj'}
 		], globalUrl );
+	}
+
+	if ( view.nav.module &&  view.nav.module.length) {
+		generate( 'module', view.nav.module.title, [
+			{kind : 'sectionIndex', contents: view.nav.module}
+		], navigationMaster.module.link );
+	}
+
+	if ( view.nav.class &&  view.nav.class.length) {
+		generate( 'class',view.nav.class.title, [
+			{kind : 'sectionIndex', contents: view.nav.class}
+		], navigationMaster.class.link );
+	}
+
+	if ( view.nav.namespace &&  view.nav.namespace.length) {
+		generate( 'namespace',view.nav.namespace.title, [
+			{kind : 'sectionIndex', contents: view.nav.namespace}
+		], navigationMaster.namespace.link );
+	}
+
+	if ( view.nav.mixin &&  view.nav.mixin.length) {
+		generate( 'mixin',view.nav.mixin.title, [
+			{kind : 'sectionIndex', contents: view.nav.mixin}
+		], navigationMaster.mixin.link );
+	}
+
+	if ( view.nav.external &&  view.nav.external.length) {
+		generate( 'external',view.nav.external.title, [
+			{kind : 'sectionIndex', contents: view.nav.external}
+		], navigationMaster.external.link );
+	}
+
+	if ( view.nav.tutorial &&  view.nav.tutorial.length) {
+		generate( 'tutorial',view.nav.tutorial.title, [
+			{kind : 'sectionIndex', contents: view.nav.tutorial}
+		], navigationMaster.tutorial.link );
 	}
 
 	// index page displays information from package.json and lists files

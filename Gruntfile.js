@@ -1,11 +1,21 @@
 "use strict";
 var path = require( "path" );
 var sys = require( "lodash" );
+
 var jsdocPublicApi = {
 	src       : ["./node_modules/jsdoc/test/fixtures/*.js"],
 	dest      : "./dox",
 	tutorials : "./",
 	template  : "./template",
+	config    : "./template/jsdoc.conf.json",
+	options   : " --lenient --verbose"
+};
+
+var jsdocDefaultApi = {
+	src       : ["./node_modules/jsdoc/test/fixtures/*.js"],
+	dest      : "./jsdox",
+	tutorials : "./",
+	template  : "./node_modules/jsdoc/templates/default",
 	config    : "./template/jsdoc.conf.json",
 	options   : " --lenient --verbose"
 };
@@ -32,6 +42,9 @@ var tasks= {
 		},
 		docs       : {
 			command : jsdocCommand( jsdocPublicApi )
+		},
+		jsdocs       : {
+			command : jsdocCommand( jsdocDefaultApi )
 		}
 	},
 	less: {

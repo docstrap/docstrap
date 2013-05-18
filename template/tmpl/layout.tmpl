@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title> <?js= systemName ?> <?js= title ?></title>
-
+    <title> <?js= navigationMaster['index'].title ?> <?js= title ?></title>
 
    <link type="text/css" rel="stylesheet" href="styles/site.css">
    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
@@ -13,34 +12,45 @@
 <div class="container-fluid">
 <div class="navbar">
   <div class="navbar-inner">
-  <a class="brand" ><?js= systemName ?></a>
+  <a class="brand" href="<?js= navigationMaster['index'].link ?>" ><?js= navigationMaster['index'].title ?></a>
     <ul class="nav">
 
     <?js Object.keys(this.nav).forEach(function(navItem){ ?>
-    	<li><a href="<?js= navItem ?>__.list.html"><?js= navItem ?></a></li>
+        <?js if (navigationMaster[navItem]) { ?>
+    	<li><a href="<?js= navigationMaster[navItem].link ?>"> <?js= navigationMaster[navItem].title ?></a></li>
+    	<?js } ?>
     <?js }); ?>
+
     </ul>
   </div>
 </div>
+
 	<div class="row-fluid">
 		<div class="span8">
 			<div id="main">
 
 			    <h1 class="page-title"><?js= title ?></h1>
 
+
 			    <?js= content ?>
 			</div>
 		</div>
         <div class="span4">
-			<nav>
-			<ul class="nav nav-list">
-				<?js if (this.nav[docType] && this.nav[docType].length && this.nav[docType].forEach) {?>
-			    <?js this.nav[docType].forEach(function(nav){ ?>
-			    <li><?js= nav ?></li>
-			    <?js}); ?></ul>
-			    <?js } ?>
-			</ul>
-			</nav>
+
+	        <?js if(docs[0].kind !== "sectionIndex"){ ?>
+
+			    <nav>
+					<ul class="nav nav-list">
+						<?js if (this.nav[docType] && this.nav[docType].length && this.nav[docType].forEach) {?>
+					    <?js this.nav[docType].forEach(function(nav){ ?>
+					    <li><?js= nav ?></li>
+					    <?js}); ?></ul>
+					    <?js } ?>
+					</ul>
+					</nav>
+
+	        <?js } ?>
+
 		</div>
 	</div>
 </div>
