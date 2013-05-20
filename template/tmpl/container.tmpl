@@ -7,8 +7,6 @@
     <?js= self.partial('mainpage.tmpl', doc) ?>
 <?js } else if (doc.kind === 'source') { ?>
     <?js= self.partial('source.tmpl', doc) ?>
-<?js } else if (doc.kind === 'sectionIndex') { ?>
-	<?js= self.partial('sections.tmpl', {docType:docType}) ?>
 <?js } else { ?>
 
 <section>

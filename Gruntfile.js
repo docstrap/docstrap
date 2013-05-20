@@ -7,7 +7,7 @@ var jsdocPublicApi = {
 	dest      : "./dox",
 	tutorials : "./",
 	template  : "./template",
-	config    : "./template/jsdoc.conf.json",
+	config    : "./template",
 	options   : " --lenient --verbose"
 };
 
@@ -18,6 +18,15 @@ var jsdocDefaultApi = {
 	template  : "./node_modules/jsdoc/templates/default",
 	config    : "./template/jsdoc.conf.json",
 	options   : " --lenient --verbose"
+};
+
+var jsdocCollectorApi = {
+	src       : ["../collector/collector.js", "../collector/README.md"],
+	dest      : "./collectordox",
+	tutorials : "./",
+	template  : "./template",
+	config    : "./template",
+	options   : "--recurse --lenient --verbose"
 };
 
 function jsdocCommand( jsdoc ) {
@@ -34,37 +43,31 @@ function jsdocCommand( jsdoc ) {
 	cmd.unshift( path.resolve( "./node_modules/jsdoc/jsdoc" ) );
 	return cmd.join( " " );
 }
-var tasks= {
-	shell  : {
-		options    : {
+var tasks = {
+	shell : {
+		options : {
 			stdout : true,
 			stderr : true
 		},
-		docs       : {
+		docs    : {
 			command : jsdocCommand( jsdocPublicApi )
 		},
-		jsdocs       : {
+		jsdocs  : {
 			command : jsdocCommand( jsdocDefaultApi )
+		},
+		cdocs  : {
+			command : jsdocCommand( jsdocCollectorApi )
 		}
 	},
-	less: {
-		dev: {
+	less  : {
+		dev : {
 
-			files: {
-				"template/static/styles/site.css": "styles/main.less"
-			}
-		},
-		prod: {
-			options: {
-				paths: ["assets/css"],
-				yuicompress: true
-			},
-			files: {
-				"path/to/result.css": "path/to/source.less"
+			files : {
+				"template/static/styles/site.css" : "styles/main.less"
 			}
 		}
 	}
-}  ;
+};
 
 module.exports = function ( grunt ) {
 	grunt.initConfig( tasks );

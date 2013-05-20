@@ -2,6 +2,7 @@
 /*global env: true */
 var template = require( 'jsdoc/template' ),
 	fs = require( 'jsdoc/fs' ),
+	_ = require( 'underscore' ),
 	path = require( 'jsdoc/path' ),
 	taffy = require( 'taffydb' ).taffy,
 	handle = require( 'jsdoc/util/error' ).handle,
@@ -19,38 +20,58 @@ var template = require( 'jsdoc/template' ),
 var globalUrl = helper.getUniqueFilename( 'global' );
 var indexUrl = helper.getUniqueFilename( 'index' );
 
+var navOptions = {
+	systemName : conf.systemName || "Documentation",
+	navType    : conf.navType || "dropdown"
+};
+
 var navigationMaster = {
-	global    : {
-		title : "Global",
-		link  : globalUrl
-	},
 	index     : {
-		title : conf.systemName || "Documentation",
-		link  : indexUrl
+		title   : navOptions.systemName,
+		link    : indexUrl,
+		members : []
 	},
-	class     : {
-		title : "Classes",
-		link  : helper.getUniqueFilename( 'classes.list' )
-	},
-	module    : {
-		title : "Modules",
-		link  : helper.getUniqueFilename( "modules.list" )
+	global    : {
+		title   : "Global",
+		link    : globalUrl,
+		members : []
+
 	},
 	namespace : {
-		title : "Namespaces",
-		link  : helper.getUniqueFilename( "namespaces.list" )
+		title   : "Namespaces",
+		link    : helper.getUniqueFilename( "namespaces.list" ),
+		members : []
 	},
-	mixin     : {
-		title : "Mixins",
-		link  : helper.getUniqueFilename( "mixins.list" )
+	module    : {
+		title   : "Modules",
+		link    : helper.getUniqueFilename( "modules.list" ),
+		members : []
 	},
-	external  : {
-		title : "Externals",
-		link  : helper.getUniqueFilename( "externals.list" )
+	class     : {
+		title   : "Classes",
+		link    : helper.getUniqueFilename( 'classes.list' ),
+		members : []
 	},
-	tutorial  : {
-		title : "Tutorials",
-		link  : helper.getUniqueFilename( "tutorials.list" )
+
+	mixin    : {
+		title   : "Mixins",
+		link    : helper.getUniqueFilename( "mixins.list" ),
+		members : []
+	},
+	event    : {
+		title   : "Events",
+		link    : helper.getUniqueFilename( "events.list" ),
+		members : []
+	},
+	tutorial : {
+		title   : "Tutorials",
+		link    : helper.getUniqueFilename( "tutorials.list" ),
+		members : []
+	},
+	external : {
+		title   : "Externals",
+		link    : helper.getUniqueFilename( "externals.list" ),
+		members : []
 	}
 };
 
@@ -152,11 +173,9 @@ function generate( docType, title, docs, filename, resolveLinks ) {
 	resolveLinks = resolveLinks === false ? false : true;
 
 	var docData = {
-		title            : title,
-		docs             : docs,
-		systemName       : conf.systemName,
-		docType          : docType,
-		navigationMaster : navigationMaster
+		title   : title,
+		docs    : docs,
+		docType : docType
 	};
 
 	var outpath = path.join( outdir, filename ),
@@ -232,54 +251,49 @@ function attachModuleSymbols( doclets, modules ) {
  * @return {string} The HTML for the navigation sidebar.
  */
 function buildNav( members ) {
-	var nav = {},
-		seen = {},
-		classNav = '',
-		globalNav = '';
 
+	var seen = {};
+	var nav = navigationMaster;
 	if ( members.modules.length ) {
-		nav.module = [];
+
 		members.modules.forEach( function ( m ) {
 			if ( !hasOwnProp.call( seen, m.longname ) ) {
 
-				nav.module.push( linkto( m.longname, m.name ) );
+				nav.module.members.push( linkto( m.longname, m.name ) );
 			}
 			seen[m.longname] = true;
 		} );
 	}
 
 	if ( members.externals.length ) {
-		nav.external = [];
+
 		members.externals.forEach( function ( e ) {
 			if ( !hasOwnProp.call( seen, e.longname ) ) {
 
-				nav.external.push( linkto( e.longname, e.name.replace( /(^"|"$)/g, '' ) ) );
+				nav.external.members.push( linkto( e.longname, e.name.replace( /(^"|"$)/g, '' ) ) );
 			}
 			seen[e.longname] = true;
 		} );
 	}
 
 	if ( members.classes.length ) {
-		var classes = [];
+
 		members.classes.forEach( function ( c ) {
 			if ( !hasOwnProp.call( seen, c.longname ) ) {
 
-				classes.push( linkto( c.longname, c.name ) );
+				nav.class.members.push( linkto( c.longname, c.name ) );
 			}
 			seen[c.longname] = true;
 		} );
 
-		if ( classes.length > 0 ) {
-			nav.class = classes;
-		}
 	}
 
 	if ( members.events.length ) {
-		nav.event = [];
+
 		members.events.forEach( function ( e ) {
 			if ( !hasOwnProp.call( seen, e.longname ) ) {
 
-				nav.event.push( linkto( e.longname, e.name ) );
+				nav.event.members.push( linkto( e.longname, e.name ) );
 			}
 			seen[e.longname] = true;
 		} );
@@ -287,12 +301,11 @@ function buildNav( members ) {
 	}
 
 	if ( members.namespaces.length ) {
-		nav.namespace = [];
 
 		members.namespaces.forEach( function ( n ) {
 			if ( !hasOwnProp.call( seen, n.longname ) ) {
 
-				nav.namespace.push( linkto( n.longname, n.name ) );
+				nav.namespace.members.push( linkto( n.longname, n.name ) );
 			}
 			seen[n.longname] = true;
 		} );
@@ -300,11 +313,11 @@ function buildNav( members ) {
 	}
 
 	if ( members.mixins.length ) {
-		nav.mixin = [];
+
 		members.mixins.forEach( function ( m ) {
 			if ( !hasOwnProp.call( seen, m.longname ) ) {
 
-				nav.mixin.push( linkto( m.longname, m.name ) );
+				nav.mixin.members.push( linkto( m.longname, m.name ) );
 			}
 			seen[m.longname] = true;
 		} );
@@ -312,26 +325,35 @@ function buildNav( members ) {
 	}
 
 	if ( members.tutorials.length ) {
-		nav.tutorial = [];
-		members.tutorials.forEach( function ( t ) {
+		members.
+			members.tutorials.forEach( function ( t ) {
 
-			nav.tutorial.push( tutoriallink( t.name ) );
-		} );
+				nav.tutorial.members.push( tutoriallink( t.name ) );
+			} );
 
 	}
 
 	if ( members.globals.length ) {
-		nav.global = [];
 		members.globals.forEach( function ( g ) {
 			if ( g.kind !== 'typedef' && !hasOwnProp.call( seen, g.longname ) ) {
 
-				nav.global.push( linkto( g.longname, g.name ) );
+				nav.global.members.push( linkto( g.longname, g.name ) );
 			}
 			seen[g.longname] = true;
 		} );
 	}
 
-	return nav;
+	var topLevelNav = [];
+	_.each( nav, function ( entry, name ) {
+		if ( entry.members.length > 0 && name !== "index" ) {
+			topLevelNav.push( {
+				title : entry.title,
+				link  : entry.link,
+				members: entry.members
+			} );
+		}
+	} );
+	nav.topLevelNav = topLevelNav;
 }
 
 /**
@@ -342,7 +364,6 @@ function buildNav( members ) {
 exports.publish = function ( taffyData, opts, tutorials ) {
 	data = taffyData;
 
-	var conf = env.conf.templates || {};
 	conf['default'] = conf['default'] || {};
 
 	var templatePath = opts.template;
@@ -486,7 +507,9 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	view.htmlsafe = htmlsafe;
 
 	// once for all
-	view.nav = buildNav( members );
+	buildNav( members );
+	view.nav = navigationMaster;
+	view.navOptions = navOptions;
 	attachModuleSymbols( find( { kind : ['class', 'function'], longname : {left : 'module:'} } ),
 		members.modules );
 
@@ -502,39 +525,39 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		], globalUrl );
 	}
 
-	if ( view.nav.module &&  view.nav.module.length) {
+	if ( view.nav.module && view.nav.module.members.length ) {
 		generate( 'module', view.nav.module.title, [
-			{kind : 'sectionIndex', contents: view.nav.module}
+			{kind : 'sectionIndex', contents : view.nav.module}
 		], navigationMaster.module.link );
 	}
 
-	if ( view.nav.class &&  view.nav.class.length) {
-		generate( 'class',view.nav.class.title, [
-			{kind : 'sectionIndex', contents: view.nav.class}
+	if ( view.nav.class && view.nav.class.members.length ) {
+		generate( 'class', view.nav.class.title, [
+			{kind : 'sectionIndex', contents : view.nav.class}
 		], navigationMaster.class.link );
 	}
 
-	if ( view.nav.namespace &&  view.nav.namespace.length) {
-		generate( 'namespace',view.nav.namespace.title, [
-			{kind : 'sectionIndex', contents: view.nav.namespace}
+	if ( view.nav.namespace && view.nav.namespace.members.length ) {
+		generate( 'namespace', view.nav.namespace.title, [
+			{kind : 'sectionIndex', contents : view.nav.namespace}
 		], navigationMaster.namespace.link );
 	}
 
-	if ( view.nav.mixin &&  view.nav.mixin.length) {
-		generate( 'mixin',view.nav.mixin.title, [
-			{kind : 'sectionIndex', contents: view.nav.mixin}
+	if ( view.nav.mixin && view.nav.mixin.members.length ) {
+		generate( 'mixin', view.nav.mixin.title, [
+			{kind : 'sectionIndex', contents : view.nav.mixin}
 		], navigationMaster.mixin.link );
 	}
 
-	if ( view.nav.external &&  view.nav.external.length) {
-		generate( 'external',view.nav.external.title, [
-			{kind : 'sectionIndex', contents: view.nav.external}
+	if ( view.nav.external && view.nav.external.members.length ) {
+		generate( 'external', view.nav.external.title, [
+			{kind : 'sectionIndex', contents : view.nav.external}
 		], navigationMaster.external.link );
 	}
 
-	if ( view.nav.tutorial &&  view.nav.tutorial.length) {
-		generate( 'tutorial',view.nav.tutorial.title, [
-			{kind : 'sectionIndex', contents: view.nav.tutorial}
+	if ( view.nav.tutorial && view.nav.tutorial.members.length ) {
+		generate( 'tutorial', view.nav.tutorial.title, [
+			{kind : 'sectionIndex', contents : view.nav.tutorial}
 		], navigationMaster.tutorial.link );
 	}
 

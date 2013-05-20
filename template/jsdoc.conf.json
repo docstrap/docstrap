@@ -8,7 +8,9 @@
         "monospaceLinks": false,
         "default": {
             "outputSourceFiles": true
-        }
+        },
+	    "systemName": "DocStrap",
+	    "navType": "both"
     } ,
 	"markdown": {
 		"parser": "gfm",

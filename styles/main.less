@@ -1,1 +1,53 @@
 @import "../components/bootstrap/less/bootstrap.less";
+@import "variables.less";
+@import "bootswatch.less";
+
+#main {
+  margin-top : 56px;
+}
+
+.navbar-fixed-top {
+  .navbar-inner {
+	padding-left  : 20px;
+	padding-right : 20px;
+  }
+
+}
+
+.navbar {
+  .dropdown-menu {
+	padding          : 20px;
+	max-height       : 300px;
+	overflow         : auto;
+	width            : 300px;
+	background-color : @navbarInverseBackground;
+	a, a:visited {
+	  color : @navbarInverseLinkColor;
+	}
+	a:hover {
+	  color            : @navbarInverseLinkColorHover;
+	  background-color : @navbarInverseLinkBackgroundHover;
+	}
+	a:active {
+	  color            : @navbarInverseLinkColorActive;
+	  background-color : @navbarInverseLinkBackgroundActive;
+	}
+	a{
+	  padding-left:0;
+	  padding-right: 5px;
+	  font-weight:500;
+	  font-size: 115%;
+	}
+  }
+
+}
+#toc{
+  width:29%;
+  .sub-header{
+	display:block !important;
+  }
+
+  .nav-list > li > a, .nav-list .nav-header {
+	margin-right: 0 !important;
+  }
+}
