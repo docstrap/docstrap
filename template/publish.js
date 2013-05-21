@@ -22,7 +22,9 @@ var indexUrl = helper.getUniqueFilename( 'index' );
 
 var navOptions = {
 	systemName : conf.systemName || "Documentation",
-	navType    : conf.navType || "dropdown"
+	navType    : conf.navType || "vertical",
+	footer     : conf.footer || "",
+	copyright  : conf.copyright || ""
 };
 
 var navigationMaster = {
@@ -347,9 +349,9 @@ function buildNav( members ) {
 	_.each( nav, function ( entry, name ) {
 		if ( entry.members.length > 0 && name !== "index" ) {
 			topLevelNav.push( {
-				title : entry.title,
-				link  : entry.link,
-				members: entry.members
+				title   : entry.title,
+				link    : entry.link,
+				members : entry.members
 			} );
 		}
 	} );

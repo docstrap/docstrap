@@ -5580,3 +5580,28 @@ i[class^="icon-"] {
 #toc .nav-list .nav-header {
   margin-right: 0 !important;
 }
+.copyright {
+  font-size: 90%;
+  text-align: center;
+  color: #033c73;
+  width: 100%;
+  display: block;
+}
+.jsdoc-message {
+  font-size: 90%;
+  text-align: center;
+  color: #033c73;
+  width: 100%;
+  display: block;
+}
+.page-title {
+  font-size: 220%;
+  color: #033c73;
+  font-weight: 700;
+  padding-top: 10px;
+  display: block;
+}
+footer {
+  border-top: 1px solid #04498c;
+  padding-top: 15px;
+}

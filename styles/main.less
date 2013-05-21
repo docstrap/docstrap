@@ -32,22 +32,52 @@
 	  color            : @navbarInverseLinkColorActive;
 	  background-color : @navbarInverseLinkBackgroundActive;
 	}
-	a{
-	  padding-left:0;
-	  padding-right: 5px;
-	  font-weight:500;
-	  font-size: 115%;
+	a {
+	  padding-left  : 0;
+	  padding-right : 5px;
+	  font-weight   : 500;
+	  font-size     : 115%;
 	}
   }
 
 }
-#toc{
-  width:29%;
-  .sub-header{
-	display:block !important;
+
+#toc {
+  width : 29%;
+  .sub-header {
+	display : block !important;
   }
 
   .nav-list > li > a, .nav-list .nav-header {
-	margin-right: 0 !important;
+	margin-right : 0 !important;
   }
+}
+
+.copyright {
+  font-size  : 90%;
+  text-align : center;
+  color      : @navbarInverseBackground;
+  width      : 100%;
+  display    : block;
+}
+
+.jsdoc-message {
+  font-size  : 90%;
+  text-align : center;
+  color      : @navbarInverseBackground;
+  width      : 100%;
+  display    : block;
+}
+
+.page-title {
+  font-size   : 220%;
+  color       : @navbarInverseBackground;
+  font-weight : 700;
+  padding-top : 10px;
+  display     : block;
+}
+
+footer {
+  border-top  : 1px solid  @navbarInverseBackgroundHighlight;
+  padding-top : 15px;
 }

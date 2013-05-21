@@ -25,7 +25,7 @@ var jsdocCollectorApi = {
 	dest      : "./collectordox",
 	tutorials : "./",
 	template  : "./template",
-	config    : "./template",
+	config    :"./template/jsdoc.conf.json",
 	options   : "--recurse --lenient --verbose"
 };
 

@@ -10,7 +10,9 @@
             "outputSourceFiles": true
         },
 	    "systemName": "DocStrap",
-	    "navType": "both"
+	    "footer": "",
+	    "copyright": "DocStrap Copyright &copy; Terry Weiss. All rights reserved.",
+	    "navType": "inline"
     } ,
 	"markdown": {
 		"parser": "gfm",
