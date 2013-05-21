@@ -1,4 +1,4 @@
-// Cerulean 2.3.2
+// United 2.3.2
 // Bootswatch
 // -----------------------------------------------------
 
@@ -6,7 +6,7 @@
 // TYPOGRAPHY
 // -----------------------------------------------------
 
-@import url(//fonts.googleapis.com/css?family=Telex);
+@import url(//fonts.googleapis.com/css?family=Ubuntu);
 
 // SCAFFOLDING
 // -----------------------------------------------------
@@ -16,39 +16,34 @@
 
 .navbar {
 
-	.brand {
-		padding: 14px 20px 16px;
-		font-family: @headingsFontFamily;
-		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-	}
-
-	li {
-		line-height: 20px;
-	}
-
 	.nav > li > a {
-		padding: 16px 10px 14px;
-		font-family: @headingsFontFamily;
-		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+		border-right: 1px solid rgba(0, 0, 0, 0.2);
+		border-left: 1px solid rgba(255, 255, 255, 0.1);
+
+		&:hover {
+			border-left: 1px solid rgba(0, 0, 0, 0.2);
+		}
 	}
 
-	.search-query {
-		border: 1px solid darken(@linkColor, 10%);
-		line-height: normal;
+	.nav > .active > a,
+	.nav > .active > a:hover {
+		border-left: 1px solid rgba(0, 0, 0, 0.2);
+	}
+
+	.divider-vertical {
+		background-color: inherit;
+		border-right: 1px solid rgba(0, 0, 0, 0.2);
 	}
 
 	.navbar-text {
-		padding: 19px 10px 18px;
-		line-height: 13px;
-		color: rgba(0, 0, 0, 0.5);
-		text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+		padding: 9px 10px 11px;
+		line-height: 19px;
+		color: @white;
 	}
 
-	&-inverse {
-
-		.navbar-search .search-query {
-			color: @textColor;
-		}
+	.navbar-search .search-query {
+		margin-bottom: 3px;
+		border: 1px solid darken(@navbarBackground, 15%);
 	}
 }
 
@@ -57,104 +52,48 @@
 	.navbar .nav-collapse {
 
 		.nav li > a {
-
-			font-family: @headingsFontFamily;
-			font-weight: normal;
 			color: @white;
-			text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+			border-left: 0px solid @orange;
+			border-right: 0px solid @orange;
 
 			&:hover {
-				background-color: #2B7CAC;
+				background-color: rgba(0, 0, 0, 0.3) !important;
+				background-image: none;
 			}
-		}
-
-		.nav .active > a {
-			.box-shadow(none);
-			background-color: #2B7CAC;
-		}
-
-		.dropdown-menu li > a:hover,
-		.dropdown-menu li > a:focus,
-		.dropdown-submenu:hover > a {
-			background-image: none;
 		}
 
 		.navbar-form,
 		.navbar-search {
-			border: none;
+			border-top: 0px solid @orange;
+			border-bottom: 0px solid @orange;
+			.box-shadow(none);
 		}
 
 		.nav-header {
-			color: #2B7CAC;
+			color: @grayLighter;
 		}
-	}
-
-	.navbar-inverse .nav-collapse {
-
-		.nav li > a {
-			color: @navbarInverseLinkColor;
-
-			&:hover {
-				background-color: rgba(0, 0, 0, 0.1);
-			}
-		}
-
-		.nav .active > a,
-		.nav > li > a:hover,
-		.dropdown-menu a:hover {
-			background-color: rgba(0, 0, 0, 0.1) !important;
-		}
-	}
-}
-
-div.subnav {
-
-	font-family: @headingsFontFamily;
-	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2);
-
-	&-fixed {
-		top: @navbarHeight + 1;
 	}
 }
 
 // NAV
 // -----------------------------------------------------
 
+.nav-tabs .open .dropdown-toggle,
+.nav-pills .open .dropdown-toggle,
+.nav > li.dropdown.open.active > a:hover {
+	border-right: 1px solid #C03D14;
+	border-left: 1px solid #E6633A;
+}
+
 // BUTTONS
 // -----------------------------------------------------
 
-.btn {
-  #gradient > .vertical-three-colors(@white, @white, 5%, darken(@white, 0%));
-  @shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
-  .box-shadow(@shadow);
-
-  &:hover {
-  	background-position: 0 0;
-  }
-}
-
 .btn-primary {
-  .buttonBackground(lighten(@btnPrimaryBackground, 5%), @btnPrimaryBackground);
-}
-
-.btn-info {
-  .buttonBackground(lighten(@btnInfoBackground, 5%), @btnInfoBackground);
-}
-
-.btn-success {
-  .buttonBackground(lighten(@btnSuccessBackground, 5%), @btnSuccessBackground);
+  .buttonBackground(lighten(@btnPrimaryBackground, 15%), @btnPrimaryBackground);
 }
 
 .btn-warning {
-  .buttonBackground(lighten(@btnWarningBackground, 5%), @btnWarningBackground);
-}
-
-.btn-danger {
-  .buttonBackground(lighten(@btnDangerBackground, 5%), @btnDangerBackground);
-}
-
-.btn-inverse {
-  .buttonBackground(lighten(@btnInverseBackground, 5%), @btnInverseBackground);
+  .buttonBackground(lighten(@yellow, 15%), @yellow);
 }
 
 // TABLES
@@ -169,11 +108,20 @@ div.subnav {
 // ALERTS, LABELS, BADGES
 // -----------------------------------------------------
 
+.alert {
+	text-shadow: none;
+}
+
 // MISC
 // -----------------------------------------------------
 
-i[class^="icon-"]{
-	opacity: 0.8;
+.hero-unit {
+    border: 1px solid rgba(0,0,0,.05);
+    .box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+
+	h1 {
+		line-height: 1.6em;
+	}
 }
 
 // MEDIA QUERIES

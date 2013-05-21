@@ -24,7 +24,8 @@ var navOptions = {
 	systemName : conf.systemName || "Documentation",
 	navType    : conf.navType || "vertical",
 	footer     : conf.footer || "",
-	copyright  : conf.copyright || ""
+	copyright  : conf.copyright || "",
+	theme      : conf.theme || "simplex"
 };
 
 var navigationMaster = {
