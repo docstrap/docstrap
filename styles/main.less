@@ -2,8 +2,9 @@
 @import "variables.less";
 @import "bootswatch.less";
 
+@headerHeight: 56px;
 #main {
-  margin-top : 56px;
+  margin-top : @headerHeight;
 }
 
 .navbar-fixed-top {
@@ -80,4 +81,15 @@
 footer {
   border-top  : 1px solid  @navbarInverseBackgroundHighlight;
   padding-top : 15px;
+}
+
+code {
+  background-color : none;
+  border           : none;
+  color            : @orange;
+}
+
+.name{
+  padding-top: @headerHeight;
+  margin-top: -@headerHeight;
 }

@@ -43,7 +43,7 @@
 
 	<div class="row-fluid">
 
-		<?js if(docs[0].kind !== "source"){ ?>
+		<?js if(docs && docs[0].kind !== "source"){ ?>
 		<div class="span8">
 			<?js }else{ ?>
 			<div class="span12">
@@ -71,7 +71,7 @@
 				</footer>
 			</div>
 
-			<?js if(docs[0].kind !== "source"){ ?>
+			<?js if(docs && docs[0].kind !== "source"){ ?>
 			<div class="span3">
 				<div id="toc"></div>
 			</div>

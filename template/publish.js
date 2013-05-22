@@ -25,7 +25,8 @@ var navOptions = {
 	navType    : conf.navType || "vertical",
 	footer     : conf.footer || "",
 	copyright  : conf.copyright || "",
-	theme      : conf.theme || "simplex"
+	theme      : conf.theme || "simplex",
+	linenums   : conf.linenums
 };
 
 var navigationMaster = {
@@ -328,11 +329,11 @@ function buildNav( members ) {
 	}
 
 	if ( members.tutorials.length ) {
-		members.
-			members.tutorials.forEach( function ( t ) {
 
-				nav.tutorial.members.push( tutoriallink( t.name ) );
-			} );
+		members.tutorials.forEach( function ( t ) {
+
+			nav.tutorial.members.push( tutoriallink( t.name ) );
+		} );
 
 	}
 
@@ -528,41 +529,42 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		], globalUrl );
 	}
 
-	if ( view.nav.module && view.nav.module.members.length ) {
-		generate( 'module', view.nav.module.title, [
-			{kind : 'sectionIndex', contents : view.nav.module}
-		], navigationMaster.module.link );
-	}
-
-	if ( view.nav.class && view.nav.class.members.length ) {
-		generate( 'class', view.nav.class.title, [
-			{kind : 'sectionIndex', contents : view.nav.class}
-		], navigationMaster.class.link );
-	}
-
-	if ( view.nav.namespace && view.nav.namespace.members.length ) {
-		generate( 'namespace', view.nav.namespace.title, [
-			{kind : 'sectionIndex', contents : view.nav.namespace}
-		], navigationMaster.namespace.link );
-	}
-
-	if ( view.nav.mixin && view.nav.mixin.members.length ) {
-		generate( 'mixin', view.nav.mixin.title, [
-			{kind : 'sectionIndex', contents : view.nav.mixin}
-		], navigationMaster.mixin.link );
-	}
-
-	if ( view.nav.external && view.nav.external.members.length ) {
-		generate( 'external', view.nav.external.title, [
-			{kind : 'sectionIndex', contents : view.nav.external}
-		], navigationMaster.external.link );
-	}
-
-	if ( view.nav.tutorial && view.nav.tutorial.members.length ) {
-		generate( 'tutorial', view.nav.tutorial.title, [
-			{kind : 'sectionIndex', contents : view.nav.tutorial}
-		], navigationMaster.tutorial.link );
-	}
+	// reserve following for future feature
+//	if ( view.nav.module && view.nav.module.members.length ) {
+//		generate( 'module', view.nav.module.title, [
+//			{kind : 'sectionIndex', contents : view.nav.module}
+//		], navigationMaster.module.link );
+//	}
+//
+//	if ( view.nav.class && view.nav.class.members.length ) {
+//		generate( 'class', view.nav.class.title, [
+//			{kind : 'sectionIndex', contents : view.nav.class}
+//		], navigationMaster.class.link );
+//	}
+//
+//	if ( view.nav.namespace && view.nav.namespace.members.length ) {
+//		generate( 'namespace', view.nav.namespace.title, [
+//			{kind : 'sectionIndex', contents : view.nav.namespace}
+//		], navigationMaster.namespace.link );
+//	}
+//
+//	if ( view.nav.mixin && view.nav.mixin.members.length ) {
+//		generate( 'mixin', view.nav.mixin.title, [
+//			{kind : 'sectionIndex', contents : view.nav.mixin}
+//		], navigationMaster.mixin.link );
+//	}
+//
+//	if ( view.nav.external && view.nav.external.members.length ) {
+//		generate( 'external', view.nav.external.title, [
+//			{kind : 'sectionIndex', contents : view.nav.external}
+//		], navigationMaster.external.link );
+//	}
+//
+//	if ( view.nav.tutorial && view.nav.tutorial.members.length ) {
+//		generate( 'tutorial', view.nav.tutorial.title, [
+//			{kind : 'sectionIndex', contents : view.nav.tutorial}
+//		], navigationMaster.tutorial.link );
+//	}
 
 	// index page displays information from package.json and lists files
 	var files = find( {kind : 'file'} ),
@@ -618,7 +620,8 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 			title    : title,
 			header   : tutorial.title,
 			content  : tutorial.parse(),
-			children : tutorial.children
+			children : tutorial.children,
+			docs: null
 		};
 
 		var tutorialPath = path.join( outdir, filename ),

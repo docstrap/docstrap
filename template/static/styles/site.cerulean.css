@@ -5605,3 +5605,12 @@ footer {
   border-top: 1px solid #04498c;
   padding-top: 15px;
 }
+code {
+  background-color: none;
+  border: none;
+  color: #dd5600;
+}
+.name {
+  padding-top: 56px;
+  margin-top: -56px;
+}

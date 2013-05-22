@@ -7,16 +7,16 @@ var path = require( "path" );
 var fs = require( "fs" );
 
 var jsdocTestPages = {
-	src       : ["./node_modules/jsdoc/test/fixtures/*.js"],
-	dest      : "./docs-test",
-	tutorials : "./node_modules/jsdoc/test/tutorials/tutorials",
+	src       : ["./samples/*.js", "./README.md"],
+	dest      : "./docs-view",
+	tutorials : "./samples/tutorials",
 	template  : "./template",
 	config    : "./template/jsdoc.conf.json",
 	options   : " --lenient --verbose"
 };
 
 var jsdocExamplePages = {
-	src       : ["../strings/*.js", "../strings/src/*.js", "../strings/README.md"],
+	src       : ["./samples/*.js", "./README.md"],
 	dest      : "./examples",
 	tutorials : "",
 	template  : "./template",
@@ -66,6 +66,7 @@ module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-less' );
 	grunt.loadNpmTasks( 'grunt-shell' );
+	grunt.registerTask( "view", ["less:dev", "shell:testdocs"] );
 
 	grunt.registerTask( "bootswatch", "Grab all Bootswatch themes and create css from each one", function () {
 		var toRun = [];
@@ -102,7 +103,7 @@ module.exports = function ( grunt ) {
 			sys.each( list.themes, function ( entry ) {
 				var conf = grunt.file.readJSON( 'example.conf.json' );
 				conf.templates.theme = entry.name.toLowerCase();
-				grunt.file.write( "tmp/example.conf." + conf.templates.theme + ".json", JSON.stringify(conf, null, 4) );
+				grunt.file.write( "tmp/example.conf." + conf.templates.theme + ".json", JSON.stringify( conf, null, 4 ) );
 
 				var jsdenv = sys.cloneDeep( jsdocExamplePages );
 				jsdenv.config = "./tmp/example.conf." + conf.templates.theme + ".json";
@@ -116,7 +117,7 @@ module.exports = function ( grunt ) {
 			grunt.registerTask( "cleanup", "", function () {
 				grunt.file["delete"]( "tmp/" );
 			} );
-			toRun.push("cleanup");
+			toRun.push( "cleanup" );
 			grunt.task.run( toRun );
 			done();
 		} );
