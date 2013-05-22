@@ -6,38 +6,30 @@ var async = require( "async" );
 var path = require( "path" );
 var fs = require( "fs" );
 
-var jsdocPublicApi = {
+var jsdocTestPages = {
 	src       : ["./node_modules/jsdoc/test/fixtures/*.js"],
-	dest      : "./dox",
-	tutorials : "./",
+	dest      : "./docs-test",
+	tutorials : "./node_modules/jsdoc/test/tutorials/tutorials",
 	template  : "./template",
-	config    : "./template",
-	options   : " --lenient --verbose"
-};
-
-var jsdocDefaultApi = {
-	src       : ["./node_modules/jsdoc/test/fixtures/*.js"],
-	dest      : "./jsdox",
-	tutorials : "./",
-	template  : "./node_modules/jsdoc/templates/default",
 	config    : "./template/jsdoc.conf.json",
 	options   : " --lenient --verbose"
 };
 
-var jsdocCollectorApi = {
-	src       : ["../collector/collector.js", "../collector/README.md"],
-	dest      : "./collectordox",
-	tutorials : "./",
+var jsdocExamplePages = {
+	src       : ["../strings/*.js", "../strings/src/*.js", "../strings/README.md"],
+	dest      : "./examples",
+	tutorials : "",
 	template  : "./template",
-	config    : "./template/jsdoc.conf.json",
-	options   : "--recurse --lenient --verbose"
+	config    : "./example.conf.json",
+	options   : " --lenient --verbose --recurse"
 };
 
 function jsdocCommand( jsdoc ) {
 	var cmd = [];
 	cmd.unshift( jsdoc.options );
-//	cmd.unshift( "--private" );
-//	cmd.push( "-u " + path.resolve( jsdoc.tutorials ) );
+	if ( jsdoc.tutorials.length > 0 ) {
+		cmd.push( "-u " + path.resolve( jsdoc.tutorials ) );
+	}
 	cmd.push( "-d " + path.resolve( jsdoc.dest ) );
 	cmd.push( "-t " + path.resolve( jsdoc.template ) );
 	cmd.push( "-c " + path.resolve( jsdoc.config ) );
@@ -47,20 +39,15 @@ function jsdocCommand( jsdoc ) {
 	cmd.unshift( path.resolve( "./node_modules/jsdoc/jsdoc" ) );
 	return cmd.join( " " );
 }
+
 var tasks = {
 	shell : {
-		options : {
+		options  : {
 			stdout : true,
 			stderr : true
 		},
-		docs    : {
-			command : jsdocCommand( jsdocPublicApi )
-		},
-		jsdocs  : {
-			command : jsdocCommand( jsdocDefaultApi )
-		},
-		cdocs   : {
-			command : jsdocCommand( jsdocCollectorApi )
+		testdocs : {
+			command : jsdocCommand( jsdocTestPages )
 		}
 	},
 	less  : {
@@ -77,11 +64,10 @@ module.exports = function ( grunt ) {
 	tasks.jsdocConf = grunt.file.readJSON( 'template/jsdoc.conf.json' );
 	grunt.initConfig( tasks );
 
-
 	grunt.loadNpmTasks( 'grunt-contrib-less' );
 	grunt.loadNpmTasks( 'grunt-shell' );
 
-	grunt.registerTask( "bootswatch", "", function () {
+	grunt.registerTask( "bootswatch", "Grab all Bootswatch themes and create css from each one", function () {
 		var toRun = [];
 
 		var done = this.async();
@@ -101,6 +87,36 @@ module.exports = function ( grunt ) {
 				};
 				toRun.push( "less:swatch" + entry.name );
 			} );
+			grunt.task.run( toRun );
+			done();
+		} );
+
+	} );
+
+	grunt.registerTask( "examples", "Create samples from the themes", function () {
+		var toRun = [];
+		var done = this.async();
+		getBootSwatchList( function ( err, list ) {
+			if ( err ) {return done( err );}
+
+			sys.each( list.themes, function ( entry ) {
+				var conf = grunt.file.readJSON( 'example.conf.json' );
+				conf.templates.theme = entry.name.toLowerCase();
+				grunt.file.write( "tmp/example.conf." + conf.templates.theme + ".json", JSON.stringify(conf, null, 4) );
+
+				var jsdenv = sys.cloneDeep( jsdocExamplePages );
+				jsdenv.config = "./tmp/example.conf." + conf.templates.theme + ".json";
+				jsdenv.dest = "./examples/" + conf.templates.theme;
+				tasks.shell["example" + conf.templates.theme] = {
+					command : jsdocCommand( jsdenv )
+				};
+				toRun.push( "shell:example" + conf.templates.theme );
+			} );
+
+			grunt.registerTask( "cleanup", "", function () {
+				grunt.file["delete"]( "tmp/" );
+			} );
+			toRun.push("cleanup");
 			grunt.task.run( toRun );
 			done();
 		} );

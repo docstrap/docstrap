@@ -1,0 +1,22 @@
+{
+	"tags": {
+		"allowUnknownTags": true
+	},
+	"plugins": ["plugins/markdown"],
+	"templates": {
+		"cleverLinks": false,
+		"monospaceLinks": false,
+		"default": {
+			"outputSourceFiles": true
+		},
+		"systemName": "ink-probe",
+		"footer": "",
+		"copyright": "Copyright &copy; Terry Weiss, Eery Wrists. All rights reserved.",
+		"navType": "vertical",
+		"theme": "cerulean"
+	} ,
+	"markdown": {
+		"parser": "gfm",
+		"hardwrap": true
+	}
+}

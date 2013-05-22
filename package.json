@@ -1,11 +1,12 @@
 {
   "name": "ink-docstrap",
   "version": "0.1.0",
-  "dependencies": {
+  "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-less": "~0.5.1",
     "jsdoc": "git://github.com/jsdoc3/jsdoc.git",
     "grunt-shell": "~0.2.2",
-    "async": "~0.2.8"
+    "async": "~0.2.8",
+    "lodash": "~1.2.1"
   }
 }

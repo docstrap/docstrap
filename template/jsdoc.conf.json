@@ -13,7 +13,7 @@
 	    "footer": "",
 	    "copyright": "DocStrap Copyright &copy; Terry Weiss. All rights reserved.",
 	    "navType": "vertical",
-	    "theme": "cosmo"
+	    "theme": "cerulean"
     } ,
 	"markdown": {
 		"parser": "gfm",
