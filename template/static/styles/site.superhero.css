@@ -6004,3 +6004,34 @@ footer {
   border-top: 1px solid #45515f;
   padding-top: 15px;
 }
+code {
+  background-color: none;
+  border: none;
+  color: #e36b23;
+}
+.buffered-name {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.member-collapsed {
+  background-color: #45515f;
+  color: #999999;
+}
+.member-open {
+  background-color: inherit;
+  color: inherit;
+}
+.member {
+  -webkit-transition: background-color 0.5s linear;
+  -moz-transition: background-color 0.5s linear;
+  -o-transition: background-color 0.5s linear;
+  transition: background-color 0.5s linear;
+  -webkit-transition: color 0.5s linear;
+  -moz-transition: color 0.5s linear;
+  -o-transition: color 0.5s linear;
+  transition: color 0.5s linear;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+}

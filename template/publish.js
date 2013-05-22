@@ -21,12 +21,13 @@ var globalUrl = helper.getUniqueFilename( 'global' );
 var indexUrl = helper.getUniqueFilename( 'index' );
 
 var navOptions = {
-	systemName : conf.systemName || "Documentation",
-	navType    : conf.navType || "vertical",
-	footer     : conf.footer || "",
-	copyright  : conf.copyright || "",
-	theme      : conf.theme || "simplex",
-	linenums   : conf.linenums
+	systemName      : conf.systemName || "Documentation",
+	navType         : conf.navType || "vertical",
+	footer          : conf.footer || "",
+	copyright       : conf.copyright || "",
+	theme           : conf.theme || "simplex",
+	linenums        : conf.linenums,
+	collapseSymbols : conf.collapseSymbols || false
 };
 
 var navigationMaster = {
@@ -621,7 +622,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 			header   : tutorial.title,
 			content  : tutorial.parse(),
 			children : tutorial.children,
-			docs: null
+			docs     : null
 		};
 
 		var tutorialPath = path.join( outdir, filename ),

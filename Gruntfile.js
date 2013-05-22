@@ -67,6 +67,16 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-less' );
 	grunt.loadNpmTasks( 'grunt-shell' );
 	grunt.registerTask( "view", ["less:dev", "shell:testdocs"] );
+	grunt.registerTask( "build", ["view", "bootswatch", "examples"] );
+
+	grunt.registerTask( "apply", "", function () {
+		var def = {
+			less          : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
+			lessVariables : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/variables.less"
+		};
+		grunt.registerTask( "swatch-apply", sys.partial( applyTheme, grunt, def ) );
+		grunt.task.run( ["swatch-apply"] );
+	} );
 
 	grunt.registerTask( "bootswatch", "Grab all Bootswatch themes and create css from each one", function () {
 		var toRun = [];

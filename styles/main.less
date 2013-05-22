@@ -3,6 +3,7 @@
 @import "bootswatch.less";
 
 @headerHeight: 56px;
+
 #main {
   margin-top : @headerHeight;
 }
@@ -89,7 +90,26 @@ code {
   color            : @orange;
 }
 
-.name{
-  padding-top: @headerHeight;
-  margin-top: -@headerHeight;
+.buffered-name {
+  padding-top : @headerHeight;
+  margin-top  : -@headerHeight;
 }
+
+.member-collapsed {
+  background-color : @navbarInverseBackground;
+  color            : @navbarInverseText;
+}
+
+.member-open {
+  background-color : inherit;
+  color            : inherit;
+}
+
+.member {
+  .transition(background-color 0.5s linear);
+  .transition(color 0.5s linear);
+  .border-radius(5px);
+  padding : 10px;
+}
+
+

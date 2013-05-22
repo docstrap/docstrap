@@ -5610,7 +5610,29 @@ code {
   border: none;
   color: #dd5600;
 }
-.name {
+.buffered-name {
   padding-top: 56px;
   margin-top: -56px;
+}
+.member-collapsed {
+  background-color: #033c73;
+  color: #ffffff;
+}
+.member-open {
+  background-color: inherit;
+  color: inherit;
+}
+.member {
+  -webkit-transition: background-color 0.5s linear;
+  -moz-transition: background-color 0.5s linear;
+  -o-transition: background-color 0.5s linear;
+  transition: background-color 0.5s linear;
+  -webkit-transition: color 0.5s linear;
+  -moz-transition: color 0.5s linear;
+  -o-transition: color 0.5s linear;
+  transition: color 0.5s linear;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
 }
