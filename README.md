@@ -40,17 +40,18 @@ Also take a gander at [JSDoc's command line options](http://usejsdoc.org/about-c
 
 DocStrap ships with a `conf.json` file in the template/ directory. It is just a regular old
 [JSDoc configuration file](http://usejsdoc.org/about-configuring-jsdoc.html), but with the following new options:
-	"templates": {
-		"systemName"      : "{string}",
-		"footer"          : "{string}",
-		"copyright"       : "{string}",
-		"navType"         : "{vertical|inline}",
-		"theme"           : "{theme}",
-		"linenums"        : {boolean},
-		"collapseSymbols" : {boolean},
-		"inverseNav"      : {boolean}
-	}
-
+```
+"templates": {
+	"systemName"      : "{string}",
+	"footer"          : "{string}",
+	"copyright"       : "{string}",
+	"navType"         : "{vertical|inline}",
+	"theme"           : "{theme}",
+	"linenums"        : {boolean},
+	"collapseSymbols" : {boolean},
+	"inverseNav"      : {boolean}
+}
+```
 ### Options ###
 
 *   _systemName_**
@@ -127,7 +128,8 @@ get that change into the template.
 **NOTE** that these steps are not necessary to just change the theme, this is only to modify the theme. If all you want to do is
 change the theme, just update conf.json with the new theme and build your docs!
 
-## Licenses ##
+## Notices ##
+If you like DocStrap, be sure and check out these excellent projects and support them!
 
 [JSDoc3 is licensed under the Apache License](https://github.com/jsdoc3/jsdoc/blob/master/LICENSE.md)
 
@@ -139,10 +141,10 @@ change the theme, just update conf.json with the new theme and build your docs!
 
 [Grunt is also MIT](https://github.com/gruntjs/grunt-cli/blob/master/LICENSE-MIT)
 
-If you like DocStrap, be sure and check out these excellent projects and support them!
+DocStrap [is licensed under the MIT license.](https://github.com/terryweiss/docstrap/blob/master/LICENSE.md)
 
 ## License ##
-DocStrap Copyright (c) 2012 Terry Weiss. All rights reserved.
+DocStrap Copyright (c) 2012-2013Terry Weiss. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
