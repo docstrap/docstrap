@@ -5774,10 +5774,14 @@ legend {
   -moz-border-radius: 5px;
   border-radius: 5px;
   border: 1px #2c3e50 solid;
+  padding: 5px;
 }
 #toc .toc-active {
   background-color: #233140;
   color: #1abc9c;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 #toc .toc-active a,
 #toc .toc-active a:hover,
@@ -5790,14 +5794,21 @@ legend {
   padding-top: 56px;
   margin-top: -56px;
 }
+.toc-h1 {
+  margin-left: 2px;
+  margin-right: 2px;
+}
 .toc-h2 {
   margin-left: 7px;
+  margin-right: 7px;
 }
 .toc-h3 {
   margin-left: 14px;
+  margin-right: 7px;
 }
 .toc-h4 {
   margin-left: 21px;
+  margin-right: 7px;
 }
 .copyright {
   font-size: 90%;

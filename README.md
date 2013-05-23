@@ -54,17 +54,17 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 ```
 ### Options ###
 
-*   _systemName_**
+*   __systemName__
 	The name of the system being documented. This will appear in the page title for each page
-*   _footer_**
+*   __footer__
 	Any markup want to appear in the footer of each page. This is not processed at all, just printed exactly as you enter it
-*   _copyright_**
+*   __copyright__
 	You can add a copyright message below the _footer_ and above the JSDoc timestamp at the bottom of the page
-*   _navType_**
+*   __navType__
 	The template uses top level navigation with dropdowns for the contents of each category. On large systems these dropdowns
 	can get large enough to expand beyond the page. To make the dropdowns render wider and stack the entries vertically, set this
 	option to `"inline"`. Otherwise set it to `"vertical"` to make them regular stacked dropdowns.
-*   _theme_**
+*   __theme__
 	This is the name of the them you want to use **in all lowercase**. The valid options are
 	+ `amelia`
 	+ `cerulean`
@@ -79,14 +79,14 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	+ `spruce`
 	+ `superhero`
 	+ `united`
-*   _linenums_**
+*   __linenums__
 	When true, line numbers will appear in the source code listing. If you have
 	[also turned that on](http://usejsdoc.org/about-configuring-jsdoc.html).
-*   _collapseSymbols_**
+*   __collapseSymbols__
 	If your pages have a large number of symbols, it can be easy to get lost in all the text. If you turn this to `true`
 	all of the symbols in the page will roll their contents up so that you just get a list of symbols that can be expanded
 	and collapsed.
-*   _inverseNav_**
+*   __inverseNav__
 	Bootstrap navbars come in two flavors, regular and inverse where inverse is generally higher contrast. Set this to `true` to
 	use the inverse header.
 
@@ -127,6 +127,9 @@ get that change into the template.
 
 **NOTE** that these steps are not necessary to just change the theme, this is only to modify the theme. If all you want to do is
 change the theme, just update conf.json with the new theme and build your docs!
+
+## Contributing ##
+Yes! Contribute! Test! Share your ideas!
 
 ## Notices ##
 If you like DocStrap, be sure and check out these excellent projects and support them!

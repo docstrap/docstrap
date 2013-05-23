@@ -131,6 +131,14 @@ var tasks = {
 				"template/static/styles/site.<%= jsdocConf.templates.theme %>.css" : "styles/main.less"
 			}
 		}
+	},
+	copy   : {
+		docs : {
+			files : [
+				{expand : true, cwd : "dox/", src : ['**'], dest : '../docstrap-dox/'},
+				{expand : true, cwd : "themes/", src : ['**'], dest : '../docstrap-dox/themes'}
+			]
+		}
 	}
 };
 
@@ -140,6 +148,8 @@ module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-less' );
 	grunt.loadNpmTasks( 'grunt-shell' );
+	grunt.loadNpmTasks( 'grunt-contrib-copy' );
+
 	grunt.registerTask( "default", ["docs"] );
 
 	/**
@@ -166,7 +176,7 @@ module.exports = function ( grunt ) {
 	 * @name build
 	 * @memberof module:Gruntfile
 	 */
-	grunt.registerTask( "build", "Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the styles directory", ["testdocs", "shell:dox", "bootswatch", "examples", "apply"] );
+	grunt.registerTask( "build", "Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the styles directory", ["testdocs", "shell:dox", "bootswatch", "examples", "apply", "copy"] );
 	/**
 	 * TASK: Applies the theme in the conf file and applies it to the styles directory.
 	 * @name apply
