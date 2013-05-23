@@ -45,14 +45,48 @@
 }
 
 #toc {
-  width : 29%;
-  .sub-header {
-	display : block !important;
-  }
+  position   : fixed;
+  top        : @headerHeight;
+  width      : 29%;
+  max-height : 90%;
+  overflow   : auto;
+  .border-radius(5px);
+  border     : 1px @navbarBackground solid;
+  padding    : 5px;
 
-  .nav-list > li > a, .nav-list .nav-header {
-	margin-right : 0 !important;
+  .toc-active {
+	background-color : @navbarLinkBackgroundActive;
+	color            : @navbarLinkColorActive;
+	.border-radius(3px);
+	a, a:hover, a:active, a:visited {
+	  background-color : @navbarLinkBackgroundActive;
+	  color            : @navbarLinkColorActive;
+	}
   }
+}
+
+.toc-shim {
+  padding-top : @headerHeight;
+  margin-top  : -@headerHeight;
+}
+
+.toc-h1 {
+  margin-left  : 2px;
+  margin-right : 2px;
+}
+.toc-h2 {
+  margin-left  : 7px;
+  margin-right : 7px;
+}
+
+.toc-h3 {
+  margin-left  : 14px;
+  margin-right : 7px;
+}
+
+.toc-h4 {
+  margin-left  : 21px;
+  margin-right : 7px;
 }
 
 .copyright {

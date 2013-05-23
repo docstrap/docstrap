@@ -149,6 +149,12 @@ module.exports = function ( grunt ) {
 	 */
 	grunt.registerTask( "docs", "Create the project documentation", ["shell:dox"] );
 	/**
+	 * Compile the CSS and create the project documentation
+	 * @name dev
+	 * @memberof module:Gruntfile
+	 */
+	grunt.registerTask( "dev", "Compile the CSS and create the project documentation", ["less","shell:dox"] );
+	/**
 	 * TASK: Builds the main less file and then generates the test documents
 	 * @name testdocs
 	 * @memberof module:Gruntfile
@@ -177,7 +183,7 @@ module.exports = function ( grunt ) {
 	/**
 	 * TASK: Grab all Bootswatch themes and create css from each one based on the main.less in the styles directory. NOTE that this will
 	 * leave the last swatch downloaded in the styles directory, you will want to call "apply" afterwards
-	 * @name apply
+	 * @name bootswatch
 	 * @memberof module:Gruntfile
 	 */
 	grunt.registerTask( "bootswatch", "Grab all Bootswatch themes and create css from each one based on the main.less in the styles directory", function () {

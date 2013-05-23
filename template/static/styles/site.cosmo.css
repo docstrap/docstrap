@@ -5806,14 +5806,39 @@ a.thumbnail:hover {
   font-size: 115%;
 }
 #toc {
+  position: fixed;
+  top: 56px;
   width: 29%;
+  max-height: 90%;
+  overflow: auto;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px #080808 solid;
 }
-#toc .sub-header {
-  display: block !important;
+#toc .toc-active {
+  background-color: transparent;
+  color: #ffffff;
 }
-#toc .nav-list > li > a,
-#toc .nav-list .nav-header {
-  margin-right: 0 !important;
+#toc .toc-active a,
+#toc .toc-active a:hover,
+#toc .toc-active a:active,
+#toc .toc-active a:visited {
+  background-color: transparent;
+  color: #ffffff;
+}
+.toc-shim {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.toc-h2 {
+  margin-left: 7px;
+}
+.toc-h3 {
+  margin-left: 14px;
+}
+.toc-h4 {
+  margin-left: 21px;
 }
 .copyright {
   font-size: 90%;
