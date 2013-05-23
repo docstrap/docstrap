@@ -41,12 +41,6 @@ var navigationMaster = {
 		link    : indexUrl,
 		members : []
 	},
-	global    : {
-		title   : "Global",
-		link    : globalUrl,
-		members : []
-
-	},
 	namespace : {
 		title   : "Namespaces",
 		link    : helper.getUniqueFilename( "namespaces.list" ),
@@ -77,6 +71,12 @@ var navigationMaster = {
 		title   : "Tutorials",
 		link    : helper.getUniqueFilename( "tutorials.list" ),
 		members : []
+	},
+	global    : {
+		title   : "Global",
+		link    : globalUrl,
+		members : []
+
 	},
 	external : {
 		title   : "Externals",

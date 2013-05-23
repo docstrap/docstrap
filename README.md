@@ -130,7 +130,7 @@ get that change into the template.
 change the theme, just update conf.json with the new theme and build your docs!
 
 ## Contributing ##
-Yes! Contribute! Test! Share your ideas!
+Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## Notices ##
 If you like DocStrap, be sure and check out these excellent projects and support them!
