@@ -27,7 +27,8 @@ var navOptions = {
 	copyright       : conf.copyright || "",
 	theme           : conf.theme || "simplex",
 	linenums        : conf.linenums,
-	collapseSymbols : conf.collapseSymbols || false
+	collapseSymbols : conf.collapseSymbols || false,
+	inverseNav      : conf.inverseNav
 };
 
 var navigationMaster = {

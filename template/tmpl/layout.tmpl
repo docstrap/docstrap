@@ -12,13 +12,17 @@
 	<![endif]-->
 	<link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
 	<link type="text/css" rel="stylesheet" href="styles/jquery.tocify.css" />
+	<?js if (this.navOptions.theme === "darkstrap"){ ?>
+	<link type="text/css" rel="stylesheet" href="styles/site.cyborg.css">
+	<link type="text/css" rel="stylesheet" href="styles/darkstrap.css">
+	<?js } else { ?>
 	<link type="text/css" rel="stylesheet" href="styles/site.<?js= this.navOptions.theme ?>.css">
+	<?js } ?>
 </head>
 
 <body>
 <div class="container-fluid">
-
-	<div class="navbar navbar-fixed-top navbar-inverse">
+	<div class="navbar navbar-fixed-top <?js= this.navOptions.inverseNav ? 'navbar-inverse' : '' ?>">
 		<div class="navbar-inner">
 			<a class="brand" href="<?js= this.nav.index.link ?>"><?js= this.nav.index.title ?></a>
 			<ul class="nav">

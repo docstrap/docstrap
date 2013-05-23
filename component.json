@@ -6,6 +6,7 @@
     "jquery": "~2.0.0",
     "jquery-ui": "~1.10.3",
     "tocify": "latest",
-    "jquery.tocify.js": "git://github.com/gfranko/jquery.tocify.js.git#~1.4.0"
+    "jquery.tocify.js": "git://github.com/gfranko/jquery.tocify.js.git#~1.4.0",
+    "darkstrap": "git://github.com/danneu/darkstrap.git#~0.9.2"
   }
 }
