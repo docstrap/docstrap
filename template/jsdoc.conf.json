@@ -10,13 +10,13 @@
 			"outputSourceFiles" : true
 		},
 		"systemName"      : "DocStrap",
-		"footer"          : "",
+		"footer"          : "If you like this template, be sure to contribute what you can to the <a href='https://github.com/jsdoc3/jsdoc'>JSDoc3</a> <a href='http://usejsdoc.org/'>Project</a> and/or the <a href='http://bootswatch.com/'>Bootswatch</a> Project and support open source!",
 		"copyright"       : "DocStrap Copyright © 2012-2013 The contributors to the JSDoc 3 documentation and DocStrap projects.",
 		"navType"         : "vertical",
-		"theme"           : "darkstrap",
+		"theme"           : "cerulean",
 		"linenums"        : true,
-		"collapseSymbols" : true,
-		"inverseNav"      : false
+		"collapseSymbols" : false,
+		"inverseNav"      : true
 	},
 	"markdown"  : {
 		"parser"   : "gfm",

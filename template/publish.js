@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * @module template/publish
+ * @type {*}
+ */
 /*global env: true */
 var template = require( 'jsdoc/template' ),
 	fs = require( 'jsdoc/fs' ),

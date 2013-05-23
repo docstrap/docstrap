@@ -1,20 +1,57 @@
 "use strict";
+/**
+ * @fileOverview Gruntfile tasks. These tasks are intended to help you when modifying the template. If you are
+ * just using the template, don't sweat this stuff. To use these tasks, you must install grunt, if you haven't already,
+ * and install the dependencies. All of this requires node.js, of course.
+ *
+ * Install grunt:
+ *
+ *      npm install -g grunt-cli
+ *
+ * Then in the directory where you found this file:
+ *
+ *      npm install
+ *
+ * And you are all set. See the individual tasks for details.
+ *
+ * @module Gruntfile
+ * @requires path
+ * @requires lodash
+ * @requires http
+ * @requires async
+ * @requires fs
+ */
 var path = require( "path" );
 var sys = require( "lodash" );
 var http = require( "http" );
 var async = require( "async" );
-var path = require( "path" );
 var fs = require( "fs" );
 
+// this rather odd arrangement of composing tasks like this to make sure this works on both
+// windows and linux correctly. We can't depend on Grunt or Node to normalize
+// paths for us because we shell out to make this work. So we gather up
+// our relative paths here, normalize them later and then pass them into
+// the shell to be run by JSDoc3.
+
+/**
+ * The definition to run the development test files. This runs the files in `samples` with the
+ * project's `conf.json` file.
+ * @private
+ */
 var jsdocTestPages = {
 	src       : ["./samples/*.js", "./README.md"],
-	dest      : "./docs-view",
+	dest      : "./testdocs",
 	tutorials : "./samples/tutorials",
 	template  : "./template",
 	config    : "./template/jsdoc.conf.json",
 	options   : " --lenient --verbose"
 };
-
+/**
+ * The definition to run the sample files. This runs the files in `samples` with the
+ * sample's `conf.json` file. No task directly exposes this configuration. The `samples` task
+ * modifies this for each swatch it finds and then run the docs command against it.
+ * @private
+ */
 var jsdocExamplePages = {
 	src       : ["./samples/*.js", "./README.md"],
 	dest      : "./examples",
@@ -24,6 +61,24 @@ var jsdocExamplePages = {
 	options   : " --lenient --verbose --recurse"
 };
 
+/**
+ * This definition provides the project's main, published documentation.
+ *  @private
+ */
+var projectDocs = {
+	src       : ["./Gruntfile*.js", "./README.md", "./template/publish.js"],
+	dest      : "./dox",
+	tutorials : "",
+	template  : "./template",
+	config    : "./template/jsdoc.conf.json",
+	options   : " --lenient --verbose --recurse --private"
+};
+
+/**
+ * Normalizes all paths from a JSDoc task definition and and returns an executable string that can be passed to the shell.
+ * @param {object} jsdoc A JSDoc definition
+ * @returns {string}
+ */
 function jsdocCommand( jsdoc ) {
 	var cmd = [];
 	cmd.unshift( jsdoc.options );
@@ -46,13 +101,32 @@ var tasks = {
 			stdout : true,
 			stderr : true
 		},
+		/**
+		 * TASK: Create the a documentation set for testing changes to the template
+		 * @name shell:testdocs
+		 * @memberOf module:Gruntfile
+		 */
 		testdocs : {
 			command : jsdocCommand( jsdocTestPages )
+		},
+		/**
+		 * TASK: Create project documentation
+		 * @name shell:dox
+		 * @memberOf module:Gruntfile
+		 */
+		dox      : {
+			command : jsdocCommand( projectDocs )
 		}
 	},
+	/**
+	 * TASK: The less task creates the themed css file from main.less. The file is written to the template styles
+	 * directory as site.[name of theme].css. Later the .conf file will look for the theme to apply based
+	 * on this naming convention.
+	 * @name less
+	 * @memberOf module:Gruntfile
+	 */
 	less  : {
 		dev : {
-
 			files : {
 				"template/static/styles/site.<%= jsdocConf.templates.theme %>.css" : "styles/main.less"
 			}
@@ -66,10 +140,33 @@ module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-less' );
 	grunt.loadNpmTasks( 'grunt-shell' );
-	grunt.registerTask( "view", ["less:dev", "shell:testdocs"] );
-	grunt.registerTask( "build", ["view", "bootswatch", "examples"] );
+	grunt.registerTask( "default", ["docs"] );
 
-	grunt.registerTask( "apply", "", function () {
+	/**
+	 * Builds the project's documentation
+	 * @name docs
+	 * @memberof module:Gruntfile
+	 */
+	grunt.registerTask( "docs", "Create the project documentation", ["shell:dox"] );
+	/**
+	 * TASK: Builds the main less file and then generates the test documents
+	 * @name testdocs
+	 * @memberof module:Gruntfile
+	 */
+	grunt.registerTask( "testdocs", "Builds the main less file and then generates the test documents", ["less:dev", "shell:testdocs"] );
+	/**
+	 * TASK: Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the
+	 * styles directory.
+	 * @name build
+	 * @memberof module:Gruntfile
+	 */
+	grunt.registerTask( "build", "Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the styles directory", ["testdocs", "shell:docs", "bootswatch", "examples", "apply"] );
+	/**
+	 * TASK: Applies the theme in the conf file and applies it to the styles directory.
+	 * @name apply
+	 * @memberof module:Gruntfile
+	 */
+	grunt.registerTask( "apply", "Applies the theme in the conf file and applies it to the styles directory", function () {
 		var def = {
 			less          : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
 			lessVariables : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/variables.less"
@@ -77,8 +174,13 @@ module.exports = function ( grunt ) {
 		grunt.registerTask( "swatch-apply", sys.partial( applyTheme, grunt, def ) );
 		grunt.task.run( ["swatch-apply"] );
 	} );
-
-	grunt.registerTask( "bootswatch", "Grab all Bootswatch themes and create css from each one", function () {
+	/**
+	 * TASK: Grab all Bootswatch themes and create css from each one based on the main.less in the styles directory. NOTE that this will
+	 * leave the last swatch downloaded in the styles directory, you will want to call "apply" afterwards
+	 * @name apply
+	 * @memberof module:Gruntfile
+	 */
+	grunt.registerTask( "bootswatch", "Grab all Bootswatch themes and create css from each one based on the main.less in the styles directory", function () {
 		var toRun = [];
 
 		var done = this.async();
@@ -103,7 +205,11 @@ module.exports = function ( grunt ) {
 		} );
 
 	} );
-
+	/**
+	 * TASK:Create samples from the themes. The files must have been built first from the bootswatch task.
+	 * @name examples
+	 * @memberof module:Gruntfile
+	 */
 	grunt.registerTask( "examples", "Create samples from the themes", function () {
 		var toRun = [];
 		var done = this.async();
@@ -135,7 +241,22 @@ module.exports = function ( grunt ) {
 	} );
 };
 
+/**
+ * Applies one of the Bootswatch themes to the working `styles` directory. When you want to modify a particular theme, this where you
+ * get the basis for it. The files are written to `./styles/variables.less` and `./styles/bootswatch.less`. The `./styles/main.less`
+ * file includes them directly, so after you apply the theme, modify `main.less` to your heart's content and then run the `less` task
+ * as in
+ *
+ *      grunt less
+ *
+ * @param {object} grunt The grunt object reference
+ * @param {object} definition The swatch definition files
+ * @param {string} definition.less The url to the `bootswatch.less` file
+ * @param {string} definition.lessVariables The url to the `variables.less` file
+ * @private
+ */
 function applyTheme( grunt, definition ) {
+	//noinspection JSHint
 	var done = this.async();
 	async.waterfall( [
 		function ( cb ) {
@@ -155,6 +276,16 @@ function applyTheme( grunt, definition ) {
 	], done );
 }
 
+/**
+ * Gets the list of available Bootswatches from, well, Bootswatch.
+ *
+ * @see http://news.bootswatch.com/post/22193315172/bootswatch-api
+ * @param {function(err, responseBody)} done The callback when complete
+ * @param {?object} done.err If an error occurred, you will find it here.
+ * @param {object} done.responseBody This is a parsed edition of the bootswatch server's response. It's format it defined
+ * by the return message from [here](http://api.bootswatch.com/)
+ * @private
+ */
 function getBootSwatchList( done ) {
 	var options = {
 		hostname : 'api.bootswatch.com',
@@ -183,6 +314,16 @@ function getBootSwatchList( done ) {
 	req.end();
 }
 
+/**
+ * This method will get one of the components from Bootswatch, which is generally a `less` file or a `lessVariables` file.
+ *
+ * @see http://news.bootswatch.com/post/22193315172/bootswatch-api
+ * @param {string} url The url to retreive from
+ * @param {function(err, responseText)} done The callback when complete
+ * @param {?object} done.err If an error occurred, you will find it here.
+ * @param {string} done.responseText The body of whatever was returned
+ * @private
+ */
 function getBootSwatchComponent( url, done ) {
 	var body = "";
 	var req = http.request( url, function ( res ) {
