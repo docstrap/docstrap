@@ -34,30 +34,30 @@ var fs = require( "fs" );
 // the shell to be run by JSDoc3.
 
 /**
- * The definition to run the development test files. This runs the files in `samples` with the
+ * The definition to run the development test files. This runs the files in `fixtures` with the
  * project's `conf.json` file.
  * @private
  */
 var jsdocTestPages = {
-	src       : ["./samples/*.js", "./README.md"],
+	src       : ["./fixtures/*.js", "./README.md"],
 	dest      : "./testdocs",
-	tutorials : "./samples/tutorials",
+	tutorials : "./fixtures/tutorials",
 	template  : "./template",
 	config    : "./template/jsdoc.conf.json",
 	options   : " --lenient --verbose"
 };
 /**
- * The definition to run the sample files. This runs the files in `samples` with the
- * sample's `conf.json` file. No task directly exposes this configuration. The `samples` task
+ * The definition to run the sample files. This runs the files in `fixtures` with the
+ * sample's `conf.json` file. No task directly exposes this configuration. The `fixtures` task
  * modifies this for each swatch it finds and then run the docs command against it.
  * @private
  */
 var jsdocExamplePages = {
-	src       : ["./samples/*.js", "./README.md"],
-	dest      : "./examples",
+	src       : ["./fixtures/*.js", "./README.md"],
+	dest      : "./themes",
 	tutorials : "",
 	template  : "./template",
-	config    : "./example.conf.json",
+	config    : "./fixtures/example.conf.json",
 	options   : " --lenient --verbose --recurse"
 };
 
@@ -155,12 +155,12 @@ module.exports = function ( grunt ) {
 	 */
 	grunt.registerTask( "testdocs", "Builds the main less file and then generates the test documents", ["less:dev", "shell:testdocs"] );
 	/**
-	 * TASK: Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the
+	 * TASK: Builds the whole shebang. Which means creating testdocs, the bootswatch fixtures and then resetting the
 	 * styles directory.
 	 * @name build
 	 * @memberof module:Gruntfile
 	 */
-	grunt.registerTask( "build", "Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the styles directory", ["testdocs", "shell:docs", "bootswatch", "examples", "apply"] );
+	grunt.registerTask( "build", "Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the styles directory", ["testdocs", "shell:dox", "bootswatch", "examples", "apply"] );
 	/**
 	 * TASK: Applies the theme in the conf file and applies it to the styles directory.
 	 * @name apply
@@ -206,7 +206,7 @@ module.exports = function ( grunt ) {
 
 	} );
 	/**
-	 * TASK:Create samples from the themes. The files must have been built first from the bootswatch task.
+	 * TASK:Create fixtures from the themes. The files must have been built first from the bootswatch task.
 	 * @name examples
 	 * @memberof module:Gruntfile
 	 */
@@ -217,13 +217,13 @@ module.exports = function ( grunt ) {
 			if ( err ) {return done( err );}
 
 			sys.each( list.themes, function ( entry ) {
-				var conf = grunt.file.readJSON( 'example.conf.json' );
+				var conf = grunt.file.readJSON( './fixtures/example.conf.json' );
 				conf.templates.theme = entry.name.toLowerCase();
 				grunt.file.write( "tmp/example.conf." + conf.templates.theme + ".json", JSON.stringify( conf, null, 4 ) );
 
 				var jsdenv = sys.cloneDeep( jsdocExamplePages );
 				jsdenv.config = "./tmp/example.conf." + conf.templates.theme + ".json";
-				jsdenv.dest = "./examples/" + conf.templates.theme;
+				jsdenv.dest = "./themes/" + conf.templates.theme;
 				tasks.shell["example" + conf.templates.theme] = {
 					command : jsdocCommand( jsdenv )
 				};

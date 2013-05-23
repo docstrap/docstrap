@@ -535,42 +535,42 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		], globalUrl );
 	}
 
-	// reserve following for future feature
-//	if ( view.nav.module && view.nav.module.members.length ) {
-//		generate( 'module', view.nav.module.title, [
-//			{kind : 'sectionIndex', contents : view.nav.module}
-//		], navigationMaster.module.link );
-//	}
-//
-//	if ( view.nav.class && view.nav.class.members.length ) {
-//		generate( 'class', view.nav.class.title, [
-//			{kind : 'sectionIndex', contents : view.nav.class}
-//		], navigationMaster.class.link );
-//	}
-//
-//	if ( view.nav.namespace && view.nav.namespace.members.length ) {
-//		generate( 'namespace', view.nav.namespace.title, [
-//			{kind : 'sectionIndex', contents : view.nav.namespace}
-//		], navigationMaster.namespace.link );
-//	}
-//
-//	if ( view.nav.mixin && view.nav.mixin.members.length ) {
-//		generate( 'mixin', view.nav.mixin.title, [
-//			{kind : 'sectionIndex', contents : view.nav.mixin}
-//		], navigationMaster.mixin.link );
-//	}
-//
-//	if ( view.nav.external && view.nav.external.members.length ) {
-//		generate( 'external', view.nav.external.title, [
-//			{kind : 'sectionIndex', contents : view.nav.external}
-//		], navigationMaster.external.link );
-//	}
-//
-//	if ( view.nav.tutorial && view.nav.tutorial.members.length ) {
-//		generate( 'tutorial', view.nav.tutorial.title, [
-//			{kind : 'sectionIndex', contents : view.nav.tutorial}
-//		], navigationMaster.tutorial.link );
-//	}
+	// some browsers can't make the dropdown work
+	if ( view.nav.module && view.nav.module.members.length ) {
+		generate( 'module', view.nav.module.title, [
+			{kind : 'sectionIndex', contents : view.nav.module}
+		], navigationMaster.module.link );
+	}
+
+	if ( view.nav.class && view.nav.class.members.length ) {
+		generate( 'class', view.nav.class.title, [
+			{kind : 'sectionIndex', contents : view.nav.class}
+		], navigationMaster.class.link );
+	}
+
+	if ( view.nav.namespace && view.nav.namespace.members.length ) {
+		generate( 'namespace', view.nav.namespace.title, [
+			{kind : 'sectionIndex', contents : view.nav.namespace}
+		], navigationMaster.namespace.link );
+	}
+
+	if ( view.nav.mixin && view.nav.mixin.members.length ) {
+		generate( 'mixin', view.nav.mixin.title, [
+			{kind : 'sectionIndex', contents : view.nav.mixin}
+		], navigationMaster.mixin.link );
+	}
+
+	if ( view.nav.external && view.nav.external.members.length ) {
+		generate( 'external', view.nav.external.title, [
+			{kind : 'sectionIndex', contents : view.nav.external}
+		], navigationMaster.external.link );
+	}
+
+	if ( view.nav.tutorial && view.nav.tutorial.members.length ) {
+		generate( 'tutorial', view.nav.tutorial.title, [
+			{kind : 'sectionIndex', contents : view.nav.tutorial}
+		], navigationMaster.tutorial.link );
+	}
 
 	// index page displays information from package.json and lists files
 	var files = find( {kind : 'file'} ),
