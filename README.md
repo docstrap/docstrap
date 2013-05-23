@@ -28,6 +28,7 @@ Here are examples of this template with the different Bootswatch themes:
 + [Superhero](http://terryweiss.github.io/docstrap/themes/superhero)
 + [United](http://terryweiss.github.io/docstrap/themes/united)
 
+To change your theme, just change it in the `conf.json` file. See below for details.
 ## Ooooh, I want it! How do I get it?##
 First grab the [zip file from github.](https://github.com/terryweiss/docstrap/archive/master.zip) Unzip it
 to your favorite hard drive and ask JSDoc to use it. Like so:
