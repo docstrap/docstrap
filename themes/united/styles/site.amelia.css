@@ -6273,6 +6273,7 @@ code {
 .toc-shim {
   padding-top: 56px;
   margin-top: -56px;
+  display: block;
 }
 .toc-h1 {
   margin-left: 2px;
