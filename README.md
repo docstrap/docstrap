@@ -132,6 +132,13 @@ change the theme, just update conf.json with the new theme and build your docs!
 ## Contributing ##
 Yes! Contribute! Test! Share your ideas! Report Bugs!
 
+## Roadmap ##
+Integrate Darkstrap
+Make plain old bootstrap an option (doh!)
+Jump to source line numbers
+Document publish.js
+
+
 ## Notices ##
 If you like DocStrap, be sure and check out these excellent projects and support them!
 
