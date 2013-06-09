@@ -8,7 +8,7 @@
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
 
 	<?js if (this.navOptions.theme === "darkstrap"){ ?>
 	<link type="text/css" rel="stylesheet" href="styles/site.cyborg.css">
@@ -82,13 +82,18 @@
 		</div>
 
 	</div>
-	<script src="scripts/prettify/prettify.js"></script>
-	<script src="scripts/prettify/lang-css.js"></script>
+	<script src="scripts/sunlight.js"></script>
+	<script src="scripts/sunlight.javascript.js"></script>
+	<script src="scripts/sunlight-plugin.doclinks.js"></script>
+	<script src="scripts/sunlight-plugin.linenumbers.js"></script>
+	<script src="scripts/sunlight-plugin.menu.js"></script>
 	<script src="scripts/jquery.min.js"></script>
+	<script src="scripts/jquery.scrollTo.js"></script>
+	<script src="scripts/jquery.localScroll.js"></script>
 	<script src="scripts/bootstrap-dropdown.js"></script>
 	<script src="scripts/toc.js"></script>
 
-	<script> prettyPrint(); </script>
+	<script>  Sunlight.highlightAll({lineNumbers:true,  showMenu: true, enableDoclinks :true}); </script>
 
 	<script>
 		$( function () {
@@ -106,6 +111,9 @@
 	<?js if (this.navOptions.collapseSymbols) { ?>
 	<script>
 		$( function () {
+			$('#main').localScroll({
+				offset: { top: 56 } //offset by the height of your header (give or take a few px, see what works for you)
+			});
 			$( "dt h4.name" ).each( function () {
 				var $this = $( this );
 				var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );

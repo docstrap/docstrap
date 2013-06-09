@@ -279,14 +279,14 @@ function applyTheme( grunt, definition ) {
 			getBootSwatchComponent( definition.less, function ( err, swatch ) {
 				if ( err ) {return cb( err );}
 				var fullPath = path.join( __dirname, "styles/bootswatch.less" );
-				fs.writeFile( fullPath, swatch, cb );
+				fs.writeFile( fullPath, swatch.replace("http://", "//"), cb );
 			} );
 		},
 		function ( cb ) {
 			getBootSwatchComponent( definition.lessVariables, function ( err, swatch ) {
 				if ( err ) {return cb( err );}
 				var fullPath = path.join( __dirname, "styles/variables.less" );
-				fs.writeFile( fullPath, swatch, cb );
+				fs.writeFile( fullPath, swatch.replace("http://", "//"), cb );
 			} );
 		}
 	], done );
