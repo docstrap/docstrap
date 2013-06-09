@@ -133,10 +133,23 @@ change the theme, just update conf.json with the new theme and build your docs!
 Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## Roadmap ##
-Integrate Darkstrap
-Make plain old bootstrap an option (doh!)
-Jump to source line numbers
-Document publish.js
+
+* Integrate Darkstrap
+* Make plain old bootstrap an option (doh!)
+* ~~Jump to source line numbers~~
+* Document publish.js
+
+
+## History ##
+
+### v0.2.0 ###
+
+* Added jump to source linenumers - still a problem scrolling with fixed header
+* changed syntax highlighter to [sunlight](http://sunlightjs.com/)
+* Modify incoming bootswatch files to make font calls without protocol.
+
+### v0.1.0 ###
+Initial release
 
 
 ## Notices ##
@@ -153,6 +166,8 @@ If you like DocStrap, be sure and check out these excellent projects and support
 [Grunt is also MIT](https://github.com/gruntjs/grunt-cli/blob/master/LICENSE-MIT)
 
 DocStrap [is licensed under the MIT license.](https://github.com/terryweiss/docstrap/blob/master/LICENSE.md)
+
+[Sunlight uses the WTFPL](http://sunlightjs.com/)
 
 ## License ##
 DocStrap Copyright (c) 2012-2013Terry Weiss. All rights reserved.
