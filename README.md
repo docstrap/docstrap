@@ -33,7 +33,7 @@ To change your theme, just change it in the `conf.json` file. See below for deta
 First grab the [zip file from github.](https://github.com/terryweiss/docstrap/archive/master.zip) Unzip it
 to your favorite hard drive and ask JSDoc to use it. Like so:
 
-	<path/to/jsdoc>/jsoc mysourcefiles/* -t <path.to.unzipped>/template -c <path.to.unzipped>/conf.json  <path.to.output>/
+	<path/to/jsdoc>/jsoc mysourcefiles/* -t <path.to.unzipped>/template -c <path.to.unzipped>/conf.json -d <path.to.output>/
 
 Also take a gander at [JSDoc's command line options](http://usejsdoc.org/about-commandline.html).
 
