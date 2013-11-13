@@ -103,7 +103,7 @@ Next, prepare the environment:
 
 and
 
-    grunt install
+    npm install
 
 When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, used [less](http://lesscss.org/).
 The way it works is that `./styles/main.less` pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,
