@@ -136,17 +136,22 @@ $.fn.toc = function(options) {
     createTree(ul)
     //set intent timer
     var intentTimer;
+    var accumulatedTime = 0;
     //bind quick search
     $('.search-query', self).bind('keyup', function(e) {
-      window.clearTimeout(intentTimer);
+      if (accumulatedTime < 1000) {
+        window.clearTimeout(intentTimer);
+      }
       var me = $(this);
       var intentTime = 500 - (me.val().length * 10);
+      accumulatedTime += intentTime;
       intentTimer = window.setTimeout(function() {
         if (searchVal == me.val()) {
           return false;
         }
         searchVal = me.val();
         search(me.val());
+        accumulatedTime = 0;
       }, intentTime);
     });
   });
