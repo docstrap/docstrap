@@ -106,7 +106,8 @@ $.fn.toc = function(options) {
     var el = $(this);
     var searchVal = '';
     var searchForm = $("<form/>", {class: "form-search quick-search"})
-      .append($("<input>", {type: "text", class: "input-medium search-query", placeholder: "Quick Search"}));
+      .append($("<input/>", {type: "text", class: "input-medium search-query", placeholder: "Quick Search"}));
+
     var ul = $('<ul/>');
     headings.each(function(i, heading) {
       var $h = $(heading);
@@ -130,7 +131,8 @@ $.fn.toc = function(options) {
 
       ul.append(li);
     });
-    el.html(searchForm).append(ul);
+    el.html(ul);
+    el.parent().prepend(searchForm);
 
     //create the tree
     createTree(ul)
@@ -138,7 +140,7 @@ $.fn.toc = function(options) {
     var intentTimer;
     var accumulatedTime = 0;
     //bind quick search
-    $('.search-query', self).bind('keyup', function(e) {
+    el.siblings('.quick-search').children('.search-query').bind('keyup', function(e) {
       if (accumulatedTime < 1000) {
         window.clearTimeout(intentTimer);
       }
@@ -154,6 +156,12 @@ $.fn.toc = function(options) {
         accumulatedTime = 0;
       }, intentTime);
     });
+
+    //set positions of search box and TOC
+    var navHeight = $(".navbar").height();
+    var searchHeight = $(".quick-search").height();
+    $(".quick-search").css({'top': navHeight + 10 + 'px', 'position': 'fixed'});
+    el.css('top', navHeight + searchHeight + 15 + 'px');
   });
 };
 
