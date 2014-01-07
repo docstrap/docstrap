@@ -5,8 +5,13 @@ In addition, it includes all of the themes from [Bootswatch](http://bootswatch.c
 and feel options for your documentation, along with a simple search. Additionally, it adds some options to the conf.json file that gives
 you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.
 
+## New ##
+
+* Quick Search
+* Added to npm registry
+
 ## Features ##
-* Fixed navigation at page top
+
 * Right side TOC for navigation in pages, with quick search
 * Themed
 * Customizable
@@ -33,7 +38,13 @@ To change your theme, just change it in the `conf.json` file. See below for deta
 First grab the [zip file from github.](https://github.com/terryweiss/docstrap/archive/master.zip) Unzip it
 to your favorite hard drive and ask JSDoc to use it. Like so:
 
-	<path/to/jsdoc>/jsoc mysourcefiles/* -t <path.to.unzipped>/template -c <path.to.unzipped>/conf.json -d <path.to.output>/
+	<path/to/jsdoc>/jsdoc mysourcefiles/* -t <path.to.unzipped>/template -c <path.to.unzipped>/conf.json -d <path.to.output>/
+
+or:
+
+```
+npm install docstrap
+```
 
 Also take a gander at [JSDoc's command line options](http://usejsdoc.org/about-commandline.html).
 
@@ -132,6 +143,12 @@ change the theme, just update conf.json with the new theme and build your docs!
 ## Contributing ##
 Yes! Contribute! Test! Share your ideas! Report Bugs!
 
+### Contributers ###
+
+* [marklagendijk](https://github.com/marklagendijk)
+* [michaelward82](https://github.com/michaelward82)
+* [kaustavdm](https://github.com/kaustavdm)
+
 ## Roadmap ##
 
 * Integrate Darkstrap
@@ -141,6 +158,14 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 
 ## History ##
+
+### v0.3.0 ###
+* Fixed navigation at page top
+* Adds -d switch to example jsdoc command.
+* Fixed typo in readme
+* Improve search box positioning and styles
+* Add dynamic quick search in TOC
+* Fix for line numbers styling issue
 
 ### v0.2.0 ###
 
