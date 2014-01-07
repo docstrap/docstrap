@@ -43,7 +43,7 @@ to your favorite hard drive and ask JSDoc to use it. Like so:
 or:
 
 ```
-npm install docstrap
+npm install ink-docstrap
 ```
 
 Also take a gander at [JSDoc's command line options](http://usejsdoc.org/about-commandline.html).
