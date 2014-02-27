@@ -91,7 +91,7 @@ function jsdocCommand( jsdoc ) {
 	sys.each( jsdoc.src, function ( src ) {
 		cmd.push( path.resolve( src ) );
 	} );
-	cmd.unshift( path.resolve( "./node_modules/jsdoc/jsdoc" ) );
+	cmd.unshift( path.resolve( "./node_modules/jsdoc/jsdoc.js" ) );
 	return cmd.join( " " );
 }
 
