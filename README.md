@@ -92,6 +92,8 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	+ `spruce`
 	+ `superhero`
 	+ `united`
+*   __hideSource__
+	When true, source code listing will not appear.
 *   __linenums__
 	When true, line numbers will appear in the source code listing. If you have
 	[also turned that on](http://usejsdoc.org/about-configuring-jsdoc.html).

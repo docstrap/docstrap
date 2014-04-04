@@ -30,7 +30,7 @@ var navOptions = {
 	footer          : conf.footer || "",
 	copyright       : conf.copyright || "",
 	theme           : conf.theme || "simplex",
-    showSource      : (typeof conf.showSource === "undefined") ? true : conf.showSource,
+    hideSource      : !!conf.hideSource,
 	linenums        : conf.linenums,
 	collapseSymbols : conf.collapseSymbols || false,
 	inverseNav      : conf.inverseNav
