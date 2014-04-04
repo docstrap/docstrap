@@ -59,6 +59,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	"copyright"       : "{string}",
 	"navType"         : "{vertical|inline}",
 	"theme"           : "{theme}",
+	"showSource"      : {boolean},
 	"linenums"        : {boolean},
 	"collapseSymbols" : {boolean},
 	"inverseNav"      : {boolean}
