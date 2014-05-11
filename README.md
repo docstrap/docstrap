@@ -108,7 +108,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 *	__sourceRootPath__
 	When `outputSourceFiles` is `false`, you may still want to name the file even without a link to the pretty printed output.
 	Set  this to 'true` when `outputSourceFiles` is `false`. `outputSourceFiles` when `true` takes precedence over this setting.
-
+*   __dateFormat__ The date format to use when printing dates. It accepts any format string understood by [moment.js](http://momentjs.com/docs/#/displaying/format/)
 
 ## Customizing DocStrap ##
 No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.
