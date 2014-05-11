@@ -7,12 +7,14 @@
 3 info using node@v0.10.8
 4 verbose node symlink C:\Program Files\nodejs\\node.exe
 5 error Error: Git working directory not clean.
-5 error M README.md
+5 error M npm-debug.log
 5 error     at C:\Program Files\nodejs\node_modules\npm\lib\version.js:97:35
 5 error     at ChildProcess.exithandler (child_process.js:635:7)
 5 error     at ChildProcess.EventEmitter.emit (events.js:98:17)
 5 error     at maybeClose (child_process.js:735:16)
-5 error     at Process.ChildProcess._handle.onexit (child_process.js:802:5)
+5 error     at Socket.<anonymous> (child_process.js:948:11)
+5 error     at Socket.EventEmitter.emit (events.js:95:17)
+5 error     at Pipe.close (net.js:451:12)
 6 error If you need help, you may report this log at:
 6 error     <http://github.com/isaacs/npm/issues>
 6 error or email it to:
