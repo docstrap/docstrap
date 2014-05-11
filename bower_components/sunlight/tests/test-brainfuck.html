@@ -1,0 +1,25 @@
+<!doctype html >
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.brainfuck.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-brainfuck">++++++++++[&gt;+++++++&gt;++++++++++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;++.&gt;+.+++++++..+++.&gt;++.&lt;&lt;+++++++++++++++.&gt;.+++.------.--------.&gt;+.&gt;.</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("increment", ">", "increment");
+		//assertExists("decrement", "<", "decrement");
+		assertExists("incrementPointer", "+", "increment pointer");
+		assertExists("decrementPointer", "-", "decrement pointer");
+		//assertExists("read", ",", "read");
+		assertExists("write", ".", "write");
+		assertExists("openLoop", "[", "open loop");
+		assertExists("closeLoop", "]", "close loop");
+	//]]></script>
+</html>

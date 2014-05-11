@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>jQuery.LocalScroll</title>
+	<meta name="keywords" content="javascript, jquery, plugins, scroll, anchor, to, navigation, scrollTo, smooth, animation, overflow, element, window, effect, lazy, ariel, flesler, customizable" />
+	<meta name="description" content="Demo of jQuery.LocalScroll. A jQuery plugin to make anchor navigation work with a smooth animation, made by Ariel Flesler." />
+	<meta name="robots" content="index,follow" />
+	<script type="text/javascript" src="../jquery.js"></script>
+	<script type="text/javascript" src="../jquery.scrollTo-min.js"></script>
+	<script type="text/javascript" src="../jquery.localscroll.js"></script>
+	<style type="text/css">
+		div{
+			background-color:#AAA;
+			margin:10px auto;
+			width:500px;
+			height:100px;
+			overflow:hidden;
+		}
+		ul{
+			width:2000px;
+			height:inherit;
+		}
+		li{
+			float:left;
+			width:500px;
+			height:inherit;
+			list-style-type:none;
+			font-size:35px;
+			text-align:center;
+		}
+			li a{
+				width:inherit;
+				height:inherit;
+				text-align:center;
+			}
+		ul, li{
+			margin:0;
+			padding:0;
+		}
+	</style>
+</head>
+<body>
+	<a href="#theItem">Move All</a>
+	<div>
+		<ul>
+			<li>Item A</li>
+			<li>Item B</li>
+			<li><a name="theItem">Item C</a></li>
+			<li>Item D</li>
+		</ul>
+	</div>
+	<div>
+		<ul>
+			<li>Item A</li>
+			<li>Item B</li>
+			<li>Item C</li>
+			<li><a name="theItem">Item D</a></li>
+		</ul>
+	</div>
+	<div>
+		<ul>
+			<li>Item A</li>
+			<li><a name="theItem">Item B</a></li>
+			<li>Item C</a></li>
+			<li>Item D</li>
+		</ul>
+	</div>
+	
+	<script type="text/javascript">
+		$.localScroll({ axis:'x', target:'div', hash:true });
+	</script>
+</body>
+</html>

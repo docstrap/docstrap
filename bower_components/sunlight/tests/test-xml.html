@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.xml.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.php.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.css.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.javascript.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.csharp.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-xml">&lt;?xml version="1.0" ?&gt;
+&lt;config xmlns:foo="http://example.com"&gt;
+	&lt;!-- sections --&gt;
+	&lt;section name="foo"&gt;Content of the section&lt;/section&gt;
+	&lt;section name="bar"&gt;Content of the section&amp;beforeopentag;&lt;/section&gt;
+	&lt;section foo:id="12" name="foo"&gt;Content of the "section" &amp; stuff&lt;/section&gt;
+
+	&lt;System.Net /&gt;
+
+	&lt;!-- cdata --&gt;
+&lt;![CDATA[I can put whatever I want here HAHAHA!
+&lt;tags&gt; that shouldn't be tags&lt;/tags&gt;
+&lt;?xml lol! ?&gt;]]&gt;
+	
+	&lt;_self-closing /&gt;
+	
+	&lt;section&gt;
+		&lt;nested lulz="asdf"&gt;
+			And again&amp;hellip;
+			&lt;again&gt;nested content&lt;/again&gt;
+		&lt;/nested&gt;
+	&lt;/section&gt;
+&lt;/config&gt;</pre>
+
+<pre id="embedded-test" class="sunlight-highlight-xml">
+&lt;!doctype html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;script type="text/javascript" src="/sunlight.js"&gt;&lt;/script&gt;
+		&lt;style&gt;&lt;/style&gt;
+		&lt;style type=&quot;text/css&quot;&gt;
+			@font-face {
+				font-family: Custom;
+				src: url(/fonts/custom.ttf);
+			}
+			
+			body {
+				background-color: black;
+				font-family: &quot;Courier New&quot;;
+				width: 100%;
+				min-height: 200px;
+			}
+			
+			.attention {
+				color: red;
+				border: 2px solid #000000;
+			}
+		&lt;/style&gt;
+		&lt;script type=&quot;text/javascript&quot;&gt;
+			window.onload = function() {
+				try {
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "/ajax.php", true);
+					xhr.onreadystatechange = function(e) {
+						if (xhr.readyState === 4 &amp;&amp; xhr.status === 200) {
+							document.getElementById("foo").innerHTML = xhr.responseText;
+						}
+					};
+					
+					xhr.send(null);
+				} catch (e) {}
+			};
+		&lt;/script&gt;
+	&lt;/head&gt;
+	
+	&lt;body&gt;
+		&lt;p&gt;
+			Let's try some PHP: Hello &lt;?= $_GET['username'] ?&gt;! Long tags work, too:
+			&lt;?php 
+				echo 'Hello world';
+				foreach (range(1, 10) as $i) {
+					print_r($i); //prints $i lol
+				}
+			?&gt;
+		&lt;/p&gt;
+		
+		&lt;p&gt;
+			Now let's try some C#:
+		&lt;/p&gt;
+		
+		&lt;%-- server side comment --%&gt;
+		&lt;% if (User.IsInRole(&quot;admin&quot;)) { %&gt;
+			You can see this
+		&lt;% } else { %&gt;
+			You are no admin fool!
+		&lt;% } %&gt;
+		
+		&lt;%= &quot;Short tag ftw&quot; %&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("xmlOpenTag", "<" + "?xml", "xml open tag");
+		assertExists("xmlCloseTag", "?>", "xml close tag");
+		
+		assertExists("tagName", "config", "config tag");
+		assertExists("tagName", "section", "section tag");
+		assertExists("tagName", "_self-closing", "_self-closing tag");
+		assertExists("tagName", "nested", "nested tag");
+		assertExists("tagName", "System.Net", "tag name with period");
+
+		assertExists("attribute", "id", "id attribute");
+		assertExists("attribute", "xmlns", "xmlns attribute");
+		assertExists("attribute", "name", "name attribute");
+		assertExists("attribute", "version", "version attribute");
+		assertExists("attribute", "foo", "foo attribute");
+		assertExists("attribute", "lulz", "lulz attribute");
+		
+		assertExists("string", "\"1.0\"", "string");
+		assertExists("string", "\"http://example.com\"", "string");
+		
+		assertExists("comment", "<!-- cdata --" + ">", "comment");
+		assertExists("cdata", "<![CDATA[I can put whatever I want here HAHAHA!\n<tags> that shouldn't be tags</tags>\n<?xml lol! ?>]]>", "cdata");
+		
+		assertExists("entity", "&hellip;", "entity in content");
+		assertExists("entity", "&beforeopentag;", "entity before open tag");
+		
+		assertExists("operator", "/>", "self closing operator");
+		assertExists("operator", "<", "opening operator");
+		assertExists("operator", ">", "closing operator");
+		assertExists("operator", "/>", "</ operator");
+		assertExists("operator", ":", "namespace operator");
+		assertExists("operator", "=", "= operator");
+		
+		assertExists("doctype", "<!doctype html>", "doctype", "embedded-test");
+		
+		
+		//embedded stuff
+		assertExists("variable", "$_GET", "php variable", "embedded-test");
+		assertExists("function", "print_r", "php function", "embedded-test");
+		assertExists("keyword", "function", "javascript keyword", "embedded-test");
+		assertExists("rule", "@font-face", "css rule", "embedded-test");
+		assertExists("tagName", "style", "xml tag", "embedded-test");
+		
+		assertExists("string", "\"Short tag ftw\"", "c# string", "embedded-test");
+		assertExists("keyword", "if", "c# keyword if", "embedded-test");
+		
+		assertExists("comment", "<" + "%-- server side comment --%>", "asp server side comment", "embedded-test");
+		assertExists("aspOpenTag", "<" + "%", "asp open tag", "embedded-test");
+		assertExists("aspOpenTag", "<" + "%=", "asp short open tag", "embedded-test");
+		assertExists("aspCloseTag", "%>", "asp close tag", "embedded-test");
+		
+	//]]></script>
+</html>

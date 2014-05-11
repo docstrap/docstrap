@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>jQuery.LocalScroll</title>
+	<meta name="keywords" content="javascript, jquery, plugins, scroll, anchor, to, navigation, scrollTo, smooth, animation, overflow, element, window, effect, lazy, ariel, flesler, customizable" />
+	<meta name="description" content="Demo of jQuery.LocalScroll. A jQuery plugin to make anchor navigation work with a smooth animation, made by Ariel Flesler." />
+	<meta name="robots" content="index,follow" />
+	<script type="text/javascript" src="../jquery.js"></script>
+	<script type="text/javascript" src="../jquery.scrollTo-min.js"></script>
+	<script type="text/javascript" src="../jquery.localscroll.js"></script>
+	<style type="text/css">
+		div.square{
+			background-color:#AAA;
+			position:absolute;
+			width:500px;
+			height:500px;
+		}
+		#div1{
+			top:200px;
+			left:400px;
+		}
+		#div2{
+			top:500px;
+			left:1500px;
+		}
+		#div3{
+			top:800px;
+			left:150px;
+		}
+		#div4{
+			top:1000px;
+			left:700px;
+		}
+		#screen{
+			overflow:hidden;
+			position:relative;
+		}
+	</style>
+</head>
+<body>
+	<div id="screen">
+		<div id="div1" class="square">
+			<h1>Div 1</h1>
+			<a href="#div2">To div 2</a>
+			<a href="#div3">To div 3</a>
+			<a href="#div4">To div 4</a>
+		</div>
+		<div id="div2" class="square">
+			<h1>Div 2</h1>	
+			<a href="#div1">To div 1</a>
+			<a href="#div3">To div 3</a>
+			<a href="#div4">To div 4</a>
+		</div>
+		<div id="div3" class="square">
+			<h1>Div 3</h1>	
+			<a href="#div1">To div 1</a>
+			<a href="#div2">To div 2</a>
+			<a href="#div4">To div 4</a>
+		</div>
+		<div id="div4" class="square">
+			<h1>Div 4</h1>	
+			<a href="#div1">To div 1</a>
+			<a href="#div2">To div 2</a>
+			<a href="#div3">To div 3</a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$('#screen').height( $(window).height() ).width( $(window).width() )
+		$.localScroll({ hash:true, axis:'xy', target:'#screen' });
+	</script>
+</body>
+</html>

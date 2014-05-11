@@ -1,0 +1,89 @@
+<!doctype html >
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.mysql.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-mysql">--comment 1
+select * from db.my_table where myTable.id &gt; 10;
+
+/* multi
+line comment */
+
+select "escaped\\\"";
+select 'escaped\\\'';
+
+#comment 2
+SELECT
+    f.foo `foo`,
+    f.bar,
+    f.name AS `foo.name`,
+    b.baz
+FROM foo f
+INNER JOIN bar b
+    ON b.id = f.bar_id
+LEFT OUTER JOIN baz
+    ON baz.id = f.foo
+    AND baz.id IS NOT NULL
+GROUP BY f.name
+HAVING COUNT(f.name) &lt; 10
+WHERE LENGTH(f.foo) &lt; 5
+AND LEFT(f.foo) = 'f'
+
+START TRANSACTION;
+SELECT @A:=SUM(salary) FROM table1 WHERE type=1;
+UPDATE table2 SET summary=@A WHERE type=1;
+COMMIT;
+
+DELIMITER $$
+
+BEGIN 
+DECLARE foo = 'bar';
+END $$
+DELIMITER ;
+</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("comment", "--comment 1", "-- comment");
+		assertExists("comment", "#comment 2", "# comment");
+		assertExists("comment", "/* multi\nline comment */", "multi line comment");
+		
+		assertExists("quotedIdent", "`foo`", "quoted ident");
+		assertExists("quotedIdent", "`foo.name`", "quoted ident");
+		
+		assertExists("keyword", "select", "select keyword");
+		assertExists("keyword", "SELECT", "SELECT keyword");
+		assertExists("keyword", "from", "from keyword");
+		assertExists("keyword", "where", "where keyword");
+		assertExists("keyword", "JOIN", "JOIN keyword");
+		assertExists("keyword", "LEFT", "LEFT keyword");
+		assertExists("keyword", "GROUP", "GROUP keyword");
+		assertExists("keyword", "BY", "BY keyword");
+		assertExists("keyword", "HAVING", "HAVING keyword");
+		assertExists("keyword", "AND", "AND keyword");
+		assertExists("keyword", "AS", "AS keyword");
+		assertExists("keyword", "OUTER", "OUTER keyword");
+		assertExists("keyword", "INNER", "INNER keyword");
+		assertExists("keyword", "START TRANSACTION", "START TRANSACTION keyword");
+		assertExists("keyword", "COMMIT", "COMMIT keyword");
+		
+		assertExists("function", "LEFT", "LEFT function");
+		assertExists("function", "LENGTH", "LENGTH function");
+		assertExists("function", "COUNT", "COUNT function");
+		
+		assertExists("operator", ">", "> operator");
+		assertExists("named-ident", "my_table", "table name named ident");
+		assertExists("named-ident", "db", "database name named ident");
+		assertExists("number", "10", "number");
+		
+		assertExists("string", "'f'", "single quoted string");
+		assertExists("string", "\"escaped\\\\\\\"\"", "double quoted string with escapes");
+		assertExists("string", "'escaped\\\\\\''", "single quoted string with escapes");
+	//]]></script>
+</html>

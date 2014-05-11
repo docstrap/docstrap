@@ -1,0 +1,233 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.vb.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-vb">Imports System.Runtime.InteropServices
+
+'comment
+
+''' &lt;summary&gt;
+''' How about an XML doc comment?
+''' This class does &lt;c cref="Foo"&gt;something&lt;/c&gt;
+''' &lt;/summary&gt;
+'''
+''' &lt;param name="foos"&gt;Collection of &lt;see cref="Foo" /&gt;&lt;/param&gt;
+&lt;Attribute1("DEBUG"), Attribute2("TEST1")&gt;
+&lt;System.Runtime.InteropServices.DllImport("user32.dll")&gt;
+Public Class thisClass(Of t As {GenericConstraint1, GenericConstraint2, Class, New})
+    ' Insert code that defines class members.
+End Class
+
+Public Class Dictionary(Of entryType, keyType As IComparable)
+    Public Sub add(&lt;[In](), ICanHazAttribute()&gt;ByVal e As entryType, ByVal k As keyType)
+        Dim dk As keyType
+		
+		'array initialization and char literals
+		Dim testChars As Char() = New Char(2) {"%"c, "&"c, "@"c}
+		
+		'casting stuff
+		f = CType(CType(castVar1, OohNestedCast), CastToThisType)
+		f = DirectCast(castVar2, NoCastToThisType)
+		f = CType(castVar3, CastToArray())
+		Dim objAsConvertible As IConvertible = TryCast(castVar4, TryToCastToThisType)
+		
+		MsgBox(GetType(GetTypeTest).ToString())
+		
+        If k.CompareTo(dk) = 0 Then
+        End If
+    End Sub
+    Public Function find(ByVal k As keyType) As entryType
+    End Function
+End Class
+
+
+Public Class ThisClass
+    Inherits BaseClass
+    Implements IInterface1, IInterface2, IInterface3
+
+    Sub New(ByVal SomeValue As Integer)
+        ' Call MyBase.New if this is a derived class.
+        MyBase.New()
+        MsgBox("ThisClass is initializing with Sub New.")
+        ' Place initialization statements here. 
+        ThisPropertyValue = SomeValue
+    End Sub
+
+    Private ThisPropertyValue As Integer
+    Property ThisProperty() As Integer
+        Get
+            CheckIfDisposed()
+            ThisProperty = ThisPropertyValue
+        End Get
+        Set(ByVal Value As Integer)
+            CheckIfDisposed()
+            ThisPropertyValue = Value
+        End Set
+    End Property
+
+    Private disposed As Boolean = False
+    Public Sub CheckIfDisposed()
+        If Me.disposed AndAlso True Then
+            Throw New ObjectDisposedException(Me.GetType().ToString, _
+            "This object has been disposed.")
+        End If
+    End Sub
+End Class
+
+Delegate Function MathOperator( 
+    ByVal x As Double, 
+    ByVal y As Double 
+) As Double
+
+Function AddNumbers( 
+    ByVal x As Double, 
+    ByVal y As Double 
+) As Double
+    Return x + y
+End Function
+
+Function SubtractNumbers( 
+    ByVal x As Double, 
+    ByVal y As Double
+) As Double
+    Return x - y
+End Function
+
+Sub DelegateTest( 
+    ByVal x As Double, 
+    ByVal op As MathOperator, 
+    ByVal y As Double 
+)
+    Dim ret As Double
+    ret = op.Invoke(x, y) ' Call the method.
+    MsgBox(ret)
+End Sub
+
+Protected Sub Test()
+    DelegateTest(5, AddressOf AddNumbers, 3)
+    DelegateTest(9, AddressOf SubtractNumbers, 3)
+End Sub
+
+Public Interface thisInterface
+    Property thisProp(ByVal thisStr As String) As Char
+    Function thisFunc(ByVal thisInt As Integer) As Integer
+End Interface
+
+Public Structure employee
+    Public firstName As String
+    Public middleName As String
+	Const maximum As Long = 459
+    Friend Sub calculateBonus(ByVal rate As Single)
+        bonus = salary * CDbl(rate)
+    End Sub
+    ' Property member to return employee's eligibility.
+    Friend ReadOnly Property eligible() As Boolean
+        Get
+            Return level >= 25
+        End Get
+    End Property
+    ' Event member, raised when business phone number has changed.
+    Public Event changedWorkPhone(ByVal newPhone As Long)
+End Structure
+
+Public Module thisModule
+    Sub Main()
+        Dim [True] As String = InputBox("What is your name?")
+        MsgBox("User name is" & [True])
+    End Sub
+    ' Insert variable, property, procedure, and event declarations.
+End Module
+
+Public Enum InterfaceColors
+    MistyRose = &amp;HE1E4FF
+    SlateGray = &amp;H908070
+    DodgerBlue = &amp;HFF901E
+    DeepSkyBlue = &amp;HFFBF00
+    SpringGreen = &amp;H7FFF00
+    ForestGreen = &amp;H228B22
+    Goldenrod = &amp;H20A5DA
+    Firebrick = &amp;H2222B2
+End Enum
+</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("comment", "'comment", "'comment");
+		
+		assertExists("keyword", "Public", "Public keyword");
+		assertExists("keyword", "Class", "Class keyword");
+		assertExists("keyword", "Of", "Of keyword");
+		assertExists("keyword", "As", "As keyword");
+		assertExists("keyword", "End", "End keyword");
+		assertExists("keyword", "Sub", "Sub keyword");
+		assertExists("keyword", "Get", "Get keyword");
+		assertExists("keyword", "Set", "Set keyword");
+		assertExists("keyword", "Public", "Public keyword");
+		assertExists("keyword", "ByVal", "ByVal keyword");
+		assertExists("keyword", "Long", "Long keyword");
+		assertExists("keyword", "Integer", "Integer keyword");
+		assertExists("keyword", "String", "String keyword");
+		assertExists("keyword", "Structure", "Structure keyword");
+		assertExists("keyword", "Event", "Event keyword");
+		assertExists("keyword", "Single", "Single keyword");
+		assertExists("keyword", "Const", "Const keyword");
+		assertExists("keyword", "Char", "Char keyword");
+		assertExists("keyword", "Return", "Return keyword");
+		assertExists("keyword", "Function", "Function keyword");
+		assertExists("keyword", "Me", "Me keyword");
+		assertExists("keyword", "True", "True keyword");
+		assertExists("keyword", "False", "False keyword");
+		assertExists("keyword", "New", "New keyword");
+		
+		assertExists("named-ident", "thisClass", "class name after Class keyword");
+		assertExists("named-ident", "GenericConstraint1", "generic constraint");
+		assertExists("named-ident", "GenericConstraint2", "generic constraint");
+		assertExists("named-ident", "IInterface1", "implemented interface name");
+		assertExists("named-ident", "IInterface2", "implemented interface name");
+		assertExists("named-ident", "IInterface3", "implemented interface name");
+		assertExists("named-ident", "InterfaceColors", "enum name");
+		assertExists("named-ident", "thisModule", "module name");
+		assertExists("named-ident", "thisInterface", "interface name");
+		assertExists("named-ident", "changedWorkPhone", "event name");
+		assertExists("named-ident", "employee", "structure name");
+		assertExists("named-ident", "MathOperator", "ident after As");
+		assertExists("named-ident", "ObjectDisposedException", "ident after New");
+		assertExists("named-ident", "BaseClass", "ident after Inherits");
+		assertExists("named-ident", "SubtractNumbers", "ident after AddressOf");
+		assertExists("named-ident", "entryType", "ident after Of");
+		assertExists("named-ident", "OohNestedCast", "nested cast");
+		assertExists("named-ident", "CastToThisType", "CType cast");
+		assertExists("named-ident", "NoCastToThisType", "DirectCast cast");
+		assertExists("named-ident", "TryToCastToThisType", "TryCast cast");
+		assertExists("named-ident", "CastToArray", "cast to array");
+		assertExists("named-ident", "GetTypeTest", "type name inside GetType operator");
+		assertExists("named-ident", "Attribute1", "class attribute");
+		assertExists("named-ident", "Attribute2", "class attribute");
+		assertExists("named-ident", "DllImport", "class attribute");
+		assertExists("named-ident", "ICanHazAttribute", "parameter attribute");
+		
+		assertExists("ident", "New", "New subprocedure");
+		assertExists("ident", "GetType", "GetType method call");
+		assertExists("ident", "castVar1", "first argument to cast function");
+		assertExists("ident", "castVar2", "first argument to cast function");
+		assertExists("ident", "castVar3", "first argument to cast function");
+		assertExists("ident", "castVar4", "first argument to cast function");
+		
+		assertExists("escapedKeyword", "[True]", "escaped keyword");
+		
+		assertExists("string", "\"ThisClass is initializing with Sub New.\"", "double quoted string");
+		assertExists("string", "\"%\"", "char");
+		
+		assertExists("number", "&HE1E4FF", "hex number");
+		assertExists("number", "459", "integer");
+		
+		assertExists("operator", "&", "& operator");
+		
+	//]]></script>
+</html>

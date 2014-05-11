@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.httpd.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-httpd">ServerType standalone
+ServerRoot "/var/www"
+
+Timeout 300
+
+#LockFile logs/accept.lock
+
+MaxClients 150
+
+Listen 8080
+Listen 12.34.56.78:80
+
+RewriteEngine on
+RewriteCond   %{HTTP_USER_AGENT}  ^Mozilla
+RewriteRule   ^/$                 /homepage.max.html  [L]
+
+RewriteLog    "/usr/local/var/apache/logs/rewrite.log"
+RewriteMap    examplemap txt:/path/to/file/map.txt 
+RewriteRule   ^/ex/(.*) ${examplemap:$1} 
+RewriteRule   ^$ RewriteRule
+
+#1.3 legacy style
+&lt;IfDefine SSL&gt;
+	Listen 80
+	Listen 443
+&lt;/IfDefine&gt;
+
+&lt;IfModule SSL&gt;
+	Listen 80
+	Listen 443
+&lt;/IfModule&gt;
+
+&lt;Directory /&gt;
+    Options FollowSymLinks
+    AllowOverride None
+    Order Deny,Allow
+    Deny from all
+&lt;/Directory&gt;
+
+&lt;Directory "/var/www/htdocs"&gt;
+	AllowOverride None
+	Order allow,deny
+    Allow from all
+&lt;/Directory&gt;
+
+&lt;Directory /home/*/public_html&gt;
+    AllowOverride FileInfo AuthConfig Limit Options Indexes
+    Options MultiViews SymLinksIfOwnerMatch IncludesNoExec
+    &lt;Limit GET POST OPTIONS PROPFIND&gt;
+        Order allow,deny
+        Allow from all
+    &lt;/Limit&gt;
+    &lt;Limit PUT DELETE PATCH PROPPATCH MKCOL COPY MOVE LOCK UNLOCK&gt;
+        Order deny,allow
+        Deny from all
+    &lt;/Limit&gt;
+&lt;/Directory&gt;
+
+&lt;Files .htaccess&gt;
+    Order allow,deny
+    Deny from all
+&lt;/Files&gt;
+
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+
+AddIconByEncoding (CMP,/icons/compressed.gif) x-compress x-gzip
+
+AddIconByType (TXT,/icons/text.gif) text/*
+AddIconByType (IMG,/icons/image2.gif) image/*
+AddIconByType (SND,/icons/sound2.gif) audio/*
+AddIconByType (VID,/icons/movie.gif) video/*
+
+AddIcon /icons/binary.gif .bin .exe
+
+NameVirtualHost *:80
+
+&lt;VirtualHost *:80&gt;
+	ServerName www.domain.tld
+	ServerAlias domain.tld *.domain.tld
+	DocumentRoot /www/domain
+&lt;/VirtualHost&gt;
+</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("comment", "#LockFile logs/accept.lock", "comment");
+		assertExists("comment", "#1.3 legacy style", "comment");
+		
+		assertExists("keyword", "ServerType", "ServerType keyword");
+		assertExists("keyword", "Timeout", "Timeout keyword (case insensitive)");
+		assertExists("keyword", "Listen", "Listen keyword");
+		assertExists("keyword", "MaxClients", "MaxClients keyword");
+		assertExists("keyword", "RewriteEngine", "RewriteEngine keyword");
+		assertExists("keyword", "RewriteRule", "RewriteRule keyword");
+		assertExists("keyword", "Options", "Options keyword");
+		assertExists("keyword", "AllowOverride", "AllowOverride keyword");
+		assertExists("keyword", "LogFormat", "LogFormat keyword");
+		assertExists("keyword", "AddIcon", "AddIcon keyword");
+		assertExists("keyword", "AddIconByType", "AddIconByType keyword");
+		assertExists("keyword", "AddIconByEncoding", "AddIconByEncoding keyword");
+		assertExists("keyword", "NameVirtualHost", "NameVirtualHost keyword");
+		assertExists("keyword", "DocumentRoot", "NameVirtualHost keyword");
+		assertExists("keyword", "ServerName", "ServerName keyword");
+		assertExists("keyword", "ServerAlias", "ServerAlias keyword");
+		
+		assertExists("ident", "RewriteRule", "keyword out of context");
+		assertExists("ident", "None", "directive value");
+		assertExists("ident", "Deny", "directive value");
+		assertExists("ident", "Allow", "directive value");
+		
+		assertExists("context", "IfDefine", "legacy context");
+		assertExists("context", "IfModule", "IfModule context");
+		assertExists("context", "Directory", "Directory context");
+		assertExists("context", "Limit", "Limit context");
+		assertExists("context", "Files", "Files context");
+		assertExists("context", "VirtualHost", "Files context");
+		
+		assertExists("regexLiteral", "^Mozilla", "regex literal as 2nd argument to RewriteCond");
+		assertExists("regexLiteral", "^/ex/(.*)", "regex literal after RewriteRule");
+		
+		assertExists("string", "\"/var/www\"", "string");
+		assertExists("string", "\"/var/www/htdocs\"", "string inside <>");
+		
+		assertExists("number", "8080", "integer");
+		assertExists("number", "12.34", "float");
+		
+		assertExists("operator", "<", "< operator");
+		assertExists("operator", ">", "> operator");
+		assertExists("operator", "</", "</ operator");
+		
+		assertExists("environmentVariable", "%{HTTP_USER_AGENT}", "variable prepended by %");
+		assertExists("environmentVariable", "${examplemap:$1}", "variable prepended by $");
+		
+		
+	//]]></script>
+</html>

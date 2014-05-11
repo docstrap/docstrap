@@ -1,0 +1,109 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.bash.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.dark.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-bash">#!/bin/bash
+
+echo "Starting the script, yo"
+#this is a comment
+
+DIR=/var/log
+cd $DIR
+
+my_function () {
+	rm -rf "$1"
+	return 0
+}
+
+for planet in Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune Pluto
+do
+  echo $planet  # Each planet on a separate line.
+done
+
+my_function $DIR
+
+if [ $# -ne 2 ]
+then
+  echo "Usage: `basename $0` search_string filename"
+  exit 65
+fi
+
+while [ "$var1" != "end" ]     # while test "$var1" != "end"
+do
+  echo "Input variable #1 (end to exit) "
+  read var1                    # Not 'read $var1' (why?).
+  echo "variable #1 = $var1"   # Need quotes because of "#" . . .
+  # If input is 'end', echoes it here.
+  # Does not test for termination condition until top of loop.
+  echo
+done  
+
+count=1
+let "count += 1"
+
+case "$Keypress" in
+  [[:lower:]]   ) echo "Lowercase letter";;
+  [[:upper:]]   ) echo "Uppercase letter";;
+  [0-9]         ) echo "Digit";;
+  *             ) echo "Punctuation, whitespace, or other";;
+esac
+
+echo $?
+echo `echo running a command`
+exit 0 #exit</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("hashBang", "#!/bin/bash", "hashbang");
+		
+		assertExists("comment", "#this is a comment", "comment");
+		assertExists("comment", "#exit", "comment");
+		
+		assertExists("command", "echo", "echo command");
+		assertExists("command", "cd", "cd command");
+		assertExists("command", "exit", "exit command");
+		assertExists("command", "return", "return command");
+		assertExists("command", "rm", "rm command");
+		assertExists("command", "let", "let command");
+		assertExists("command", "read", "read command");
+		
+		assertExists("keyword", "for", "for keyword");
+		assertExists("keyword", "in", "in keyword");
+		assertExists("keyword", "do", "do keyword");
+		assertExists("keyword", "done", "done keyword");
+		assertExists("keyword", "if", "if keyword");
+		assertExists("keyword", "fi", "fi keyword");
+		assertExists("keyword", "then", "then keyword");
+		assertExists("keyword", "while", "while keyword");
+		assertExists("keyword", "case", "case keyword");
+		assertExists("keyword", "esac", "esac keyword");
+		
+		assertExists("ident", "DIR", "DIR ident");
+		assertExists("ident", "count", "count ident");
+		assertExists("ident", "planet", "planet ident");
+		assertExists("ident", "Mercury", "Mercury ident");
+		assertExists("ident", "Jupiter", "Jupiter ident");
+		
+		assertExists("named-ident", "my_function", "function");
+		
+		assertExists("operator", "!=", "!= operator");
+		assertExists("operator", ";;", ";; operator");
+		
+		//assertExists("switch", "-rf", "-rf switch");
+		
+		assertExists("verbatimCommand", "`echo running a command`", "verbatim command");
+		
+		assertExists("variable", "$DIR", "$DIR variable");
+		
+		assertExists("specialVariable", "$?", "$? special variable");
+		assertExists("specialVariable", "$#", "$# special variable");
+		
+		assertExists("string", "\"Starting the script, yo\"", "double quoted string");
+	//]]></script>
+</html>

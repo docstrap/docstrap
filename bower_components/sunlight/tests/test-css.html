@@ -1,0 +1,134 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.css.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-css">@import "/my/style/sheet.css";
+@import url(/my/style/sheet.css) screen "Print style\"s";
+
+html div.myClass {
+	width: 100%;
+	min-height: 100%;
+	opacity: 0.0;
+	background: transparent url(foo.png) no-repeat;
+	background-color: #000000;
+	color: white;
+	font-family: "Courier New", 'Arialola\'s', sans-serif;
+}
+
+body > .warning {
+	color: #FF0000;
+	background-image: url(warning.png); /* ".png" should not be colored as a class */
+	border: 2px solid none;
+	border-image: url(warning.png);
+	border-radius: url(warning.png);
+	border-top: 1px dotted #FFFFFF;
+	border-top-color: magenta;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity = 50);
+	filter: alpha(opacity=50);
+	opacity: 0.5;
+}
+
+#wrapper div[lang~="en"]:first-child::before {
+	text-decoration: underline overline;
+	padding-left: 12px;
+	width: 50%;
+	position: fixed;
+	display: inline-block;
+}
+
+a:fake-pseudo-class {
+	transform: rotate(5deg);
+	-moz-background-inline-policy: -moz-initial;
+	-o-device-pixel-ratio: meh;
+	-webkit-background-origin: lolwut;
+	-ms-accelerator: snoo-snoo !important;
+	zoom: 1; /* IE crap */
+	vertical-align: middle;
+}
+
+/* new clearfix */
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+shouldBeNamed .shouldBeNamed { zoom: 1; } /* IE7 */
+
+pseudotest1:before, pseudotest2:after {
+	/* stuff goes here */
+}</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("rule", "@import", "css rule declaration");
+		
+		assertExists("string", "\"Courier New\"", "font-family string");
+		assertExists("string", "\"Print style\\\"s\"", "string with escaped quote");
+		assertExists("string", "'Arialola\\'s'", "single quoted string with escaped quote");
+		
+		assertExists("element", "html", "html element selector");
+		assertExists("element", "shouldBeNamed", "element selector after :pseudoclass+");
+		assertExists("element", "pseudotest1", "element selector before pseudoclass+");
+		assertExists("element", "pseudotest2", "element selector after pseudoclass+");
+		
+		assertExists("ident", "css", "css extension");
+		assertExists("ident", "fake-pseudo-class", "non existent pseudo class");
+		assertExists("ident", "-moz-initial", "property value -moz-initial");
+		assertExists("ident", "fixed", "property value fixed");
+		assertExists("ident", "solid", "property value solid");
+		
+		assertExists("importantFlag", "!important", "!important");
+		
+		assertExists("class", "warning", "class selector");
+		assertExists("class", "myClass", "class selector");
+		assertExists("class", "shouldBeNamed", "class selector");
+		
+		assertExists("number", "100%", "number with %");
+		assertExists("number", "2px", "number with px suffix");
+		
+		assertExists("number", "0.0", "decimal number");
+		assertExists("hexColor", "#FF0000", "hex color");
+		assertExists("id", "#wrapper", "id selector");
+		
+		assertExists("operator", "~=", "attribute operator");
+		assertExists("operator", ".", "dot operator");
+		assertExists("operator", ">", "child operator");
+		assertExists("operator", "*", "catchall operator");
+		assertExists("operator", "+", "sibling operator");
+		
+		assertExists("pseudoElement", "before", "pseudo element");
+		assertExists("pseudoClass", "first-child", "pseudo class");
+		
+		assertExists("function", "url", "url function");
+		assertExists("function", "rotate", "rotate function");
+		assertExists("function", "alpha", "alpha function");
+		assertExists("function", "Alpha", "capitalized alpha function");
+		
+		assertExists("keyword", "background-color", "background-color property");
+		assertExists("keyword", "background", "background property");
+		assertExists("keyword", "border", "border property");
+		assertExists("keyword", "border-top", "border-top property");
+		assertExists("keyword", "border-top-color", "border-top-color property");
+		assertExists("keyword", "vertical-align", "vertical-align property");
+		assertExists("keyword", "width", "width property");
+		assertExists("keyword", "position", "position property");
+		assertExists("keyword", "color", "color property");
+		assertExists("keyword", "filter", "filter property");
+		assertExists("keyword", "-moz-background-inline-policy", "mozilla specific property");
+		assertExists("keyword", "-o-device-pixel-ratio", "opera specific property");
+		assertExists("keyword", "-ms-accelerator", "ie specific property");
+		assertExists("keyword", "-webkit-background-origin", "webkit specific property");
+		
+		assertExists("microsoftFilterPrefix", "progid:DXImageTransform.Microsoft", "Microsoft filter prefix");
+	//]]></script>
+</html>

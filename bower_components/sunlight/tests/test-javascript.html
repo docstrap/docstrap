@@ -1,0 +1,191 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.javascript.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.dark.css" />
+	</head>
+
+	<body>
+	
+<pre id="code" class="sunlight-highlight-javascript">(function($, window), undefined){
+	
+	if ($ === undefined) {
+		throw 'missing jQuery\'s dependency';
+	}
+	
+	function $$(id) {
+		var element = document.getElementById(id);
+		for (var property in element) {
+			document.write(property + ": " + element[property].toString());
+		}
+	}
+	
+	function foo(bar) {
+		window.alert("oh noes!!");
+		
+		var abstract = encodeURIComponent(parseFloat("abstract is a reserved word"));
+		
+		var elements = document.getElementsByTagName("foo");
+		for (var i = 0; i &lt; elements.length; i++) {
+			if (element[i].name !== 'foo\'s') {
+				return false;
+			} else {
+				return true;
+			}
+		}
+		
+		var req;
+		try {
+			req = new XMLHttpRequest();
+		} catch (e) {
+			try {
+				req = new XDomainRequest();
+			} catch (e) { 
+				try {
+					req = new ActiveXObject("MSXML2.HTTP");
+				} catch (e) { 
+					if (e instanceof Object) {
+						throw e;
+					}
+				}
+			}
+		} finally {
+			if (req !== null) {
+				req.open("http://google.com/");
+				req.send();
+			}
+		}
+		
+		if (req === null) {
+			throw new Error("FAIL");
+		}
+		
+		return bar == 0.5;
+	}
+	
+	var stringify = function(string) {
+		return JSON !== undefined ? JSON.stringify.call(null, string) : new String(string);
+	};
+	
+	switch (foo("he\\\"ad").length) {
+		case 1:
+			//fall through
+		case 0x2:
+			break;
+		case 1e3:
+		default:
+			/* 
+			 * default implementation
+			 * of something
+			 */
+			if (isNaN(10) || this === NaN) {
+				doSomething(Infinity, new Boolean(true));
+			}
+			
+			doSomething(/\w[^A-Z0-9]$/g, 5 / 3);
+			break;
+	}
+	
+	//regex literal parsing
+	
+	/foo/.test("foo"); //should be a regex
+	/\//.test("/"); //should be a regex
+	/\\/.test("foo"); //should be a regex
+	var foo = /foo/.test("foo"); //should be a regex
+	var foo = /f\/oo/.test("foo"); //should be a regex
+	if (/foo/.test("foo")) { } //should be a regex
+	var x = 4 / 5; /foo/.test("foo") { } //should be a regex
+	4 = /foo/ //should be a regex
+	if (!/foo/.test("foo")) {} //should be a regex
+	if (!/foo/.test("foo") || /foo/.test("foo") && /foo/.test("foo")) {} //all should be a regex
+	4 + /regexafteroperator/ //should be a regex
+	/regexatstartofline/ //should be a regex
+	/[/]/.test('/'); //should be a regex
+	/[\/]/.test('/'); //should be a regex
+	/[\]]/.test('/'); //should be a regex
+	/[\[]/.test('/'); //should be a regex
+	/\[/.test('/'); //should be a regex
+	/\]/.test('/'); //should be a regex
+
+	/foo/gim.test("foo") //should be a regex with modifiers
+	/foo/asdfasdf //should be a regex with non-existent modifiers
+	
+	var foo = (4 + 5) / 2; //should not be a regex
+	var arr = [/regexafterbracket/, /regexaftercomma/, 4/5];
+	function(regex) { /regexafterbrace/.text(regex); }
+	func(/regexafterparen/); /regexaftersemicolon/;
+	
+	
+	//.test("foo"); //should not be a regex
+	
+	4 /identafterdivision1/ //should not be a regex
+	var foo = 5/identafterdivision2; //should not be a regex
+	var foo = 5 /identafterdivision3; //should not be a regex
+	if /regexafterkeyword/ //should not be a regex
+	
+	
+	var jsonLiteral = {
+		regex: /regexaftercolon/
+	};
+}(jQuery, window));</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("keyword", "function", "function keyword");
+		assertExists("keyword", "if", "if keyword");
+		assertExists("keyword", "throw", "throw keyword");
+		assertExists("keyword", "var", "var keyword");
+		assertExists("keyword", "in", "in keyword");
+		assertExists("keyword", "null", "null keyword");
+		assertExists("keyword", "finally", "finally keyword");
+		assertExists("reservedWord", "abstract", "reserved word");
+		assertExists("named-ident", "$$", "$$ named ident");
+		assertExists("ident", "$", "$ ident");
+		assertExists("named-ident", "foo", "foo named ident");
+		assertExists("operator", ":", ": operator");
+		assertExists("globalFunction", "isNaN", "isNaN global function");
+		
+		assertExists("regexLiteral", "/\\//", "regex literal with escaped forward slash");
+		assertExists("regexLiteral", "/\\\\/", "regex literal with escaped backslash");
+		assertExists("regexLiteral", "/foo/gim", "regex literal with valid modifiers");
+		assertExists("regexLiteral", "/foo/asdfasdf", "regex literal with invalid modifiers");
+		assertExists("regexLiteral", "/regexaftercolon/", "regex literal after colon");
+		assertExists("regexLiteral", "/regexafteroperator/", "regex literal after operator");
+		assertExists("regexLiteral", "/regexatstartofline/", "regex literal at start of line");
+		assertExists("regexLiteral", "/regexaftercomma/", "regex literal after a comma");
+		assertExists("regexLiteral", "/regexaftersemicolon/", "regex literal after a semicolon");
+		assertExists("regexLiteral", "/regexafterbrace/", "regex literal after curly brace");
+		assertExists("regexLiteral", "/regexafterbracket/", "regex literal after bracket");
+		assertExists("regexLiteral", "/regexafterparen/", "regex literal after paren");
+		assertExists("regexLiteral", "/[/]/", "regex literal with forward slash in character class");
+		assertExists("regexLiteral", "/[\\/]/", "regex literal with escaped forward slash in character class");
+		assertExists("regexLiteral", "/[\\]]/", "regex literal with escaped closing bracket in character class");
+		assertExists("regexLiteral", "/[\\[]/", "regex literal with escaped opening bracket in character class");
+		assertExists("regexLiteral", "/\\[/", "regex literal with escaped opening bracket");
+		assertExists("regexLiteral", "/\\]/", "regex literal with escaped closing bracket");
+
+		assertExists("ident", "identafterdivision1", "not a regex literal after division operator");
+		assertExists("ident", "identafterdivision2", "not a regex literal after division operator");
+		assertExists("ident", "identafterdivision3", "not a regex literal after division operator");
+		assertExists("ident", "regexafterkeyword", "not a regex literal after keyword");
+		assertExists("comment", "//should not be a regex", "single line comment");
+		
+		assertExists("string", "\"he\\\\\\\"ad\"", "string with escaped backslash and escaped quote");
+		assertExists("string", "'missing jQuery\\\'s dependency'", "single quoted string with escaped quote");
+		assertExists("number", "0x2", "hex number");
+		assertExists("number", "1e3", "scientific notation");
+		assertExists("number", "1", "integer");
+		assertExists("number", "0.5", "float");
+		assertExists("globalObject", "XMLHttpRequest", "XMLHttpRequest");
+		assertExists("globalObject", "XDomainRequest", "XDomainRequest");
+		assertExists("globalObject", "ActiveXObject", "ActiveXObject");
+		assertExists("globalObject", "Object", "Object");
+		assertExists("globalObject", "String", "String");
+		assertExists("globalObject", "JSON", "JSON");
+		assertExists("globalObject", "Boolean", "Boolean");
+		assertExists("globalVariable", "Infinity", "Infinity");
+		assertExists("globalVariable", "NaN", "NaN");
+	//]]></script>
+</html>

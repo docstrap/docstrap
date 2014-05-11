@@ -1,0 +1,516 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.actionscript.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+
+<pre id="code" class="sunlight-highlight-actionscript">// Copyright: Hiroshi Ichikawa &lt;http://gimite.net/en/&gt;
+// License: New BSD License
+// Reference: http://dev.w3.org/html5/websockets/
+// Reference: http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol-76
+
+package {
+
+import com.adobe.net.proxies.RFC2817Socket;
+import com.gsolo.encryption.MD5;
+import com.hurlant.crypto.tls.TLSConfig;
+import com.hurlant.crypto.tls.TLSEngine;
+import com.hurlant.crypto.tls.TLSSecurityParameters;
+import com.hurlant.crypto.tls.TLSSocket;
+
+import flash.display.*;
+import flash.events.*;
+import flash.external.*;
+import flash.net.*;
+import flash.system.*;
+import flash.utils.*;
+
+import mx.controls.*;
+import mx.core.*;
+import mx.events.*;
+import mx.utils.*;
+
+public class WebSocket extends EventDispatcher {
+  
+  private static var CONNECTING:int = 0;
+  private static var OPEN:int = 1;
+  private static var CLOSING:int = 2;
+  private static var CLOSED:int = 3;
+  
+  private var id:int;
+  private var rawSocket:Socket;
+  private var tlsSocket:TLSSocket;
+  private var tlsConfig:TLSConfig;
+  private var socket:Socket;
+  private var url:String;
+  private var scheme:String;
+  private var host:String;
+  private var port:uint;
+  private var path:String;
+  private var origin:String;
+  private var protocol:String;
+  private var buffer:ByteArray = new ByteArray();
+  private var headerState:int = 0;
+  private var readyState:int = CONNECTING;
+  private var cookie:String;
+  private var headers:String;
+  private var noiseChars:Array;
+  private var expectedDigest:String;
+  private var logger:IWebSocketLogger;
+
+  public function WebSocket(
+      id:int, url:String, protocol:String, origin:String,
+      proxyHost:String, proxyPort:int,
+      cookie:String, headers:String,
+      logger:IWebSocketLogger) {
+    this.logger = logger;
+    this.id = id;
+    initNoiseChars();
+    this.url = url;
+    var m:Array = url.match(/^(\w+):\/\/([^\/:]+)(:(\d+))?(\/.*)?(\?.*)?$/);
+    if (!m) fatal(&quot;SYNTAX_ERR: invalid url: &quot; + url);
+    this.scheme = m[1];
+    this.host = m[2];
+    this.port = parseInt(m[4] || &quot;80&quot;);
+    this.path = (m[5] || &quot;/&quot;) + (m[6] || &quot;&quot;);
+    this.origin = origin;
+    this.protocol = protocol;
+    this.cookie = cookie;
+    // if present and not the empty string, headers MUST end with \r\n
+    // headers should be zero or more complete lines, for example
+    // &quot;Header1: xxx\r\nHeader2: yyyy\r\n&quot;
+    this.headers = headers;
+    
+    if (proxyHost != null &amp;&amp; proxyPort != 0){
+      if (scheme == &quot;wss&quot;) {
+        fatal(&quot;wss with proxy is not supported&quot;);
+      }
+      var proxySocket:RFC2817Socket = new RFC2817Socket();
+      proxySocket.setProxyInfo(proxyHost, proxyPort);
+      proxySocket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+      rawSocket = socket = proxySocket;
+    } else {
+      rawSocket = new Socket();
+      if (scheme == &quot;wss&quot;) {
+        tlsConfig= new TLSConfig(TLSEngine.CLIENT,
+            null, null, null, null, null,
+            TLSSecurityParameters.PROTOCOL_VERSION);
+        tlsConfig.trustAllCertificates = true;
+        tlsConfig.ignoreCommonNameMismatch = true;
+        tlsSocket = new TLSSocket();
+        tlsSocket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+        socket = tlsSocket;
+      } else {
+        rawSocket.addEventListener(ProgressEvent.SOCKET_DATA, onSocketData);
+        socket = rawSocket;
+      }
+    }
+    rawSocket.addEventListener(Event.CLOSE, onSocketClose);
+    rawSocket.addEventListener(Event.CONNECT, onSocketConnect);
+    rawSocket.addEventListener(IOErrorEvent.IO_ERROR, onSocketIoError);
+    rawSocket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSocketSecurityError);
+    rawSocket.connect(host, port);
+  }
+  
+  /**
+   * @return  This WebSocket's ID.
+   */
+  public function getId():int {
+    return this.id;
+  }
+  
+  /**
+   * @return this WebSocket's readyState.
+   */
+  public function getReadyState():int {
+    return this.readyState;
+  }
+  
+  public function send(encData:String):int {
+    var data:String = decodeURIComponent(encData);
+    if (readyState == OPEN) {
+      socket.writeByte(0x00);
+      socket.writeUTFBytes(data);
+      socket.writeByte(0xff);
+      socket.flush();
+      logger.log(&quot;sent: &quot; + data);
+      return -1;
+    } else if (readyState == CLOSING || readyState == CLOSED) {
+      var bytes:ByteArray = new ByteArray();
+      bytes.writeUTFBytes(data);
+      return bytes.length; // not sure whether it should include \x00 and \xff
+    } else {
+      fatal(&quot;invalid state&quot;);
+      return 0;
+    }
+  }
+  
+  public function close(isError:Boolean = false):void {
+    logger.log(&quot;close&quot;);
+    try {
+      if (readyState == OPEN &amp;&amp; !isError) {
+        socket.writeByte(0xff);
+        socket.writeByte(0x00);
+        socket.flush();
+      }
+      socket.close();
+    } catch (ex:Error) { }
+    readyState = CLOSED;
+    this.dispatchEvent(new WebSocketEvent(isError ? &quot;error&quot; : &quot;close&quot;));
+  }
+  
+  private function onSocketConnect(event:Event):void {
+    logger.log(&quot;connected&quot;);
+
+    if (scheme == &quot;wss&quot;) {
+      logger.log(&quot;starting SSL/TLS&quot;);
+      tlsSocket.startTLS(rawSocket, host, tlsConfig);
+    }
+    
+    var hostValue:String = host + (port == 80 ? &quot;&quot; : &quot;:&quot; + port);
+    var key1:String = generateKey();
+    var key2:String = generateKey();
+    var key3:String = generateKey3();
+    expectedDigest = getSecurityDigest(key1, key2, key3);
+    var opt:String = &quot;&quot;;
+    if (protocol) opt += &quot;Sec-WebSocket-Protocol: &quot; + protocol + &quot;\r\n&quot;;
+    // if caller passes additional headers they must end with &quot;\r\n&quot;
+    if (headers) opt += headers;
+    
+    var req:String = StringUtil.substitute(
+      &quot;GET {0} HTTP/1.1\r\n&quot; +
+      &quot;Upgrade: WebSocket\r\n&quot; +
+      &quot;Connection: Upgrade\r\n&quot; +
+      &quot;Host: {1}\r\n&quot; +
+      &quot;Origin: {2}\r\n&quot; +
+      &quot;Cookie: {3}\r\n&quot; +
+      &quot;Sec-WebSocket-Key1: {4}\r\n&quot; +
+      &quot;Sec-WebSocket-Key2: {5}\r\n&quot; +
+      &quot;{6}&quot; +
+      &quot;\r\n&quot;,
+      path, hostValue, origin, cookie, key1, key2, opt);
+    logger.log(&quot;request header:\n&quot; + req);
+    socket.writeUTFBytes(req);
+    logger.log(&quot;sent key3: &quot; + key3);
+    writeBytes(key3);
+    socket.flush();
+  }
+
+  private function onSocketClose(event:Event):void {
+    logger.log(&quot;closed&quot;);
+    readyState = CLOSED;
+    this.dispatchEvent(new WebSocketEvent(&quot;close&quot;));
+  }
+
+  private function onSocketIoError(event:IOErrorEvent):void {
+    var message:String;
+    if (readyState == CONNECTING) {
+      message = &quot;cannot connect to Web Socket server at &quot; + url + &quot; (IoError)&quot;;
+    } else {
+      message = &quot;error communicating with Web Socket server at &quot; + url + &quot; (IoError)&quot;;
+    }
+    onError(message);
+  }
+
+  private function onSocketSecurityError(event:SecurityErrorEvent):void {
+    var message:String;
+    if (readyState == CONNECTING) {
+      message =
+          &quot;cannot connect to Web Socket server at &quot; + url + &quot; (SecurityError)\n&quot; +
+          &quot;make sure the server is running and Flash socket policy file is correctly placed&quot;;
+    } else {
+      message = &quot;error communicating with Web Socket server at &quot; + url + &quot; (SecurityError)&quot;;
+    }
+    onError(message);
+  }
+  
+  private function onError(message:String):void {
+    if (readyState == CLOSED) return;
+    logger.error(message);
+    close(readyState != CONNECTING);
+  }
+
+  private function onSocketData(event:ProgressEvent):void {
+    var pos:int = buffer.length;
+    socket.readBytes(buffer, pos);
+    for (; pos &lt; buffer.length; ++pos) {
+      if (headerState &lt; 4) {
+        // try to find &quot;\r\n\r\n&quot;
+        if ((headerState == 0 || headerState == 2) &amp;&amp; buffer[pos] == 0x0d) {
+          ++headerState;
+        } else if ((headerState == 1 || headerState == 3) &amp;&amp; buffer[pos] == 0x0a) {
+          ++headerState;
+        } else {
+          headerState = 0;
+        }
+        if (headerState == 4) {
+          var headerStr:String = readUTFBytes(buffer, 0, pos + 1);
+          logger.log(&quot;response header:\n&quot; + headerStr);
+          if (!validateHeader(headerStr)) return;
+          removeBufferBefore(pos + 1);
+          pos = -1;
+        }
+      } else if (headerState == 4) {
+        if (pos == 15) {
+          var replyDigest:String = readBytes(buffer, 0, 16);
+          logger.log(&quot;reply digest: &quot; + replyDigest);
+          if (replyDigest != expectedDigest) {
+            onError(&quot;digest doesn't match: &quot; + replyDigest + &quot; != &quot; + expectedDigest);
+            return;
+          }
+          headerState = 5;
+          removeBufferBefore(pos + 1);
+          pos = -1;
+          readyState = OPEN;
+          this.dispatchEvent(new WebSocketEvent(&quot;open&quot;));
+        }
+      } else {
+        if (buffer[pos] == 0xff &amp;&amp; pos &gt; 0) {
+          if (buffer[0] != 0x00) {
+            onError(&quot;data must start with \\x00&quot;);
+            return;
+          }
+          var data:String = readUTFBytes(buffer, 1, pos - 1);
+          logger.log(&quot;received: &quot; + data);
+          this.dispatchEvent(new WebSocketEvent(&quot;message&quot;, encodeURIComponent(data)));
+          removeBufferBefore(pos + 1);
+          pos = -1;
+        } else if (pos == 1 &amp;&amp; buffer[0] == 0xff &amp;&amp; buffer[1] == 0x00) { // closing
+          logger.log(&quot;received closing packet&quot;);
+          removeBufferBefore(pos + 1);
+          pos = -1;
+          close();
+        }
+      }
+    }
+  }
+  
+  private function validateHeader(headerStr:String):Boolean {
+    var lines:Array = headerStr.split(/\r\n/);
+    if (!lines[0].match(/^HTTP\/1.1 101 /)) {
+      onError(&quot;bad response: &quot; + lines[0]);
+      return false;
+    }
+    var header:Object = {};
+    var lowerHeader:Object = {};
+    for (var i:int = 1; i &lt; lines.length; ++i) {
+      if (lines[i].length == 0) continue;
+      var m:Array = lines[i].match(/^(\S+): (.*)$/);
+      if (!m) {
+        onError(&quot;failed to parse response header line: &quot; + lines[i]);
+        return false;
+      }
+      header[m[1].toLowerCase()] = m[2];
+      lowerHeader[m[1].toLowerCase()] = m[2].toLowerCase();
+    }
+    if (lowerHeader[&quot;upgrade&quot;] != &quot;websocket&quot;) {
+      onError(&quot;invalid Upgrade: &quot; + header[&quot;Upgrade&quot;]);
+      return false;
+    }
+    if (lowerHeader[&quot;connection&quot;] != &quot;upgrade&quot;) {
+      onError(&quot;invalid Connection: &quot; + header[&quot;Connection&quot;]);
+      return false;
+    }
+    if (!lowerHeader[&quot;sec-websocket-origin&quot;]) {
+      if (lowerHeader[&quot;websocket-origin&quot;]) {
+        onError(
+          &quot;The WebSocket server speaks old WebSocket protocol, &quot; +
+          &quot;which is not supported by web-socket-js. &quot; +
+          &quot;It requires WebSocket protocol 76 or later. &quot; +
+          &quot;Try newer version of the server if available.&quot;);
+      } else {
+        onError(&quot;header Sec-WebSocket-Origin is missing&quot;);
+      }
+      return false;
+    }
+    var resOrigin:String = lowerHeader[&quot;sec-websocket-origin&quot;];
+    if (resOrigin != origin) {
+      onError(&quot;origin doesn't match: '&quot; + resOrigin + &quot;' != '&quot; + origin + &quot;'&quot;);
+      return false;
+    }
+    if (protocol &amp;&amp; header[&quot;sec-websocket-protocol&quot;] != protocol) {
+      onError(&quot;protocol doesn't match: '&quot; +
+        header[&quot;websocket-protocol&quot;] + &quot;' != '&quot; + protocol + &quot;'&quot;);
+      return false;
+    }
+    return true;
+  }
+
+  private function removeBufferBefore(pos:int):void {
+    if (pos == 0) return;
+    var nextBuffer:ByteArray = new ByteArray();
+    buffer.position = pos;
+    buffer.readBytes(nextBuffer);
+    buffer = nextBuffer;
+  }
+  
+  private function initNoiseChars():void {
+    noiseChars = new Array();
+    for (var i:int = 0x21; i &lt;= 0x2f; ++i) {
+      noiseChars.push(String.fromCharCode(i));
+    }
+    for (var j:int = 0x3a; j &lt;= 0x7a; ++j) {
+      noiseChars.push(String.fromCharCode(j));
+    }
+  }
+  
+  private function generateKey():String {
+    var spaces:uint = randomInt(1, 12);
+    var max:uint = uint.MAX_VALUE / spaces;
+    var number:uint = randomInt(0, max);
+    var key:String = (number * spaces).toString();
+    var noises:int = randomInt(1, 12);
+    var pos:int;
+    for (var i:int = 0; i &lt; noises; ++i) {
+      var char:String = noiseChars[randomInt(0, noiseChars.length - 1)];
+      pos = randomInt(0, key.length);
+      key = key.substr(0, pos) + char + key.substr(pos);
+    }
+    for (var j:int = 0; j &lt; spaces; ++j) {
+      pos = randomInt(1, key.length - 1);
+      key = key.substr(0, pos) + &quot; &quot; + key.substr(pos);
+    }
+    return key;
+  }
+  
+  private function generateKey3():String {
+    var key3:String = &quot;&quot;;
+    for (var i:int = 0; i &lt; 8; ++i) {
+      key3 += String.fromCharCode(randomInt(0, 255));
+    }
+    return key3;
+  }
+  
+  private function getSecurityDigest(key1:String, key2:String, key3:String):String {
+    var bytes1:String = keyToBytes(key1);
+    var bytes2:String = keyToBytes(key2);
+    return MD5.rstr_md5(bytes1 + bytes2 + key3);
+  }
+  
+  private function keyToBytes(key:String):String {
+    var keyNum:uint = parseInt(key.replace(/[^\d]/g, &quot;&quot;));
+    var spaces:uint = 0;
+    for (var i:int = 0; i &lt; key.length; ++i) {
+      if (key.charAt(i) == &quot; &quot;) ++spaces;
+    }
+    var resultNum:uint = keyNum / spaces;
+    var bytes:String = &quot;&quot;;
+    for (var j:int = 3; j &gt;= 0; --j) {
+      bytes += String.fromCharCode((resultNum &gt;&gt; (j * 8)) &amp; 0xff);
+    }
+    return bytes;
+  }
+  
+  // Writes byte sequence to socket.
+  // bytes is String in special format where bytes[i] is i-th byte, not i-th character.
+  private function writeBytes(bytes:String):void {
+    for (var i:int = 0; i &lt; bytes.length; ++i) {
+      socket.writeByte(bytes.charCodeAt(i));
+    }
+  }
+  
+  // Reads specified number of bytes from buffer, and returns it as special format String
+  // where bytes[i] is i-th byte (not i-th character).
+  private function readBytes(buffer:ByteArray, start:int, numBytes:int):String {
+    buffer.position = start;
+    var bytes:String = &quot;&quot;;
+    for (var i:int = 0; i &lt; numBytes; ++i) {
+      // &amp; 0xff is to make \x80-\xff positive number.
+      bytes += String.fromCharCode(buffer.readByte() &amp; 0xff);
+    }
+    return bytes;
+  }
+  
+  private function readUTFBytes(buffer:ByteArray, start:int, numBytes:int):String {
+    buffer.position = start;
+    var data:String = &quot;&quot;;
+    for(var i:int = start; i &lt; start + numBytes; ++i) {
+      // Workaround of a bug of ByteArray#readUTFBytes() that bytes after &quot;\x00&quot; is discarded.
+      if (buffer[i] == 0x00) {
+        data += buffer.readUTFBytes(i - buffer.position) + &quot;\x00&quot;;
+        buffer.position = i + 1;
+      }
+    }
+    data += buffer.readUTFBytes(start + numBytes - buffer.position);
+    return data;
+  }
+  
+  private function randomInt(min:uint, max:uint):uint {
+    return min + Math.floor(Math.random() * (Number(max) - min + 1));
+  }
+  
+  private function fatal(message:String):void {
+    logger.error(message);
+    throw message;
+  }
+
+  // for debug
+  private function dumpBytes(bytes:String):void {
+    var output:String = &quot;&quot;;
+    for (var i:int = 0; i &lt; bytes.length; ++i) {
+      output += bytes.charCodeAt(i).toString() + &quot;, &quot;;
+    }
+    logger.log(output);
+  }
+  
+}
+
+}
+
+//other tests
+class Foo implements IInterface1, IInterface2, IInterface3 {}
+</pre>
+	</body>
+
+	<script type="text/javascript" src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("comment", "// Copyright: Hiroshi Ichikawa <http://gimite.net/en/>", "single line comment");
+		assertExists("comment", "/**\n   * @return  This WebSocket's ID.\n   */", "multi line comment");
+		
+		assertExists("keyword", "package", "package keyword");
+		assertExists("keyword", "private", "private keyword");
+		assertExists("keyword", "function", "function keyword");
+		assertExists("keyword", "for", "for keyword");
+		assertExists("keyword", "return", "return keyword");
+		assertExists("keyword", "class", "class keyword");
+		assertExists("keyword", "extends", "extends keyword");
+		assertExists("keyword", "implements", "implements keyword");
+		assertExists("keyword", "void", "void keyword");
+		assertExists("keyword", "else", "else keyword");
+		assertExists("keyword", "false", "false keyword");
+		assertExists("keyword", "null", "null keyword");
+		assertExists("keyword", "import", "import keyword");
+		assertExists("keyword", "static", "static keyword");
+		assertExists("keyword", "var", "var keyword");
+		
+		assertExists("named-ident", "IInterface1", "interface name after implements");
+		assertExists("named-ident", "IInterface2", "interface name after implements");
+		assertExists("named-ident", "IInterface3", "interface name after implements");
+		assertExists("named-ident", "ByteArray", "ident after :");
+		assertExists("named-ident", "IWebSocketLogger", "ident after :");
+		assertExists("named-ident", "WebSocketEvent", "ident after new");
+		assertExists("named-ident", "TLSSecurityParameters", "ident after import");
+		
+		assertExists("globalObject", "uint", "uint global object");
+		assertExists("globalObject", "String", "String global object");
+		assertExists("globalObject", "Math", "Math global object");
+		
+		assertExists("string", "\"\\x00\"", "string");
+		
+		assertExists("number", "0x7a", "hex number");
+		assertExists("number", "0", "integer");
+		
+		
+		assertExists("globalFunction", "Number", "Number function");
+		assertExists("globalFunction", "parseInt", "parseInt function");
+		assertExists("globalFunction", "encodeURIComponent", "encodeURIComponent function");
+		assertExists("globalFunction", "decodeURIComponent", "decodeURIComponent function");
+		
+		assertExists("regexLiteral", "/[^\\d]/g", "regex literal with modifiers");
+		
+	//]]></script>
+</html>

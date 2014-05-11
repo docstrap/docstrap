@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.nginx.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-nginx">#nginx test
+http {
+	error_page 502 503 504 /50x.html;
+	gzip on;
+	gzip_static on;
+	gzip_disable "MSIE [1-6]\.";
+	expires 24h;
+	index index.html;
+	
+	&lt;!--# echo var=&quot;name&quot; default=&quot;no&quot; --&gt;
+	
+	geo $geo  { # the variable created is $geo
+		default          0;
+		127.0.0.1/32     2;
+		192.168.1.0/24   1;
+		10.1.0.0/16      1;
+	}
+	
+	map $uri $new {
+		default        http://www.domain.com/home/;
+
+		/aa            http://aa.domain.com/;
+		/bb            http://bb.domain.com/;
+		/john          http://my.domain.com/users/john/;
+	}
+	
+	split-clients '${remote-addr}AAA' $variant {
+        0.5% .one;
+        2.0% .two;
+        - "";
+    }
+	
+	upstream backend {
+		server backend1.example.com weight=5;
+		server backend2.example.com:8080;
+		server unix:/tmp/backend3;
+	}
+	
+	location / {
+		error_page 404 = @fallback;
+		proxy_set_header X-Real-IP $remote_addr;
+		rewrite ^ /prefix/$secure_link break;
+	}
+	 
+	location @fallback {
+		proxy_pass http://backend;
+		proxy_cache_path /data/nginx/cache/three levels=1:1:2 keys_zone=three:1000m;
+	}
+	
+	server {
+		listen [fe80::1];
+		listen  127.0.0.1 default accept_filter=dataready backlog=1024;
+		server_name example.com *.example.com www.example.*;
+		root /var/www;
+	}
+
+	server {
+		listen *:8000;
+		listen localhost:8000;
+		listen               443;
+		ssl                  on;
+		ssl_certificate      /usr/local/nginx/conf/cert.pem;
+		ssl_certificate_key  /usr/local/nginx/conf/cert.key;
+
+		server_name server_name www.example.com ~^(www\.)?(?P&lt;domain&gt;.+)$;
+		root  /sites/$domain;
+		
+		if ($slow) {
+			set $limit_rate 4k;
+		}
+		
+		location ^~ /images/ {
+			# matches any query beginning with /images/ and halts searching,
+			# so regular expressions will not be checked.
+		}
+		
+		location = / {
+			# matches the query / only.
+		}
+
+		location ~* \.(gif|jpg|jpeg)$ {
+			fastcgi_pass 127.0.0.1:9000;
+			fastcgi_param SCRIPT_FILENAME /home/www/scripts/php$fastcgi_script_name;
+		}
+		
+		location /video {
+			aio on; 
+			directio 512; 
+			output_buffers 1 128k;
+			types {
+				text/html    html;
+				image/gif    gif;
+				image/jpeg   jpg;
+			}
+
+			default_type text/html;
+			echo "foo";
+			echo_after_body "after the body";
+		}
+		
+		location ~ ^/download/(.*)$ {
+			alias /home/website/files/$1;
+			internal;
+			limit_except GET {
+				allow  192.168.1.0/32;
+				deny   all;
+			}
+		}
+	}
+}
+
+mail {
+	imap_capabilities NAMESPACE SORT QUOTA;
+	listen 127.0.0.1:8000;
+	server {
+		server_name example.com www.example.com;
+	}
+}
+</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("comment", "#nginx test", "comment");
+		
+		assertExists("context", "http", "http context");
+		assertExists("context", "location", "location context");
+		assertExists("context", "server", "server context");
+		assertExists("context", "upstream", "upstream context");
+		assertExists("context", "map", "map context");
+		assertExists("context", "geo", "geo context");
+		assertExists("context", "split-clients", "split-clients context");
+		assertExists("context", "mail", "mail context");
+		assertExists("context", "types", "types context");
+		assertExists("context", "limit_except", "limit_except context");
+		
+		assertExists("ssiCommand", "<" + "!--# echo var=\"name\" default=\"no\" --" + ">", "ssi command");
+		
+		assertExists("variable", "$geo", "$geo variable");
+		assertExists("variable", "$variant", "$variant variable");
+		assertExists("variable", "$secure_link", "$secure_link variable");
+		
+		assertExists("keyword", "server", "server keyword");
+		assertExists("keyword", "default", "default keyword");
+		assertExists("keyword", "listen", "listen keyword");
+		assertExists("keyword", "server_name", "server_name keyword");
+		assertExists("keyword", "root", "root keyword");
+		assertExists("keyword", "ssl", "ssl keyword");
+		assertExists("keyword", "ssl_certificate_key", "ssl_certificate_key keyword");
+		assertExists("keyword", "allow", "allow keyword");
+		assertExists("keyword", "internal", "internal keyword");
+		assertExists("keyword", "imap_capabilities", "imap_capabilities keyword");
+		assertExists("keyword", "echo", "echo keyword");
+		assertExists("keyword", "echo_after_body", "echo_after_body keyword");
+		assertExists("keyword", "default_type", "default_type keyword");
+		
+		assertExists("ident", "default", "non-contextual keyword default");
+		assertExists("ident", "server_name", "non-contextual keyword server_name");
+		assertExists("ident", "index", "non-contextual keyword index");
+		assertExists("ident", "all", "directive value");
+		assertExists("ident", "on", "directive value");
+		assertExists("ident", "GET", "limit_except name");
+		
+		assertExists("label", "@fallback", "label");
+		
+		assertExists("number", "404", "integer");
+		assertExists("number", "0.5", "float");
+		assertExists("number", "1000m", "1000m");
+		assertExists("number", "4k", "4k");
+		
+		assertExists("regexLiteral", "\\.(gif|jpg|jpeg)$", "regex literal after location ~*");
+		assertExists("regexLiteral", "/images/", "regex literal after location ^~");
+		assertExists("regexLiteral", "~^(www\\.)?(?P<domain>.+)$", "regex literal after server_name ~");
+		assertExists("regexLiteral", "^/download/(.*)$", "regex literal after location ~");
+		
+		assertExists("operator", "::", ":: operator");
+		assertExists("operator", "~*", "~* operator");
+		assertExists("operator", "~", "~ operator");
+		assertExists("operator", "^~", "^~ operator");
+		
+		assertExists("punctuation", ";", "; punctuation");
+		assertExists("punctuation", "{", "{ punctuation");
+		assertExists("punctuation", "}", "} punctuation");
+		
+		assertExists("string", "\"MSIE [1-6]\\.\"", "double quoted string");
+		assertExists("string", "'${remote-addr}AAA'", "single quoted string");
+		
+		
+	//]]></script>
+</html>

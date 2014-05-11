@@ -1,0 +1,284 @@
+<!doctype html>
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.menu.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.csharp.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-csharp">extern alias GridV1;
+using System;
+using UsingAlias = My.Namespace.UsingThisClass;
+
+namespace My.Namespace {
+	[NotAnAttribute.FullyQualifiedAttribute]
+	public abstract class ValueHandlerFactoryBase&lt;T1, T2, in TClass1&gt; : MarshalByRefObject, IValueHandlerFactory, IAmAnInterface 
+		where TClass1Constraint : IAmATypeConstraint
+		where T2 : T1
+	{
+		[Obsolete] private Skank foo;
+		public const Stripper bar = "foo";
+		protected static readonly DirtyWhore baz = 0xffffff;
+		
+#if NET_20
+		private ArrayList list = new ArrayList();
+#endif
+
+		[AnAttribute(typeof(Exception), Message = "foo"]
+		protected internal class InternalClass&lt;TClass2, out TClass3&gt; : ICloneable where TClass2Constraint : class, IAfterClassConstraint, ISecondConstraint { 
+			void Iterate(ICollection&lt;object&gt; foos) {
+				foreach (var foo in foos) {
+					if (foo is MyNamespace.TypeAfterIs) {
+						this.SomeMethod(ref foo, out foo);
+					}
+					
+					var chars = new[] { 'c', '\'', '\\' };
+				}
+			}
+		}
+
+		#region verify that casts are properly colored
+		partial void Meh(AnotherArrayOfSomething[] somethings) {
+			IDisposable foo = (IDisposable)foo as ICloneable;
+			foo.Dispose();
+			((IDisposable)this).Dispose();
+			var lame = typeof(IDisposable);
+			
+			if (notACast) methodCall();
+		}
+		#endregion
+
+		/**
+		 * Gets or sets the value of an integer
+		 * and such. This is a useful comment.
+		 */
+		public new Object PropertyAccessor {
+			get { 
+				var get = foo > 0 ? new Integer[initialArrayLength] : new Integer[0];
+				return new List&lt;object&gt; {
+					get
+				};
+			}
+			
+			private set { 
+				var set = value;
+				value = value;
+				value == value ? DoSomething() : DoSomethingElse();
+				this.value = set ?? value; 
+			}
+		}
+		
+		public string AutomaticProperty {
+			get; private set;
+		}
+
+		private static Func&lt;Object, char&gt; GetFunction(Object o, Character c, Integer[] integers) {
+			if (!Object.ReferenceEquals(o, c)) {
+				throw new ArgumentException();
+			}
+
+			
+			return value =&gt; (char)value.GetHashCode();
+		}
+		
+		/// &lt;summary&gt;
+		/// Tests the coloring of generic method definitions and
+		/// and &lt;c cref="Foo"&gt;generic parameters&lt;/c&gt;
+		/// &lt;/summary&gt;
+		///
+		/// &lt;param name="foos"&gt;Collection of &lt;see cref="Foo" /&gt;&lt;/param&gt;
+		[FirstAttribute]
+		[Pure(typeof(IDisposable[])), OutOfThisWorld, ThirdAttribute]
+		[OutOfThisWorld(AttributeNamedParameter = "foo")]
+		[Another]
+		Action&lt;IDisposable&gt; DoOtherStuff(IEnumerable&lt;Foo&gt; fooEnumerable, string[] strings) {
+			Action&lt;Func&lt;IDisposable, SecondGeneric&gt;&gt; action = () => disposable => new Foo();
+			
+			//neither foo below should be a named ident
+			return foo &lt; 1 || foo &gt; 2;
+		}
+		
+		public IEnumerable&lt;TReturnValue&gt; GenericMethod&lt;TMethod&gt;(GenericCollection1&lt;TParameter&gt; shouldNotBeNamed, GenericCollection2&lt;TGenericTest4&gt; somethingElse) {
+			container.GenericMethodInvocation&lt;GenericMethodDefinition&gt;();
+			var options = OptionParser.Parse&lt;Contract&gt;(args);
+			expression.ArrayAccess[0].Name; //ArrayAccess should not be a named ident
+		}
+		
+		//method without an access modifier: "Action" should be a named ident
+		Action DoStuff() { 
+			Fully1.Qualified1.FullyQualifiedClass1 fqc = new Fully2.Qualified2.FullyQualifiedClass2();
+		}
+
+		protected override sealed TNotNamed NumbersTest&lt;T&gt;(ref Foo foo, out Bar @class, params ArrayOfSomething[] somethings) where T : event, IDisposable, IFoo {
+			//let's test out numbers
+			int i = 0;
+			double d = 1.5;
+			float f = (1.7f + 1.2d) * (12 % 5);
+			decimal dec = 1.2d;
+			int hex = 0x1a; //ooh! hex!
+
+			return default(TAlsoNotNamed);
+		}
+
+		public virtual IValueHandler Create(string resourceName, string criterionFieldName) {
+			//1) check for resource-specific value handler
+			VerifyStuff((int)resourceName);
+
+			/* multi
+			line comment
+			*/
+
+			var s = "this is \"a\" string";
+			s = @"this is ""another""
+multi line
+string";
+
+			switch (Foo.Bar) {
+				case "foo":
+					if (2 |= Foo["foo"]) {
+						throw new InvalidOperationException(string.Format("fail"));
+					}
+					break;
+				case "bar":
+					goto default;
+				case Empty:
+					return "foo";
+				default:
+					yield return new TanningBooth();
+			}
+		}
+	}
+}</pre>
+
+		<pre id="undefinedTokenFix" class="sunlight-highlight-csharp">UndefinedTokenFix&lt;Foo&gt; undefinedTokenFix = new List&lt;Foo&gt;();</pre>
+		<pre id="attributeFix" class="sunlight-highlight-csharp">[FirstToken]
+public class Foo { }</pre>
+
+	</body>
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("keyword", "using", "using keyword");
+		assertExists("keyword", "class", "class keyword");
+		assertExists("keyword", "in", "in keyword");
+		assertExists("keyword", "const", "const keyword");
+		assertExists("keyword", "readonly", "readonly keyword");
+		assertExists("keyword", "internal", "internal keyword");
+		assertExists("keyword", "event", "event keyword");
+		assertExists("keyword", "set", "set contextual keyword");
+		assertExists("keyword", "get", "get contextual keyword");
+		assertExists("keyword", "value", "value contextual keyword");
+		assertExists("keyword", "yield return", "yield return");
+		assertExists("keyword", "extern alias", "extern alias");
+		assertExists("keyword", "is", "is keyword");
+		
+		assertExists("named-ident", "UsingAlias", "using alias");
+		assertExists("named-ident", "ValueHandlerFactoryBase", "class name");
+		assertExists("named-ident", "MarshalByRefObject", "base class name");
+		assertExists("named-ident", "IValueHandlerFactory", "implemented interface");
+		assertExists("named-ident", "IAmAnInterface", "implemented interface");
+		assertExists("named-ident", "IAmATypeConstraint", "type constraint name");
+		assertExists("named-ident", "IAfterClassConstraint", "type constraint name after class");
+		assertExists("named-ident", "ISecondConstraint", "second type constraint name after class");
+		assertExists("named-ident", "Obsolete", "attribute on field on same line");
+		assertExists("named-ident", "Obsolete", "attribute on field on same line");
+		assertExists("named-ident", "Object", "Object name");
+		assertExists("named-ident", "Func", "ident before generic return value");
+		assertExists("named-ident", "ArgumentException", "class name after new");
+		assertExists("named-ident", "Pure", "attribute");
+		assertExists("named-ident", "OutOfThisWorld", "attribute");
+		assertExists("named-ident", "Another", "attribute");
+		assertExists("named-ident", "AnAttribute", "attribute");
+		assertExists("named-ident", "FirstAttribute", "attribute");
+		assertExists("named-ident", "ThirdAttribute", "attribute");
+		assertExists("named-ident", "FullyQualifiedAttribute", "fully qualified attribute");
+		assertExists("named-ident", "SecondGeneric", "second generic argument");
+		assertExists("named-ident", "ArrayOfSomething", "class name before []");
+		assertExists("named-ident", "AnotherArrayOfSomething", "class name before []");
+		assertExists("named-ident", "FullyQualifiedClass1", "fully qualified class naming");
+		assertExists("named-ident", "FullyQualifiedClass2", "fully qualified class naming");
+		assertExists("named-ident", "TanningBooth", "class that starts with T");
+		assertExists("named-ident", "InvalidOperationException", "new()'d class");
+		assertExists("named-ident", "GenericMethodDefinition", "generic method definition during invocation");
+		assertExists("named-ident", "TypeAfterIs", "type name after is keyword");
+		assertExists("named-ident", "UsingThisClass", "type name that is being used in a using alias");
+		
+		assertExists("pragma", "#if NET_20", "#if pragma");
+		assertExists("pragma", "#endif", "#endif pragma");
+		assertExists("pragma", "#region verify that casts are properly colored", "#region pragma");
+		assertExists("pragma", "#endregion", "#endregion pragma");
+		
+		assertExists("ident", "Iterate", "method name");
+		assertExists("ident", "set", "non-keyword set");
+		assertExists("ident", "get", "non-keyword get");
+		assertExists("ident", "value", "non-keyword value");
+		assertExists("ident", "AttributeNamedParameter", "named parameter in attribute");
+		assertExists("ident", "Meh", "method name");
+		assertExists("ident", "DoStuff", "method name");
+		assertExists("ident", "DoOtherStuff", "method name");
+		assertExists("ident", "fooEnumerable", "parameter name after generic");
+		assertExists("ident", "@class", "@ syntax for idents");
+		assertExists("ident", "criterionFieldName", "parameter name");
+		assertExists("ident", "initialArrayLength", "array length initializer between []");
+		assertExists("ident", "GenericMethodInvocation", "generic method invocation");
+		assertExists("ident", "ArrayAccess", "accessing specific array index");
+		assertExists("ident", "Fully1", "fully qualified class naming");
+		assertExists("ident", "Fully2", "fully qualified class naming");
+		assertExists("ident", "Qualified1", "fully qualified class naming");
+		assertExists("ident", "Qualified2", "fully qualified class naming");
+		assertExists("ident", "PropertyAccessor", "property name");
+		assertExists("ident", "shouldNotBeNamed", "parameter in generic method");
+		assertExists("ident", "GenericMethod", "generic method name");
+		assertExists("ident", "TClass1", "type definition on class");
+		assertExists("ident", "TClass2", "type definition on class");
+		assertExists("ident", "TClass3", "type definition on class");
+		assertExists("ident", "TReturnValue", "generic return value definition");
+		assertExists("ident", "TMethod", "generic method definition");
+		assertExists("ident", "TParameter", "generic parameter definition");
+		assertExists("ident", "TClass1Constraint", "type constraint on class");
+		assertExists("ident", "TClass2Constraint", "type constraint on class");
+		assertExists("ident", "T", "type constraint T");
+		assertExists("ident", "T1", "type constraint T1");
+		assertExists("ident", "TNotNamed", "type definition as return value");
+		assertExists("ident", "TAlsoNotNamed", "type definition in default()");
+		assertExists("ident", "notACast", "if (notACast) doSomething()");
+		assertExists("ident", "NotAnAttribute", "namespace of fully qualified attribute");
+		assertExists("ident", "MyNamespace", "namespace of fully qualified type after is keyword");
+		
+		assertExists("comment", "/* multi\n\t\t\tline comment\n\t\t\t*/", "multi line comment");
+		assertExists("comment", "//neither foo below should be a named ident", "single line comment");
+		
+		assertExists("string", "\"this is \\\"a\\\" string\"", "string with escaped quote");
+		assertExists("string", "@\"this is \"\"another\"\"\nmulti line\nstring\"", "verbatim string with escaped quote");
+		
+		assertExists("char", "'c'", "char");
+		assertExists("char", "'\\''", "char with escaped single quote");
+		assertExists("char", "'\\\\'", "char with escaped backslash");
+		
+		assertExists("number", "0", "number 0");
+		assertExists("number", "1.5", "number 1.5");
+		assertExists("number", "0x1a", "number 0x1a");
+		assertExists("number", "1.7f", "number 1.7f");
+		assertExists("number", "1.2d", "number 1.2d");
+		assertExists("number", "12", "number 12");
+		assertExists("number", "0xffffff", "number 0xffffff");
+		
+		assertExists("xmlDocCommentMeta", "///", "xml doc comment ///");
+		assertExists("xmlDocCommentMeta", "<summary>", "xml doc comment <summary>");
+		assertExists("xmlDocCommentMeta", "</summary>", "xml doc comment </summary>");
+		assertExists("xmlDocCommentMeta", "<c cref=\"Foo\">", "xml doc comment <c cref>");
+		assertExists("xmlDocCommentMeta", "</c>", "xml doc comment <c/c>");
+		assertExists("xmlDocCommentContent", "generic parameters", "xml doc comment content between tags");
+		assertExists("xmlDocCommentContent", " Tests the coloring of generic method definitions and", "xml doc comment content");
+		
+		//undefined token when ident is the first token
+		assertExists("named-ident", "UndefinedTokenFix", "undefined token fix", "undefinedTokenFix");
+		assertExists("ident", "undefinedTokenFix", "undefined token fix", "undefinedTokenFix");
+		
+		//when attribute is first token
+		assertExists("named-ident", "FirstToken", "attribute as first token", "attributeFix");
+	//]]></script>
+</html>

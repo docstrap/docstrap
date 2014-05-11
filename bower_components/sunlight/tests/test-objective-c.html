@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.objective-c.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-objective-c">
+//
+//  GCPagedScrollView.m
+//  GCLibrary
+//
+//  Created by Guillaume Campagna on 10-11-10.
+//  Copyright (c) 2010 LittleKiwi. All rights reserved.
+//
+
+#import &quot;GCPagedScrollView.h&quot;
+#import &lt;QuartzCore/CATransaction.h&gt;
+
+NSString * const GCPagedScrollViewContentOffsetKey = @&quot;contentOffset&quot;;
+const CGFloat GCPagedScrollViewPageControlHeight = 36.0;
+
+@interface GCPagedScrollView ()
+
+@property (nonatomic, readonly) NSMutableArray* views;
+@property (nonatomic, readonly) UIPageControl* pageControl;
+
+- (void) updateViewPositionAndPageControl;
+
+- (void) changePage:(UIPageControl*) aPageControl;
+
+@end
+
+@implementation GCPagedScrollView
+
+@synthesize views;
+@synthesize pageControl;
+
+#pragma mark -
+#pragma mark Subclass
+
+- (id)initWithFrame:(CGRect)frame {
+    if ((self = [super initWithFrame:frame])) {
+        self.pagingEnabled = YES;
+        self.showsVerticalScrollIndicator = NO;
+        self.showsHorizontalScrollIndicator = NO;
+        self.scrollsToTop = NO;
+
+        //Place page control
+        CGRect frame = CGRectMake(self.contentOffset.x, 0, self.frame.size.width, GCPagedScrollViewPageControlHeight);
+        UIPageControl* aPageControl = [[UIPageControl alloc] initWithFrame:frame];
+        [aPageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
+        aPageControl.defersCurrentPageDisplay = YES;
+        aPageControl.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
+        [self addSubview:aPageControl];
+        pageControl = aPageControl;
+    }
+    return self;
+}
+
+- (void) setPagingEnabled:(BOOL) pagingEnabled {
+    if (pagingEnabled) [super setPagingEnabled:pagingEnabled];
+    else {
+        [NSException raise:@&quot;Disabling pagingEnabled&quot; format:@&quot;Paging enabled should not be disabled in GCPagedScrollView&quot;];
+    }
+}
+
+#pragma mark -
+#pragma mark Add/Remove content
+
+- (void) addContentSubview:(UIView *)view {
+    [self addContentSubview:view atIndex:[self.views count]];
+}
+
+- (void) addContentSubview:(UIView *)view atIndex:(NSUInteger)index {
+    [self insertSubview:view atIndex:index];
+    [self.views insertObject:view atIndex:index];
+    [self updateViewPositionAndPageControl];
+    self.contentOffset = CGPointMake(0, - self.scrollIndicatorInsets.top);
+}
+
+- (void) removeContentSubview:(UIView *)view {
+    [view removeFromSuperview];
+
+    [self.views removeObject:view];
+    [self updateViewPositionAndPageControl];
+}
+
+- (void)removeContentSubviewAtIndex:(NSUInteger)index {
+    [self removeContentSubview:[self.views objectAtIndex:index]];
+}
+
+- (void) removeAllContentSubview {
+    for (UIView* view in self.views) {
+        [view removeFromSuperview];
+    }
+
+    [self.views removeAllObjects];
+    [self updateViewPositionAndPageControl];
+}
+
+#pragma mark -
+#pragma mark Layout
+
+- (void) updateViewPositionAndPageControl {
+    NSUInteger index = 0;
+    for (UIView* view in self.views) {
+        view.center = CGPointMake(self.frame.size.width * index + self.frame.size.width / 2,
+                                  (self.frame.size.height - GCPagedScrollViewPageControlHeight) / 2);
+        index ++;
+    }
+
+    UIEdgeInsets inset = self.scrollIndicatorInsets;
+    CGFloat heightInset = inset.top + inset.bottom;
+    self.contentSize = CGSizeMake(self.frame.size.width * [self.views count], self.frame.size.height - heightInset);
+
+    self.pageControl.numberOfPages = self.views.count;
+}
+
+- (void) layoutSubviews {
+    [super layoutSubviews];
+
+    //Avoid that the pageControl move
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+
+    CGRect frame = self.pageControl.frame;
+    frame.origin.x = self.contentOffset.x;
+    frame.origin.y = self.frame.size.height - GCPagedScrollViewPageControlHeight - self.scrollIndicatorInsets.bottom - self.scrollIndicatorInsets.top;
+    frame.size.width = self.frame.size.width;
+    self.pageControl.frame = frame;
+
+    [CATransaction commit];
+}
+
+#pragma mark -
+#pragma mark Getters/Setters
+
+- (void) setFrame:(CGRect) newFrame {
+    [super setFrame:newFrame];
+    [self updateViewPositionAndPageControl];
+}
+
+- (void) changePage:(UIPageControl*) aPageControl {
+    [self setPage:aPageControl.currentPage animated:YES];
+}
+
+- (void) setContentOffset:(CGPoint) new {
+    new.y = -self.scrollIndicatorInsets.top;
+    [super setContentOffset:new];
+
+    self.pageControl.currentPage = self.page; //Update the page number
+}
+
+- (NSMutableArray*) views {
+    if (views == nil) {
+        views = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+    return views;
+}
+
+- (NSUInteger) page {
+    return (self.contentOffset.x + self.frame.size.width / 2) / self.frame.size.width;
+}
+
+- (void) setPage:(NSUInteger)page {
+    [self setPage:page animated:NO];
+}
+
+- (void) setPage:(NSUInteger)page animated:(BOOL) animated {
+    [self setContentOffset:CGPointMake(page * self.frame.size.width, - self.scrollIndicatorInsets.top) animated:animated];
+}
+
+#pragma mark -
+#pragma mark Dealloc
+
+- (void)dealloc {
+    [views release];
+    [pageControl release];
+
+    [super dealloc];
+}
+
+
+@end
+</pre>
+
+<pre id="type-argument-reference" class="sunlight-highlight-objective-c">
+- (void)popToViewControllerOfType:(Class)lollersk8
+	animated:(BOOL)animated
+</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("keyword", "const", "const keyword");
+		assertExists("keyword", "@interface", "@interface keyword");
+		assertExists("keyword", "@property", "@property keyword");
+		assertExists("keyword", "nonatomic", "nonatomic keyword");
+		assertExists("keyword", "readonly", "readonly keyword");
+		assertExists("keyword", "void", "void keyword");
+		assertExists("keyword", "@synthesize", "@synthesize keyword");
+		assertExists("keyword", "@end", "@end keyword");
+		assertExists("keyword", "@implementation", "@implementation keyword");
+		assertExists("keyword", "@selector", "@selector keyword");
+		assertExists("keyword", "if", "if keyword");
+		assertExists("keyword", "else", "else keyword");
+		assertExists("keyword", "self", "self keyword");
+		assertExists("keyword", "super", "super keyword");
+		assertExists("keyword", "YES", "YES keyword");
+		assertExists("keyword", "NO", "NO keyword");
+		assertExists("keyword", "BOOL", "BOOL keyword");
+		assertExists("keyword", "nil", "nil keyword");
+		
+		assertExists("comment", "//  Created by Guillaume Campagna on 10-11-10.", "single line comment");
+		
+		assertExists("string", "@\"contentOffset\"", "string starting with @");
+		
+		assertExists("preprocessorDirective", "#import \"GCPagedScrollView.h\"", "#import statement");
+		assertExists("preprocessorDirective", "#pragma mark -", "#pragma statement");
+		
+		assertExists("named-ident", "NSString", "type name with pointer");
+		assertExists("named-ident", "CGFloat", "type name");
+		assertExists("named-ident", "NSMutableArray", "type name after @property with pointer");
+		assertExists("named-ident", "UIPageControl", "type name with pointer cast");
+		assertExists("named-ident", "GCPagedScrollView", "type name after @interface");
+		assertExists("named-ident", "CGRect", "type name in cast");
+		
+		assertExists("ident", "CGRectMake", "type name beginning with CG but followed by a (");
+		assertExists("ident", "setPagingEnabled", "method name");
+		
+		assertExists("messageArgumentName", "forControlEvents", "message argument name");
+		assertExists("messageArgumentName", "action", "message argument name");
+		
+		assertExists("messageDestination", "initWithFrame", "message destination");
+		assertExists("messageDestination", "alloc", "nested message destination");
+		assertExists("messageDestination", "setPagingEnabled", "message destination");
+
+		assertExists("ident", "lollersk8", "ident after (Class)", "type-argument-reference");
+	//]]></script>
+</html>

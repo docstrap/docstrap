@@ -1,0 +1,136 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.erlang.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-erlang">-module(talk2).
+-compile(export_all).
+start() -&gt;
+    OtherNode = clean(io:get_line('What node? ')),
+    FullNode = string:concat(OtherNode, &quot;@localhost&quot;),
+    io:format(&quot;talking to: ~s~n&quot;, [FullNode]),
+    register(receiver, spawn(?MODULE, receiver, [])),
+    register(sender, spawn(?MODULE, sender, [list_to_atom(FullNode)])),
+    get_input().
+get_input() -&gt;
+    Message = clean(io:get_line('Talk: ')),
+    case string:equal(&quot;exit!&quot;, Message) of
+        true -&gt;
+            receiver ! done,
+            sender ! done;
+        false -&gt;
+            talk(Message),
+            get_input()
+    end.
+talk(Message) -&gt;
+    sender ! {send, Message}.
+sender(OtherNode) -&gt;
+    receive
+        {send, Message} -&gt;
+            rpc:call(OtherNode, talk2, send_message, [Message]),
+            sender(OtherNode);
+        done -&gt;
+            void
+    end.
+send_message(Message) -&gt;
+    receiver ! {message, Message}.
+receiver() -&gt;
+    receive
+        {message, Message} -&gt;
+            io:format(&quot;~s~n&quot;, [Message]),
+            receiver();
+        done -&gt;
+            void
+    end.
+clean(Data) -&gt;
+    string:strip(Data, both, $\n).</pre>
+	
+	
+	<pre id="infinite-loop-test" class="sunlight-highlight-erlang">var parser = new Butterfly.Parser().loadDefaultStrategies(), timeout, current;
+$("#markup").keydown(function(e) {
+	if (timeout) {
+		clearTimeout(timeout);
+		timeout = null;
+	}
+	
+	timeout = setTimeout(render, 200);
+});
+
+function render() {
+	var text = $("#markup").val();
+	if (text === current) {
+		return;
+	}
+	
+	current = text;
+	
+	var $html = $("#html").removeClass("error").empty();
+	var startTime = new Date().getTime();
+	try {
+		var html = parser.parseAndReturn(text);
+		$html.html(html);
+	} catch (e) {
+		$html.addClass("error").html("&lt;p/&gt;").text(e.toString());
+	}
+	
+	parser.analyzer.flush();
+	$("#elapsed-time").empty().text((new Date().getTime() - startTime) + "ms");
+	
+	Sunlight.highlightAll();
+}
+
+render();</pre>
+	
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("moduleAttribute", "-module", "-module module attribute");
+		assertExists("moduleAttribute", "-compile", "-compile module attribute");
+		
+		assertExists("userDefinedFunction", "start", "user defined function");
+		assertExists("userDefinedFunction", "clean", "user defined function");
+		assertExists("userDefinedFunction", "sender", "user defined function");
+		
+		assertExists("quotedAtom", "'What node? '", "atom surrounded by single quotes");
+		
+		
+		assertExists("function", "clean", "function");
+		assertExists("function", "format", "function");
+		assertExists("function", "call", "function after :");
+		
+		assertExists("named-ident", "rpc", "fully qualified module name");
+		assertExists("named-ident", "io", "fully qualified module name");
+		assertExists("named-ident", "string", "fully qualified module name");
+		assertExists("named-ident", "receiver", "user defined function reference");
+		assertExists("named-ident", "sender", "user defined function reference");
+		assertExists("named-ident", "send_message", "user defined function reference");
+		
+		assertExists("ident", "talk2", "ident");
+		assertExists("ident", "OtherNode", "atom");
+		assertExists("ident", "FullNode", "atom");
+		assertExists("ident", "Message", "atom");
+		
+		assertExists("keyword", "of", "of keyword");
+		assertExists("keyword", "case", "case keyword");
+		assertExists("keyword", "true", "true keyword");
+		assertExists("keyword", "false", "false keyword");
+		assertExists("keyword", "receive", "receive keyword");
+		assertExists("keyword", "end", "end keyword");
+		
+		assertExists("string", "\"@localhost\"", "string");
+		
+		assertExists("char", "$\\n", "char");
+		
+		assertExists("operator", ":", ": operator");
+		assertExists("operator", "->", "-> operator");
+		
+		assertExists("macro", "?MODULE", "macro");
+		
+	//]]></script>
+</html>

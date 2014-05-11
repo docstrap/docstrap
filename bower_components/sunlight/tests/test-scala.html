@@ -1,0 +1,296 @@
+<!doctype html >
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.xml.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.scala.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-scala">
+object addressbook {
+
+  case class Person(name: String, age: Int)
+
+  /** An AddressBook takes a variable number of arguments
+   *  which are accessed as a Sequence
+   */
+  class AddressBook(a: Person*) {
+    private val people: List[Person] = a.toList
+
+    /** Serialize to XHTML. Scala supports XML literals
+     *  which may contain Scala expressions between braces,
+     *  which are replaced by their evaluation
+     */
+    def toXHTML =
+      &lt;table cellpadding=&quot;2&quot; cellspacing=&quot;0&quot;&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Name&lt;/th&gt;
+          &lt;th&gt;Age&lt;/th&gt;
+        &lt;/tr&gt;
+        { for (val p &lt;- people) yield
+            &lt;tr&gt;
+              &lt;td&gt; { p.name } &lt;/td&gt;
+              &lt;td&gt; { p.age.toString() } &lt;/td&gt;
+            &lt;/tr&gt; 
+        }
+      &lt;/table&gt;;
+  }
+
+  /** We introduce CSS using raw strings (between triple
+   *  quotes). Raw strings may contain newlines and special
+   *  characters (like \) are not interpreted.
+   */
+  val header =
+    &lt;head&gt;
+      &lt;title&gt;
+        { &quot;My Address Book&quot; }
+      &lt;/title&gt;
+      &lt;style type=&quot;text/css&quot;&gt; {
+     &quot;&quot;&quot;table { border-right: 1px solid #cccccc; }
+        th { background-color: #cccccc; }
+        td { border-left: 1px solid #acacac; }
+        td { border-bottom: 1px solid #acacac;&quot;&quot;&quot;}
+      &lt;/style&gt;
+    &lt;/head&gt;;
+
+  val people = new AddressBook(
+    Person("Tom", 20),
+    Person("Bob", 22),
+    Person("James", 19));
+
+  val page =
+    &lt;html&gt;
+      { header }
+      &lt;body&gt;
+       { people.toXHTML }
+      &lt;/body&gt;
+    &lt;/html&gt;;
+
+  def main(args: Array[String]) {
+    println(page)
+  }
+}
+
+object callccInterpreter {
+
+  type Answer = Value;
+
+  /** 
+   * A continuation monad. 
+   */
+  case class M[A](in: (A => Answer) =&gt; Answer) {
+    def bind[B](k: A =&gt; M[B])          = M[B](c =&gt; in (a =&gt; k(a) in c))
+    def map[B](f: A =&gt; B): M[B]        = bind(x =&gt; unitM(f(x)))
+    def flatMap[B](f: A =&gt; M[B]): M[B] = bind(f)
+  }
+
+  def unitM[A](a: A) = M[A](c =&gt; c(a))
+
+  def id[A] = (x: A) =&gt; x
+  def showM(m: M[Value]): String = (m in id).toString()
+
+  def callCC[A](h: (A =&gt; M[A]) =&gt; M[A]) =
+    M[A](c =&gt; h(a =&gt; M[A](d =&gt; c(a))) in c)
+
+  type Name = String
+
+  trait Term
+  case class Var(x: Name) extends Term
+  case class Con(n: int) extends Term
+  case class Add(l: Term, r: Term) extends Term
+  case class Lam(x: Name, body: Term) extends Term
+  case class App(fun: Term, arg: Term) extends Term
+  case class Ccc(x: Name, t: Term) extends Term
+
+  trait Value
+  case object Wrong extends Value {
+   override def toString() = "wrong"
+  }
+  case class Num(n: Int) extends Value {
+    override def toString() = n.toString()
+  }
+  case class Fun(f: Value =&gt; M[Value]) extends Value {
+    override def toString() = "&lt;function&gt;"
+  }
+
+  type Environment = List[Pair[Name, Value]];
+
+  def lookup(x: Name, e: Environment): M[Value] = e match {
+    case List() =&gt; unitM(Wrong)
+    case Pair(y, b) :: e1 =&gt; if (x == y) unitM(b) else lookup(x, e1)
+  }
+
+  def add(a: Value, b: Value): M[Value] = Pair(a, b) match {
+    case Pair(Num(m), Num(n)) =&gt; unitM(Num(m + n))
+    case _ =&gt; unitM(Wrong)
+  }
+
+  def apply(a: Value, b: Value): M[Value] = a match {
+    case Fun(k) =&gt; k(b)
+    case _ =&gt; unitM(Wrong)
+  }
+
+  def interp(t: Term, e: Environment): M[Value] = t match {
+    case Var(x) =&gt; lookup(x, e)
+    case Con(n) =&gt; unitM(Num(n))
+    case Add(l, r) =&gt; for (val a &lt;- interp(l, e);
+                        val b &lt;- interp(r, e);
+                        val c &lt;- add(a, b))
+                      yield c
+    case Lam(x, t) =&gt; unitM(Fun(a =&gt; interp(t, Pair(x, a) :: e)))
+    case App(f, t) =&gt; for (val a &lt;- interp(f, e);
+                        val b &lt;- interp(t, e);
+                        val c &lt;- apply(a, b))
+                      yield c
+    case Ccc(x, t) =&gt; callCC(k =&gt; interp(t, Pair(x, Fun(k)) :: e))
+  }
+
+  def test(t: Term): String = showM(interp(t, List()))
+
+  val term0 = App(Lam("x", Add(Var("x"), Var("x"))), Add(Con(10), Con(11)))
+  val term1 = App(Con(1), Con(2))
+  val term2 = Add(Con(1), Ccc("k", Add(Con(2), App(Var("k"), Con(4)))))
+
+  def main(args: Array[String]) {
+    println(test(term0))
+    println(test(term1))
+    println(test(term2))
+  }
+}
+
+// Contributed by Daniel Gronau
+import scala.annotation._
+
+trait Func[T] {
+    val zero: T
+    def inc(t: T): T
+    def dec(t: T): T
+    def in: T
+    def out(t: T): Unit
+}
+
+object ByteFunc extends Func[Byte] {
+  override val zero: Byte = 0
+  override def inc(t: Byte) = ((t + 1) &amp; 0xFF).toByte
+  override def dec(t: Byte) = ((t - 1) &amp; 0xFF).toByte
+  override def in: Byte = readByte
+  override def out(t: Byte) { print(t.toChar) }
+}
+
+case class Tape[T](left: List[T], cell: T, right: List[T])(implicit func: Func[T]) {
+  private def headOf(list:List[T]) = if (list.isEmpty) func.zero else list.head
+  private def tailOf(list:List[T]) = if (list.isEmpty) Nil else list.tail
+  def isZero = cell == func.zero
+  def execute(ch: Char) = (ch: @switch) match {
+   case '+' =&gt; copy(cell = func.inc(cell))
+   case '-' =&gt; copy(cell = func.dec(cell))
+   case '&lt;' =&gt; Tape(tailOf(left), headOf(left), cell :: right)
+   case '&gt;' =&gt; Tape(cell :: left, headOf(right), tailOf(right))
+   case '.' =&gt; func.out(cell); this
+   case ',' =&gt; copy(cell = func.in)
+   case '[' | ']' =&gt; this
+   case _ =&gt; error("Unexpected token: " + ch)
+  }
+}
+
+object Tape {
+  def empty[T](func: Func[T]) = Tape(Nil, func.zero, Nil)(func)
+}
+
+class Brainfuck[T](func:Func[T]) {
+
+  def execute(p: String) {
+    val prog = p.replaceAll("[^\\+\\-\\[\\]\\.\\,\\&gt;\\&lt;]", "")
+
+    @tailrec def braceMatcher(pos: Int, stack: List[Int], o2c: Map[Int, Int]): Map[Int,Int] =
+      if(pos == prog.length) o2c else (prog(pos): @switch) match {
+        case '[' =&gt; braceMatcher(pos + 1, pos :: stack, o2c)
+        case ']' =&gt; braceMatcher(pos + 1, stack.tail, o2c + (stack.head -> pos))
+        case _ =&gt; braceMatcher(pos + 1, stack, o2c)
+      }
+
+    val open2close = braceMatcher(0, Nil, Map())
+    val close2open = open2close.map(_.swap)
+
+    @tailrec def ex(pos:Int, tape:Tape[T]): Unit =
+      if(pos &lt; prog.length) ex((prog(pos): @switch) match {
+          case '[' if tape.isZero => open2close(pos)
+          case ']' if ! tape.isZero => close2open(pos)
+          case _ =&gt; pos + 1
+        }, tape.execute(prog(pos)))
+
+    println("---running---")
+    ex(0, Tape.empty(func))
+    println("\n---done---")
+  }
+} 
+
+/*
+  Run with:
+    val bf = new Brainfuck(ByteFunc)
+    bf.execute("""&gt;+++++++++[&lt;++++++++&gt;-]&lt;.&gt;+++++++[&lt;++
+                  ++&gt;-]&lt;+.+++++++..+++.[-]&gt;++++++++[&lt;++++&gt;-]
+                  &lt;.#&gt;+++++++++++[&lt;+++++&gt;-]&lt;.&gt;++++++++[&lt;++
+                  +&gt;-]&lt;.+++.------.--------.[-]&gt;++++++++[&lt;++++&gt;
+                  -]&lt;+.[-]++++++++++.""")
+*/
+
+//symbol literals and chars
+val aSymbol = 'aSymbol
+val notASymbol = ' '
+val aChar = 'a'
+val aChar = '\u0041'
+</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("keyword", "object", "object keyword");
+		assertExists("keyword", "case", "case keyword");
+		assertExists("keyword", "class", "class keyword");
+		assertExists("keyword", "private", "private keyword");
+		assertExists("keyword", "val", "val keyword");
+		assertExists("keyword", "def", "def keyword");
+		assertExists("keyword", "if", "if keyword");
+		assertExists("keyword", "match", "match keyword");
+		assertExists("keyword", "new", "new keyword");
+		assertExists("keyword", "type", "type keyword");
+		assertExists("keyword", "extends", "extends keyword");
+		
+		assertExists("named-ident", "Pair", "built in type");
+		assertExists("named-ident", "Answer", "type name");
+		assertExists("named-ident", "Term", "trait name");
+		assertExists("named-ident", "AddressBook", "class name");
+		assertExists("named-ident", "addressbook", "object name");
+		assertExists("named-ident", "List", "built in type");
+		
+		assertExists("tagName", "tr", "embedded xml");
+		assertExists("tagName", "td", "embedded xml");
+		assertExists("tagName", "table", "embedded xml");
+		assertExists("operator", "</", "embedded xml");
+		assertExists("attribute", "cellpadding", "embedded xml");
+		assertExists("string", "\"text/css\"", "embedded xml");
+		
+		assertExists("ident", "T", "generic type name");
+		assertExists("ident", "A", "generic type name");
+		
+		assertExists("annotation", "@tailrec", "@tailrec annotation");
+		assertExists("annotation", "@switch", "@switch annotation");
+		
+		assertExists("comment", "/** An AddressBook takes a variable number of arguments\n   *  which are accessed as a Sequence\n   */", "multi line comment");
+		
+		assertExists("symbolLiteral", "'aSymbol", "symbol literal");
+		assertExists("char", "'['", "single character char");
+		assertExists("char", "']'", "single character char");
+		assertExists("char", "' '", "space character");
+		assertExists("char", "'a'", "single character char");
+		assertExists("char", "'\\u0041'", "char code point");
+
+		assertExists("string", "\"My Address Book\"", "string in embedded xml");
+		assertExists("string", "\"\"\"table { border-right: 1px solid #cccccc; }\n        th { background-color: #cccccc; }\n        td { border-left: 1px solid #acacac; }\n        td { border-bottom: 1px solid #acacac;\"\"\"", "raw string in embedded xml");
+	//]]></script>
+</html>

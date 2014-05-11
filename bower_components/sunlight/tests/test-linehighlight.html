@@ -1,0 +1,42 @@
+<!doctype html >
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.mysql.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.dark.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-mysql">--comment 1
+select * from db.my_table where myTable.id &gt; 10;
+
+/* multi
+line comment */
+
+select "escaped\\\"";
+select 'escaped\\\'';
+
+#comment 2
+SELECT
+    f.foo `foo`,
+    f.bar,
+    f.name AS `foo.name`,
+    b.baz
+FROM foo f
+INNER JOIN bar b
+    ON b.id = f.bar_id
+LEFT OUTER JOIN baz
+    ON baz.id = f.foo
+    AND baz.id IS NOT NULL
+GROUP BY f.name
+HAVING COUNT(f.name) &lt; 10
+WHERE LENGTH(f.foo) &lt; 5
+AND LEFT(f.foo) = 'f'</pre>
+	</body>
+
+	<script type="text/javascript">//<![CDATA[
+		Sunlight.highlightAll({ lineHighlight: [2, 3, 4, 8, 15, 24] });
+	//]]></script>
+</html>

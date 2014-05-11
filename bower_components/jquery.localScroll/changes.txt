@@ -1,0 +1,88 @@
+1.2.9
+[Fix]
+- hash:true incompatible with vertical offset
+[Enhancement]
+- $.localScroll.hash() is not needed anymore
+- Setting "reset" removed
+
+1.2.8
+[Fix]
+- The setting 'stop' wasn't working on window.
+
+1.2.7
+[Feature]
+- The set of settings can be accessed from within the onBefore as 'this'.
+- The hash is set before scrolling, so the back button works (when scrolling the window).
+- The option hash doesn't make the window jump when scrolling overflown elements (making it usable).
+- $.localScroll.hash now resets the element by default
+[Enhancement]
+- Various enhancements, updated to take advantage of scrollTo +1.4.x
+[Change]
+- The element that triggered the scroll cannot be accessed anymore (useless).
+- settings.persistent is no longer supported (was deprecated)
+
+1.2.6
+[Enhancement]
+- areas(from image maps) are now formally supported, it was possible before by setting 'lazy' to true.
+[Fix]
+- When hash:true, a queue problem could arise.
+
+1.2.5
+[Feature]
+- LocalScroll can now be safely combined with SerialScroll(1.2.0 or higher).
+
+1.2.4
+[Feature]
+- If onBefore returns false, the event is ignored.
+- Relicensed from GPL to GPL+MIT.
+
+1.2.3
+[Fix]
+- Added an extra check for an odd behavior of Firefox that it throws an error when checking the 'hash' attribute of a named anchor.
+
+1.2.2
+[Optimizations]
+* Small improvements to make the code shorter.
+* Made the code to set the hash in the url, cleaner.
+[Features]
+* Added the option 'lock', if true, the plugin will ignore events if already animating.
+
+1.2.1
+[Changes]
+* Renamed the option 'persistent' to 'lazy', I didn't like the name. Using persistent will still work (backwards compatibilty)
+
+1.2
+[Optimizations]
+* Replaced a $('[name='+id+']') for a document.getElementsByName(id) to improve perfomance.
+[Fixes]
+* Now the last argument received by onBefore when scrolling the window, is no more $(window) but the real element being scrolled.
+[Features]
+* Added the option 'stop', if true (default), each click will stop any previous animations of the target.
+* Removed the option 'cancel' that wasn't working and added the option 'hash' that does that as it should. After the scroll, the hash is added to the address bar.
+* Added $.localScroll.hash( settings ); which will scroll to the given element if the URL contains a valid hash.
+[Changes]
+* Modified the regular demo, to make it show these last changes.
+
+1.1.4
+* The event propagation is not stopped anymore, only the default prevented.
+* The option cancel works as expected (not yet)
+
+1.1.3
+* Added semicolon to the start, for safe file concatenation
+* Changed the default named 'speed' for 'duration', following the change in jQuery.ScrollTo 1.3
+* jQuery.ScrollTo 1.3 improved the behavior when scrolling the window, among the different browsers, jQuery.localScroll now delegates this responsability completely.
+* Modified the demo according to these changes.
+* The third argument of onBefore, is now $(window) if settings.target is null (the whole window is scrolled)
+
+1.1.2
+* The option 'persistent' has been added, if true, links can be added later, and will still work.
+* If 'cancel' is set to false, the default behaviour of the anchor will occur.
+* An event can be specified, if click is not the desired one.
+
+1.1.1
+* The anchor filter has been optimized.
+* A bug was fixed, clicking an anchor with href=# and then a special link, wasn't scrolling.
+
+1.1.0
+* The defaults have been made public.
+* Instead of letting jQuery.ScrollTo decide, the default speed has been overriden.

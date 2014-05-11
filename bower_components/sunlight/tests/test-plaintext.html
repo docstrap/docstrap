@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+		<pre id="code" class="sunlight-highlight-plaintext">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This is a number: 12. It should not
+be parsed as anything or else this is not working correctly!</pre>
+		
+		<pre id="nonexistent" class="sunlight-highlight-asdf">foo</pre>
+	
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		var lipsum =
+			"Lorem ipsum dolor sit amet, consectetur adipisicing elit,\n" +
+			"sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This is a number: 12. It should not\n" +
+			"be parsed as anything or else this is not working correctly!";
+			
+		lipsum = lipsum.replace(/ /g, nbsp).replace(/\t/g, nbsp + nbsp + nbsp + nbsp);
+		
+		var value = document.getElementById("code").getElementsByTagName("span")[0].firstChild.nodeValue;
+		if (lipsum !== value) {
+			console.error("fail: generated content does not match plain text");
+		} else {
+			console.log("pass");
+		}
+		
+		if (document.getElementById("nonexistent").getElementsByTagName("span")[0].firstChild.nodeValue !== "foo") {
+			console.error("fail: non existent language should have been rendered as plaintext");
+		} else {
+			console.log("pass: non existent language");
+		}
+	//]]></script>
+</html>

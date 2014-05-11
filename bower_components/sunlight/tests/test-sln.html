@@ -1,0 +1,74 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.sln.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-sln">Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Project1", "Project1.vbproj", "{8CDD8387-B905-44A8-B5D5-07BB50E05BEA}"
+EndProject
+Global
+  GlobalSection(SolutionNotes) = postSolution
+       Name1 = Note2
+       Issue1 = N
+       Text1 = This is a shared note.
+       Name2 = Note3
+       Issue2 = N
+       Text2 = This is also a shared note. The second of two shared notes.
+       NumNotes = 2
+  EndGlobalSection
+  GlobalSection(SolutionConfiguration) = preSolution
+       ConfigName.0 = Debug
+       ConfigName.1 = Release
+  EndGlobalSection
+  GlobalSection(ProjectDependencies) = postSolution
+  EndGlobalSection
+  GlobalSection(ProjectConfiguration) = postSolution
+   {8CDD8387-B905-44A8-B5D5-07BB50E05BEA}.Debug.ActiveCfg = Debug|.NET
+   {8CDD8387-B905-44A8-B5D5-07BB50E05BEA}.Debug.Build.0 = Debug|.NET
+   {8CDD8387-B905-44A8-B5D5-07BB50E05BEA}.Release.ActiveCfg = Release|.NET
+   {8CDD8387-B905-44A8-B5D5-07BB50E05BEA}.Release.Build.0 = Release|.NET
+  EndGlobalSection
+  GlobalSection(ExtensibilityGlobals) = postSolution
+  EndGlobalSection
+  GlobalSection(ExtensibilityAddIns) = postSolution
+  EndGlobalSection
+EndGlobal</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("keyword", "Project", "Project keyword");
+		assertExists("keyword", "EndProject", "EndProject keyword");
+		assertExists("keyword", "Global", "Global keyword");
+		assertExists("keyword", "EndGlobal", "EndGlobal keyword");
+		assertExists("keyword", "GlobalSection", "GlobalSection keyword");
+		assertExists("keyword", "EndGlobalSection", "EndGlobalSection keyword");
+		
+		assertExists("sectionName", "preSolution", "preSolution section name");
+		assertExists("sectionName", "postSolution", "postSolution section name");
+		
+		assertExists("string", "\"{F184B08F-C81C-45F6-A57F-5ABD9991F28F}\"", "string");
+		
+		assertExists("ident", ".Debug.ActiveCfg", "ident that starts with period");
+		assertExists("ident", "ConfigName.0", "ident with period");
+		assertExists("ident", "Name1", "normal ident");
+		
+		assertExists("operator", "=", "= operator");
+		assertExists("operator", "|", "| operator");
+		
+		assertExists("named-ident", "SolutionNotes", "argument to GlobalSection");
+		assertExists("named-ident", "ProjectDependencies", "argument to ProjectDependencies");
+		
+		assertExists("guid", "{8CDD8387-B905-44A8-B5D5-07BB50E05BEA}", "guid");
+		
+		assertExists("comment", "# Visual Studio 2010", "comment");
+		
+		assertExists("formatDeclaration", "Microsoft Visual Studio Solution File, Format Version 11.00", "formatDeclaration");
+	//]]></script>
+</html>

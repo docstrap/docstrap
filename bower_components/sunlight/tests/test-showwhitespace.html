@@ -1,0 +1,44 @@
+<!doctype html >
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-plaintext">Lorem ipsum dolor sit amet, 	c	onsectetur adipisicing elit, sed do eiusmod tempor 
+incididunt ut labore et dolore magna 		aliqua. Ut enim ad minim veniam, quis 
+    nostrud 	  	 	exercitation ullamco laboris nisi ut liquip ex ea commodo consequat. Duis 
+aute irure 	dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat 
+	nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+officia deserunt mollit anim id est laborum.</pre>
+	</body>
+
+	<script type="text/javascript">
+		Sunlight.globalOptions.showWhitespace = true;
+	</script>
+	<script type="text/javascript" src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		var expected = 
+			"Lorem ipsum dolor sit amet, ___*c__*onsectetur adipisicing elit, sed do eiusmod tempor " + "\n" +
+			"incididunt ut labore et dolore magna __*___*aliqua. Ut enim ad minim veniam, quis " + "\n" +
+			"    nostrud ___*  _* __*exercitation ullamco laboris nisi ut liquip ex ea commodo consequat. Duis " + "\n" +
+			"aute irure *dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat " + "\n" +
+			"___*nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " + "\n" +
+			"officia deserunt mollit anim id est laborum.";
+			
+		expected = expected
+			.replace(/ /g, String.fromCharCode(0xB7))
+			.replace(/_/g, String.fromCharCode(0x2014))
+			.replace(/\*/g, String.fromCharCode(0x2192));
+			
+		var actual = document.getElementById("code").getElementsByTagName("span")[0].firstChild.nodeValue;
+		if (actual !== expected) {
+			console.error("fail: tabstop mayhem");
+		} else {
+			console.log("pass: tabstop mayhem");
+		}
+	//]]></script>
+</html>

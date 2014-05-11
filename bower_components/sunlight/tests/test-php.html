@@ -1,0 +1,174 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.doclinks.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.php.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-php">&lt;?php
+
+	namespace My\Namespace;
+	
+	use UseThisClass;
+	use AlsoUseThis, AndUseThis;
+	use My\Favorite\UseMePlease;
+	use Other\Namespace\UseMe, Other\Namespace\NoUseMe;
+	
+	interface Kissable extends Countable {
+		function kiss(array $foo = null);
+	}
+	
+	abstract class HenryKissable extends ExtendedClass implements ImplementedInterface1, ImplementedInterface2, ImplementedInterface3 {
+		const KISS = 'kiss';
+		private $myPrivateVar;
+		public $publicVar;
+		
+		#Perl-style comments are stupid
+		public function __construct($foo, Iterator $bar = null, array $kiss = array()) {
+			parent::__construct();
+			$this-&gt;myPrivateVar = $foo;
+			$this-&gt;publicVar = $bar ?: new self();
+			
+			foreach ($kiss as $key =&gt; $value) {
+				//unset stuff
+				unset($this[$key]);
+				if ($value instanceof \My\Namespace\InstanceOfClassName1):
+					$value = $value instanceof InstanceOfClassName2;
+				endif;
+				$this[$key] = is_int($value) ? (int)$value : (string)$value;
+			}
+		}
+		
+		protected final function invokeStatic() {
+			StaticClass::invoke("this is a \"string\"");
+			static::doSomething();
+			
+			switch (KISS) {
+				case 5:
+				case 0x1a:
+					if (KISS === 'foo') {
+						return null;
+					} elseif (KISS === 'bar') {
+						return false;
+					} else {
+						return true;
+					}
+				case 1e3:
+					break;
+				default:
+					throw new OutOfBoundsException();
+			}
+		}
+		
+		function noModifier() {
+			$fqc = new Fully1\Qualified1\FullyQualifiedClassName1();
+			$fqc = new \Fully2\Qualified2\FullyQualifiedClassName2();
+			$notFullyQualified = new NotFullyQualified();
+			
+			$closure = function($foo, array $bar) use (Fully3\Qualified3\ClassName3 $fqc) {
+				return $fqc;
+			};
+		}
+		
+		public abstract function(TypeHinted $var);
+		
+		/**
+		 * This does something
+		 */
+		private static function doSomething() {
+			$heredoc = "this one is my \"favorite\"";
+			$heredoc .= &lt;&lt;&lt;LOL
+oh 'look'
+a heredoc!
+LOL;
+
+			$nowdoc = &lt;&lt;&lt;'LULZ'
+oh look
+a nowdoc!
+LULZ;
+		}
+		
+	}
+?&gt;
+
+&lt;? 
+	//short tags 
+?&gt;
+
+&lt;?= 'lol' ?&gt;</pre>
+
+<pre id="unclosed-heredoc" class="sunlight-highlight-php">$foo = &lt;&lt;&lt;HEREDOC
+unclosed heredoc</pre>
+	</body>
+
+	<script type="text/javascript">var maxHeight = 600;</script>
+	<script type="text/javascript" src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("openTag", "<" + "?php", "open tag");
+		assertExists("closeTag", "?>", "close tag");
+		assertExists("shortOpenTag", "<" + "?", "short open tag");
+		assertExists("shortOpenTag", "<" + "?=", "short open tag echo");
+		
+		assertExists("keyword", "namespace", "namespace keyword");
+		assertExists("keyword", "use", "use keyword");
+		assertExists("keyword", "class", "class keyword");
+		assertExists("keyword", "interface", "class keyword");
+		assertExists("keyword", "public", "public keyword");
+		assertExists("keyword", "static", "static keyword");
+		assertExists("keyword", "function", "function keyword");
+		assertExists("keyword", "parent", "parent keyword");
+		assertExists("keyword", "self", "self keyword");
+		assertExists("keyword", "endif", "endif keyword");
+		assertExists("keyword", "if", "if keyword");
+		
+		assertExists("ident", "KISS", "const ident");
+		assertExists("ident", "Fully1", "namespace name in fully qualified new() 1");
+		assertExists("ident", "Fully2", "namespace name in fully qualified new() 2");
+		assertExists("ident", "Qualified1", "namespace name in fully qualified new() 1");
+		assertExists("ident", "Qualified2", "namespace name in fully qualified new() 2");
+		
+		assertExists("named-ident", "OutOfBoundsException", "named ident after new");
+		assertExists("named-ident", "ExtendedClass", "extended class");
+		assertExists("named-ident", "ImplementedInterface1", "implemented interface");
+		assertExists("named-ident", "ImplementedInterface2", "implemented interface");
+		assertExists("named-ident", "ImplementedInterface3", "implemented interface");
+		assertExists("named-ident", "StaticClass", "named ident for static class method call");
+		assertExists("named-ident", "FullyQualifiedClassName1", "fully qualified class name 1");
+		assertExists("named-ident", "FullyQualifiedClassName2", "fully qualified class name 2");
+		assertExists("named-ident", "NotFullyQualified", "not fully qualified class name");
+		assertExists("named-ident", "OutOfBoundsException", "class name after new");
+		assertExists("named-ident", "InstanceOfClassName1", "class name after instanceof fully qualified");
+		assertExists("named-ident", "InstanceOfClassName2", "class name after instanceof not fully qualified");
+		assertExists("named-ident", "ClassName3", "class name in closure use statement");
+		assertExists("named-ident", "UseThisClass", "class name in use statement");
+		assertExists("named-ident", "AlsoUseThis", "class name in use statement");
+		assertExists("named-ident", "AndUseThis", "class name in use statement");
+		assertExists("named-ident", "UseMePlease", "class name in use statement");
+		assertExists("named-ident", "UseMe", "class name in use statement");
+		assertExists("named-ident", "NoUseMe", "class name in use statement");
+		
+		assertExists("comment", "#Perl-style comments are stupid", "Perl-style comment");
+		assertExists("comment", "//unset stuff", "Single line comment");
+		assertExists("comment", "/**\n\t\t * This does something\n\t\t */", "multi line comment");
+		
+		assertExists("languageConstruct", "array", "array language construct");
+		assertExists("languageConstruct", "unset", "unset language construct");
+		assertExists("languageConstruct", "return", "return language construct");
+		assertExists("variable", "$this", "$this variable");
+		assertExists("variable", "$kiss", "$kiss variable");
+		assertExists("variable", "$myPrivateVar", "private member variable");
+		assertExists("string", "'foo'", "single quoted string");
+		assertExists("string", "\"this one is my \\\"favorite\\\"\"", "double quoted string with escaped quote");
+		assertExists("function", "is_int", "is_int function");
+		assertExists("operator", ".=", ".= operator");
+		assertExists("operator", "->", "-> operator");
+		assertExists("nowdoc", "<<<'LULZ'\noh look\na nowdoc!\nLULZ", "nowdoc");
+		assertExists("heredoc", "<<<LOL\noh 'look'\na heredoc!\nLOL", "heredoc");
+		
+		
+		assertExists("heredoc", "<<<HEREDOC\nunclosed heredoc", "unclosed heredoc", "unclosed-heredoc");
+	//]]></script>
+</html>

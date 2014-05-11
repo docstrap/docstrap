@@ -1,0 +1,95 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.batch.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-batch">REM http://en.wikipedia.org/wiki/Batch_file#Advanced_batch_example_-_conditional_shutdown
+@echo off
+color 3
+title Conditional Shutdown
+set /p name=enter a name:
+:start 
+cls
+echo Hi, %name%
+echo. 
+echo 1.Shutdown
+echo 2.Quit
+:invalid_choice
+set /p choice=enter your choice 1,2: 
+if %choice%==1 goto shutdown
+if %choice%==2 exit
+echo invalid choice: %choice%
+goto invalid_choice
+ 
+:shutdown
+cls
+set /p sec=enter the number of seconds that you wish the computer to shutdown in: 
+set /p message=enter the shutdown message you wish to display: 
+shutdown -s -f -t %sec% -c "%message%"
+echo shutdown initiated at %time%
+set /p cancel=type cancel to stop shutdown 
+if %cancel%==cancel shutdown -a
+if %cancel%==cancel goto start
+
+:: http://en.wikipedia.org/wiki/Batch_file#Text_output_with_stripped_CR.2FLF
+set foo=Line 1
+echo y | set /p tmp="%foo%"
+echo Line 2
+echo Line 3
+
+REM http://en.wikipedia.org/wiki/Batch_file#Sleep_.2F_Scripted_Delay
+for /f "tokens=1-3 delims=:.," %%a in ("%time%") do set /a h=%%a, m=1%%b%%100, s=1%%c%%100, end=(h*60+m)*60+s+%1
+:wait
+for /f "tokens=1-3 delims=:.," %%a in ("%time%") do set /a h=%%a, m=1%%b%%100, s=1%%c%%100, current=(h*60+m)*60+s
+if %current% lss %end% goto wait</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("keyword", "echo", "echo keyword");
+		assertExists("keyword", "color", "color keyword");
+		assertExists("keyword", "title", "title keyword");
+		assertExists("keyword", "set", "set keyword");
+		assertExists("keyword", "cls", "cls keyword");
+		assertExists("keyword", "goto", "goto keyword");
+		assertExists("keyword", "shutdown", "shutdown keyword");
+		assertExists("keyword", "if", "if keyword");
+		assertExists("keyword", "for", "for keyword");
+		assertExists("keyword", "in", "in keyword");
+		assertExists("keyword", "do", "do keyword");
+		assertExists("keyword", "exit", "exit keyword");
+		assertExists("keyword", "lss", "lss keyword");
+		
+		assertExists("ident", "Shutdown", "keyword after title");
+		assertExists("ident", "shutdown", "keyword after echo");
+		
+		assertExists("variable", "%name%", "variable surrounded by %");
+		assertExists("variable", "%choice%", "variable surrounded by %");
+		assertExists("variable", "%%a", "variable prefixed with %%");
+		assertExists("variable", "%%b%%100", "variable prefixed with %%");
+		assertExists("variable", "%1", "variable prefixed with %");
+		
+		assertExists("operator", "==", "== operator");
+		assertExists("operator", "=", "= operator");
+		assertExists("operator", ":", ": operator");
+		assertExists("operator", "|", "| operator");
+		assertExists("operator", "*", "* operator");
+		assertExists("operator", "+", "+ operator");
+		
+		assertExists("number", "2", "number");
+		assertExists("number", "60", "number");
+		
+		assertExists("label", "start", "label prefixed with :");
+		assertExists("label", "shutdown", "label after goto");
+		
+		assertExists("comment", "REM http://en.wikipedia.org/wiki/Batch_file#Advanced_batch_example_-_conditional_shutdown", "REM comment");
+		assertExists("comment", ":: http://en.wikipedia.org/wiki/Batch_file#Text_output_with_stripped_CR.2FLF", ":: comment");
+		
+		
+	//]]></script>
+</html>

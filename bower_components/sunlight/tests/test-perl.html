@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.doclinks.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.perl.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-perl">#!/usr/bin/perl
+use strict;
+use warnings;
+use IO::Handle;
+use feature ":5.10";
+
+print "Hello \"world\\\"";
+print 'Hello \'world\\\'s best';
+print 42;
+
+my $animal = "camel";
+
+my $content = '';
+open my $fh, "&lt;", "foo" or die $!;
+{
+	local $/;
+	$content = &lt;$fh&gt;;
+}
+close $fh;
+
+sub handler { # 1st argument is signal name
+	my($sig) = @_;
+	print "Caught a SIG$sig--shutting down\n";
+	close(LOG);
+	exit(0);
+}
+$SIG{'INT'} = \&amp;referenceOrSomethingIGuess;
+
+local $SIG{__WARN__} = sub { die $_[0] };
+eval $proggie;
+
+my @mixed = ("camel", 42, 101.23);
+print $mixed[$#mixed]; #how do perl programmers remember all this stuff?
+@animals[1..$#animals]
+
+my %fruit_color = (
+	apple => "red",
+	banana => "yellow",
+);
+my @fruits = keys %fruit_colors;
+my @colors = values %fruit_colors;
+
+given($foo) {
+	when (undef) {
+		say '$foo is undefined';
+	}
+	when ("foo") {
+		say '$foo is the string "foo"';
+	}
+	when ([1,3,5,7,9]) {
+		say '$foo is an odd digit';
+		continue; # Fall through
+	}
+	when ($_ &lt; 100) {
+		say '$foo is numerically less than 100';
+	}
+	when (\&amp;complicated_check) {
+		say 'a complicated check for $foo is true';
+	}
+	default {
+		die q(I don't know what to do (with) $foo);
+	}
+}
+
+if (1) {
+	#do stuff
+} elsif (0) {
+	#do other stuff
+} else {
+	until (1) {
+		foreach my $key (keys %hash) {
+			print "The value of $key is $hash{$key}\n";
+		}
+	}
+}
+
+#regex literal mayhem
+
+while (&lt;&gt;) {
+	if (?^$?) {
+		# blank line between header and body
+	}
+} continue {
+	reset if eof; # clear ?? status for next file
+}
+
+$re = qr/$pattern/;
+$string =~ /foo${re}bar/;
+$string =~ //;
+$string =~ ??;
+$string =~ /$re/;
+$count = ($paragraph =~ s/Mister\b/Mr./g);
+$ARGV[1] =~ tr/A-Z/a-z/;	# canonicalize to lower case
+tr [\200-\377]
+	[\000-\177];
+	
+y/i/hate/perl; #seriously
+	
+$cnt = tr/0-9//; # count the digits in $_
+
+#remove C-like comments I can't believe I got this pile of sewage to parse correctly
+$program =~ s {
+	/\* # Match the opening delimiter.
+	.*? # Match a minimal number of characters.
+	\*/ # Match the closing delimiter.
+} []gsx;
+
+#friggin' heredocs...
+print &lt;&lt;HEREDOC;
+Default heredoc body
+HEREDOC
+
+print &lt;&lt;"QUOTEDHEREDOC";
+Quoted heredoc body
+QUOTEDHEREDOC
+
+print &lt;&lt;`BACKQUOTEDHEREDOC`;
+echo back quoted heredoc body
+BACKQUOTEDHEREDOC
+
+print &lt;&lt;'SINGLEQUOTEDHEREDOC';
+single quoted heredoc body
+SINGLEQUOTEDHEREDOC
+
+print &lt;&lt;"stacked1", &lt;&lt;"stacked2";
+stacked heredoc #1
+stacked1
+stacked heredoc #2
+stacked2
+
+($quote = &lt;&lt;'FINIS') =~ s/^\s+//gm;
+	The Road goes ever on and on,
+	down from the door where it began.
+FINIS
+
+#doc comments
+=pod
+=head1 Heading Text
+=cut this should not be parsed
+sub { say "yay!"; }
+
+</pre>
+
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("comment", "#!/usr/bin/perl", "comment");
+		
+		assertExists("keyword", "use", "use keyword");
+		assertExists("keyword", "my", "my keyword");
+		assertExists("keyword", "exit", "exit keyword");
+		assertExists("keyword", "local", "local keyword");
+		assertExists("keyword", "die", "die keyword");
+		assertExists("keyword", "or", "or keyword");
+		assertExists("keyword", "sub", "sub keyword");
+		assertExists("keyword", "given", "given keyword");
+		assertExists("keyword", "when", "when keyword");
+		assertExists("keyword", "default", "default keyword");
+		assertExists("keyword", "if", "if keyword");
+		assertExists("keyword", "elsif", "elsif keyword");
+		assertExists("keyword", "else", "else keyword");
+		assertExists("keyword", "until", "until keyword");
+		assertExists("keyword", "foreach", "foreach keyword");
+		
+		assertExists("function", "print", "print function");
+		assertExists("function", "open", "open function");
+		assertExists("function", "close", "close function");
+		assertExists("function", "eval", "eval function");
+		assertExists("function", "keys", "keys function");
+		assertExists("function", "values", "values function");
+		assertExists("function", "undef", "undef function");
+		assertExists("function", "say", "say function");
+		assertExists("function", "reset", "say function");
+		assertExists("function", "eof", "say function");
+		
+		assertExists("variable", "$animal", "variable prepended by $");
+		assertExists("variable", "$content", "variable prepended by $");
+		assertExists("variable", "$fh", "variable prepended by $");
+		assertExists("variable", "$sig", "variable prepended by $");
+		assertExists("variable", "@mixed", "variable prepended by @");
+		assertExists("variable", "@animals", "variable prepended by @");
+		assertExists("variable", "$#mixed", "variable prepended by $#");
+		assertExists("variable", "$#animals", "variable prepended by $#");
+		assertExists("variable", "%fruit_color", "variable prepended by %");
+		
+		assertExists("specialVariable", "$!", "special variable $!");
+		assertExists("specialVariable", "@_", "special variable @_");
+		assertExists("specialVariable", "$_", "special variable $_");
+		assertExists("specialVariable", "$SIG", "special variable $SIG");
+		
+		assertExists("named-ident", "referenceOrSomethingIGuess", "subroutine name after \\&");
+		assertExists("named-ident", "handler", "subroutine name");
+		
+		assertExists("ident", "LOG", "LOG ident");
+		assertExists("ident", "apple", "apple ident");
+		
+		assertExists("number", "42", "integer");
+		assertExists("number", "101.23", "float");
+		
+		assertExists("string", "\"Hello \\\"world\\\\\\\"\"", "double quoted string with escapes");
+		assertExists("string", "'Hello \\'world\\\\\\'s best'", "single quoted string with escapes");
+		assertExists("string", "\"camel\"", "double quoted string");
+		assertExists("string", "''", "empty single quoted string");
+		
+		assertExists("rawString", "q(I don't know what to do (with) $foo)", "raw q string with nested () delimiters");
+		
+		assertExists("punctuation", ";", "semicolon");
+		
+		assertExists("operator", "\\&", "\\& operator");
+		assertExists("operator", "..", ".. operator");
+		assertExists("operator", "=>", "=> operator");
+		assertExists("operator", "=~", "=~ operator");
+		
+		assertExists("docComment", "=pod\n=head1 Heading Text\n=cut this should not be parsed", "pod");
+		
+		assertExists("heredocDeclaration", "<<HEREDOC", "default heredoc declaration");
+		assertExists("heredocDeclaration", "<<\"QUOTEDHEREDOC\"", "double quoted heredoc declaration");
+		assertExists("heredocDeclaration", "<<`BACKQUOTEDHEREDOC`", "back quoted heredoc declaration");
+		assertExists("heredocDeclaration", "<<'SINGLEQUOTEDHEREDOC'", "single quoted heredoc declaration");
+		assertExists("heredocDeclaration", "<<\"stacked1\"", "stacked heredoc declaration");
+		assertExists("heredocDeclaration", "<<\"stacked2\"", "stacked heredoc declaration");
+		
+		assertExists("heredoc", "Default heredoc body\nHEREDOC\n", "default heredoc body");
+		assertExists("heredoc", "Quoted heredoc body\nQUOTEDHEREDOC\n", "double quoted heredoc body");
+		assertExists("heredoc", "echo back quoted heredoc body\nBACKQUOTEDHEREDOC\n", "back quoted heredoc body");
+		assertExists("heredoc", "single quoted heredoc body\nSINGLEQUOTEDHEREDOC\n", "single quoted heredoc body");
+		assertExists("heredoc", "stacked heredoc #1\nstacked1\n", "stacked heredoc body");
+		assertExists("heredoc", "stacked heredoc #2\nstacked2\n", "stacked heredoc body");
+		
+		assertExists("regexLiteral", "?^$?", "regex literal delimited by ?");
+		assertExists("regexLiteral", "//", "empty regex literal //");
+		assertExists("regexLiteral", "??", "empty regex literal ??");
+		assertExists("regexLiteral", "qr/$pattern/", "regex literal prepended by qr with no modifiers");
+		assertExists("regexLiteral", "/$re/", "regex literal delimited by / with no modifiers");
+		assertExists("regexLiteral", "s/Mister\\b/Mr./g", "regex literal prepended by s delimited by / with modifiers");
+		assertExists("regexLiteral", "s {\n\t/\\* # Match the opening delimiter.\n\t.*? # Match a minimal number of characters.\n\t\\*/ # Match the closing delimiter.\n} []gsx", "regex literal prepended by s delimited by { and [ with modifiers");
+		assertExists("regexLiteral", "y/i/hate/perl", "regex literal prepended by y delimited by / with modifiers");
+		assertExists("regexLiteral", "tr [\\200-\\377]\n\t[\\000-\\177]", "regex literal prepended by tr delimited by [ with whitespace");
+		assertExists("regexLiteral", "tr/A-Z/a-z/", "regex literal prepended by tr delimited by / with no modifiers");
+		assertExists("regexLiteral", "tr/0-9//", "regex literal prepended by tr delimited by / with no modifiers and empty replacement");
+		
+	//]]></script>
+</html>

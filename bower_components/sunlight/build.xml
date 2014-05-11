@@ -1,0 +1,197 @@
+<project name="Sunlight" basedir="." default="help">
+
+	<property name="src.dir" value="${basedir}/src"/>
+	
+	<property name="product.name" value="Sunlight"/>
+	<property name="product.shortname" value="sunlight"/>
+	<property name="product.version" value="1.22.0"/>
+
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="build.dist" value="${build.dir}/dist"/>
+	<property name="deploy.dir" value="${build.dir}/${product.version}"/>
+	<property name="temp.dir" value="${build.dir}/temp"/>
+	<property name="lang.dir" value="${deploy.dir}/lang"/>
+	<property name="themes.dir" value="${deploy.dir}/themes"/>
+	<property name="plugins.dir" value="${deploy.dir}/plugins"/>
+	
+	<property environment="env"/>
+	
+	<path id="task.classpath">
+		<pathelement location="lib/yuicompressor-2.4.2.jar" />
+		<pathelement location="lib/yui-compressor-ant-task-0.5.jar" />
+	</path>
+	
+	<taskdef name="yui-compressor" classname="net.noha.tools.ant.yuicompressor.tasks.YuiCompressorTask">
+		<classpath refid="task.classpath"/>
+	</taskdef>
+	
+	<target name="release" depends="clean, compress" description="Creates deployment packages">
+		<mkdir dir="${build.dist}"/>
+		
+		<copy file="${src.dir}/jquery.sunlight.js" todir="${deploy.dir}" />
+		
+		<!-- copy themes -->
+		<copy todir="${themes.dir}">
+			<fileset dir="${src.dir}/themes" />
+		</copy>
+		
+		<property name="package.source" value="${product.shortname}-src-${product.version}"/>
+		<property name="package.release" value="${product.shortname}-${product.version}"/>
+
+		<!-- non compressed files and test HTML files -->
+		<tar destfile="${build.dist}/${package.source}.tar.gz" compression="gzip">
+			<tarfileset dir="${basedir}" includes="src/**,tests/**,CHANGELOG,COPYING,README" prefix="${package.source}"/>
+		</tar>
+		
+		<!-- compressed files -->
+		<tar destfile="${build.dist}/${package.release}.tar.gz" compression="gzip">
+			<tarfileset dir="${deploy.dir}" includes="*/**" prefix="${package.release}"/>
+			<tarfileset dir="${basedir}" includes="CHANGELOG,COPYING,README.md" prefix="${package.release}"/>
+		</tar>
+		
+		<!-- stuff for website -->
+		<mkdir dir="${build.dir}/web"/>
+		<copy file="${deploy.dir}/sunlight-all-min.js" tofile="${build.dir}/web/sunlight-${product.version}.js" />
+		<copy file="${deploy.dir}/themes/sunlight.default.css" tofile="${build.dir}/web/sunlight.default-${product.version}.css" />
+		<copy file="${deploy.dir}/themes/sunlight.dark.css" tofile="${build.dir}/web/sunlight.dark-${product.version}.css" />
+	</target>
+	
+	<target name="clean" depends="init" description="Deletes directories and files created by the build sequence">
+		<delete dir="${build.dir}"/>
+	</target>
+	
+	<target name="compress" depends="init, clean, create-build-dirs, copy-uncompressed" description="Compresses JavaScript source files using YUI compressor">
+		<!-- combine sunlight core and bundled plugins -->
+		<concat destfile="${temp.dir}/sunlight-bundled.js" encoding="UTF-8" eol="lf">
+			<fileset dir="${temp.dir}" includes="sunlight.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight-plugin.linenumbers.js"/>
+		</concat>
+		
+		<!-- combine all files for sunlight-all.js -->
+		<concat destfile="${temp.dir}/sunlight-all.js" encoding="UTF-8" eol="lf">
+			<fileset dir="${temp.dir}" includes="sunlight-bundled.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight-plugin.menu.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight-plugin.doclinks.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.csharp.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.javascript.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.php.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.mysql.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.xml.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.css.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.bash.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.tsql.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.python.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.ruby.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.java.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.brainfuck.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.nginx.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.cpp.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.6502asm.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.perl.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.vb.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.httpd.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.lisp.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.sln.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.batch.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.haskell.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.erlang.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.diff.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.scala.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.actionscript.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.powershell.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.objective-c.js"/>
+			<fileset dir="${temp.dir}" includes="sunlight.lua.js"/>
+		</concat>
+	
+		<yui-compressor warn="true" munge="true" jsSuffix="-min.js" charset="UTF-8" fromdir="${temp.dir}" todir="${deploy.dir}">
+			<include name="sunlight-all.js"/>
+			<include name="sunlight-bundled.js"/>
+		</yui-compressor>
+		
+		<move file="${deploy.dir}/sunlight-bundled-min.js" tofile="${deploy.dir}/sunlight-min.js" />
+		
+		<yui-compressor warn="true" munge="true" jsSuffix="-min.js" charset="UTF-8" fromdir="${temp.dir}" todir="${lang.dir}">
+			<include name="sunlight.csharp.js"/>
+			<include name="sunlight.javascript.js"/>
+			<include name="sunlight.php.js"/>
+			<include name="sunlight.mysql.js"/>
+			<include name="sunlight.xml.js"/>
+			<include name="sunlight.css.js"/>
+			<include name="sunlight.bash.js"/>
+			<include name="sunlight.tsql.js"/>
+			<include name="sunlight.python.js"/>
+			<include name="sunlight.ruby.js"/>
+			<include name="sunlight.java.js"/>
+			<include name="sunlight.brainfuck.js"/>
+			<include name="sunlight.nginx.js"/>
+			<include name="sunlight.cpp.js"/>
+			<include name="sunlight.6502asm.js"/>
+			<include name="sunlight.perl.js"/>
+			<include name="sunlight.vb.js"/>
+			<include name="sunlight.httpd.js"/>
+			<include name="sunlight.lisp.js"/>
+			<include name="sunlight.sln.js"/>
+			<include name="sunlight.batch.js"/>
+			<include name="sunlight.haskell.js"/>
+			<include name="sunlight.erlang.js"/>
+			<include name="sunlight.diff.js"/>
+			<include name="sunlight.scala.js"/>
+			<include name="sunlight.actionscript.js"/>
+			<include name="sunlight.powershell.js"/>
+			<include name="sunlight.objective-c.js"/>
+			<include name="sunlight.lua.js"/>
+		</yui-compressor>
+		
+		<yui-compressor warn="false" munge="true" jsSuffix="-min.js" charset="UTF-8" fromdir="${temp.dir}" todir="${plugins.dir}">
+			<include name="sunlight-plugin.linenumbers.js"/>
+			<include name="sunlight-plugin.menu.js"/>
+			<include name="sunlight-plugin.doclinks.js"/>
+		</yui-compressor>
+		
+		<!-- delete temporary files -->
+		<delete dir="${temp.dir}"/>
+	</target>
+	
+	<target name="help" depends="set-exe-suffix" description="Displays information about available targets">
+		<exec executable="ant${exe.suffix}" failonerror="true">
+			<arg value="-p"/>
+		</exec>
+	</target>
+	
+	<!-- 
+		######################################################
+		internal targets only below
+		######################################################
+	-->
+	
+	<target name="create-build-dirs">
+		<mkdir dir="${deploy.dir}"/>
+		<mkdir dir="${lang.dir}"/>
+		<mkdir dir="${themes.dir}"/>
+		<mkdir dir="${plugins.dir}"/>
+	</target>
+	
+	<target name="copy-uncompressed">
+		<mkdir dir="${temp.dir}"/>
+		<copy todir="${temp.dir}">
+			<fileset dir="${src.dir}" includes="*.js"/>
+			<fileset dir="${src.dir}/lang" includes="*.js"/>
+			<fileset dir="${src.dir}/plugins" includes="*.js"/>
+		</copy>
+	</target>
+	
+	<target name="init">
+		<tstamp>
+			<format property="TIMESTAMP" pattern="yyyy-MM-dd HH:mm:ss"/>
+		</tstamp>
+		<echo level="info">Beginning build for ${product.name} ${product.version}</echo>
+		<echo level="info">  ${TIMESTAMP}</echo>
+		<echo level="info"/>
+	</target>
+	
+	<target name="set-exe-suffix">
+		<condition property="exe.suffix" value=".bat" else="">
+			<os family="winnt"/>
+		</condition>
+	</target>
+</project>

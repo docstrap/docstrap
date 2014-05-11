@@ -1,0 +1,258 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.lisp.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-lisp">;;; Count and collect names and ages.
+(loop for name in '(fred sue alice joe june)
+      as age in '(22 26 19 20 10)
+      append (list name age) into name-and-age-list
+      count name into name-count
+      sum age into total-age
+      finally
+        (return (values (round total-age name-count)
+                        name-and-age-list)))
+
+; special form and constant
+(setq x (+ 3 2 1) y (cons x nil))
+
+; type
+(series 'b 'c) => #Z(b c b c b c ...)
+(scan (list 'a 'b 'c)) => #Z(a b c)
+
+; declaration specifier
+(defun simple-collect-sum (numbers)
+  (declare (optimizable-series-function 1))
+  (collect-fn 'number #'(lambda () 0) #'+ numbers))
+
+; global variables
+(let ((*print-right-margin* 25) (*print-lines* 3))
+  (pprint '(progn (setq a 1 b 2 c 3 d 4))))
+
+
+#2A((0 1 5) (foo #4r4056 (hot dog)))
+
+; user-defined variable
+(setf *temp* (function *))
+
+; keyword arguments
+(write foo
+   :pretty t
+   :right-margin 60
+   :case :downcase)
+   
+;;; cl-typesetting copyright 2003-2004 Marc Battyani see license.txt for the details
+;;; You can reach me at marc.battyani@fractalconcept.com or marc@battyani.net
+;;; The homepage of cl-typesetting is here: http://www.fractalconcept.com/asp/html/cl-typesetting.html
+
+(in-package #:typeset)
+
+;;; This is a module to typeset Common Lisp code with some syntax coloring
+;;; The syntax coloring is too simple to be 100% accurate:
+;;; Improvements welcomed!
+
+(defparameter *pp-font-size* 9)
+(defparameter *pp-default-decoration* '(&quot;courier&quot; (0.0 0.0 0.0)))
+(defparameter *pp-keyword-decoration* '(&quot;courier&quot; (0.8 0.0 0.0)))
+(defparameter *pp-common-lisp-decoration* '(&quot;courier&quot; (0.0 0.0 0.4)))
+(defparameter *pp-string-decoration* '(&quot;courier&quot; (0.0 0.5 0.0)))
+(defparameter *pp-comment-decoration* '(&quot;courier&quot; (0.2 0.2 0.6)))
+(defparameter *pp-symbol-decoration-table* (make-hash-table))
+
+(defparameter *exceptions* '())
+
+(defun add-symbol-decoration (symbol decoration)
+  (setf (gethash symbol *pp-symbol-decoration-table*) decoration))
+
+;(loop for (symbol . decoration) in '((defvar &quot;courier-bold&quot; (0.0 0.0 0.5))
+;                                     (defun &quot;courier-bold&quot; (0.0 0.2 0.5))
+;                                     (defmethod &quot;courier-bold&quot; (0.0 0.2 0.5)))
+;      do (add-symbol-decoration symbol decoration))
+
+(loop for symbol being the external-symbols of 'common-lisp
+      when (eql (search &quot;DEF&quot; (symbol-name symbol)) 0)
+      do (add-symbol-decoration symbol '(&quot;courier-bold&quot; (0.0 0.2 0.5))))
+                    
+(defun split-comment (line)
+  (let ((comment-pos (position #\; line)))
+    (if comment-pos
+        (values (subseq line 0 comment-pos)(subseq line comment-pos))
+        line)))
+
+(defun clean-line (line)
+  (setf line (copy-seq line))
+  (map-into line #'(lambda (char)
+                     (if (find char &quot;()'`#      &quot;)
+                         #\Space
+                         char))
+            line))
+
+(defun process-lisp-line (line)
+  (multiple-value-bind (code comment)(split-comment line)
+    (let* ((cleaned-line (clean-line code))
+           (cl-package (find-package 'common-lisp))
+           (decorations '())
+           (start 0)
+           (trimmed 0)
+           (length (length cleaned-line)))
+      (iter
+       (setf trimmed (position #\Space cleaned-line :start start :test #'char/=))
+       (while (and trimmed (&lt; trimmed length)))
+       (for (values obj end) = (ignore-errors
+                                 (read-from-string
+                                  cleaned-line nil nil
+                                  :start trimmed :preserve-whitespace t)))
+       (unless (numberp end)
+         (setf end (position #\Space cleaned-line :start trimmed :test #'char=)))
+       (while (and (numberp end) (&lt; end length)))
+       (cond ((keywordp obj)
+              (push (list* trimmed end *pp-keyword-decoration*) decorations))
+             ((stringp obj)
+              (push (list* trimmed end *pp-string-decoration*) decorations))
+             ((gethash obj *pp-symbol-decoration-table*)
+              (push (list* trimmed end (gethash obj *pp-symbol-decoration-table*)) decorations))
+             ((and (symbolp obj)
+                   (or (eq (symbol-package obj) cl-package)
+                       (member (symbol-name obj)
+                               '(&quot;FOR&quot; &quot;THEN&quot; &quot;WHILE&quot; &quot;COLLECT&quot; &quot;IN&quot; &quot;WITH&quot; &quot;FINALLY&quot;)
+                               :test #'string=))
+                   (not (member (symbol-name obj) *exceptions* :test #'string=)))
+              (push (list* trimmed end *pp-common-lisp-decoration*) decorations)))
+       (setf start end))
+      (setf start 0)
+      (loop for (start-tok end-tok font-name color) in (nreverse decorations) do
+            (when (/= start start-tok)
+              (with-text-compilation 
+                  (verbatim (subseq line start start-tok))))
+            (with-text-compilation 
+                (with-style (:font font-name :font-size *pp-font-size* :color color)
+                  (verbatim (subseq line start-tok end-tok))))
+            (setf start end-tok))
+      (with-text-compilation 
+        (when (&lt; start length)
+          (verbatim (subseq code start)))
+        (with-style (:font (first *pp-comment-decoration*)
+                           :font-size *pp-font-size*
+                           :color (second *pp-comment-decoration*))
+            (verbatim comment)
+            (when (zerop length) (verbatim &quot; &quot;)) :eol)))))
+
+(defmethod process-lisp-code ((s stream))
+  (with-text-compilation
+      (paragraph (:h-align :left :top-margin 10
+                  :left-margin 5 :right-margin 5
+                  :font &quot;courier&quot; :font-size *pp-font-size*)
+                 (loop for line = (read-line s nil)
+                       while line
+                       do (with-text-compilation
+                              (process-lisp-line line))))))
+
+(defmethod process-lisp-code ((lisp-file pathname))
+  (with-open-file (s lisp-file :direction :input)
+    (process-lisp-code s)))
+
+(defmethod process-lisp-code ((lisp-string string))
+  (with-input-from-string (s lisp-string)
+    (process-lisp-code s)))
+
+(defmethod process-lisp-code ((sexpr t))
+  (process-lisp-code
+   (with-output-to-string (s)
+     (pprint sexpr s))))
+
+(defun pprint-lisp-file (lisp-code pdf-file &amp;optional title *exceptions*)
+  (with-document ()
+    (let* ((margins '(30 50 30 50))
+           (print-stamp (multiple-value-bind (second minute hour date month year)
+                            (get-decoded-time)
+                          (declare (ignore second))
+                          (format nil &quot;Printed on ~4D-~2,'0D-~2,'0D ~2,'0D:~2,'0D&quot;
+                                  year month date hour minute)))
+           (header (compile-text ()
+                        (paragraph (:h-align :center
+                                    :font &quot;Helvetica-BoldOblique&quot; :font-size 12)
+                                   (put-string (cond
+                                                 (title title)
+                                                 ((pathnamep lisp-code)(namestring lisp-code))
+                                                 (t &quot;Lisp Source Code&quot;))))
+                        (vspace 1)
+                        (hrule :dy 0.5)))
+           (footer (lambda (pdf:*page*)
+                     (compile-text (:font &quot;Helvetica&quot; :font-size 10)
+                          (hrule :dy 1/2)
+                          (hbox (:align :center :adjustable-p t)
+                                (verbatim print-stamp)
+                                :hfill
+                                (verbatim
+                                 (format nil &quot;Page ~d&quot; pdf:*page-number*))))))
+           (content (compile-text () (process-lisp-code lisp-code))))
+      (draw-pages content :margins margins :header header :footer footer)
+      (when pdf:*page* (finalize-page pdf:*page*))
+      (pdf:write-document pdf-file))))
+</pre>
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("comment", ";;; Count and collect names and ages.", "comment");
+		assertExists("comment", "; user-defined variable", "comment");
+
+		assertExists("macro", "loop", "loop macro");
+		assertExists("macro", "return", "return macro");
+		assertExists("macro", "setf", "setf macro");
+		assertExists("macro", "unless", "unless macro");
+
+		assertExists("keyword", "for", "for keyword");
+		assertExists("keyword", "in", "in keyword");
+		assertExists("keyword", "as", "as keyword");
+		assertExists("keyword", "append", "append keyword");
+		assertExists("keyword", "into", "into keyword");
+		assertExists("keyword", "count", "count keyword");
+		assertExists("keyword", "sum", "sum keyword");
+		assertExists("keyword", "finally", "finally keyword");
+
+		assertExists("function", "list", "list function");
+		assertExists("function", "round", "round function");
+		assertExists("function", "values", "values function");
+		assertExists("function", "cons", "cons function");
+		assertExists("function", "<", "< function");
+		assertExists("function", "keywordp", "keywordp function");
+		
+		assertExists("named-ident", "simple-collect-sum", "user defined function");
+
+		assertExists("specialForm", "setq", "setq special form");
+		assertExists("specialForm", "function", "function special form");
+		
+		assertExists("keywordArgument", ":pretty", "keyword argument");
+		assertExists("keywordArgument", ":downcase", "keyword argument before )");
+
+		assertExists("globalVariable", "*", "* variable");
+		assertExists("globalVariable", "*print-lines*", "*print-lines* variable");
+
+		assertExists("variable", "*temp*", "user defined variable");
+
+		assertExists("type", "series", "series type specifier");
+
+		assertExists("constant", "nil", "nil constant");
+		assertExists("constant", "t", "t constant");
+
+		assertExists("number", "22", "integer");
+		assertExists("number", "0.4", "float");
+
+		assertExists("ident", "name-and-age-list", "ident with dashes");
+		
+		assertExists("operator", "=>", "=> operator");
+		assertExists("operator", "#'", "#' operator");
+		assertExists("operator", "#2A", "#<n>A operator");
+		assertExists("operator", "#4r", "#<n>R operator");
+		assertExists("operator", "#\\", "#\\ operator");
+		assertExists("operator", "'", "' operator");
+		assertExists("operator", "#", "# operator");
+		assertExists("operator", "...", "... operator");
+
+	//]]></script>
+</html>

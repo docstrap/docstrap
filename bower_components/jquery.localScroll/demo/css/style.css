@@ -1,0 +1,140 @@
+body{ 
+			padding: 0 5px;
+			font-family: Verdana, sans-serif;
+			background-color: #DDD;
+		}
+		ul, li, h3, h2, h1, p, #navigation, #content,.section{
+			padding:0;
+			margin:0;
+			list-style:none;
+		}
+		#content{
+			overflow:hidden;
+			width:630px;
+			background-color:white;
+			position:relative;
+			height:400px;
+			float:left;
+		}
+			#content h2{
+				color:#993333;
+				margin:20px 0pt;
+			}
+			#content a{
+				color:#777;
+				font-weight:bolder;
+				text-decoration:none;
+			}
+		#navigation{
+			float:left;
+			width:110px;
+			height:400px;
+			background-color:#5B739C;
+		}
+			#navigation .sup{
+				margin:26px 10px;
+				font-size:14px;
+			}
+				#navigation ul{
+					margin:5px 0;
+					list-style:circle;
+					padding-left:15px;						
+				}
+				#navigation a{
+					color:white;
+					font-weight:bolder;
+					text-decoration:none;
+				}				
+				#navigation .sup li{
+					margin: 3px 0 !important;
+					margin:-4px 0;
+					font-size:10px;
+				}
+				#navigation a.scrolling{
+					color:#933;
+				}
+		.section{
+			width:1900px;
+			position:relative;
+		}
+		
+			.section .sub{
+				position:relative;
+				float:left;
+				padding:9px 21px 42px 45px;
+				width:567px;
+				height:352px;
+			}
+				.section .sub p{
+					width:550px;
+					margin:16px 0;
+					font-size:85%;
+					line-height:1.4em;
+				}
+				.section .next, .section .prev{
+					font-size:18px;
+					position:absolute;
+					bottom:15px;
+					letter-spacing:-2px;
+				}
+				.section .next{
+					right:30px;
+				}
+				.section .prev{
+					left:30px;
+				}
+		
+		#links, h2.title{
+			position:absolute;
+			right:5px;
+		}
+		
+		#links{
+			border:1px solid #777;
+			width:210px;
+			top:78px;
+			padding:10px;
+		}
+			#links h3{
+				color:#777;
+			}
+			#links ul{
+				padding: 8px 0 3px 20px;
+			}
+			#links li{
+				list-style-type:circle;
+			}
+			#links a{
+				color:#69C;
+			}
+		
+		.message{
+			background:#EEE;
+			border:1px solid #999;
+			color:#333;
+			font-size:12px;
+			padding:1px;
+			position:absolute;
+			left:11px;
+		}
+		#first{
+			top:484px !important;
+			top:498px;			
+		}
+		#second{
+			top:503px !important;
+			top:517px;			
+		}
+		
+		h1{
+			margin:20px 0;
+			color:#5B739C;
+		}
+			h1 strong{
+				font-size:13px;
+				color:#777;
+			}
+		h2.title{
+			top:28px;
+			color:#933;
+		}

@@ -1,0 +1,14 @@
+{
+  "name": "darkstrap",
+  "homepage": "https://github.com/danneu/darkstrap",
+  "version": "0.9.2",
+  "_release": "0.9.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.2",
+    "commit": "d7d24acd7b5f5a6007f5574f71deea0512e46456"
+  },
+  "_source": "git://github.com/danneu/darkstrap.git",
+  "_target": "~0.9.2",
+  "_originalSource": "git://github.com/danneu/darkstrap.git"
+}

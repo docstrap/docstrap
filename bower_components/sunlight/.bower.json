@@ -1,0 +1,14 @@
+{
+  "name": "sunlight",
+  "homepage": "https://github.com/tmont/sunlight",
+  "version": "1.22.0",
+  "_release": "1.22.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.22.0",
+    "commit": "7072c3b20a123b00b1a4c7d95c6ad118e9bcdef6"
+  },
+  "_source": "https://github.com/tmont/sunlight.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/tmont/sunlight.git"
+}

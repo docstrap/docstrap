@@ -1,0 +1,137 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="prettify.js"></script>
+		<link rel="stylesheet" type="text/css" href="prettify.css" />
+		<script type="text/javascript">
+		window.onload = function() {
+			var date = new Date();
+			prettyPrint();
+			console.log("parse time: %dms", new Date().getTime() - date.getTime());
+		};
+	</script>
+</head>
+
+	<body>
+<pre class="prettyprint">using System;
+using UsingAlias = System.Linq.Enumerable;
+
+namespace My.Namespace {
+	public abstract class ValueHandlerFactoryBase&lt;in T&gt; : MarshalByRefObject, IValueHandlerFactory, IAmAnInterface where T : IAmATypeConstraint {
+		[Obsolete] private Skank foo;
+		public const Stripper bar = "foo";
+		protected static readonly DirtyWhore baz = 0xffffff;
+		
+#if NET_20
+		private ArrayList list = new ArrayList();
+#endif
+
+		[AnAttribute(typeof(Exception), Message = "foo"]
+		protected internal class InternalClass&lt;T1, out T2&gt; : ICloneable where T1 : class, IAfterClassConstraint, ISecondConstraint { 
+			void Iterate(ICollection&lt;object&gt; foos) {
+				foreach (var foo in foos) {
+					this.SomeMethod(ref foo, out foo);
+				}
+			}
+		}
+
+		#region verify that casts are properly colored
+		partial void Meh() {
+			IDisposable foo = (IDisposable)foo as ICloneable;
+			foo.Dispose();
+			((IDisposable)this).Dispose();
+			var lame = typeof(IDisposable);
+		}
+		#endregion
+
+		/**
+		 * Gets or sets the value of an integer
+		 * and such. This is a useful comment.
+		 */
+		public new Object Value {
+			get { 
+				var get = foo > 0 ? new Integer[foo] : new Integer[0];
+				return new List&lt;object&gt; {
+					get
+				};
+			}
+			
+			set { 
+				var set = value;
+				value = value;
+				value == value ? DoSomething() : DoSomethingElse();
+				this.value = set ?? value; 
+			}
+		}
+
+		private static Func&lt;Object, char&gt; GetFunction(Object o, Character c, Integer[] integers) {
+			if (!Object.ReferenceEquals(o, c)) {
+				throw new ArgumentException();
+			}
+
+			return value => (char)value.GetHashCode();
+		}
+		
+		/// &lt;summary&gt;
+		/// Tests the coloring of generic method definitions and
+		/// and &lt;c cref="Foo"&gt;generic parameters&lt;/c&gt;
+		/// &lt;/summary&gt;
+		///
+		/// &lt;param name="foos"&gt;Collection of &lt;see cref="Foo" /&gt;&lt;/param&gt;
+		[FirstAttribute]
+		[Pure(typeof(IDisposable[])), OutOfThisWorld]
+		[OutOfThisWorld(AttributeNamedParameter = "foo")]
+		[Another]
+		Action&lt;IDisposable&gt; DoOtherStuff(IEnumerable&lt;Foo&gt; fooEnumerable, string[] strings) {
+			Action&lt;Func&lt;IDisposable, SecondGeneric&gt;&gt; action = () => disposable => new Foo();
+			
+			//neither foo below should be a named ident
+			return foo &lt; 1 || foo &gt; 2;
+		}
+		
+		//method without an access modifier: "Action" should be a named ident
+		Action DoStuff() { }
+
+		protected override sealed T NumbersTest&lt;T&gt;(ref Foo foo, out Bar @class, params ArrayOfSomething[] somethings) where T : event, IDisposable, IFoo {
+			//let's test out numbers
+			int i = 0;
+			double d = 1.5;
+			float f = (1.7f + 1.2d) * (12 % 5);
+			decimal dec = 1.2d;
+			int hex = 0x1a; //ooh! hex!
+
+			return default(T);
+		}
+
+		public virtual IValueHandler Create(string resourceName, string criterionFieldName) {
+			//1) check for resource-specific value handler
+			VerifyStuff((int)resourceName);
+
+			/* multi
+			line comment
+			*/
+
+			var s = "this is \"a\" string";
+			s = @"this is ""another""
+multi line
+string";
+
+			switch (Foo.Bar) {
+				case "foo":
+					if (2 |= Foo["foo"]) {
+						throw new InvalidOperationException(string.Format("fail"));
+					}
+					break;
+				case "bar":
+					goto default;
+				case Empty:
+					return "foo";
+				default:
+					yield return new GarbanzoBean();
+			}
+		}
+	}
+}</pre>
+	
+	</body>
+</html>

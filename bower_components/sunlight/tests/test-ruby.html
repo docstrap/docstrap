@@ -1,0 +1,265 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.doclinks.js"></script>
+		<script type="text/javascript" src="../src/plugins/sunlight-plugin.linenumbers.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.ruby.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-ruby">#!/usr/bin/ruby
+
+#single line comment
+puts 'Hello world!'
+puts "Hello world!"
+
+=begin This is a "comment" that begins with
+=begin and apparently doesn't end until
+you get to a line that starts with =end
+=end this is also ignored by the interpreter
+def factorial(n)
+  if n == 0
+    1
+  else
+    n * factorial(n-1)
+  end
+end
+
+`ls -l`
+
+foo %= not(a && b)
+print defined? foo || foo.eql?(10) || foo.equal?(10.0)
+
+"stringToChomp1".chomp!()
+"stringToChomp2".chomp()
+
+foo = %q(raw string 1)
+foo = %Q[raw string 2]
+foo = %{raw string 3}
+foo = %!raw string\\\! 4!
+
+#regex stuff
+print /regextest1/ =~ 'regextest'
+print /regextest2/i =~ 'regextest'
+print 5 /regextest3/i #not a regex
+print %r[regextest4]xm =~ 'regextest' #dear god why does ruby have so many different syntaxes for the same thing?
+print %r|regextest5| =~ 'regextest'
+print /\/\\/ #escape test
+
+StaticVariableAccess::Bar
+
+case $age
+	when 0 .. 2
+	  "baby"
+	when 3 .. 6
+	  "little child"
+	when 7 .. 12
+	  "child"
+	when 12 .. 18
+	  # Note: 12 already matched by "child"
+	  "youth"
+	else
+	  "adult"
+	end
+
+[1,2,3].each do |i| print i*2, "\n" end
+
+begin
+  do_something
+rescue
+  recover
+ensure
+  must_to_do
+end
+
+BEGIN {
+	#oh god, the colons!
+	not_true = false
+	foo = false ? :symbol1 :not_a_symbol1
+	foo = false ? (true ? :symbol2 : :symbol3) :not_a_symbol2
+}
+
+END {
+	#do stuff
+}
+
+class Person
+  attr_reader :name, :age
+  def initialize(name, age)
+    @name, @age = name, age
+  end
+  def &lt;=&gt;(person) # Comparison operator for sorting
+    @age &lt;=&gt; person.age
+  end
+  def to_s
+    "#@name (#@age)"
+  end
+end
+
+class ParseError &lt; ExtendedException
+  def initialize input, line, pos
+    super "Could not parse '#{input}' at line #{line}, position #{pos}"
+  end
+end
+ 
+raise IdentBeforeNew.new("Foo", 3, 9)
+
+#friggin' heredocs...
+#http://ruby-doc.org/docs/ruby-doc-bundle/Manual/man-1.4/syntax.html#here_doc
+print &lt;&lt;HEREDOC
+Default heredoc body
+HEREDOC
+
+print &lt;&lt;"QUOTEDHEREDOC";
+Quoted heredoc body
+QUOTEDHEREDOC
+
+print &lt;&lt;`BACKQUOTEDHEREDOC`
+echo back quoted heredoc body
+BACKQUOTEDHEREDOC
+
+print &lt;&lt;'SINGLEQUOTEDHEREDOC'
+single quoted heredoc body
+SINGLEQUOTEDHEREDOC
+
+print &lt;&lt;"stacked1", &lt;&lt;"stacked2"
+stacked heredoc #1
+stacked1
+stacked heredoc #2
+stacked2
+
+if need_define_foo
+	eval &lt;&lt;-INDENTED  # delimiters can be indented
+		def foo
+			print "foo\n"
+		end
+	INDENTED
+end
+
+print &lt;&lt;-'THERE'
+    This is single quoted.
+    The above used #{a + 1}
+    THERE
+	
+File::open("grocery-list", "w") do |f|
+  f &lt;&lt; &lt;&lt;GROCERY_LIST
+Grocery list
+------------
+1. Salad mix.
+2. Strawberries.*
+3. Cereal.
+4. Milk.*
+ 
+* Organic
+GROCERY_LIST
+end
+
+#&lt;&lt; operator should not be interpreted as heredoc
+self &lt;&lt; a[0]
+
+def foo(s)
+	puts s
+end
+
+foo &lt;&lt;afterIdent
+lol
+afterIdent
+
+foo = &lt;&lt;1_a2
+lol
+1_a2
+
+print "we're still good"
+</pre>
+
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("heredocDeclaration", "<<HEREDOC", "default heredoc declaration");
+		assertExists("heredocDeclaration", "<<\"QUOTEDHEREDOC\"", "double quoted heredoc declaration");
+		assertExists("heredocDeclaration", "<<`BACKQUOTEDHEREDOC`", "back quoted heredoc declaration");
+		assertExists("heredocDeclaration", "<<'SINGLEQUOTEDHEREDOC'", "single quoted heredoc declaration");
+		assertExists("heredocDeclaration", "<<\"stacked1\"", "stacked heredoc declaration");
+		assertExists("heredocDeclaration", "<<\"stacked2\"", "stacked heredoc declaration");
+		assertExists("heredocDeclaration", "<<-INDENTED", "indented heredoc declaration");
+		assertExists("heredocDeclaration", "<<1_a2", "heredoc declaration that starts with a number");
+		assertExists("heredocDeclaration", "<<afterIdent", "heredoc declaration after ident");
+		
+		assertExists("heredoc", "Default heredoc body\nHEREDOC\n", "default heredoc body");
+		assertExists("heredoc", "Quoted heredoc body\nQUOTEDHEREDOC\n", "double quoted heredoc body");
+		assertExists("heredoc", "echo back quoted heredoc body\nBACKQUOTEDHEREDOC\n", "back quoted heredoc body");
+		assertExists("heredoc", "single quoted heredoc body\nSINGLEQUOTEDHEREDOC\n", "single quoted heredoc body");
+		assertExists("heredoc", "stacked heredoc #1\nstacked1\n", "stacked heredoc body");
+		assertExists("heredoc", "stacked heredoc #2\nstacked2\n", "stacked heredoc body");
+		
+		assertExists("comment", "#single line comment", "comment");
+		assertExists("comment", "# delimiters can be indented", "comment after heredoc declaration");
+		
+		assertExists("docComment", "=begin This is a \"comment\" that begins with\n=begin and apparently doesn't end until\nyou get to a line that starts with =end\n=end this is also ignored by the interpreter", "docComment");
+		
+		assertExists("keyword", "def", "def keyword");
+		assertExists("keyword", "if", "if keyword");
+		assertExists("keyword", "else", "else keyword");
+		assertExists("keyword", "end", "end keyword");
+		assertExists("keyword", "not", "not keyword");
+		assertExists("keyword", "case", "case keyword");
+		assertExists("keyword", "when", "when keyword");
+		assertExists("keyword", "begin", "begin keyword");
+		assertExists("keyword", "rescue", "rescue keyword");
+		assertExists("keyword", "ensure", "ensure keyword");
+		assertExists("keyword", "BEGIN", "BEGIN keyword");
+		assertExists("keyword", "END", "END keyword");
+		
+		assertExists("regexLiteral", "/regextest1/", "regex literal");
+		assertExists("regexLiteral", "/regextest2/i", "regex literal with modifiers");
+		assertExists("ident", "regextest3", "not a regex literal");
+		assertExists("regexLiteral", "%r[regextest4]xm", "raw regex literal with modifiers");
+		assertExists("regexLiteral", "%r|regextest5|", "raw regex literal");
+		assertExists("regexLiteral", "/\\/\\\\/", "regex literal with escaped backslash and forward slash");
+		
+		assertExists("operator", "%=", "%= operator");
+		assertExists("operator", "&&", "&& operator");
+		assertExists("operator", "..", ".. operator");
+		
+		assertExists("specialOperator", "defined?", "defined? operator");
+		assertExists("specialOperator", "eql?", "eql? operator");
+		assertExists("specialOperator", "equal?", "equal? operator");
+		
+		assertExists("named-ident", "factorial", "function name");
+		assertExists("named-ident", "StaticVariableAccess", "static variable access");
+		assertExists("named-ident", "ExtendedException", "extended class name");
+		assertExists("named-ident", "IdentBeforeNew", "class name before new() invocation");
+		
+		assertExists("ident", "factorial", "user-defined function call");
+		assertExists("ident", "not_a_symbol1", "second argument of ternary operator");
+		assertExists("ident", "not_a_symbol2", "second argument of ternary operator after nested ternary operator");
+		
+		assertExists("symbol", ":symbol1", "symbol as first argument of ternary operator");
+		assertExists("symbol", ":symbol2", "symbol as first argument of nested ternary operator");
+		assertExists("symbol", ":symbol3", "symbol as second argument of nested ternary operator");
+		
+		assertExists("function", "puts", "puts function");
+		assertExists("function", "chomp", "chomp function");
+		assertExists("function", "chomp!", "chomp! function");
+		
+		assertExists("string", "'Hello world!'", "single quoted string");
+		assertExists("string", "\"Hello world!\"", "double quoted string");
+		assertExists("string", "\"stringToChomp1\"", "double quoted string");
+		assertExists("string", "\"stringToChomp2\"", "double quoted string");
+		assertExists("string", "\"we're still good\"", "string after heredocs");
+		
+		assertExists("rawString", "%q(raw string 1)", "raw string");
+		assertExists("rawString", "%Q[raw string 2]", "raw string");
+		assertExists("rawString", "%{raw string 3}", "raw string");
+		assertExists("rawString", "%!raw string\\\\\\! 4!", "raw string");
+		
+		assertExists("subshellCommand", "`ls -l`", "subshell command");
+		
+		assertExists("number", "10", "integer");
+		assertExists("number", "10.0", "float");
+		
+	//]]></script>
+</html>

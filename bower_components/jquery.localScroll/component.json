@@ -1,0 +1,22 @@
+{
+  "name": "jquery.localScroll",
+  "version": "1.2.9",
+  "description": "This plugin will animate a regular anchor navigation. It will allow your visitors to navigate your site with a smooth scrolling effect.",
+  "homepage": "https://github.com/flesler/jquery.localScroll",
+  "main": [
+    "./jquery.localScroll.js",
+    "./jquery.localScroll.min.js"
+  ],
+  "dependencies": {
+    "jquery": ">=1.8",
+    "jquery.scrollTo": ">=1.4.3"
+  },
+  "keywords": [
+    "browser", "animated", "animation", 
+    "scrolling", "scroll", "links", "anchors"
+  ],
+  "author": {
+    "name": "Ariel Flesler",
+    "web": "http://flesler.blogspot.com/"
+  }
+}

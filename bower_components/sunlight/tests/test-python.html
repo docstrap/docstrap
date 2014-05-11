@@ -1,0 +1,222 @@
+<html>
+
+	<head>
+		<script type="text/javascript" src="../src/sunlight.js"></script>
+		<script type="text/javascript" src="../src/lang/sunlight.python.js"></script>
+		<link rel="stylesheet" type="text/css" href="../src/themes/sunlight.default.css" />
+	</head>
+
+	<body>
+<pre id="code" class="sunlight-highlight-python">#normal strings
+print 'Hello, world!'
+print "Hello, world!"
+
+#looooooooooooooong strings
+print """Hello, world!"""
+print '''Hello, world!'''
+
+#raw strings
+print r"hello"
+print r'hello'
+print R"hello"
+print R'hello'
+
+print r'''hello'''
+print R'''hello'''
+print r"""hello"""
+print R"""hello"""
+
+#binary strings
+print br"hello"
+print br'hello'
+print bR"hello"
+print bR'hello'
+print Br"hello"
+print Br'hello'
+print BR"hello"
+print BR'hello'
+
+print br"""hello"""
+print br'''hello'''
+print bR"""hello"""
+print bR'''hello'''
+print Br"""hello"""
+print Br'''hello'''
+print BR"""hello"""
+print BR'''hello'''
+
+#fibonacci tuple assignment
+parents, babies = (1, 1)
+while babies &lt; 100:
+    print 'This generation has %d babies' % babies
+    parents, babies = (babies, parents + babies)
+
+#import, regex
+import re
+for test_string in ['555-1212', 'ILL-EGAL']:
+    if re.match(r'^\d{3}-\d{4}$', test_string):
+        print test_string, 'is a valid US local phone number'
+    else:
+        print test_string, 'rejected'
+
+#!/usr/bin/env python
+# This program adds up integers in the command line
+import sys
+try:
+    total = sum(int(arg) for arg in sys.argv[1:])
+    print 'sum =', total
+except ValueError:
+    print 'Please supply integer arguments'
+
+class BankAccount(object):
+    def __init__(self, initial_balance=0):
+        self.balance = initial_balance
+    def deposit(self, amount):
+        self.balance += amount
+    def withdraw(self, amount):
+        self.balance -= amount
+    def overdrawn(self):
+        return self.balance &lt; 0
+my_account = BankAccount(15)
+my_account.withdraw(5)
+print my_account.balance
+
+
+#8-Queens
+BOARD_SIZE = 8
+
+class BailOut(Exception):
+    pass
+
+def validate(queens):
+    left = right = col = queens[-1]
+    for r in reversed(queens[:-1]):
+        left, right = left-1, right+1
+        if r in (left, col, right):
+            raise BailOut
+
+def add_queen(queens):
+    for i in range(BOARD_SIZE):
+        test_queens = queens + [i]
+        try:
+            validate(test_queens)
+            if len(test_queens) == BOARD_SIZE:
+                return test_queens
+            else:
+                return add_queen(test_queens)
+        except BailOut:
+            pass
+    raise BailOut
+
+queens = add_queen([])
+print queens
+print "\n".join(". "*q + "Q " + ". "*(BOARD_SIZE-q-1) for q in queens)
+
+variableName = 4**5
+complexNumber = 4j += 1
+
+constants = (None, True, False, NotImplemented, __debug__, Ellipsis)
+ellipsis = ...
+
+import unittest
+def median(pool):
+    copy = sorted(pool)
+    size = len(copy)
+    if size % 2 == 1:
+        return copy[(size - 1) / 2]
+    else:
+        return (copy[size/2 - 1] + copy[size/2]) / 2
+class TestMedian(unittest.TestCase):
+    def testMedian(self):
+        self.failUnlessEqual(median([2, 9, 9, 7, 9, 2, 4, 5, 8]), 7)
+if __name__ == '__main__':
+    unittest.main()</pre>
+
+	</body>
+
+	<script type="text/javascript"  src="test.js"></script>
+	<script type="text/javascript">//<![CDATA[
+		assertExists("comment", "#normal strings", "comment");
+		assertExists("comment", "#raw strings", "comment");
+		assertExists("comment", "#binary strings", "comment");
+		
+		assertExists("string", "'Hello, world!'", "single quoted string");
+		assertExists("string", "\"Hello, world!\"", "double quoted string");
+		
+		assertExists("rawString", "r\"hello\"", "raw double quoted string");
+		assertExists("rawString", "R\"hello\"", "raw double quoted string");
+		assertExists("rawString", "r'hello'", "raw single quoted string");
+		assertExists("rawString", "R'hello'", "raw single quoted string");
+		
+		assertExists("rawLongString", "R'''hello'''", "raw single quoted string");
+		assertExists("rawLongString", "r'''hello'''", "raw single quoted string");
+		assertExists("rawLongString", "R\"\"\"hello\"\"\"", "raw double quoted string");
+		assertExists("rawLongString", "r\"\"\"hello\"\"\"", "raw double quoted string");
+		
+		assertExists("binaryString", "br\"hello\"", "binary raw double quoted string");
+		assertExists("binaryString", "br'hello'", "binary raw single quoted string");
+		assertExists("binaryString", "bR\"hello\"", "binary raw double quoted string");
+		assertExists("binaryString", "bR'hello'", "binary raw single quoted string");
+		assertExists("binaryString", "Br\"hello\"", "binary raw double quoted string");
+		assertExists("binaryString", "Br'hello'", "binary raw single quoted string");
+		assertExists("binaryString", "BR\"hello\"", "binary raw double quoted string");
+		assertExists("binaryString", "BR'hello'", "binary raw single quoted string");
+		
+		assertExists("binaryLongString", "br\"\"\"hello\"\"\"", "binary raw long double quoted string");
+		assertExists("binaryLongString", "br'''hello'''", "binary raw single long quoted string");
+		assertExists("binaryLongString", "bR\"\"\"hello\"\"\"", "binary raw long double quoted string");
+		assertExists("binaryLongString", "bR'''hello'''", "binary raw single long quoted string");
+		assertExists("binaryLongString", "Br\"\"\"hello\"\"\"", "binary raw long double quoted string");
+		assertExists("binaryLongString", "Br'''hello'''", "binary raw single long quoted string");
+		assertExists("binaryLongString", "BR\"\"\"hello\"\"\"", "binary raw long double quoted string");
+		assertExists("binaryLongString", "BR'''hello'''", "binary raw single long quoted string");
+		
+		assertExists("longString", "'''Hello, world!'''", "long single quoted string");
+		assertExists("longString", "\"\"\"Hello, world!\"\"\"", "long double quoted string");
+		
+		assertExists("function", "print", "print function");
+		assertExists("function", "len", "len function");
+		assertExists("function", "range", "range function");
+		assertExists("function", "reversed", "reversed function");
+		
+		assertExists("named-ident", "BailOut", "class name");
+		assertExists("named-ident", "validate", "function name");
+		assertExists("named-ident", "add_queen", "function name");
+		assertExists("named-ident", "overdrawn", "function name");
+		assertExists("named-ident", "ValueError", "exception name after except");
+		
+		assertExists("ident", "BOARD_SIZE", "variable declaration");
+		assertExists("ident", "queens", "function parameter");
+		assertExists("ident", "variableName", "variable declaration");
+		assertExists("ident", "complexNumber", "variable declaration");
+		
+		assertExists("keyword", "while", "while keyword");
+		assertExists("keyword", "import", "import keyword");
+		assertExists("keyword", "for", "for keyword");
+		assertExists("keyword", "in", "in keyword");
+		assertExists("keyword", "else", "else keyword");
+		assertExists("keyword", "if", "if keyword");
+		assertExists("keyword", "try", "try keyword");
+		assertExists("keyword", "def", "def keyword");
+		assertExists("keyword", "return", "return keyword");
+		
+		assertExists("number", "4j", "complex number");
+		assertExists("number", "5", "integer");
+		
+		assertExists("operator", "**", "** operator");
+		assertExists("delimiter", "+=", "+= delimiter");
+		assertExists("delimiter", "=", "= delimiter");
+		
+		assertExists("ellipsis", "...", "ellipsis");
+		
+		assertExists("constant", "None", "None constant");
+		assertExists("constant", "True", "True constant");
+		assertExists("constant", "False", "False constant");
+		assertExists("constant", "__debug__", "__debug__ constant");
+		assertExists("constant", "Ellipsis", "Ellipsis constant");
+		assertExists("constant", "NotImplemented", "NotImplemented constant");
+		
+		assertExists("attribute", "__name__", "__name__ attribute");
+		
+	//]]></script>
+</html>

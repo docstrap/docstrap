@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>jQuery.LocalScroll</title>
+	<meta name="keywords" content="javascript, jquery, plugins, scroll, anchor, to, navigation, scrollTo, smooth, animation, overflow, element, window, effect, lazy, ariel, flesler, customizable" />
+	<meta name="description" content="Demo of jQuery.LocalScroll. A jQuery plugin to make anchor navigation work with a smooth animation, made by Ariel Flesler." />
+	<meta name="robots" content="index,follow" />
+	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/jquery.scrollTo.min.js"></script>
+	<script type="text/javascript" src="../jquery.localScroll.js"></script>
+	<script type="text/javascript">
+		jQuery(function( $ ){
+			/**
+			 * Most jQuery.localScroll's settings, actually belong to jQuery.ScrollTo, check it's demo for an example of each option.
+			 * @see http://flesler.demos.com/jquery/scrollTo/
+			 * You can use EVERY single setting of jQuery.ScrollTo, in the settings hash you send to jQuery.LocalScroll.
+			 */
+			
+			// The default axis is 'y', but in this demo, I want to scroll both
+			// You can modify any default like this
+			$.localScroll.defaults.axis = 'xy';
+			
+			// Scroll initially if there's a hash (#something) in the url 
+			$.localScroll.hash({
+				target: '#content', // Could be a selector or a jQuery object too.
+				queue:true,
+				duration:1500
+			});
+			
+			/**
+			 * NOTE: I use $.localScroll instead of $('#navigation').localScroll() so I
+			 * also affect the >> and << links. I want every link in the page to scroll.
+			 */
+			$.localScroll({
+				target: '#content', // could be a selector or a jQuery object too.
+				queue:true,
+				duration:1000,
+				hash:true,
+				onBefore:function( e, anchor, $target ){
+					// The 'this' is the settings object, can be modified
+				},
+				onAfter:function( anchor, settings ){
+					// The 'this' contains the scrolled element (#content)
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<h1>jQuery.LocalScroll&nbsp;<strong>by Ariel Flesler</strong></h1>
+	<h2 class="title">Regular Demo</h2>
+	<ul id="navigation">
+		<li class="sup">
+			<a href="#section1">Section 1</a>
+			<ul>
+				<li><a href="#section1b">Section 1-b</a></li>
+				<li><a href="#section1c">Section 1-c</a></li>
+			</ul>					
+		</li>
+		<li class="sup">
+			<a href="#section2">Section 2</a>
+			<ul>
+				<li><a href="#section2b">Section 2-b</a></li>
+				<li><a href="#section2c">Section 2-c</a></li>
+			</ul>	
+		</li>
+		<li class="sup">
+			<a href="#section3">Section 3</a>
+			<ul>
+				<li><a href="#section3b">Section 3-b</a></li>
+				<li><a href="#section3c">Section 3-c</a></li>
+			</ul>
+		</li>
+		<li class="sup">
+			<a href="#section4">Section 4</a>
+			<ul>
+				<li><a href="#section4b">Section 4-b</a></li>
+				<li><a href="#section4c">Section 4-c</a></li>
+			</ul>
+		</li>
+		<li class="sup">
+			<a href="#section5">Section 5</a>
+			<ul>
+				<li><a href="#section5b">Section 5-b</a></li>
+				<li><a href="#section5c">Section 5-c</a></li>
+			</ul>
+		</li>
+	</ul>															
+	<div id="content">
+		<div class="section">
+			<ul>
+				<li class="sub" id="section1">
+					<h2>Section 1</h2>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et turpis sed metus fermentum pellentesque. Vestibulum auctor neque ac nunc elementum malesuada. Praesent non est sed libero vestibulum consectetuer. Sed vehicula. Vivamus quis tellus sit amet erat ultrices luctus. Fusce a ligula. Fusce viverra libero vitae velit. Aenean bibendum nibh non lorem. Suspendisse quis velit. Integer sit amet lacus. Curabitur tristique. Morbi eu lectus. Vestibulum tristique aliquam quam. Sed neque.</p>
+					<p>Nulla facilisi. Quisque eleifend libero. Sed eros. Morbi vel leo. Morbi varius tincidunt sem. Nam sodales volutpat velit. Suspendisse potenti. Duis vehicula pede non nisi. Proin elit pede, ultrices non, ultrices quis, vulputate sit amet, magna. Praesent sodales pellentesque justo. Donec blandit, augue id convallis congue, magna libero hendrerit erat, id blandit est lorem a tellus. Vestibulum tincidunt lectus quis metus. Pellentesque placerat lacus in urna.</p>
+					<a href="#section1b" class="next">&gt;&gt;</a>
+				</li>
+				<li class="sub" id="section1b">
+					<h2>Section 1-b</h2>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et turpis sed metus fermentum pellentesque. Vestibulum auctor neque ac nunc elementum malesuada. Praesent non est sed libero vestibulum consectetuer. Sed vehicula. Vivamus quis tellus sit amet erat ultrices luctus. Fusce a ligula. Fusce viverra libero vitae velit. Aenean bibendum nibh non lorem. Suspendisse quis velit. Integer sit amet lacus. Curabitur tristique. Morbi eu lectus. Vestibulum tristique aliquam quam. Sed neque.</p>
+					<p>Nulla facilisi. Quisque eleifend libero. Sed eros. Morbi vel leo. Morbi varius tincidunt sem. Nam sodales volutpat velit. Suspendisse potenti. Duis vehicula pede non nisi. Proin elit pede, ultrices non, ultrices quis, vulputate sit amet, magna. Praesent sodales pellentesque justo. Donec blandit, augue id convallis congue, magna libero hendrerit erat, id blandit est lorem a tellus. Vestibulum tincidunt lectus quis metus. Pellentesque placerat lacus in urna.</p>
+					<a href="#section1" class="prev">&lt;&lt;</a>
+					<a href="#section1c" class="next">&gt;&gt;</a>					
+				</li>
+				<li class="sub" id="section1c">
+					<h2>Section 1-c</h2>
+					<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et turpis sed metus fermentum pellentesque. Vestibulum auctor neque ac nunc elementum malesuada. Praesent non est sed libero vestibulum consectetuer. Sed vehicula. Vivamus quis tellus sit amet erat ultrices luctus. Fusce a ligula. Fusce viverra libero vitae velit. Aenean bibendum nibh non lorem. Suspendisse quis velit. Integer sit amet lacus. Curabitur tristique. Morbi eu lectus. Vestibulum tristique aliquam quam. Sed neque.</p>
+					<p>Nulla facilisi. Quisque eleifend libero. Sed eros. Morbi vel leo. Morbi varius tincidunt sem. Nam sodales volutpat velit. Suspendisse potenti. Duis vehicula pede non nisi. Proin elit pede, ultrices non, ultrices quis, vulputate sit amet, magna. Praesent sodales pellentesque justo. Donec blandit, augue id convallis congue, magna libero hendrerit erat, id blandit est lorem a tellus. Vestibulum tincidunt lectus quis metus. Pellentesque placerat lacus in urna.</p>
+					<a href="#section1b" class="prev">&lt;&lt;</a>
+				</li>				
+			</ul>
+		</div>
+		<div class="section">
+			<ul>
+				<li class="sub" id="section2" >
+					<h2>Section 2</h2>
+					<p>Nullam et sem eget massa pellentesque dapibus. Nulla sollicitudin enim quis odio. Quisque ipsum lorem, volutpat eget, condimentum ac, posuere id, risus. Suspendisse tortor metus, aliquet in, varius nec, hendrerit a, libero. Suspendisse iaculis. Fusce commodo urna ut enim. Fusce tempus eros. Phasellus sodales tellus id dolor. Integer sollicitudin, turpis ac interdum condimentum, enim enim tempus metus, sed imperdiet massa diam nec elit. Mauris ante augue, hendrerit non, commodo ac, porttitor eu, turpis.</p>
+					<p>In fermentum nibh ut diam. Mauris sagittis, tellus ac molestie fermentum, arcu orci pharetra mi, id vehicula massa leo vel pede. Nullam semper tincidunt lorem. Proin arcu libero, auctor sed, interdum egestas, ullamcorper et, lacus. Donec id lectus eget diam accumsan ullamcorper. Donec at urna et lacus condimentum pellentesque. Phasellus dapibus hendrerit massa. Sed sed ipsum. Quisque venenatis. Donec vel turpis. Vivamus quis augue a turpis facilisis facilisis. Pellentesque augue ipsum, bibendum id.</p>
+					<a href="#section2b" class="next">&gt;&gt;</a>	
+				</li>
+				<li class="sub" id="section2b">
+					<h2>Section 2-b</h2>
+					<p>Nullam et sem eget massa pellentesque dapibus. Nulla sollicitudin enim quis odio. Quisque ipsum lorem, volutpat eget, condimentum ac, posuere id, risus. Suspendisse tortor metus, aliquet in, varius nec, hendrerit a, libero. Suspendisse iaculis. Fusce commodo urna ut enim. Fusce tempus eros. Phasellus sodales tellus id dolor. Integer sollicitudin, turpis ac interdum condimentum, enim enim tempus metus, sed imperdiet massa diam nec elit. Mauris ante augue, hendrerit non, commodo ac, porttitor eu, turpis.</p>
+					<p>In fermentum nibh ut diam. Mauris sagittis, tellus ac molestie fermentum, arcu orci pharetra mi, id vehicula massa leo vel pede. Nullam semper tincidunt lorem. Proin arcu libero, auctor sed, interdum egestas, ullamcorper et, lacus. Donec id lectus eget diam accumsan ullamcorper. Donec at urna et lacus condimentum pellentesque. Phasellus dapibus hendrerit massa. Sed sed ipsum. Quisque venenatis. Donec vel turpis. Vivamus quis augue a turpis facilisis facilisis. Pellentesque augue ipsum, bibendum id</p>
+					<a href="#section2" class="prev">&lt;&lt;</a>
+					<a href="#section2c" class="next">&gt;&gt;</a>	
+				</li>
+				<li class="sub" id="section2c">
+					<h2>Section 2-c</h2>
+					<p>Nullam et sem eget massa pellentesque dapibus. Nulla sollicitudin enim quis odio. Quisque ipsum lorem, volutpat eget, condimentum ac, posuere id, risus. Suspendisse tortor metus, aliquet in, varius nec, hendrerit a, libero. Suspendisse iaculis. Fusce commodo urna ut enim. Fusce tempus eros. Phasellus sodales tellus id dolor. Integer sollicitudin, turpis ac interdum condimentum, enim enim tempus metus, sed imperdiet massa diam nec elit. Mauris ante augue, hendrerit non, commodo ac, porttitor eu, turpis.</p>
+					<p>In fermentum nibh ut diam. Mauris sagittis, tellus ac molestie fermentum, arcu orci pharetra mi, id vehicula massa leo vel pede. Nullam semper tincidunt lorem. Proin arcu libero, Donec at urna et lacus condimentum pellentesque. Phasellus dapibus hendrerit massa. Sed sed ipsum. Quisque venenatis. Donec vel turpis. Vivamus quis augue a turpis facilisis facilisis. Pellentesque augue ipsum, bibendum id, scelerisque id, venenatis sit amet, nulla.</p>
+					<a href="#section2b" class="prev">&lt;&lt;</a>
+				</li>
+			</ul>
+		</div>
+		<div class="section">
+			<ul>
+				<li class="sub" id="section3">
+					<h2>Section 3</h2>
+					<p>Aliquam erat volutpat. In a neque. Mauris malesuada consectetuer metus. Etiam molestie. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer scelerisque gravida libero. Nulla nisi massa, consequat nec, gravida sit amet, imperdiet in, est. Nam gravida lacus. Etiam sem tortor, faucibus eget, iaculis euismod, molestie consequat, mauris. Phasellus consectetuer lobortis eros. Maecenas sit amet arcu. Morbi ut enim. Fusce sem augue, consectetuer in, tempus eu, dictum vel, felis. Praesent nisl tortor, aliquet a, fermentum ac, molestie vitae, libero.</p>
+					<p>Donec lacinia neque et justo. Vestibulum pretium semper tellus. Phasellus lacinia tristique purus. Id, orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla non orci eu felis accumsan blandit. Nam condimentum. Quisque pulvinar. Cras nibh. Sed quis lorem id erat feugiat vulputate.</p>
+					<a href="#section3b" class="next">&gt;&gt;</a>	
+				</li>
+				<li class="sub" id="section3b">
+					<h2>Section 3-b</h2>
+					<p>Aliquam erat volutpat. Pellentesque cursus, vel dignissim dolor est eget ante. Pellentesque a purus. Proin quis arcu ut ipsum sollicitudin sollicitudin. In a neque. Mauris malesuada consectetuer metus. Etiam molestie. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.Nam gravida lacus. Etiam sem tortor, faucibus eget, iaculis euismod, molestie consequat, mauris. Phasellus consectetuer lobortis eros. Maecenas sit amet arcu. Morbi ut enim. Fusce sem augue, consectetuer in, tempus eu, dictum vel, felis. Praesent nisl tortor, aliquet a, fermentum ac, molestie vitae, libero.</p>
+					<p>Donec lacinia neque et justo. Vestibulum pretium semper tellus. Phasellus lacinia tristique purus. Sed magna est, auctor quis, egestas et, tristique id, orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla non orci eu felis accumsan blandit. Nam condimentum. Sed quis lorem id erat feugiat vulputate.</p>
+					<a href="#section3" class="prev">&lt;&lt;</a>
+					<a href="#section3c" class="next">&gt;&gt;</a>	
+				</li>
+				<li class="sub" id="section3c">
+					<h2>Section 3-c</h2>
+					<p>Aliquam erat volutpat. Pellentesque cursus, pede vel molestie tempor, orci mauris pellentesque mauris. Etiam molestie. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer scelerisque gravida libero. Nulla nisi massa, consequat nec, gravida sit amet, imperdiet in, est. Nam gravida lacus. Etiam sem tortor, faucibus eget, iaculis euismod, molestie consequat, mauris. Phasellus consectetuer lobortis eros. Maecenas sit amet arcu. Morbi ut enim. Fusce sem augue, consectetuer in, tempus eu, dictum vel, felis. Praesent nisl tortor, aliquet a, fermentum ac, molestie vitae, libero.</p>
+					<p>Donec lacinia neque et justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. ellentesque cursus, pede vel molestie tempor, orci mauris pellentesque mauris. Nulla non orci eu felis accumsan blandit. Nam condimentum. Quisque pulvinar. Cras nibh. Sed quis lorem id erat feugiat vulputate. </p>
+					<a href="#section3b" class="prev">&lt;&lt;</a>
+				</li>								
+			</ul>
+		</div>
+		<div class="section">
+			<ul>
+				<li class="sub" id="section4">
+					<h2>Section 4</h2>
+					<p>Donec eu diam. Etiam pharetra pede id orci. Mauris tellus enim, ultrices in, vehicula sed, feugiat eget, pede. Vestibulum odio eros, viverra non, posuere sed, elementum blandit, nunc. Fusce sodales cursus nibh. Nam ut sem sed tortor lacinia aliquet. Donec lacus arcu, consectetuer non, dignissim eget, ultrices sed, ligula. Maecenas faucibus lobortis nibh. Ut viverra justo quis felis eleifend ultrices. Integer at magna ut lacus malesuada rutrum. Proin in odio a mi tincidunt faucibus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam nisi massa, facilisis vitae, mollis et, ornare sit amet, dolor.</p>
+					<p>Quisque turpis eros. Vivamus ullamcorper, diam sit amet pharetra vehicula, sem nisi scelerisque ante, nec mattis risus augue non nulla. Donec elit dui, porttitor eget, ultricies vel, elementum gravida, urna. Aliquam erat volutpat. Mauris libero tellus, facilisis et, aliquet non, pulvinar sagittis, turpis. Quisque eu augue et dui lacinia gravida. Nam in massa a purus blandit mattis. Nulla facilisi.</p>
+					<a href="#section4b" class="next">&gt;&gt;</a>	
+				</li>
+				<li class="sub" id="section4b">
+					<h2>Section 4-b</h2>
+					<p>Donec eu diam. . Integer viverra ante quis nisi. Vestibulum odio eros, viverra non, posuere sed, elementum blandit, nunc. Fusce sodales cursus nibh. Nam ut sem sed tortor lacinia aliquet. Donec lacus arcu, consectetuer non, dignissim eget, ultrices sed, ligula. Maecenas faucibus lobortis nibh. Ut viverra justo quis felis eleifend ultrices. Integer at magna ut lacus malesuada rutrum. Proin in odio a mi tincidunt faucibus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam nisi massa, facilisis vitae, mollis et, ornare sit amet, dolor.</p>
+					<p>Quisque turpis eros, blandit vitae, auctor vel, eleifend nec, nisl. Nam justo lacus, elementum vel, rhoncus ut, feugiat id, ante. Vivamus ullamcorper,Nec mattis risus augue non nulla. Donec elit dui, porttitor eget, ultricies vel, elementum gravida, urna. Aliquam erat volutpat. Mauris libero tellus, facilisis et, aliquet non, pulvinar sagittis, turpis. Quisque eu augue et dui lacinia gravida. Nam in massa a purus blandit mattis. Nulla facilisi.</p>
+					<a href="#section4" class="prev">&lt;&lt;</a>
+					<a href="#section4c" class="next">&gt;&gt;</a>	
+				</li>
+				<li class="sub" id="section4c">
+					<h2>Section 4-c</h2>
+					<p>Donec eu diam. Morbi molestie purus at velit. Morbi augue eros, eleifend nec, bibendum tempor, aliquet a, augue. Integer viverra ante quis nisi. Vestibulum odio eros, viverra non, posuere sed, elementum blandit, nunc. Fusce sodales cursus nibh. Nam ut sem sed tortor lacinia aliquet. Donec lacus arcu, consectetuer non, dignissim eget, ultrices sed, ligula. Maecenas faucibus lobortis nibh. Ut viverra justo quis felis eleifend ultrices. Integer at magna ut lacus malesuada rutrum. Proin in odio a mi tincidunt faucibus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam nisi massa, facilisis vitae, mollis et, ornare sit amet, dolor.</p>
+					<p>Quisque turpis eros, blandit vitae, auctor vel, eleifend nec, nisl. Nec mattis risus augue non nulla. Donec elit dui, porttitor eget, ultricies vel, elementum gravida, urna. Aliquam erat volutpat. Mauris libero tellus, facilisis et, aliquet non, pulvinar sagittis, turpis. Quisque eu augue et dui lacinia gravida. Nam in massa a purus blandit mattis. Nulla facilisi.</p>
+					<a href="#section4b" class="prev">&lt;&lt;</a>
+				</li>
+			</ul>
+		</div>
+		<div class="section">
+			<ul>
+				<li class="sub" id="section5">
+					<h2>Section 5</h2>
+					<p>Fusce sit amet nibh sit amet libero pretium rutrum. Phasellus arcu. Donec turpis lorem, eleifend ut, cursus at, lacinia eget, dolor. Vivamus pulvinar sollicitudin ante. Nulla eu mauris sollicitudin urna fermentum tincidunt. Mauris placerat leo ut quam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed in risus. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas enim. Suspendisse odio odio, cursus ut, egestas eget, lobortis eget, magna.</p>
+					<p>Maecenas ultrices lectus facilisis metus. Fusce imperdiet. Aenean bibendum magna a neque. Aenean vel tellus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce gravida, magna non pellentesque interdum, felis odio eleifend ligula, et luctus dolor mi et diam. Vivamus varius nisl sed enim. Sed ultricies fermentum urna.</p>
+					<a href="#section5b" class="next">&gt;&gt;</a>	
+				</li>
+				<li class="sub" id="section5b">
+					<h2>Section 5-b</h2>
+					<p>Fusce sit amet nibh sit amet libero pretium rutrum. Nam iaculis enim ac ipsum. Donec turpis lorem, eleifend ut, cursus at, lacinia eget, dolor. Vivamus pulvinar sollicitudin ante. Nulla eu mauris sollicitudin urna fermentum tincidunt. Mauris placerat leo ut quam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed in risus. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas enim. Suspendisse odio odio, cursus ut, egestas eget, lobortis eget, magna.</p>
+					<p>Maecenas ultrices lectus facilisis metus. Nunc nec elit vitae lectus posuere aliquam. Integer id justo nec elit varius blandit. Aenean vel tellus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce gravida, magna non pellentesque interdum, felis odio eleifend ligula, et luctus dolor mi et diam. Vivamus varius nisl sed enim. Sed ultricies fermentum urna.</p>
+					<a href="#section5" class="prev">&lt;&lt;</a>
+					<a href="#section5c" class="next">&gt;&gt;</a>	
+				</li>
+				<li class="sub" id="section5c">
+					<h2>Section 5-c</h2>
+					<p>Fusce sit amet nibh sit amet libero pretium rutrum. Phasellus arcu. Morbi justo purus, pellentesque ac, fringilla at, adipiscing non, dolor. Suspendisse imperdiet lorem. Nam iaculis enim ac ipsum.  Nulla eu mauris sollicitudin urna fermentum tincidunt. Mauris placerat leo ut quam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed in risus. Aliquam erat volutpat. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas enim. Suspendisse odio odio, cursus ut, egestas eget, lobortis eget, magna.</p>
+					<p>Maecenas ultrices lectus facilisis metus. Nunc nec elit vitae lectus posuere aliquam. Integer id justo nec elit varius blandit. Aenean vel tellus. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Fusce gravida, magna non pellentesque interdum, felis odio eleifend ligula, et luctus dolor mi et diam. Vivamus varius nisl sed enim. Sed ultricies fermentum urna.</p>
+					<a href="#section5b" class="prev">&lt;&lt;</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<span id="first" class="message">This plugin is <strong>not</strong> restricted to this html, it can be applied to any html.</span>
+	<span id="second" class="message">Note that the URL, in the address bar, gets modified on each click, try refreshing after a click...</span>
+	<div id="links">
+		<h3>Links</h3>
+		<ul>
+			<li><a target="_blank" href="http://plugins.jquery.com/project/LocalScroll">Project Page</a></li>
+			<li><a target="_blank" href="http://flesler.blogspot.com/2007/10/jquerylocalscroll-10.html">Main blog article</a></li>
+			<li><a target="_blank" href="http://flesler.blogspot.com/search/label/jQuery.LocalScroll">All articles</a></li>
+			<li><a href="ajax/" rev="prev" rel="next" type="text/html">AJAX Demo</a></li>
+			<li><a href="http://flesler.webs.com/jQuery.ScrollTo/" rel="prev" rev="next" type="text/html">jQuery.ScrollTo's Demo</a></li>
+		</ul>
+	</div>
+</body>
+</html>
