@@ -1,16 +1,21 @@
 "use strict";
+
 /**
  * @module template/publish
  * @type {*}
  */
 /*global env: true */
+console.info( process.cwd() )
 var template = require( 'jsdoc/template' ),
 	fs = require( 'jsdoc/fs' ),
 	_ = require( 'underscore' ),
 	path = require( 'jsdoc/path' ),
+	path2 = require( "path" ),
 	taffy = require( 'taffydb' ).taffy,
 	handle = require( 'jsdoc/util/error' ).handle,
 	helper = require( 'jsdoc/util/templateHelper' ),
+// jsdoc node support is still a bit odd
+	moment = require( path2.join( process.cwd(), "node_modules/moment/moment" ) ),
 	htmlsafe = helper.htmlsafe,
 	linkto = helper.linkto,
 	resolveAuthorLinks = helper.resolveAuthorLinks,
@@ -25,14 +30,18 @@ var globalUrl = helper.getUniqueFilename( 'global' );
 var indexUrl = helper.getUniqueFilename( 'index' );
 
 var navOptions = {
-	systemName      : conf.systemName || "Documentation",
-	navType         : conf.navType || "vertical",
-	footer          : conf.footer || "",
-	copyright       : conf.copyright || "",
-	theme           : conf.theme || "simplex",
-	linenums        : conf.linenums,
-	collapseSymbols : conf.collapseSymbols || false,
-	inverseNav      : conf.inverseNav
+	systemName        : conf.systemName || "Documentation",
+	navType           : conf.navType || "vertical",
+	footer            : conf.footer || "",
+	copyright         : conf.copyright || "",
+	theme             : conf.theme || "simplex",
+	linenums          : conf.linenums,
+	collapseSymbols   : conf.collapseSymbols || false,
+	inverseNav        : conf.inverseNav,
+	outputSourceFiles : conf.outputSourceFiles === true,
+	sourceRootPath    : conf.sourceRootPath,
+	outputSourcePath  : conf.outputSourcePath,
+	dateFormat        : conf.dateFormat
 };
 
 var navigationMaster = {
@@ -72,7 +81,7 @@ var navigationMaster = {
 		link    : helper.getUniqueFilename( "tutorials.list" ),
 		members : []
 	},
-	global    : {
+	global   : {
 		title   : "Global",
 		link    : globalUrl,
 		members : []
@@ -155,9 +164,13 @@ function shortenPaths( files, commonPrefix ) {
 	// always use forward slashes
 	var regexp = new RegExp( '\\\\', 'g' );
 
+	var prefix = commonPrefix.toLowerCase().replace( regexp, "/" );
+
 	Object.keys( files ).forEach( function ( file ) {
-		files[file].shortened = files[file].resolved.replace( commonPrefix, '' )
-			.replace( regexp, '/' );
+		files[file].shortened = files[file]
+			.resolved
+			.replace( regexp, '/' )
+			.replace( prefix, '' );
 	} );
 
 	return files;
@@ -400,7 +413,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 			doclet.examples = doclet.examples.map( function ( example ) {
 				var caption, code;
 
-				if ( example.match( /^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i ) ) {
+				if ( example.match( /\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i ) ) {
 					caption = RegExp.$1;
 					code = RegExp.$3;
 				}
@@ -427,6 +440,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 			};
 
 			sourceFilePaths.push( sourcePath );
+
 		}
 	} );
 
@@ -448,7 +462,11 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	} );
 
 	if ( sourceFilePaths.length ) {
-		sourceFiles = shortenPaths( sourceFiles, path.commonPrefix( sourceFilePaths ) );
+		var payload = navOptions.sourceRootPath;
+		if ( !payload ) {
+			payload = path.commonPrefix( sourceFilePaths );
+		}
+		sourceFiles = shortenPaths( sourceFiles, payload );
 	}
 	data().each( function ( doclet ) {
 		var url = helper.createLink( doclet );
@@ -507,6 +525,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	view.resolveAuthorLinks = resolveAuthorLinks;
 	view.tutoriallink = tutoriallink;
 	view.htmlsafe = htmlsafe;
+	view.moment = moment;
 
 	// once for all
 	buildNav( members );
@@ -517,7 +536,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 
 	// only output pretty-printed source files if requested; do this before generating any other
 	// pages, so the other pages can link to the source files
-	if ( conf['default'].outputSourceFiles ) {
+	if ( navOptions.outputSourceFiles ) {
 		generateSourceFiles( sourceFiles );
 	}
 

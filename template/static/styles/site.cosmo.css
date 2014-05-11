@@ -5844,7 +5844,7 @@ a.thumbnail:hover {
 #toc .toc-active a:hover,
 #toc .toc-active a:active,
 #toc .toc-active a:visited {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: transparent;
   color: #ffffff;
 }
 .toc-shim {

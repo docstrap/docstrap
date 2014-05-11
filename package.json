@@ -5,11 +5,11 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-less": "~0.5.1",
-    "jsdoc": "git://github.com/jsdoc3/jsdoc.git",
     "grunt-shell": "~0.2.2",
     "async": "~0.2.8",
     "lodash": "~1.2.1",
-    "grunt-contrib-copy": "~0.4.1"
+    "grunt-contrib-copy": "~0.4.1" ,
+	  "jsdoc": "~3.3.0-alpha5"
   },
   "license": "MIT",
   "keywords": [

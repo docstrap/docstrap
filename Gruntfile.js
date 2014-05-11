@@ -39,7 +39,7 @@ var fs = require( "fs" );
  * @private
  */
 var jsdocTestPages = {
-	src       : ["./fixtures/*.js", "./README.md"],
+	src       : ["./fixtures/", "./README.md"],
 	dest      : "./testdocs",
 	tutorials : "./fixtures/tutorials",
 	template  : "./template",
@@ -53,7 +53,7 @@ var jsdocTestPages = {
  * @private
  */
 var jsdocExamplePages = {
-	src       : ["./fixtures/*.js", "./README.md"],
+	src       : ["./fixtures/", "./README.md"],
 	dest      : "./themes",
 	tutorials : "",
 	template  : "./template",
@@ -66,7 +66,7 @@ var jsdocExamplePages = {
  *  @private
  */
 var projectDocs = {
-	src       : ["./Gruntfile*.js", "./README.md", "./template/publish.js"],
+	src       : ["./Gruntfile.js", "./README.md", "./template/publish.js"],
 	dest      : "./dox",
 	tutorials : "",
 	template  : "./template",
@@ -92,6 +92,9 @@ function jsdocCommand( jsdoc ) {
 		cmd.push( path.resolve( src ) );
 	} );
 	cmd.unshift( path.resolve( "./node_modules/jsdoc/jsdoc" ) );
+	cmd.unshift( "node" );
+
+	console.info( cmd.join( " " ) );
 	return cmd.join( " " );
 }
 
@@ -132,7 +135,7 @@ var tasks = {
 			}
 		}
 	},
-	copy   : {
+	copy  : {
 		docs : {
 			files : [
 				{expand : true, cwd : "dox/", src : ['**'], dest : '../docstrap-dox/'},
@@ -163,7 +166,7 @@ module.exports = function ( grunt ) {
 	 * @name dev
 	 * @memberof module:Gruntfile
 	 */
-	grunt.registerTask( "dev", "Compile the CSS and create the project documentation", ["less","shell:dox"] );
+	grunt.registerTask( "dev", "Compile the CSS and create the project documentation", ["less", "shell:dox"] );
 	/**
 	 * TASK: Builds the main less file and then generates the test documents
 	 * @name testdocs
@@ -279,14 +282,14 @@ function applyTheme( grunt, definition ) {
 			getBootSwatchComponent( definition.less, function ( err, swatch ) {
 				if ( err ) {return cb( err );}
 				var fullPath = path.join( __dirname, "styles/bootswatch.less" );
-				fs.writeFile( fullPath, swatch.replace("http://", "//"), cb );
+				fs.writeFile( fullPath, swatch.replace( "http://", "//" ), cb );
 			} );
 		},
 		function ( cb ) {
 			getBootSwatchComponent( definition.lessVariables, function ( err, swatch ) {
 				if ( err ) {return cb( err );}
 				var fullPath = path.join( __dirname, "styles/variables.less" );
-				fs.writeFile( fullPath, swatch.replace("http://", "//"), cb );
+				fs.writeFile( fullPath, swatch.replace( "http://", "//" ), cb );
 			} );
 		}
 	], done );

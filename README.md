@@ -7,8 +7,10 @@ you even more flexibility to tweak the template to your needs. It will also make
 
 ## New ##
 
-* Quick Search
-* Added to npm registry
+* As of version 0.4.0, DocStrap only supports the node version of JSDoc and will no longer support the Java version of JSDoc
+* New options in `jsdoc.conf.json` to provide greater control over the output of source files. See `outputSourceFiles` and `sourceRootPath`
+* Several updated components for the development environment
+
 
 ## Features ##
 
@@ -101,6 +103,12 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 *   __inverseNav__
 	Bootstrap navbars come in two flavors, regular and inverse where inverse is generally higher contrast. Set this to `true` to
 	use the inverse header.
+*   __outputSourceFiles__
+	When true, the system will produce source pretty printed file listings with a link from the documentation.
+*	__sourceRootPath__
+	When `outputSourceFiles` is `false`, you may still want to name the file even without a link to the pretty printed output.
+	Set  this to 'true` when `outputSourceFiles` is `false`. `outputSourceFiles` when `true` takes precedence over this setting.
+
 
 ## Customizing DocStrap ##
 No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.
@@ -145,19 +153,30 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ### Contributers ###
 
+*Huge* thanks to all contributers. If your name should be here, but isn't, please let me know
+
 * [marklagendijk](https://github.com/marklagendijk)
 * [michaelward82](https://github.com/michaelward82)
 * [kaustavdm](https://github.com/kaustavdm)
+* [vmeurisse](https://github.com/vmeurisse)
+* [bmathern](https://github.com/bmathern)
+* [bmathern](https://github.com/bmathern)
 
 ## Roadmap ##
 
-* Integrate Darkstrap
 * Make plain old bootstrap an option (doh!)
 * ~~Jump to source line numbers~~
 * Document publish.js
 
 
 ## History ##
+
+### v0.4.0 ###
+* Issue #41
+* Issue #40
+* Issue #39
+* Issue #36
+* Issue #32
 
 ### v0.3.0 ###
 * Fixed navigation at page top
