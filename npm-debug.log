@@ -1,0 +1,25 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'version',
+1 verbose cli   'build' ]
+2 info using npm@1.2.23
+3 info using node@v0.10.8
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 error Error: Git working directory not clean.
+5 error M README.md
+5 error     at C:\Program Files\nodejs\node_modules\npm\lib\version.js:97:35
+5 error     at ChildProcess.exithandler (child_process.js:635:7)
+5 error     at ChildProcess.EventEmitter.emit (events.js:98:17)
+5 error     at maybeClose (child_process.js:735:16)
+5 error     at Process.ChildProcess._handle.onexit (child_process.js:802:5)
+6 error If you need help, you may report this log at:
+6 error     <http://github.com/isaacs/npm/issues>
+6 error or email it to:
+6 error     <npm-@googlegroups.com>
+7 error System Windows_NT 6.1.7601
+8 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "version" "build"
+9 error cwd v:\code\ink\docstrap
+10 error node -v v0.10.8
+11 error npm -v 1.2.23
+12 verbose exit [ 1, true ]
