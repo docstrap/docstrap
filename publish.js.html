@@ -55,21 +55,27 @@
 
 		<h1 class="page-title">Source: template/publish.js</h1>
     
-    <section>
-        <article>
-            <pre class="sunlight-highlight-javascript linenums">"use strict";
+<section>
+	<article>
+		<pre
+			class="sunlight-highlight-javascript linenums">"use strict";
+
 /**
  * @module template/publish
  * @type {*}
  */
 /*global env: true */
+console.info( process.cwd() )
 var template = require( 'jsdoc/template' ),
 	fs = require( 'jsdoc/fs' ),
 	_ = require( 'underscore' ),
 	path = require( 'jsdoc/path' ),
+
 	taffy = require( 'taffydb' ).taffy,
 	handle = require( 'jsdoc/util/error' ).handle,
 	helper = require( 'jsdoc/util/templateHelper' ),
+// jsdoc node support is still a bit odd
+	moment = require( "./moment" ),
 	htmlsafe = helper.htmlsafe,
 	linkto = helper.linkto,
 	resolveAuthorLinks = helper.resolveAuthorLinks,
@@ -84,14 +90,18 @@ var globalUrl = helper.getUniqueFilename( 'global' );
 var indexUrl = helper.getUniqueFilename( 'index' );
 
 var navOptions = {
-	systemName      : conf.systemName || "Documentation",
-	navType         : conf.navType || "vertical",
-	footer          : conf.footer || "",
-	copyright       : conf.copyright || "",
-	theme           : conf.theme || "simplex",
-	linenums        : conf.linenums,
-	collapseSymbols : conf.collapseSymbols || false,
-	inverseNav      : conf.inverseNav
+	systemName        : conf.systemName || "Documentation",
+	navType           : conf.navType || "vertical",
+	footer            : conf.footer || "",
+	copyright         : conf.copyright || "",
+	theme             : conf.theme || "simplex",
+	linenums          : conf.linenums,
+	collapseSymbols   : conf.collapseSymbols || false,
+	inverseNav        : conf.inverseNav,
+	outputSourceFiles : conf.outputSourceFiles === true,
+	sourceRootPath    : conf.sourceRootPath,
+	outputSourcePath  : conf.outputSourcePath,
+	dateFormat        : conf.dateFormat
 };
 
 var navigationMaster = {
@@ -131,7 +141,7 @@ var navigationMaster = {
 		link    : helper.getUniqueFilename( "tutorials.list" ),
 		members : []
 	},
-	global    : {
+	global   : {
 		title   : "Global",
 		link    : globalUrl,
 		members : []
@@ -173,7 +183,7 @@ function needsSignature( doclet ) {
 		needsSig = true;
 	}
 	// typedefs that contain functions get a signature, too
-	else if ( doclet.kind === 'typedef' && doclet.type && doclet.type.names &&
+	else if ( doclet.kind === 'typedef' &amp;&amp; doclet.type &amp;&amp; doclet.type.names &amp;&amp;
 		doclet.type.names.length ) {
 		for ( var i = 0, l = doclet.type.names.length; i &lt; l; i++ ) {
 			if ( doclet.type.names[i].toLowerCase() === 'function' ) {
@@ -195,7 +205,7 @@ function addSignatureParams( f ) {
 function addSignatureReturns( f ) {
 	var returnTypes = helper.getSignatureReturns( f );
 
-	f.signature = '&lt;span class="signature">' + (f.signature || '') + '&lt;/span>' + '&lt;span class="type-signature">' + (returnTypes.length ? ' &rarr; {' + returnTypes.join( '|' ) + '}' : '') + '&lt;/span>';
+	f.signature = '&lt;span class="signature">' + (f.signature || '') + '&lt;/span>' + '&lt;span class="type-signature">' + (returnTypes.length ? ' &amp;rarr; {' + returnTypes.join( '|' ) + '}' : '') + '&lt;/span>';
 }
 
 function addSignatureTypes( f ) {
@@ -214,16 +224,17 @@ function shortenPaths( files, commonPrefix ) {
 	// always use forward slashes
 	var regexp = new RegExp( '\\\\', 'g' );
 
+	var prefix = commonPrefix.toLowerCase().replace( regexp, "/" );
+
 	Object.keys( files ).forEach( function ( file ) {
-		files[file].shortened = files[file].resolved.replace( commonPrefix, '' )
-			.replace( regexp, '/' );
+		files[file].shortened = files[file]
+			.resolved
+			.toLowerCase()
+			.replace( regexp, '/' )
+			.replace( prefix, '' );
 	} );
 
 	return files;
-}
-
-function resolveSourcePath( filepath ) {
-	return path.resolve( process.cwd(), filepath );
 }
 
 function getPathFromDoclet( doclet ) {
@@ -231,11 +242,9 @@ function getPathFromDoclet( doclet ) {
 		return;
 	}
 
-	var filepath = doclet.meta.path && doclet.meta.path !== 'null' ?
+	return doclet.meta.path &amp;&amp; doclet.meta.path !== 'null' ?
 		doclet.meta.path + '/' + doclet.meta.filename :
 		doclet.meta.filename;
-
-	return filepath;
 }
 
 function generate( docType, title, docs, filename, resolveLinks ) {
@@ -260,7 +269,7 @@ function generate( docType, title, docs, filename, resolveLinks ) {
 function generateSourceFiles( sourceFiles ) {
 	Object.keys( sourceFiles ).forEach( function ( file ) {
 		var source;
-		// links are keyed to the shortened path in each doclet's `meta.filename` property
+		// links are keyed to the shortened path in each doclet's `meta.shortpath` property
 		var sourceOutfile = helper.getUniqueFilename( sourceFiles[file].shortened );
 		helper.registerLink( sourceFiles[file].shortened, sourceOutfile );
 
@@ -404,7 +413,7 @@ function buildNav( members ) {
 
 	if ( members.globals.length ) {
 		members.globals.forEach( function ( g ) {
-			if ( g.kind !== 'typedef' && !hasOwnProp.call( seen, g.longname ) ) {
+			if ( g.kind !== 'typedef' &amp;&amp; !hasOwnProp.call( seen, g.longname ) ) {
 
 				nav.global.members.push( linkto( g.longname, g.name ) );
 			}
@@ -414,7 +423,7 @@ function buildNav( members ) {
 
 	var topLevelNav = [];
 	_.each( nav, function ( entry, name ) {
-		if ( entry.members.length > 0 && name !== "index" ) {
+		if ( entry.members.length > 0 &amp;&amp; name !== "index" ) {
 			topLevelNav.push( {
 				title   : entry.title,
 				link    : entry.link,
@@ -465,7 +474,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 			doclet.examples = doclet.examples.map( function ( example ) {
 				var caption, code;
 
-				if ( example.match( /^\s*&lt;caption>([\s\S]+?)&lt;\/caption>(\s*[\n\r])([\s\S]+)$/i ) ) {
+				if ( example.match( /\s*&lt;caption>([\s\S]+?)&lt;\/caption>(\s*[\n\r])([\s\S]+)$/i ) ) {
 					caption = RegExp.$1;
 					code = RegExp.$3;
 				}
@@ -484,22 +493,21 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 
 		// build a list of source files
 		var sourcePath;
-		var resolvedSourcePath;
 		if ( doclet.meta ) {
 			sourcePath = getPathFromDoclet( doclet );
-			resolvedSourcePath = resolveSourcePath( sourcePath );
 			sourceFiles[sourcePath] = {
-				resolved  : resolvedSourcePath,
+				resolved  : sourcePath,
 				shortened : null
 			};
 
-			sourceFilePaths.push( resolvedSourcePath );
+			sourceFilePaths.push( sourcePath );
+
 		}
 	} );
 
 	// update outdir if necessary, then create outdir
 	var packageInfo = ( find( {kind : 'package'} ) || [] ) [0];
-	if ( packageInfo && packageInfo.name ) {
+	if ( packageInfo &amp;&amp; packageInfo.name ) {
 		outdir = path.join( outdir, packageInfo.name, packageInfo.version );
 	}
 	fs.mkPath( outdir );
@@ -515,19 +523,23 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	} );
 
 	if ( sourceFilePaths.length ) {
-		sourceFiles = shortenPaths( sourceFiles, path.commonPrefix( sourceFilePaths ) );
+		var payload = navOptions.sourceRootPath;
+		if ( !payload ) {
+			payload = path.commonPrefix( sourceFilePaths );
+		}
+		sourceFiles = shortenPaths( sourceFiles, payload );
 	}
 	data().each( function ( doclet ) {
 		var url = helper.createLink( doclet );
 		helper.registerLink( doclet.longname, url );
 
-		// replace the filename with a shortened version of the full path
+		// add a shortened version of the full path
 		var docletPath;
 		if ( doclet.meta ) {
 			docletPath = getPathFromDoclet( doclet );
 			docletPath = sourceFiles[docletPath].shortened;
 			if ( docletPath ) {
-				doclet.meta.filename = docletPath;
+				doclet.meta.shortpath = docletPath;
 			}
 		}
 	} );
@@ -574,6 +586,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	view.resolveAuthorLinks = resolveAuthorLinks;
 	view.tutoriallink = tutoriallink;
 	view.htmlsafe = htmlsafe;
+	view.moment = moment;
 
 	// once for all
 	buildNav( members );
@@ -584,7 +597,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 
 	// only output pretty-printed source files if requested; do this before generating any other
 	// pages, so the other pages can link to the source files
-	if ( conf['default'].outputSourceFiles ) {
+	if ( navOptions.outputSourceFiles ) {
 		generateSourceFiles( sourceFiles );
 	}
 
@@ -595,37 +608,37 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	}
 
 	// some browsers can't make the dropdown work
-	if ( view.nav.module && view.nav.module.members.length ) {
+	if ( view.nav.module &amp;&amp; view.nav.module.members.length ) {
 		generate( 'module', view.nav.module.title, [
 			{kind : 'sectionIndex', contents : view.nav.module}
 		], navigationMaster.module.link );
 	}
 
-	if ( view.nav.class && view.nav.class.members.length ) {
+	if ( view.nav.class &amp;&amp; view.nav.class.members.length ) {
 		generate( 'class', view.nav.class.title, [
 			{kind : 'sectionIndex', contents : view.nav.class}
 		], navigationMaster.class.link );
 	}
 
-	if ( view.nav.namespace && view.nav.namespace.members.length ) {
+	if ( view.nav.namespace &amp;&amp; view.nav.namespace.members.length ) {
 		generate( 'namespace', view.nav.namespace.title, [
 			{kind : 'sectionIndex', contents : view.nav.namespace}
 		], navigationMaster.namespace.link );
 	}
 
-	if ( view.nav.mixin && view.nav.mixin.members.length ) {
+	if ( view.nav.mixin &amp;&amp; view.nav.mixin.members.length ) {
 		generate( 'mixin', view.nav.mixin.title, [
 			{kind : 'sectionIndex', contents : view.nav.mixin}
 		], navigationMaster.mixin.link );
 	}
 
-	if ( view.nav.external && view.nav.external.members.length ) {
+	if ( view.nav.external &amp;&amp; view.nav.external.members.length ) {
 		generate( 'external', view.nav.external.title, [
 			{kind : 'sectionIndex', contents : view.nav.external}
 		], navigationMaster.external.link );
 	}
 
-	if ( view.nav.tutorial && view.nav.tutorial.members.length ) {
+	if ( view.nav.tutorial &amp;&amp; view.nav.tutorial.members.length ) {
 		generate( 'tutorial', view.nav.tutorial.title, [
 			{kind : 'sectionIndex', contents : view.nav.tutorial}
 		], navigationMaster.tutorial.link );
@@ -709,8 +722,8 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	saveChildren( tutorials );
 };
 </pre>
-        </article>
-    </section>
+	</article>
+</section>
 
 
 
@@ -728,8 +741,8 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 					<br />
 					
 		<span class="jsdoc-message">
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a>
-		on Sun Jun 09 2013 11:50:06 GMT-0400 (EDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
+		on Mon May 26th 2014 using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
@@ -751,11 +764,14 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	<script src="scripts/toc.js"></script>
 
 
-	<script>  Sunlight.highlightAll({lineNumbers:true,  showMenu: true, enableDoclinks :true}); </script>
+	<script>  Sunlight.highlightAll({lineNumbers: true,  showMenu: true, enableDoclinks: true}); </script>
 
 	<script>
 		$( function () {
 			$( "#toc" ).toc( {
+			    anchorName  : function(i, heading, prefix) {
+					return $(heading).attr("id") || ( prefix + i );
+				},
 				selectors   : "h1,h2,h3,h4",
 				showAndHide : false,
 				scrollTo    : 60

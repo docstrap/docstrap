@@ -163,20 +163,21 @@
 
 
     <section>
-        <article><h1>DocStrap</h1>
-<p>DocStrap is <a href="http://twitter.github.io/bootstrap/index.html">Bootstrap</a> based template for <a href="http://usejsdoc.org/">JSDoc3</a>.
+        <article><h1>DocStrap</h1><p>DocStrap is <a href="http://twitter.github.io/bootstrap/index.html">Bootstrap</a> based template for <a href="http://usejsdoc.org/">JSDoc3</a>.
 In addition, it includes all of the themes from <a href="http://bootswatch.com/">Bootswatch</a> giving you a great deal of look
-and feel options for your documentation. Additionally, it adds some options to the conf.json file that gives
+and feel options for your documentation, along with a simple search. Additionally, it adds some options to the conf.json file that gives
 you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.</p>
-<h2>Features</h2>
-<ul>
-<li>Fixed navigation at page top</li>
-<li>Right side TOC for navigation in pages</li>
+<h2>New</h2><ul>
+<li>As of version 0.4.0, DocStrap only supports the node version of JSDoc and will no longer support the Java version of JSDoc</li>
+<li>New options in <code>jsdoc.conf.json</code> to provide greater control over the output of source files. See <code>outputSourceFiles</code> and <code>sourceRootPath</code></li>
+<li>Several updated components for the development environment</li>
+</ul>
+<h2>Features</h2><ul>
+<li>Right side TOC for navigation in pages, with quick search</li>
 <li>Themed</li>
 <li>Customizable</li>
 </ul>
-<h3>What It Looks Like</h3>
-<p>Here are examples of this template with the different Bootswatch themes:</p>
+<h3>What It Looks Like</h3><p>Here are examples of this template with the different Bootswatch themes:</p>
 <ul>
 <li><a href="http://terryweiss.github.io/docstrap/themes/amelia">Amelia</a></li>
 <li><a href="http://terryweiss.github.io/docstrap/themes/cerulean">Cerulean</a></li>
@@ -193,13 +194,13 @@ you even more flexibility to tweak the template to your needs. It will also make
 <li><a href="http://terryweiss.github.io/docstrap/themes/united">United</a></li>
 </ul>
 <p>To change your theme, just change it in the <code>conf.json</code> file. See below for details.</p>
-<h2>Ooooh, I want it! How do I get it?</h2>
-<p>First grab the <a href="https://github.com/terryweiss/docstrap/archive/master.zip">zip file from github.</a> Unzip it
+<h2>Ooooh, I want it! How do I get it?</h2><p>First grab the <a href="https://github.com/terryweiss/docstrap/archive/master.zip">zip file from github.</a> Unzip it
 to your favorite hard drive and ask JSDoc to use it. Like so:</p>
-<pre><code>&lt;path/to/jsdoc&gt;/jsoc mysourcefiles/* -t &lt;path.to.unzipped&gt;/template -c &lt;path.to.unzipped&gt;/conf.json  &lt;path.to.output&gt;/</code></pre>
-<p>Also take a gander at <a href="http://usejsdoc.org/about-commandline.html">JSDoc's command line options</a>.</p>
-<h2>Configuring the template</h2>
-<p>DocStrap ships with a <code>conf.json</code> file in the template/ directory. It is just a regular old
+<pre><code>&lt;path/to/jsdoc&gt;/jsdoc mysourcefiles/* -t &lt;path.to.unzipped&gt;/template -c &lt;path.to.unzipped&gt;/conf.json -d &lt;path.to.output&gt;/
+</code></pre><p>or:</p>
+<pre><code>npm install ink-docstrap
+</code></pre><p>Also take a gander at <a href="http://usejsdoc.org/about-commandline.html">JSDoc's command line options</a>.</p>
+<h2>Configuring the template</h2><p>DocStrap ships with a <code>conf.json</code> file in the template/ directory. It is just a regular old
 <a href="http://usejsdoc.org/about-configuring-jsdoc.html">JSDoc configuration file</a>, but with the following new options:</p>
 <pre><code>&quot;templates&quot;: {
     &quot;systemName&quot;      : &quot;{string}&quot;,
@@ -210,9 +211,8 @@ to your favorite hard drive and ask JSDoc to use it. Like so:</p>
     &quot;linenums&quot;        : {boolean},
     &quot;collapseSymbols&quot; : {boolean},
     &quot;inverseNav&quot;      : {boolean}
-}</code></pre>
-<h3>Options</h3>
-<ul>
+}
+</code></pre><h3>Options</h3><ul>
 <li><strong>systemName</strong>
 The name of the system being documented. This will appear in the page title for each page</li>
 <li><strong>footer</strong>
@@ -250,52 +250,74 @@ and collapsed.</li>
 <li><strong>inverseNav</strong>
 Bootstrap navbars come in two flavors, regular and inverse where inverse is generally higher contrast. Set this to <code>true</code> to
 use the inverse header.</li>
+<li><strong>outputSourceFiles</strong>
+When true, the system will produce source pretty printed file listings with a link from the documentation.</li>
+<li><strong>outputSourcePath</strong>
+When <code>outputSourceFiles</code> is <code>false</code>, you may still want to name the file even without a link to the pretty printed output.
+Set  this to 'true<code>when</code>outputSourceFiles<code>is</code>false<code>.</code>outputSourceFiles<code>when</code>true` takes precedence over this setting.</li>
+<li><strong>dateFormat</strong> The date format to use when printing dates. It accepts any format string understood by <a href="http://momentjs.com/docs/#/displaying/format/">moment.js</a></li>
 </ul>
-<h2>Customizing DocStrap</h2>
-<p>No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.
+<h2>Customizing DocStrap</h2><p>No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.
 First make sure you have <a href="https://github.com/bower/bower">bower</a> and <a href="https://github.com/gruntjs/grunt-cli">grunt-cli</a> installed.
 Fetch the source using <code>git</code> or grab the <a href="https://github.com/terryweiss/docstrap/archive/master.zip">zip file from github.</a> and unzip
 it somewhere. Everything that follows happens in the unzip directory.</p>
 <p>Next, prepare the environment:</p>
-<pre><code>bower install</code></pre>
-<p>and</p>
-<pre><code>grunt install</code></pre>
-<p>When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, used <a href="http://lesscss.org/">less</a>.
+<pre><code>bower install
+</code></pre><p>and</p>
+<pre><code>npm install
+</code></pre><p>When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, used <a href="http://lesscss.org/">less</a>.
 The way it works is that <code>./styles/main.less</code> pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,
 etc, that you would want. There are two more files in that directory, <code>variables.less</code>, <code>bootswatch.less</code>. These are the
 theme files and you can modify them, but keep in mind that if you apply a new theme (see below) those files will be overwritten. It is best
 to keep your changes to the <code>main.less</code> file.</p>
 <p>To compile your changes to <code>main.less</code> and any other files it loads up,</p>
-<pre><code>grunt less</code></pre>
-<p>The output is will be put in <code>./template/static/styles/site.&lt;theme-name&gt;.css</code>. The next time you create your documentation, it
+<pre><code>grunt less
+</code></pre><p>The output is will be put in <code>./template/static/styles/site.&lt;theme-name&gt;.css</code>. The next time you create your documentation, it
 will have the new css file included.</p>
 <p>To apply a different template to the <code>styles</code> directory to modify, open up the <code>conf.json</code> in the template directory and
 change the <code>theme</code> option to the theme you want. Then</p>
-<pre><code>grunt apply</code></pre>
-<p>And the new theme will be in <code>variables.less</code>, <code>bootswatch.less</code>. Don't forget to compile your changes using <code>grunt apply</code> to
+<pre><code>grunt apply
+</code></pre><p>And the new theme will be in <code>variables.less</code>, <code>bootswatch.less</code>. Don't forget to compile your changes using <code>grunt apply</code> to
 get that change into the template.</p>
 <p><strong>NOTE</strong> that these steps are not necessary to just change the theme, this is only to modify the theme. If all you want to do is
 change the theme, just update conf.json with the new theme and build your docs!</p>
-<h2>Contributing</h2>
-<p>Yes! Contribute! Test! Share your ideas! Report Bugs!</p>
-<h2>Roadmap</h2>
+<h2>Contributing</h2><p>Yes! Contribute! Test! Share your ideas! Report Bugs!</p>
+<h3>Contributers</h3><p><em>Huge</em> thanks to all contributers. If your name should be here, but isn't, please let me know</p>
 <ul>
-<li>Integrate Darkstrap</li>
+<li><a href="https://github.com/marklagendijk">marklagendijk</a></li>
+<li><a href="https://github.com/michaelward82">michaelward82</a></li>
+<li><a href="https://github.com/kaustavdm">kaustavdm</a></li>
+<li><a href="https://github.com/vmeurisse">vmeurisse</a></li>
+<li><a href="https://github.com/bmathern">bmathern</a></li>
+<li><a href="https://github.com/bmathern">bmathern</a></li>
+</ul>
+<h2>Roadmap</h2><ul>
 <li>Make plain old bootstrap an option (doh!)</li>
 <li><del>Jump to source line numbers</del></li>
 <li>Document publish.js</li>
 </ul>
-<h2>History</h2>
-<h3>v0.2.0</h3>
-<ul>
+<h2>History</h2><h3>v0.4.0</h3><ul>
+<li>Issue #41</li>
+<li>Issue #40</li>
+<li>Issue #39</li>
+<li>Issue #36</li>
+<li>Issue #32</li>
+</ul>
+<h3>v0.3.0</h3><ul>
+<li>Fixed navigation at page top</li>
+<li>Adds -d switch to example jsdoc command.</li>
+<li>Fixed typo in readme</li>
+<li>Improve search box positioning and styles</li>
+<li>Add dynamic quick search in TOC</li>
+<li>Fix for line numbers styling issue</li>
+</ul>
+<h3>v0.2.0</h3><ul>
 <li>Added jump to source linenumers - still a problem scrolling with fixed header</li>
 <li>changed syntax highlighter to <a href="http://sunlightjs.com/">sunlight</a></li>
 <li>Modify incoming bootswatch files to make font calls without protocol.</li>
 </ul>
-<h3>v0.1.0</h3>
-<p>Initial release</p>
-<h2>Notices</h2>
-<p>If you like DocStrap, be sure and check out these excellent projects and support them!</p>
+<h3>v0.1.0</h3><p>Initial release</p>
+<h2>Notices</h2><p>If you like DocStrap, be sure and check out these excellent projects and support them!</p>
 <p><a href="https://github.com/jsdoc3/jsdoc/blob/master/LICENSE.md">JSDoc3 is licensed under the Apache License</a></p>
 <p><a href="https://github.com/twitter/bootstrap/blob/master/LICENSE">So is Bootstrap</a></p>
 <p><a href="https://github.com/thomaspark/bootswatch/blob/gh-pages/LICENSE">And Bootswatch</a></p>
@@ -303,8 +325,7 @@ change the theme, just update conf.json with the new theme and build your docs!<
 <p><a href="https://github.com/gruntjs/grunt-cli/blob/master/LICENSE-MIT">Grunt is also MIT</a></p>
 <p>DocStrap <a href="https://github.com/terryweiss/docstrap/blob/master/LICENSE.md">is licensed under the MIT license.</a></p>
 <p><a href="http://sunlightjs.com/">Sunlight uses the WTFPL</a></p>
-<h2>License</h2>
-<p>DocStrap Copyright (c) 2012-2013Terry Weiss. All rights reserved.</p>
+<h2>License</h2><p>DocStrap Copyright (c) 2012-2014 Terry Weiss. All rights reserved.</p>
 <p>Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
 files (the &quot;Software&quot;), to deal in the Software without
@@ -343,8 +364,8 @@ OTHER DEALINGS IN THE SOFTWARE.</p></article>
 					<br />
 					
 		<span class="jsdoc-message">
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a>
-		on Sun Jun 09 2013 11:52:42 GMT-0400 (EDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
+		on 2014-05-26T09:30:47-04:00 using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
@@ -370,11 +391,14 @@ OTHER DEALINGS IN THE SOFTWARE.</p></article>
 	<script src="scripts/toc.js"></script>
 
 
-	<script>  Sunlight.highlightAll({lineNumbers:,  showMenu: true, enableDoclinks :true}); </script>
+	<script>  Sunlight.highlightAll({lineNumbers: false,  showMenu: true, enableDoclinks: true}); </script>
 
 	<script>
 		$( function () {
 			$( "#toc" ).toc( {
+			    anchorName  : function(i, heading, prefix) {
+					return $(heading).attr("id") || ( prefix + i );
+				},
 				selectors   : "h1,h2,h3,h4",
 				showAndHide : false,
 				scrollTo    : 60
