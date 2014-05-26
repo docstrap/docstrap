@@ -411,19 +411,19 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		doclet.attribs = '';
 
 		if ( doclet.examples ) {
-			doclet.examples = doclet.examples.map( function ( example ) {
+			doclet.examples = doclet.examples.map(function(example) {
 				var caption, code;
 
-				if ( example.match( /\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i ) ) {
+				if (example.match(/^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i)) {
 					caption = RegExp.$1;
-					code = RegExp.$3;
+					code    = RegExp.$3;
 				}
 
 				return {
-					caption : caption || '',
-					code    : code || example
+					caption: caption || '',
+					code: code || example
 				};
-			} );
+			});
 		}
 		if ( doclet.see ) {
 			doclet.see.forEach( function ( seeItem, i ) {
@@ -477,9 +477,11 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		var docletPath;
 		if ( doclet.meta ) {
 			docletPath = getPathFromDoclet( doclet );
-			docletPath = sourceFiles[docletPath].shortened;
-			if ( docletPath ) {
-				doclet.meta.shortpath = docletPath;
+			if ( !_.isEmpty( sourceFiles[docletPath] ) ) {
+				docletPath = sourceFiles[docletPath].shortened;
+				if ( docletPath ) {
+					doclet.meta.shortpath = docletPath;
+				}
 			}
 		}
 	} );

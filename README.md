@@ -37,18 +37,18 @@ Here are examples of this template with the different Bootswatch themes:
 
 To change your theme, just change it in the `conf.json` file. See below for details.
 ## Ooooh, I want it! How do I get it?##
-First grab the [zip file from github.](https://github.com/terryweiss/docstrap/archive/master.zip) Unzip it
-to your favorite hard drive and ask JSDoc to use it. Like so:
 
-	<path/to/jsdoc>/jsdoc mysourcefiles/* -t <path.to.unzipped>/template -c <path.to.unzipped>/conf.json -d <path.to.output>/
-
-or:
+If you manage your own version of jsdoc:
 
 ```
 npm install ink-docstrap
 ```
 
-Also take a gander at [JSDoc's command line options](http://usejsdoc.org/about-commandline.html).
+When using [grunt](http://gruntjs.com/), this plugin manages jsdoc and docstrap for you:
+
+```
+npm install grunt-jsdoc // follow the instructions on the [project home page](https://github.com/krampstudio/grunt-jsdoc).
+```
 
 ## Configuring the template ##
 
@@ -56,14 +56,17 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 [JSDoc configuration file](http://usejsdoc.org/about-configuring-jsdoc.html), but with the following new options:
 ```
 "templates": {
-	"systemName"      : "{string}",
-	"footer"          : "{string}",
-	"copyright"       : "{string}",
-	"navType"         : "{vertical|inline}",
-	"theme"           : "{theme}",
-	"linenums"        : {boolean},
-	"collapseSymbols" : {boolean},
-	"inverseNav"      : {boolean}
+	"systemName"        : "{string}",
+	"footer"            : "{string}",
+	"copyright"         :  "{string}",
+	"navType"           : "{vertical|inline}",
+	"theme"             : "{theme}",
+	"linenums"          : "{boolean}",
+	"collapseSymbols"   : "{boolean}",
+	"inverseNav"        : "{boolean}",
+	"outputSourceFiles" : "{boolean}" ,
+	"outputSourcePath"  : "{boolean}",
+	"dateFormat"        : "{string}"
 }
 ```
 ### Options ###
@@ -73,7 +76,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 *   __footer__
 	Any markup want to appear in the footer of each page. This is not processed at all, just printed exactly as you enter it
 *   __copyright__
-	You can add a copyright message below the _footer_ and above the JSDoc timestamp at the bottom of the page
+	You can add a copyright message below the footer and above the JSDoc timestamp at the bottom of the page
 *   __navType__
 	The template uses top level navigation with dropdowns for the contents of each category. On large systems these dropdowns
 	can get large enough to expand beyond the page. To make the dropdowns render wider and stack the entries vertically, set this
@@ -107,7 +110,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	When true, the system will produce source pretty printed file listings with a link from the documentation.
 *	__outputSourcePath__
 	When `outputSourceFiles` is `false`, you may still want to name the file even without a link to the pretty printed output.
-	Set  this to 'true` when `outputSourceFiles` is `false`. `outputSourceFiles` when `true` takes precedence over this setting.
+	Set  this to `true` when `outputSourceFiles` is `false`. `outputSourceFiles` when `true` takes precedence over this setting.
 *   __dateFormat__ The date format to use when printing dates. It accepts any format string understood by [moment.js](http://momentjs.com/docs/#/displaying/format/)
 
 ## Customizing DocStrap ##
@@ -124,7 +127,7 @@ and
 
     npm install
 
-When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, used [less](http://lesscss.org/).
+When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, uses [less](http://lesscss.org/).
 The way it works is that `./styles/main.less` pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,
 etc, that you would want. There are two more files in that directory, `variables.less`, `bootswatch.less`. These are the
 theme files and you can modify them, but keep in mind that if you apply a new theme (see below) those files will be overwritten. It is best
@@ -160,7 +163,10 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 * [kaustavdm](https://github.com/kaustavdm)
 * [vmeurisse](https://github.com/vmeurisse)
 * [bmathern](https://github.com/bmathern)
-* [bmathern](https://github.com/bmathern)
+* [jrkim123us](https://github.com/jrkim123us)
+* [shawke](https://github.com/shawke)
+* [mar10](https://github.com/mar10)
+* [mwcz](https://github.com/mwcz)
 
 ## Roadmap ##
 
@@ -170,6 +176,13 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 
 ## History ##
+
+### v0.4.1-1###
+* Issue #44
+* Update documentation
+* Issue #43
+* Issue #42
+* Issue #34
 
 ### v0.4.0 ###
 * Issue #41

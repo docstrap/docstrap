@@ -30,6 +30,8 @@ exports.Car = function (hybrid) {
 	/**
 	 * Aenean commodo lorem nec sapien suscipit quis hendrerit dui feugiat. Curabitur pretium congue sollicitudin. Nam eleifend ultricies libero vel iaculis. Maecenas vel elit vel lorem lacinia pellentesque. Vestibulum posuere suscipit lacus, sit amet volutpat erat sagittis vitae. Ut eleifend pretium nulla vitae tempor.
 	 * @type {string}
+	 * @example
+	 * <div>I am a camera</div>
 	 */
 	this.color = null;
 
