@@ -5,7 +5,7 @@
  * @type {*}
  */
 /*global env: true */
-console.info( process.cwd() )
+
 var template = require( 'jsdoc/template' ),
 	fs = require( 'jsdoc/fs' ),
 	_ = require( 'underscore' ),
@@ -30,18 +30,19 @@ var globalUrl = helper.getUniqueFilename( 'global' );
 var indexUrl = helper.getUniqueFilename( 'index' );
 
 var navOptions = {
-	systemName        : conf.systemName || "Documentation",
-	navType           : conf.navType || "vertical",
-	footer            : conf.footer || "",
-	copyright         : conf.copyright || "",
-	theme             : conf.theme || "simplex",
-	linenums          : conf.linenums,
-	collapseSymbols   : conf.collapseSymbols || false,
-	inverseNav        : conf.inverseNav,
-	outputSourceFiles : conf.outputSourceFiles === true,
-	sourceRootPath    : conf.sourceRootPath,
-	outputSourcePath  : conf.outputSourcePath,
-	dateFormat        : conf.dateFormat
+	systemName            : conf.systemName || "Documentation",
+	navType               : conf.navType || "vertical",
+	footer                : conf.footer || "",
+	copyright             : conf.copyright || "",
+	theme                 : conf.theme || "simplex",
+	linenums              : conf.linenums,
+	collapseSymbols       : conf.collapseSymbols || false,
+	inverseNav            : conf.inverseNav,
+	outputSourceFiles     : conf.outputSourceFiles === true,
+	sourceRootPath        : conf.sourceRootPath,
+	outputSourcePath      : conf.outputSourcePath,
+	dateFormat            : conf.dateFormat,
+	highlightTutorialCode : conf.highlightTutorialCode
 };
 
 var navigationMaster = {
@@ -411,19 +412,29 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		doclet.attribs = '';
 
 		if ( doclet.examples ) {
-			doclet.examples = doclet.examples.map(function(example) {
-				var caption, code;
+			doclet.examples = doclet.examples.map( function ( example ) {
+				var caption, code, lang;
 
-				if (example.match(/^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i)) {
+				if ( example.match( /^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i ) ) {
 					caption = RegExp.$1;
-					code    = RegExp.$3;
+					code = RegExp.$3;
+				}
+
+				var lang = /{@lang (.*?)}/.exec( example );
+
+				if ( lang && lang[1] ) {
+					example = example.replace( lang[0], "" );
+					lang = lang[1];
+				} else {
+					lang = null;
 				}
 
 				return {
-					caption: caption || '',
-					code: code || example
+					caption : caption || '',
+					code    : code || example,
+					lang    : (lang && navOptions.highlightTutorialCode) ? lang : "javascript"
 				};
-			});
+			} );
 		}
 		if ( doclet.see ) {
 			doclet.see.forEach( function ( seeItem, i ) {

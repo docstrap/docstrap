@@ -5,6 +5,7 @@ Mauris sit amet risus non ligula lacinia iaculis. Sed ornare tellus velit, vel e
 Quisque elementum sapien id neque volutpat cursus non mattis velit.
 
 ```
+<div class="fred"></div>
 Mauris at mauris mi. Aenean id pulvinar sem. Nunc viverra,
 odio id fringilla viverra, nulla libero suscipit dui, non
 tincidunt eros nunc non elit. Etiam id fringilla felis.

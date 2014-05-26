@@ -56,17 +56,18 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 [JSDoc configuration file](http://usejsdoc.org/about-configuring-jsdoc.html), but with the following new options:
 ```
 "templates": {
-	"systemName"        : "{string}",
-	"footer"            : "{string}",
-	"copyright"         :  "{string}",
-	"navType"           : "{vertical|inline}",
-	"theme"             : "{theme}",
-	"linenums"          : "{boolean}",
-	"collapseSymbols"   : "{boolean}",
-	"inverseNav"        : "{boolean}",
-	"outputSourceFiles" : "{boolean}" ,
-	"outputSourcePath"  : "{boolean}",
-	"dateFormat"        : "{string}"
+	"systemName"            : "{string}",
+	"footer"                : "{string}",
+	"copyright"             :  "{string}",
+	"navType"               : "{vertical|inline}",
+	"theme"                 : "{theme}",
+	"linenums"              : "{boolean}",
+	"collapseSymbols"       : "{boolean}",
+	"inverseNav"            : "{boolean}",
+	"outputSourceFiles"     : "{boolean}" ,
+	"outputSourcePath"      : "{boolean}",
+	"dateFormat"            : "{string}",
+	"highlightTutorialCode" : "{boolean}"
 }
 ```
 ### Options ###
@@ -112,6 +113,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	When `outputSourceFiles` is `false`, you may still want to name the file even without a link to the pretty printed output.
 	Set  this to `true` when `outputSourceFiles` is `false`. `outputSourceFiles` when `true` takes precedence over this setting.
 *   __dateFormat__ The date format to use when printing dates. It accepts any format string understood by [moment.js](http://momentjs.com/docs/#/displaying/format/)
+
 
 ## Customizing DocStrap ##
 No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.
