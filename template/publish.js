@@ -42,7 +42,7 @@ var navOptions = {
 	sourceRootPath        : conf.sourceRootPath,
 	outputSourcePath      : conf.outputSourcePath,
 	dateFormat            : conf.dateFormat,
-	analytics             : conf.analytics || false,
+	analytics             : conf.analytics || null,
 	highlightTutorialCode : conf.highlightTutorialCode
 };
 
