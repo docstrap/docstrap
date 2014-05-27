@@ -104,6 +104,8 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	If your pages have a large number of symbols, it can be easy to get lost in all the text. If you turn this to `true`
 	all of the symbols in the page will roll their contents up so that you just get a list of symbols that can be expanded
 	and collapsed.
+*   __analytics__
+	Add Google Analytics to your docs. Needs to set the `analytics.ua` and `analytics.domain`
 *   __inverseNav__
 	Bootstrap navbars come in two flavors, regular and inverse where inverse is generally higher contrast. Set this to `true` to
 	use the inverse header.
