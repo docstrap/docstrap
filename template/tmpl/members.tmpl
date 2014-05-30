@@ -10,13 +10,13 @@ var self = this;
     <?js } ?>
 </dt>
 <dd>
-    <?js if (data.description) { ?>
+    <?js if (data && data.description) { ?>
     <div class="description">
         <?js= data.description ?>
     </div>
     <?js } ?>
     
-    <?js if (data.type && data.type.names) {?>
+    <?js if (data && data.type && data.type.names) {?>
         <h5>Type:</h5>
         <ul>
             <li>
