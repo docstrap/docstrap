@@ -10,9 +10,8 @@
 	<![endif]-->
 	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
 
-	
 	<link type="text/css" rel="stylesheet" href="styles/site.amelia.css">
-	
+
 </head>
 
 <body>
@@ -162,12 +161,15 @@
 
 
 
-    <section>
-        <article><h1>DocStrap</h1><p>DocStrap is <a href="http://twitter.github.io/bootstrap/index.html">Bootstrap</a> based template for <a href="http://usejsdoc.org/">JSDoc3</a>.
+    <section class="readme-section">
+        <article><p><a href="https://nodei.co/npm/ink-docstrap/"><img src="https://nodei.co/npm/ink-docstrap.png?downloads=true" alt="NPM"></a></p>
+<h1>DocStrap <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></h1><p>DocStrap is <a href="http://twitter.github.io/bootstrap/index.html">Bootstrap</a> based template for <a href="http://usejsdoc.org/">JSDoc3</a>.
 In addition, it includes all of the themes from <a href="http://bootswatch.com/">Bootswatch</a> giving you a great deal of look
 and feel options for your documentation, along with a simple search. Additionally, it adds some options to the conf.json file that gives
 you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.</p>
 <h2>New</h2><ul>
+<li>Two <strong>exciting</strong> new features in 0.4.3. Read about Google Analytics (tip of the hat to * <a href="https://github.com/pocesar">pocesar</a>)
+support and major syntax highlight changes. </li>
 <li>As of version 0.4.0, DocStrap only supports the node version of JSDoc and will no longer support the Java version of JSDoc</li>
 <li>New options in <code>jsdoc.conf.json</code> to provide greater control over the output of source files. See <code>outputSourceFiles</code> and <code>sourceRootPath</code></li>
 <li>Several updated components for the development environment</li>
@@ -194,23 +196,29 @@ you even more flexibility to tweak the template to your needs. It will also make
 <li><a href="http://terryweiss.github.io/docstrap/themes/united">United</a></li>
 </ul>
 <p>To change your theme, just change it in the <code>conf.json</code> file. See below for details.</p>
-<h2>Ooooh, I want it! How do I get it?</h2><p>First grab the <a href="https://github.com/terryweiss/docstrap/archive/master.zip">zip file from github.</a> Unzip it
-to your favorite hard drive and ask JSDoc to use it. Like so:</p>
-<pre><code>&lt;path/to/jsdoc&gt;/jsdoc mysourcefiles/* -t &lt;path.to.unzipped&gt;/template -c &lt;path.to.unzipped&gt;/conf.json -d &lt;path.to.output&gt;/
-</code></pre><p>or:</p>
-<pre><code>npm install ink-docstrap
-</code></pre><p>Also take a gander at <a href="http://usejsdoc.org/about-commandline.html">JSDoc's command line options</a>.</p>
-<h2>Configuring the template</h2><p>DocStrap ships with a <code>conf.json</code> file in the template/ directory. It is just a regular old
+<h2>Ooooh, I want it! How do I get it?</h2><p>If you manage your own version of jsdoc:</p>
+<pre><code>{@lang bash}
+npm install ink-docstrap
+</code></pre><p>When using <a href="http://gruntjs.com/">grunt</a>, please look at <a href="https://github.com/krampstudio/grunt-jsdoc">grunt-jsdoc</a> which includes
+docstrap</p>
+<pre><code>{@lang bash}
+npm install grunt-jsdoc
+</code></pre><h2>Configuring the template</h2><p>DocStrap ships with a <code>conf.json</code> file in the template/ directory. It is just a regular old
 <a href="http://usejsdoc.org/about-configuring-jsdoc.html">JSDoc configuration file</a>, but with the following new options:</p>
-<pre><code>&quot;templates&quot;: {
-    &quot;systemName&quot;      : &quot;{string}&quot;,
-    &quot;footer&quot;          : &quot;{string}&quot;,
-    &quot;copyright&quot;       : &quot;{string}&quot;,
-    &quot;navType&quot;         : &quot;{vertical|inline}&quot;,
-    &quot;theme&quot;           : &quot;{theme}&quot;,
-    &quot;linenums&quot;        : {boolean},
-    &quot;collapseSymbols&quot; : {boolean},
-    &quot;inverseNav&quot;      : {boolean}
+<pre><code>{@lang javascript}
+&quot;templates&quot;: {
+    &quot;systemName&quot;            : &quot;{string}&quot;,
+    &quot;footer&quot;                : &quot;{string}&quot;,
+    &quot;copyright&quot;             :  &quot;{string}&quot;,
+    &quot;navType&quot;               : &quot;{vertical|inline}&quot;,
+    &quot;theme&quot;                 : &quot;{theme}&quot;,
+    &quot;linenums&quot;              : &quot;{boolean}&quot;,
+    &quot;collapseSymbols&quot;       : &quot;{boolean}&quot;,
+    &quot;inverseNav&quot;            : &quot;{boolean}&quot;,
+    &quot;outputSourceFiles&quot;     : &quot;{boolean}&quot; ,
+    &quot;outputSourcePath&quot;      : &quot;{boolean}&quot;,
+    &quot;dateFormat&quot;            : &quot;{string}&quot;,
+    &quot;highlightTutorialCode&quot; : &quot;{boolean}&quot;
 }
 </code></pre><h3>Options</h3><ul>
 <li><strong>systemName</strong>
@@ -218,7 +226,7 @@ The name of the system being documented. This will appear in the page title for 
 <li><strong>footer</strong>
 Any markup want to appear in the footer of each page. This is not processed at all, just printed exactly as you enter it</li>
 <li><strong>copyright</strong>
-You can add a copyright message below the <em>footer</em> and above the JSDoc timestamp at the bottom of the page</li>
+You can add a copyright message below the footer and above the JSDoc timestamp at the bottom of the page</li>
 <li><strong>navType</strong>
 The template uses top level navigation with dropdowns for the contents of each category. On large systems these dropdowns
 can get large enough to expand beyond the page. To make the dropdowns render wider and stack the entries vertically, set this
@@ -247,6 +255,12 @@ When true, line numbers will appear in the source code listing. If you have
 If your pages have a large number of symbols, it can be easy to get lost in all the text. If you turn this to <code>true</code>
 all of the symbols in the page will roll their contents up so that you just get a list of symbols that can be expanded
 and collapsed.</li>
+<li><strong>analytics</strong> Add a <a href="http://www.google.com/analytics">Google Analytics</a> code to the template output
+<em>e.g.</em> <code>&quot;analytics&quot;:{&quot;ua&quot;:&quot;UA-XXXXX-XXX&quot;, &quot;domain&quot;:&quot;XXXX&quot;}</code><ul>
+<li><strong>ua</strong> The google agent (see Google Analytics help for details)</li>
+<li><strong>domain</strong> The domain being served. (see Google Analytics help for details)</li>
+</ul>
+</li>
 <li><strong>inverseNav</strong>
 Bootstrap navbars come in two flavors, regular and inverse where inverse is generally higher contrast. Set this to <code>true</code> to
 use the inverse header.</li>
@@ -254,49 +268,99 @@ use the inverse header.</li>
 When true, the system will produce source pretty printed file listings with a link from the documentation.</li>
 <li><strong>outputSourcePath</strong>
 When <code>outputSourceFiles</code> is <code>false</code>, you may still want to name the file even without a link to the pretty printed output.
-Set  this to 'true<code>when</code>outputSourceFiles<code>is</code>false<code>.</code>outputSourceFiles<code>when</code>true` takes precedence over this setting.</li>
+Set  this to <code>true</code> when <code>outputSourceFiles</code> is <code>false</code>. <code>outputSourceFiles</code> when <code>true</code> takes precedence over this setting.</li>
 <li><strong>dateFormat</strong> The date format to use when printing dates. It accepts any format string understood by <a href="http://momentjs.com/docs/#/displaying/format/">moment.js</a></li>
+<li><strong>highlightTutorialCode</strong> Boolean used to determine whether to treat code blocks in &quot;tutorial&quot; markdown as examples and highlight them </li>
+</ul>
+<h2>Controlling Syntax Highlighting</h2><p>Of course this is intended to document JS. But JS often interacts with other languages, most commonly <code>HTML</code>, but also any
+language on the server including PHP, C# and other C-like languages. The point is that when you write examples, you may want to
+include other languages to make your examples as expressive as possible. So, DocStrap introduces a new documentation tag
+which can appear inside any example block in source code, or in any fenced code block in markdown: <code>{@lang languageName}</code>, where
+<em><code>language</code></em> can be any of the languages supported by <a href="http://sunlightjs.com/">Sunlight</a></p>
+<p>Look at this:</p>
+<pre><code>{@lang javascript} var mini = me; {@lang javascript}
+</code></pre><pre><code>{@lang xml} &lt;div&gt;I have no hair!&lt;/div&gt; {@lang xml}
+</code></pre><pre><code>{@lang csharp} Bottle wine = new Bottle(); {@lang csharp}
+</code></pre><ul>
+<li>ActionScript</li>
+<li>bash </li>
+<li>C/C++</li>
+<li>C♯</li>
+<li>CSS</li>
+<li>Diff</li>
+<li>DOS batch</li>
+<li>Erlang</li>
+<li>Haskell</li>
+<li>httpd (Apache)</li>
+<li>Java</li>
+<li>JavaScript</li>
+<li>Lisp</li>
+<li>Lua</li>
+<li>MySQL</li>
+<li>nginx</li>
+<li>Objective-C</li>
+<li>Perl</li>
+<li>PHP</li>
+<li>PowerShell</li>
+<li>Python</li>
+<li>Ruby</li>
+<li>Scala</li>
+<li>T-SQL</li>
+<li>VB.NET</li>
+<li>XML (HTML)</li>
 </ul>
 <h2>Customizing DocStrap</h2><p>No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.
 First make sure you have <a href="https://github.com/bower/bower">bower</a> and <a href="https://github.com/gruntjs/grunt-cli">grunt-cli</a> installed.
 Fetch the source using <code>git</code> or grab the <a href="https://github.com/terryweiss/docstrap/archive/master.zip">zip file from github.</a> and unzip
 it somewhere. Everything that follows happens in the unzip directory.</p>
 <p>Next, prepare the environment:</p>
-<pre><code>bower install
-</code></pre><p>and</p>
-<pre><code>npm install
-</code></pre><p>When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, used <a href="http://lesscss.org/">less</a>.
+<pre><code>bower install      {@lang bash}
+</code></pre><p>and         </p>
+<pre><code>npm install     {@lang bash}
+</code></pre><p>When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, uses <a href="http://lesscss.org/">less</a>.
 The way it works is that <code>./styles/main.less</code> pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,
 etc, that you would want. There are two more files in that directory, <code>variables.less</code>, <code>bootswatch.less</code>. These are the
 theme files and you can modify them, but keep in mind that if you apply a new theme (see below) those files will be overwritten. It is best
 to keep your changes to the <code>main.less</code> file.</p>
 <p>To compile your changes to <code>main.less</code> and any other files it loads up,</p>
-<pre><code>grunt less
+<pre><code>grunt less     {@lang bash}
 </code></pre><p>The output is will be put in <code>./template/static/styles/site.&lt;theme-name&gt;.css</code>. The next time you create your documentation, it
 will have the new css file included.</p>
 <p>To apply a different template to the <code>styles</code> directory to modify, open up the <code>conf.json</code> in the template directory and
 change the <code>theme</code> option to the theme you want. Then</p>
-<pre><code>grunt apply
+<pre><code>grunt apply     {@lang bash}
 </code></pre><p>And the new theme will be in <code>variables.less</code>, <code>bootswatch.less</code>. Don't forget to compile your changes using <code>grunt apply</code> to
 get that change into the template.</p>
 <p><strong>NOTE</strong> that these steps are not necessary to just change the theme, this is only to modify the theme. If all you want to do is
 change the theme, just update conf.json with the new theme and build your docs!</p>
 <h2>Contributing</h2><p>Yes! Contribute! Test! Share your ideas! Report Bugs!</p>
-<h3>Contributers</h3><p><em>Huge</em> thanks to all contributers. If your name should be here, but isn't, please let me know</p>
+<h3>Contributers</h3><p><em>Huge</em> thanks to all contributors. If your name should be here, but isn't, please let me know</p>
 <ul>
 <li><a href="https://github.com/marklagendijk">marklagendijk</a></li>
 <li><a href="https://github.com/michaelward82">michaelward82</a></li>
 <li><a href="https://github.com/kaustavdm">kaustavdm</a></li>
 <li><a href="https://github.com/vmeurisse">vmeurisse</a></li>
 <li><a href="https://github.com/bmathern">bmathern</a></li>
-<li><a href="https://github.com/bmathern">bmathern</a></li>
+<li><a href="https://github.com/jrkim123us">jrkim123us</a></li>
+<li><a href="https://github.com/shawke">shawke</a></li>
+<li><a href="https://github.com/mar10">mar10</a></li>
+<li><a href="https://github.com/mwcz">mwcz</a></li>
+<li><a href="https://github.com/pocesar">pocesar</a></li>
+<li><a href="https://github.com/hyperandroid">hyperandroid</a></li>
 </ul>
-<h2>Roadmap</h2><ul>
-<li>Make plain old bootstrap an option (doh!)</li>
-<li><del>Jump to source line numbers</del></li>
-<li>Document publish.js</li>
+<h2>History</h2><h3>v0.4.3</h3><ul>
+<li>Issue #46</li>
+<li>Issue #46</li>
+<li>Issue #47</li>
 </ul>
-<h2>History</h2><h3>v0.4.0</h3><ul>
+<h3>v0.4.1-1</h3><ul>
+<li>Issue #44</li>
+<li>Update documentation</li>
+<li>Issue #43</li>
+<li>Issue #42</li>
+<li>Issue #34</li>
+</ul>
+<h3>v0.4.0</h3><ul>
 <li>Issue #41</li>
 <li>Issue #40</li>
 <li>Issue #39</li>
@@ -359,13 +423,14 @@ OTHER DEALINGS IN THE SOFTWARE.</p></article>
 					
 					
 		<span class="copyright">
-		Copyright &copy; 2012-2103 Terry Weiss, Eery Wrists. All rights reserved.
+		Copyright &copy; 2012-2014 Terry Weiss, Eery Wrists. All rights reserved.
 		</span>
 					<br />
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on 2014-05-26T09:29:50-04:00 using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on 2014-05-31T21:25:11-04:00 using the <a
+			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
@@ -379,25 +444,15 @@ OTHER DEALINGS IN THE SOFTWARE.</p></article>
 		</div>
 
 	</div>
-	<script src="scripts/sunlight.js"></script>
-	<script src="scripts/sunlight.javascript.js"></script>
-	<script src="scripts/sunlight-plugin.doclinks.js"></script>
-	<script src="scripts/sunlight-plugin.linenumbers.js"></script>
-	<script src="scripts/sunlight-plugin.menu.js"></script>
-	<script src="scripts/jquery.min.js"></script>
-	<script src="scripts/jquery.scrollTo.js"></script>
-	<script src="scripts/jquery.localScroll.js"></script>
-	<script src="scripts/bootstrap-dropdown.js"></script>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
 	<script src="scripts/toc.js"></script>
-
-
-	<script>  Sunlight.highlightAll({lineNumbers: false,  showMenu: true, enableDoclinks: true}); </script>
 
 	<script>
 		$( function () {
 			$( "#toc" ).toc( {
-			    anchorName  : function(i, heading, prefix) {
-					return $(heading).attr("id") || ( prefix + i );
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
 				},
 				selectors   : "h1,h2,h3,h4",
 				showAndHide : false,
@@ -406,9 +461,45 @@ OTHER DEALINGS IN THE SOFTWARE.</p></article>
 			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
 			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
 
+//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
+
+				var example = $this.find("code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html(exampleText);
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
+
+				if ( lang ) {
+
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
+
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : false,
+				showMenu:true,
+				enableDoclinks:true
 		} );
+		} );
+
 	</script>
 
+	<!--Google Analytics-->
+	
+
+	<!--Navigation and Symbol Display-->
 	
 
 </body>

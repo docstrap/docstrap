@@ -1,0 +1,22 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'version',
+1 verbose cli   'patch' ]
+2 info using npm@1.4.9
+3 info using node@v0.10.28
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 error version No package.json found
+6 error Error: ENOENT, open 'v:\code\ink\docstrap-dox\package.json'
+7 error If you need help, you may report this *entire* log,
+7 error including the npm and node versions, at:
+7 error     <http://github.com/npm/npm/issues>
+8 error System Windows_NT 6.1.7601
+9 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "version" "patch"
+10 error cwd v:\code\ink\docstrap-dox
+11 error node -v v0.10.28
+12 error npm -v 1.4.9
+13 error path v:\code\ink\docstrap-dox\package.json
+14 error code ENOENT
+15 error errno 34
+16 verbose exit [ 34, true ]
