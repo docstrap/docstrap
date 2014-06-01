@@ -94,12 +94,12 @@ function jsdocCommand( jsdoc ) {
 	cmd.unshift( path.resolve( "./node_modules/jsdoc/jsdoc" ) );
 	cmd.unshift( "node" );
 
-	console.info( cmd.join( " " ) );
+
 	return cmd.join( " " );
 }
 
 var tasks = {
-	shell : {
+	shell  : {
 		options  : {
 			stdout : true,
 			stderr : true
@@ -128,19 +128,39 @@ var tasks = {
 	 * @name less
 	 * @memberOf module:Gruntfile
 	 */
-	less  : {
+	less   : {
 		dev : {
 			files : {
 				"template/static/styles/site.<%= jsdocConf.templates.theme %>.css" : "styles/main.less"
 			}
 		}
 	},
-	copy  : {
+	copy   : {
 		docs : {
 			files : [
 				{expand : true, cwd : "dox/", src : ['**'], dest : '../docstrap-dox/'},
 				{expand : true, cwd : "themes/", src : ['**'], dest : '../docstrap-dox/themes'}
 			]
+		}
+	},
+	uglify : {
+		template : {
+			files : {
+				'template/static/scripts/docstrap.lib.js' : [
+					'bower_components/jquery/jquery.min.js',
+					'bower_components/sunlight/src/sunlight.js',
+					'bower_components/sunlight/src/lang/sunlight.xml.js',
+					'bower_components/sunlight/src/**/*.js',
+//					'bower_components/sunlight/src/lang/*.js',
+//					'bower_components/sunlight/src/plugins/*.js',
+
+					'bower_components/jquery.scrollTo/jquery.scrollTo.min.js',
+					'bower_components/jquery.localScroll/jquery.localScroll.min.js',
+					'bower_components/js/bootstrap.dropdown.js',
+					'bower_components/toc/toc.js',
+					'bower_components/toc/copyright.js'
+				]
+			}
 		}
 	}
 };
@@ -152,6 +172,7 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-less' );
 	grunt.loadNpmTasks( 'grunt-shell' );
 	grunt.loadNpmTasks( 'grunt-contrib-copy' );
+	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 
 	grunt.registerTask( "default", ["docs"] );
 
@@ -179,7 +200,7 @@ module.exports = function ( grunt ) {
 	 * @name build
 	 * @memberof module:Gruntfile
 	 */
-	grunt.registerTask( "build", "Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the styles directory", ["testdocs", "shell:dox", "bootswatch", "examples", "apply", "copy"] );
+	grunt.registerTask( "build", "Builds the whole shebang. Which means creating testdocs, the bootswatch samples and then resetting the styles directory", ["uglify:template", "testdocs", "shell:dox", "bootswatch", "examples", "apply", "copy"] );
 	/**
 	 * TASK: Applies the theme in the conf file and applies it to the styles directory.
 	 * @name apply

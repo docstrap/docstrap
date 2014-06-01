@@ -1,4 +1,10 @@
-# DocStrap #
+
+
+
+
+[![NPM](https://nodei.co/npm/ink-docstrap.png?downloads=true)](https://nodei.co/npm/ink-docstrap/)
+
+# DocStrap [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) #
 
 DocStrap is [Bootstrap](http://twitter.github.io/bootstrap/index.html) based template for [JSDoc3](http://usejsdoc.org/).
 In addition, it includes all of the themes from [Bootswatch](http://bootswatch.com/) giving you a great deal of look
@@ -7,6 +13,8 @@ you even more flexibility to tweak the template to your needs. It will also make
 
 ## New ##
 
+* Two __exciting__ new features in 0.4.3. Read about Google Analytics (tip of the hat to * [pocesar](https://github.com/pocesar))
+support and major syntax highlight changes. 
 * As of version 0.4.0, DocStrap only supports the node version of JSDoc and will no longer support the Java version of JSDoc
 * New options in `jsdoc.conf.json` to provide greater control over the output of source files. See `outputSourceFiles` and `sourceRootPath`
 * Several updated components for the development environment
@@ -40,21 +48,26 @@ To change your theme, just change it in the `conf.json` file. See below for deta
 
 If you manage your own version of jsdoc:
 
-```
+``` 
+{@lang bash}
 npm install ink-docstrap
 ```
 
-When using [grunt](http://gruntjs.com/), this plugin manages jsdoc and docstrap for you:
+When using [grunt](http://gruntjs.com/), please look at [grunt-jsdoc](https://github.com/krampstudio/grunt-jsdoc) which includes
+docstrap
 
-```
-npm install grunt-jsdoc // follow the instructions on the [project home page](https://github.com/krampstudio/grunt-jsdoc).
+```  
+{@lang bash}
+npm install grunt-jsdoc 
 ```
 
 ## Configuring the template ##
 
 DocStrap ships with a `conf.json` file in the template/ directory. It is just a regular old
 [JSDoc configuration file](http://usejsdoc.org/about-configuring-jsdoc.html), but with the following new options:
-```
+
+``` 
+{@lang javascript}
 "templates": {
 	"systemName"            : "{string}",
 	"footer"                : "{string}",
@@ -69,6 +82,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	"dateFormat"            : "{string}",
 	"highlightTutorialCode" : "{boolean}"
 }
+
 ```
 ### Options ###
 
@@ -104,11 +118,10 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	If your pages have a large number of symbols, it can be easy to get lost in all the text. If you turn this to `true`
 	all of the symbols in the page will roll their contents up so that you just get a list of symbols that can be expanded
 	and collapsed.
-*   __analytics__ Use Google analytics
-    * __ua__ The google agent
-    * __domain__ The domain being served. 
-     
-    eg: `"analytics":{"ua":"UA-XXXXX-XXX", "domain":"XXXX"}`
+*   __analytics__ Add a [Google Analytics](http://www.google.com/analytics) code to the template output
+ _e.g._ `"analytics":{"ua":"UA-XXXXX-XXX", "domain":"XXXX"}`
+    * __ua__ The google agent (see Google Analytics help for details)
+    * __domain__ The domain being served. (see Google Analytics help for details)
 *   __inverseNav__
 	Bootstrap navbars come in two flavors, regular and inverse where inverse is generally higher contrast. Set this to `true` to
 	use the inverse header.
@@ -118,6 +131,56 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	When `outputSourceFiles` is `false`, you may still want to name the file even without a link to the pretty printed output.
 	Set  this to `true` when `outputSourceFiles` is `false`. `outputSourceFiles` when `true` takes precedence over this setting.
 *   __dateFormat__ The date format to use when printing dates. It accepts any format string understood by [moment.js](http://momentjs.com/docs/#/displaying/format/)
+*   __highlightTutorialCode__ Boolean used to determine whether to treat code blocks in "tutorial" markdown as examples and highlight them 
+
+## Controlling Syntax Highlighting ##
+Of course this is intended to document JS. But JS often interacts with other languages, most commonly `HTML`, but also any
+language on the server including PHP, C# and other C-like languages. The point is that when you write examples, you may want to
+include other languages to make your examples as expressive as possible. So, DocStrap introduces a new documentation tag
+which can appear inside any example block in source code, or in any fenced code block in markdown: `{@lang languageName}`, where
+_`language`_ can be any of the languages supported by [Sunlight](http://sunlightjs.com/)
+
+Look at this:
+
+```
+{@lang javascript} var mini = me; {@lang javascript} 
+```
+ 
+```
+{@lang xml} <div>I have no hair!</div> {@lang xml} 
+```
+
+```
+{@lang csharp} Bottle wine = new Bottle(); {@lang csharp} 
+```
+
+ 
+* ActionScript
+* bash 
+* C/C++
+* C♯
+* CSS
+* Diff
+* DOS batch
+* Erlang
+* Haskell
+* httpd (Apache)
+* Java
+* JavaScript
+* Lisp
+* Lua
+* MySQL
+* nginx
+* Objective-C
+* Perl
+* PHP
+* PowerShell
+* Python
+* Ruby
+* Scala
+* T-SQL
+* VB.NET
+* XML (HTML)
 
 
 ## Customizing DocStrap ##
@@ -127,12 +190,12 @@ Fetch the source using `git` or grab the [zip file from github.](https://github.
 it somewhere. Everything that follows happens in the unzip directory.
 
 Next, prepare the environment:
+     
+    bower install      {@lang bash}
 
-    bower install
-
-and
-
-    npm install
+and         
+   
+    npm install     {@lang bash}
 
 When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, uses [less](http://lesscss.org/).
 The way it works is that `./styles/main.less` pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,
@@ -142,7 +205,7 @@ to keep your changes to the `main.less` file.
 
 To compile your changes to `main.less` and any other files it loads up,
 
-	grunt less
+	grunt less 	{@lang bash}
 
 The output is will be put in `./template/static/styles/site.<theme-name>.css`. The next time you create your documentation, it
 will have the new css file included.
@@ -150,7 +213,7 @@ will have the new css file included.
 To apply a different template to the `styles` directory to modify, open up the `conf.json` in the template directory and
 change the `theme` option to the theme you want. Then
 
-	grunt apply
+	grunt apply 	{@lang bash}
 
 And the new theme will be in `variables.less`, `bootswatch.less`. Don't forget to compile your changes using `grunt apply` to
 get that change into the template.
@@ -163,7 +226,7 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ### Contributers ###
 
-*Huge* thanks to all contributers. If your name should be here, but isn't, please let me know
+*Huge* thanks to all contributors. If your name should be here, but isn't, please let me know
 
 * [marklagendijk](https://github.com/marklagendijk)
 * [michaelward82](https://github.com/michaelward82)
@@ -174,15 +237,17 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 * [shawke](https://github.com/shawke)
 * [mar10](https://github.com/mar10)
 * [mwcz](https://github.com/mwcz)
+* [pocesar](https://github.com/pocesar)
+* [hyperandroid](https://github.com/hyperandroid)
 
-## Roadmap ##
-
-* Make plain old bootstrap an option (doh!)
-* ~~Jump to source line numbers~~
-* Document publish.js
 
 
 ## History ##
+
+### v0.4.3 ###
+* Issue #46
+* Issue #46
+* Issue #47
 
 ### v0.4.1-1###
 * Issue #44
