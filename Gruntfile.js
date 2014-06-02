@@ -44,7 +44,7 @@ var jsdocTestPages = {
 	tutorials : "./fixtures/tutorials",
 	template  : "./template",
 	config    : "./template/jsdoc.conf.json",
-	options   : " --lenient --verbose"
+	options   : " --lenient --verbose --recurse"
 };
 /**
  * The definition to run the sample files. This runs the files in `fixtures` with the
@@ -55,7 +55,7 @@ var jsdocTestPages = {
 var jsdocExamplePages = {
 	src       : ["./fixtures/", "./README.md"],
 	dest      : "./themes",
-	tutorials : "",
+	tutorials : "./fixtures/tutorials",
 	template  : "./template",
 	config    : "./fixtures/example.conf.json",
 	options   : " --lenient --verbose --recurse"
@@ -94,19 +94,18 @@ function jsdocCommand( jsdoc ) {
 	cmd.unshift( path.resolve( "./node_modules/jsdoc/jsdoc" ) );
 	cmd.unshift( "node" );
 
-
 	return cmd.join( " " );
 }
 
 var tasks = {
 	shell  : {
-		options  : {
+		options   : {
 			stdout : true,
 			stderr : true
 		},
 		/**
 		 * TASK: Create the a documentation set for testing changes to the template
-		 * @name shell:testdocs
+		 * @name jsdoc:testdocs
 		 * @memberOf module:Gruntfile
 		 */
 		testdocs : {
@@ -117,8 +116,21 @@ var tasks = {
 		 * @name shell:dox
 		 * @memberOf module:Gruntfile
 		 */
-		dox      : {
+		dox       : {
 			command : jsdocCommand( projectDocs )
+		}
+	},
+	jsdoc  : {
+		testdocs : {
+			src     : ['fixtures/**.js', "./README.md"],
+			jsdoc: "./node_modules/jsdoc/jsdoc.js",
+			options : {
+				destination : './testdocs',
+				rescurse    : true,
+				"private"   : true,
+				"template"  : "./template",
+				"configure" : "./template/jsdoc.conf.json"
+			}
 		}
 	},
 	/**
@@ -156,7 +168,7 @@ var tasks = {
 
 					'bower_components/jquery.scrollTo/jquery.scrollTo.min.js',
 					'bower_components/jquery.localScroll/jquery.localScroll.min.js',
-					'bower_components/js/bootstrap.dropdown.js',
+					'bower_components/bootstrap/js/bootstrap-dropdown.js',
 					'bower_components/toc/toc.js',
 					'bower_components/toc/copyright.js'
 				]
@@ -173,6 +185,7 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-shell' );
 	grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+	grunt.loadNpmTasks( 'grunt-jsdoc' );
 
 	grunt.registerTask( "default", ["docs"] );
 
