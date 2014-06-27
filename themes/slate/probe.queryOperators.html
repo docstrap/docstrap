@@ -94,31 +94,31 @@
 						</li>
 						
 						<li>
-							<a href="probe.queryOperators.html">queryOperators</a>
+							<a href="probe.queryOperators.html">documents/probe.queryOperators</a>
 						</li>
 						
 						<li>
-							<a href="probe.updateOperators.html">updateOperators</a>
+							<a href="probe.updateOperators.html">documents/probe.updateOperators</a>
 						</li>
 						
 						<li>
-							<a href="collector-ACollector.html">ACollector</a>
+							<a href="collector-ACollector.html">ink/collector~ACollector</a>
 						</li>
 						
 						<li>
-							<a href="collector-CollectorBase_.html">CollectorBase</a>
+							<a href="collector-CollectorBase_.html">ink/collector~CollectorBase</a>
 						</li>
 						
 						<li>
-							<a href="collector-OCollector.html">OCollector</a>
+							<a href="collector-OCollector.html">ink/collector~OCollector</a>
 						</li>
 						
 						<li>
-							<a href="signalable-Signal.html">Signal</a>
+							<a href="signalable-Signal.html">mixins/signalable~Signal</a>
 						</li>
 						
 						<li>
-							<a href="logger.Logger.html">Logger</a>
+							<a href="logger.Logger.html">utils/logger.Logger</a>
 						</li>
 						
 
@@ -308,9 +308,9 @@
 
         <dl>
             
-<dt>
-    <h4 class="name" id="$all"><span class="type-signature">&lt;static> </span>$all<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$all">
+    <h4><span class="type-signature">&lt;static> </span>$all<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -320,7 +320,7 @@
 <code>{array: {$all: [val1, val2, val3]}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -364,7 +364,7 @@
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -377,9 +377,9 @@ probe.find( data, {&quot;categories&quot; : {$all : [&quot;cat4&quot;, &quot;cat
 
         
             
-<dt>
-    <h4 class="name" id="$and"><span class="type-signature">&lt;static> </span>$and<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$and">
+    <h4><span class="type-signature">&lt;static> </span>$and<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -389,7 +389,7 @@ probe.find( data, {&quot;categories&quot; : {$all : [&quot;cat4&quot;, &quot;cat
 <code>{$and: [query1, query2, query3]}</code></p>
     </div>
     
-    
+
     
 
     
@@ -433,7 +433,7 @@ probe.find( data, {&quot;categories&quot; : {$all : [&quot;cat4&quot;, &quot;cat
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -449,9 +449,9 @@ probe.find( data, {$and : [
 
         
             
-<dt>
-    <h4 class="name" id="$elemMatch"><span class="type-signature">&lt;static> </span>$elemMatch<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$elemMatch">
+    <h4><span class="type-signature">&lt;static> </span>$elemMatch<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -462,7 +462,7 @@ of the conditions of the query
 <code>{array: {$elemMatch: {path: value, path: {$operation: value2}}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -506,7 +506,7 @@ of the conditions of the query
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -521,9 +521,9 @@ probe.find( data, {attr : {$elemMatch : [
 
         
             
-<dt>
-    <h4 class="name" id="$eq"><span class="type-signature">&lt;static> </span>$eq<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$eq">
+    <h4><span class="type-signature">&lt;static> </span>$eq<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -534,7 +534,7 @@ otherwise if it is an array, it checks to see if the value looked for is in the 
 <code>{field: value}</code> or <code>{field: {$eq : value}}</code> or <code>{array: value}</code> or <code>{array: {$eq : value}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -578,7 +578,7 @@ otherwise if it is an array, it checks to see if the value looked for is in the 
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -593,9 +593,9 @@ probe.find( data, {categories : {$eq: &quot;cat1&quot;}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$exists"><span class="type-signature">&lt;static> </span>$exists<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$exists">
+    <h4><span class="type-signature">&lt;static> </span>$exists<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -605,7 +605,7 @@ probe.find( data, {categories : {$eq: &quot;cat1&quot;}} );</pre>
 <code>{field: {$exists: true|false}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -649,7 +649,7 @@ probe.find( data, {categories : {$eq: &quot;cat1&quot;}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -662,9 +662,9 @@ probe.find( data, {&quot;name.middle&quot; : {$exists : true}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$gt"><span class="type-signature">&lt;static> </span>$gt<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$gt">
+    <h4><span class="type-signature">&lt;static> </span>$gt<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -674,7 +674,7 @@ probe.find( data, {&quot;name.middle&quot; : {$exists : true}} );</pre>
 <code>{field: {$gt: value}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -718,7 +718,7 @@ probe.find( data, {&quot;name.middle&quot; : {$exists : true}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -731,9 +731,9 @@ probe.find( data, {&quot;age&quot; : {$gt : 24}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$gte"><span class="type-signature">&lt;static> </span>$gte<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$gte">
+    <h4><span class="type-signature">&lt;static> </span>$gte<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -743,7 +743,7 @@ probe.find( data, {&quot;age&quot; : {$gt : 24}} );</pre>
 <code>{field: {$gte: value}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -787,7 +787,7 @@ probe.find( data, {&quot;age&quot; : {$gt : 24}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -800,9 +800,9 @@ probe.find( data, {&quot;age&quot; : {$gte : 50}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$in"><span class="type-signature">&lt;static> </span>$in<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$in">
+    <h4><span class="type-signature">&lt;static> </span>$in<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -812,7 +812,7 @@ probe.find( data, {&quot;age&quot; : {$gte : 50}} );</pre>
 <code>{field: {$in: [test1, test2, test3,...]}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -856,7 +856,7 @@ probe.find( data, {&quot;age&quot; : {$gte : 50}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -869,9 +869,9 @@ probe.find( data, {&quot;age&quot; : {$in : [24, 28, 60]}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$lt"><span class="type-signature">&lt;static> </span>$lt<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$lt">
+    <h4><span class="type-signature">&lt;static> </span>$lt<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -881,7 +881,7 @@ probe.find( data, {&quot;age&quot; : {$in : [24, 28, 60]}} );</pre>
 <code>{field: {$lt: value}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -925,7 +925,7 @@ probe.find( data, {&quot;age&quot; : {$in : [24, 28, 60]}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -938,9 +938,9 @@ probe.find( data, {&quot;age&quot; : {$lt : 24}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$lte"><span class="type-signature">&lt;static> </span>$lte<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$lte">
+    <h4><span class="type-signature">&lt;static> </span>$lte<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -950,7 +950,7 @@ probe.find( data, {&quot;age&quot; : {$lt : 24}} );</pre>
 <code>{field: {$lte: value}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -994,7 +994,7 @@ probe.find( data, {&quot;age&quot; : {$lt : 24}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1007,9 +1007,9 @@ probe.find( data, {&quot;age&quot; : {$lte : 50}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$mod"><span class="type-signature">&lt;static> </span>$mod<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$mod">
+    <h4><span class="type-signature">&lt;static> </span>$mod<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -1019,7 +1019,7 @@ probe.find( data, {&quot;age&quot; : {$lte : 50}} );</pre>
 <code>{field: {$mod: [divisor, remainder]}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -1063,7 +1063,7 @@ probe.find( data, {&quot;age&quot; : {$lte : 50}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1076,9 +1076,9 @@ probe.find( data, {&quot;age&quot; : {$mod : [2, 0]}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$ne"><span class="type-signature">&lt;static> </span>$ne<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$ne">
+    <h4><span class="type-signature">&lt;static> </span>$ne<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -1089,7 +1089,7 @@ this is performs a &quot;not in array&quot;.
 '{field: {$ne : value}}<code>or '{array: {$ne : value}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -1133,7 +1133,7 @@ this is performs a &quot;not in array&quot;.
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1146,9 +1146,9 @@ probe.find( data, {&quot;name.first&quot; : {$ne : &quot;Sheryl&quot;}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$nin"><span class="type-signature">&lt;static> </span>$nin<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$nin">
+    <h4><span class="type-signature">&lt;static> </span>$nin<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -1158,7 +1158,7 @@ probe.find( data, {&quot;name.first&quot; : {$ne : &quot;Sheryl&quot;}} );</pre>
 <code>{field: {$nin: [test1, test2, test3,...]}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -1202,7 +1202,7 @@ probe.find( data, {&quot;name.first&quot; : {$ne : &quot;Sheryl&quot;}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1215,9 +1215,9 @@ probe.find( data, {&quot;age&quot; : {$nin : [24, 28, 60]}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$nor"><span class="type-signature">&lt;static> </span>$nor<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$nor">
+    <h4><span class="type-signature">&lt;static> </span>$nor<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -1227,7 +1227,7 @@ probe.find( data, {&quot;age&quot; : {$nin : [24, 28, 60]}} );</pre>
 <code>{$nor: [query1, query2, query3]}</code></p>
     </div>
     
-    
+
     
 
     
@@ -1271,7 +1271,7 @@ probe.find( data, {&quot;age&quot; : {$nin : [24, 28, 60]}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1287,9 +1287,9 @@ probe.find( data, {$nor : [
 
         
             
-<dt>
-    <h4 class="name" id="$not"><span class="type-signature">&lt;static> </span>$not<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$not">
+    <h4><span class="type-signature">&lt;static> </span>$not<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -1299,7 +1299,7 @@ probe.find( data, {$nor : [
 <code>{$not: [query1, query2, query3]}</code></p>
     </div>
     
-    
+
     
 
     
@@ -1343,7 +1343,7 @@ probe.find( data, {$nor : [
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1356,9 +1356,9 @@ probe.find( data, {$not : {&quot;age&quot; : {$lt : 24}}} );</pre>
 
         
             
-<dt>
-    <h4 class="name" id="$or"><span class="type-signature">&lt;static> </span>$or<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$or">
+    <h4><span class="type-signature">&lt;static> </span>$or<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -1368,7 +1368,7 @@ probe.find( data, {$not : {&quot;age&quot; : {$lt : 24}}} );</pre>
 <code>{$or: [query1, query2, query3]}</code></p>
     </div>
     
-    
+
     
 
     
@@ -1412,7 +1412,7 @@ probe.find( data, {$not : {&quot;age&quot; : {$lt : 24}}} );</pre>
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1428,9 +1428,9 @@ probe.find( data, {$or : [
 
         
             
-<dt>
-    <h4 class="name" id="$regex"><span class="type-signature">&lt;static> </span>$regex<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$regex">
+    <h4><span class="type-signature">&lt;static> </span>$regex<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -1440,7 +1440,7 @@ probe.find( data, {$or : [
 <code>{field: {$regex: re, $options: reOptions}}</code></p>
     </div>
     
-    
+
     
 
     
@@ -1484,7 +1484,7 @@ probe.find( data, {$or : [
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1497,9 +1497,9 @@ probe.find( data, {&quot;name.first&quot; : {$regex : &quot;m*&quot;, $options :
 
         
             
-<dt>
-    <h4 class="name" id="$size"><span class="type-signature">&lt;static> </span>$size<span class="type-signature"></span></h4>
-    
+<dt class="name" id="$size">
+    <h4><span class="type-signature">&lt;static> </span>$size<span class="type-signature"></span></h4>
+
     
 </dt>
 <dd>
@@ -1509,7 +1509,7 @@ probe.find( data, {&quot;name.first&quot; : {$regex : &quot;m*&quot;, $options :
 <code>{'field|array</code>: {$size: value}}`</p>
     </div>
     
-    
+
     
 
     
@@ -1553,7 +1553,7 @@ probe.find( data, {&quot;name.first&quot; : {$regex : &quot;m*&quot;, $options :
 	
 </dl>
 
-    
+
     
         <h5>Example</h5>
         
@@ -1592,7 +1592,7 @@ probe.find( data, {attr : {$size : 3}} );</pre>
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Mon Jun 2nd 2014 using the <a
+		on Fri Jun 27th 2014 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
@@ -1614,28 +1614,35 @@ probe.find( data, {attr : {$size : 3}} );</pre>
 
 	<script>
 		$( function () {
+			$( "[id*='$']" ).each( function () {
+				var $this = $( this );
+
+				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+			} );
+
 			$( "#toc" ).toc( {
 				anchorName  : function ( i, heading, prefix ) {
 					return $( heading ).attr( "id" ) || ( prefix + i );
 				},
 				selectors   : "h1,h2,h3,h4",
 				showAndHide : false,
-				scrollTo    : 60
+				scrollTo    : "100px"
 			} );
+
 			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
 			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-			$('.dropdown-toggle').dropdown();
+			$( '.dropdown-toggle' ).dropdown();
 //			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
 
 			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
 				var $this = $( this );
 
-				var example = $this.find("code" );
+				var example = $this.find( "code" );
 				exampleText = example.html();
 				var lang = /{@lang (.*?)}/.exec( exampleText );
 				if ( lang && lang[1] ) {
 					exampleText = exampleText.replace( lang[0], "" );
-					example.html(exampleText);
+					example.html( exampleText );
 					lang = lang[1];
 				} else {
 					lang = "javascript";
@@ -1653,17 +1660,19 @@ probe.find( data, {attr : {$size : 3}} );</pre>
 
 			Sunlight.highlightAll( {
 				lineNumbers : true,
-				showMenu:true,
-				enableDoclinks:true
+				showMenu : true,
+				enableDoclinks : true
+			} );
 		} );
-		} );
+	 </script>
 
-	</script>
 
-	<!--Google Analytics-->
-	
 
 	<!--Navigation and Symbol Display-->
+	
+
+
+	<!--Google Analytics-->
 	
 
 </body>
