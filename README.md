@@ -140,20 +140,28 @@ include other languages to make your examples as expressive as possible. So, Doc
 which can appear inside any example block in source code, or in any fenced code block in markdown: `{@lang languageName}`, where
 _`language`_ can be any of the languages supported by [Sunlight](http://sunlightjs.com/)
 
-Look at this:
+Look at this: 
+For an example of this thing in action [this](http://terryweiss.github.io/docstrap/themes/readable/#toc7) )__
 
-```
-{@lang javascript} var mini = me; {@lang javascript} 
-```
- 
-```
-{@lang xml} <div>I have no hair!</div> {@lang xml} 
-```
 
-```
-{@lang csharp} Bottle wine = new Bottle(); {@lang csharp} 
-```
+The syntax for adding the tag is as follows. When in markdown, add the tag on the line just after the \`\`\` fence like so:
 
+\`\`\`
+
+`{@lang language}` 
+
+`This is my code`
+
+\`\`\`
+
+When in a doclet add the tag just after the `@example` tag like this:
+
+`@example {@lang xml}`
+
+`<div>This is the most interesting web site ever</div>`
+
+
+These are the supported languages. 
  
 * ActionScript
 * bash 
@@ -243,6 +251,14 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 
 ## History ##
+### v0.4.4 ###
+* Issue #55
+* Issue #54
+* Issue #52
+* Issue #51
+* Issue #50
+* Issue #45
+* Issue #44
 
 ### v0.4.3 ###
 * Issue #46

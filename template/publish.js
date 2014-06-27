@@ -163,18 +163,25 @@ function addAttribs( f ) {
 }
 
 function shortenPaths( files, commonPrefix ) {
-	// always use forward slashes
-	var regexp = new RegExp( '\\\\', 'g' );
+//	// always use forward slashes
+//	var regexp = new RegExp( '\\\\', 'g' );
+//
+//	var prefix = commonPrefix.toLowerCase().replace( regexp, "/" );
+//
+//	Object.keys( files ).forEach( function ( file ) {
+//		files[file].shortened = files[file]
+//			.resolved
+//			.toLowerCase()
+//			.replace( regexp, '/' )
+//			.replace( prefix, '' );
+//	} );
 
-	var prefix = commonPrefix.toLowerCase().replace( regexp, "/" );
+	Object.keys(files).forEach(function(file) {
+		files[file].shortened = files[file].resolved.replace(commonPrefix, '')
+			// always use forward slashes
+			.replace(/\\/g, '/');
+	});
 
-	Object.keys( files ).forEach( function ( file ) {
-		files[file].shortened = files[file]
-			.resolved
-			.toLowerCase()
-			.replace( regexp, '/' )
-			.replace( prefix, '' );
-	} );
 
 	return files;
 }
@@ -279,7 +286,7 @@ function buildNav( members ) {
 		members.modules.forEach( function ( m ) {
 			if ( !hasOwnProp.call( seen, m.longname ) ) {
 
-				nav.module.members.push( linkto( m.longname, m.name ) );
+				nav.module.members.push( linkto( m.longname, m.longname.replace("module:", "") ) );
 			}
 			seen[m.longname] = true;
 		} );
@@ -301,7 +308,7 @@ function buildNav( members ) {
 		members.classes.forEach( function ( c ) {
 			if ( !hasOwnProp.call( seen, c.longname ) ) {
 
-				nav.class.members.push( linkto( c.longname, c.name ) );
+				nav.class.members.push( linkto( c.longname, c.longname.replace("module:", "") ) );
 			}
 			seen[c.longname] = true;
 		} );
@@ -313,7 +320,7 @@ function buildNav( members ) {
 		members.events.forEach( function ( e ) {
 			if ( !hasOwnProp.call( seen, e.longname ) ) {
 
-				nav.event.members.push( linkto( e.longname, e.name ) );
+				nav.event.members.push( linkto( e.longname, e.longname.replace("module:", "") ) );
 			}
 			seen[e.longname] = true;
 		} );
@@ -325,7 +332,7 @@ function buildNav( members ) {
 		members.namespaces.forEach( function ( n ) {
 			if ( !hasOwnProp.call( seen, n.longname ) ) {
 
-				nav.namespace.members.push( linkto( n.longname, n.name ) );
+				nav.namespace.members.push( linkto( n.longname, n.longname.replace("module:", "") ) );
 			}
 			seen[n.longname] = true;
 		} );
@@ -337,7 +344,7 @@ function buildNav( members ) {
 		members.mixins.forEach( function ( m ) {
 			if ( !hasOwnProp.call( seen, m.longname ) ) {
 
-				nav.mixin.members.push( linkto( m.longname, m.name ) );
+				nav.mixin.members.push( linkto( m.longname, m.longname.replace("module:", "") ) );
 			}
 			seen[m.longname] = true;
 		} );
@@ -357,7 +364,7 @@ function buildNav( members ) {
 		members.globals.forEach( function ( g ) {
 			if ( g.kind !== 'typedef' && !hasOwnProp.call( seen, g.longname ) ) {
 
-				nav.global.members.push( linkto( g.longname, g.name ) );
+				nav.global.members.push( linkto( g.longname, g.longname.replace("module:", "") ) );
 			}
 			seen[g.longname] = true;
 		} );
@@ -426,6 +433,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 				if ( lang && lang[1] ) {
 					example = example.replace( lang[0], "" );
 					lang = lang[1];
+
 				} else {
 					lang = null;
 				}

@@ -39,11 +39,10 @@ var fs = require( "fs" );
  * @private
  */
 var jsdocTestPages = {
-	src       : ["./fixtures/", "./README.md"],
 	dest      : "./testdocs",
 	tutorials : "./fixtures/tutorials",
 	template  : "./template",
-	config    : "./template/jsdoc.conf.json",
+	config    : "./fixtures/testdocs.conf.json",
 	options   : " --lenient --verbose --recurse"
 };
 /**
@@ -179,6 +178,8 @@ var tasks = {
 
 module.exports = function ( grunt ) {
 	tasks.jsdocConf = grunt.file.readJSON( 'template/jsdoc.conf.json' );
+
+
 	grunt.initConfig( tasks );
 
 	grunt.loadNpmTasks( 'grunt-contrib-less' );
@@ -310,20 +311,24 @@ module.exports = function ( grunt ) {
  */
 function applyTheme( grunt, definition ) {
 	//noinspection JSHint
+
+
+	var webProtocol = tasks.jsdocConf.templates.protocol || "//";
+	 console.info(webProtocol);
 	var done = this.async();
 	async.waterfall( [
 		function ( cb ) {
 			getBootSwatchComponent( definition.less, function ( err, swatch ) {
 				if ( err ) {return cb( err );}
 				var fullPath = path.join( __dirname, "styles/bootswatch.less" );
-				fs.writeFile( fullPath, swatch.replace( "http://", "//" ), cb );
+				fs.writeFile( fullPath, swatch.replace( "http://", webProtocol), cb );
 			} );
 		},
 		function ( cb ) {
 			getBootSwatchComponent( definition.lessVariables, function ( err, swatch ) {
 				if ( err ) {return cb( err );}
 				var fullPath = path.join( __dirname, "styles/variables.less" );
-				fs.writeFile( fullPath, swatch.replace( "http://", "//" ), cb );
+				fs.writeFile( fullPath, swatch.replace( "http://", webProtocol ), cb );
 			} );
 		}
 	], done );

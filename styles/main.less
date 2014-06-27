@@ -2,7 +2,7 @@
 @import "variables.less";
 @import "bootswatch.less";
 
-@headerHeight: 56px;
+@headerHeight: 62px;
 
 #main {
   margin-top : @headerHeight;
@@ -48,28 +48,23 @@
   position   : fixed;
   top        : @headerHeight;
   width      : 29%;
-  max-height : 90%;
+  max-height : 82%;
   overflow   : auto;
   .border-radius(5px);
   border     : 1px @navbarBackground solid;
   padding    : 5px;
 
   .toc-active {
-	background-color : @navbarLinkBackgroundActive;
-	color            : @navbarLinkColorActive;
+	background-color : @navbarInverseLinkBackgroundActive;
+	color            : @navbarInverseLinkColorActive;
 	.border-radius(3px);
 	a, a:hover, a:active, a:visited {
-	  background-color : @navbarLinkBackgroundActive;
-	  color            : @navbarLinkColorActive;
+	  background-color : @navbarInverseLinkBackgroundActive;
+	  color            : @navbarInverseLinkColorActive;
 	}
   }
 }
 
-.toc-shim {
-  padding-top : @headerHeight;
-  margin-top  : -@headerHeight;
-  display     : block;
-}
 
 .toc-h1 {
   margin-left  : 2px;
@@ -146,8 +141,17 @@ code {
   .transition(background-color 0.5s linear);
   .transition(color 0.5s linear);
   .border-radius(5px);
-  padding : 10px;
+  padding : 3px;
+  margin-top:5px;
+  margin-bottom:5px;
+
+
 }
+.member-name{
+  padding-top: 100px !important;
+  margin-top: -100px !important;
+}
+
 
 .sunlight-highlighted {
   margin           : 0;

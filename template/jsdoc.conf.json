@@ -14,11 +14,12 @@
 		"footer"                : "",
 		"copyright"             : "DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.",
 		"navType"               : "vertical",
-		"theme"                 : "cerulean",
+		"theme"                 : "cosmo",
 		"linenums"              : true,
 		"collapseSymbols"       : false,
 		"inverseNav"            : true,
-		"highlightTutorialCode" : true
+		"highlightTutorialCode" : true,
+		"protocol": "fred://"
 	},
 	"markdown"  : {
 		"parser"   : "gfm",
