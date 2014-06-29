@@ -247,10 +247,13 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 * [mwcz](https://github.com/mwcz)
 * [pocesar](https://github.com/pocesar)
 * [hyperandroid](https://github.com/hyperandroid)
-
+* [vmadman](https://github.com/vmadman)
 
 
 ## History ##
+### v0.4.7 ###
+* Issue #57
+
 ### v0.4.5 ###
 * Issue #55
 * Issue #54
