@@ -5,7 +5,7 @@ bower_components*
 .idea*
 ringojs-0.9*
 dox*
-testdocs*
+testdocs/*
 themes*
 npm-debug.log
 
