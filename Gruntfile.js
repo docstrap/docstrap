@@ -222,8 +222,8 @@ module.exports = function ( grunt ) {
 	 */
 	grunt.registerTask( "apply", "Applies the theme in the conf file and applies it to the styles directory", function () {
 		var def = {
-			less          : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
-			lessVariables : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/variables.less"
+			less          : "http://bootswatch.com/2/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
+			lessVariables : "http://bootswatch.com/2/" + tasks.jsdocConf.templates.theme + "/variables.less"
 		};
 		grunt.registerTask( "swatch-apply", sys.partial( applyTheme, grunt, def ) );
 		grunt.task.run( ["swatch-apply"] );
