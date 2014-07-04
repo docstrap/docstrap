@@ -251,6 +251,9 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 
 ## History ##
+### v0.4.8 ###
+* Issue #58
+
 ### v0.4.7 ###
 * Issue #57
 

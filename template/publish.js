@@ -191,9 +191,9 @@ function getPathFromDoclet( doclet ) {
 		return;
 	}
 
-	return doclet.meta.path && doclet.meta.path !== 'null' ?
+	return path.normalize(doclet.meta.path && doclet.meta.path !== 'null' ?
 		doclet.meta.path + '/' + doclet.meta.filename :
-		doclet.meta.filename;
+		doclet.meta.filename);
 }
 
 function generate( docType, title, docs, filename, resolveLinks ) {
