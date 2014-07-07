@@ -120,7 +120,7 @@ var tasks = {
 		},
 		release1 : {
 			command : [
-				"touch gruntfile.js",
+				"touch Gruntfile.js",
 				"git add .",
 				'git commit -m "ready for release"',
 			].join( ";" )
@@ -307,6 +307,8 @@ module.exports = function ( grunt ) {
 		} );
 
 	} );
+
+	grunt.registerTask( "release", "Create the project documentation", ["shell:release1", "shell:release2"] );
 };
 
 /**
