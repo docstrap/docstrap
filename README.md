@@ -257,7 +257,7 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 
 ## History ##
-### v0.4.9 ###
+### v0.4.11 ###
 * Pull Request #59
 
 ### v0.4.8 ###
