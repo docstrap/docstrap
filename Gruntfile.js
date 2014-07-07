@@ -120,6 +120,7 @@ var tasks = {
 		},
 		release : {
 			command : [
+				"touch gruntfile.js",
 				"git add .",
 				'git commit -m "ready for release"',
 				"npm version patch",
