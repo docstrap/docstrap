@@ -35,6 +35,7 @@ var navOptions = {
 	footer                : conf.footer || "",
 	copyright             : conf.copyright || "",
 	theme                 : conf.theme || "simplex",
+	syntaxTheme           : conf.syntaxTheme || "default",
 	linenums              : conf.linenums,
 	collapseSymbols       : conf.collapseSymbols || false,
 	inverseNav            : conf.inverseNav,
