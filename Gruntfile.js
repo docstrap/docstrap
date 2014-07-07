@@ -117,6 +117,16 @@ var tasks = {
 		 */
 		dox       : {
 			command : jsdocCommand( projectDocs )
+		},
+		release : {
+			command : [
+				"git add .",
+				'git commit -m "ready for release"',
+				"npm version patch",
+				"git push",
+				"git push --tags",
+				"npm publish"
+			].join("&&")
 		}
 	},
 	jsdoc  : {

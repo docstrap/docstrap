@@ -12,8 +12,9 @@ and feel options for your documentation, along with a simple search. Additionall
 you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.
 
 ## New ##
-
-* Two __exciting__ new features in 0.4.3. Read about Google Analytics (tip of the hat to * [pocesar](https://github.com/pocesar))
+* Courtesy [whitelynx](https://github.com/whitelynx), you can now also select [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) 
+for code blocks.
+* Read about Google Analytics (tip of the hat to [pocesar](https://github.com/pocesar))
 support and major syntax highlight changes. 
 * As of version 0.4.0, DocStrap only supports the node version of JSDoc and will no longer support the Java version of JSDoc
 * New options in `jsdoc.conf.json` to provide greater control over the output of source files. See `outputSourceFiles` and `sourceRootPath`
@@ -80,7 +81,8 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	"outputSourceFiles"     : "{boolean}" ,
 	"outputSourcePath"      : "{boolean}",
 	"dateFormat"            : "{string}",
-	"highlightTutorialCode" : "{boolean}"
+	"highlightTutorialCode" : "{boolean}",
+	"syntaxTheme"           : "{string}"
 }
 
 ```
@@ -131,7 +133,10 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	When `outputSourceFiles` is `false`, you may still want to name the file even without a link to the pretty printed output.
 	Set  this to `true` when `outputSourceFiles` is `false`. `outputSourceFiles` when `true` takes precedence over this setting.
 *   __dateFormat__ The date format to use when printing dates. It accepts any format string understood by [moment.js](http://momentjs.com/docs/#/displaying/format/)
-*   __highlightTutorialCode__ Boolean used to determine whether to treat code blocks in "tutorial" markdown as examples and highlight them 
+*   __highlightTutorialCode__ Boolean used to determine whether to treat code blocks in "tutorial" markdown as examples and highlight them
+*   __syntaxTheme__ String that determines the theme used for code blocks. Default value is `"default"`. It can be any value supported
+    at [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) which right now consists of...uh...`"default"` and `"dark"`, 
+    but at least you have it if you need it.
 
 ## Controlling Syntax Highlighting ##
 Of course this is intended to document JS. But JS often interacts with other languages, most commonly `HTML`, but also any
@@ -199,11 +204,11 @@ it somewhere. Everything that follows happens in the unzip directory.
 
 Next, prepare the environment:
      
-    bower install      {@lang bash}
+    bower install     
 
 and         
    
-    npm install     {@lang bash}
+    npm install     
 
 When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, uses [less](http://lesscss.org/).
 The way it works is that `./styles/main.less` pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,
@@ -213,7 +218,7 @@ to keep your changes to the `main.less` file.
 
 To compile your changes to `main.less` and any other files it loads up,
 
-	grunt less 	{@lang bash}
+	grunt less 	
 
 The output is will be put in `./template/static/styles/site.<theme-name>.css`. The next time you create your documentation, it
 will have the new css file included.
@@ -221,7 +226,7 @@ will have the new css file included.
 To apply a different template to the `styles` directory to modify, open up the `conf.json` in the template directory and
 change the `theme` option to the theme you want. Then
 
-	grunt apply 	{@lang bash}
+	grunt apply 
 
 And the new theme will be in `variables.less`, `bootswatch.less`. Don't forget to compile your changes using `grunt apply` to
 get that change into the template.
@@ -248,9 +253,13 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 * [pocesar](https://github.com/pocesar)
 * [hyperandroid](https://github.com/hyperandroid)
 * [vmadman](https://github.com/vmadman)
+* [whitelynx](https://github.com/whitelynx)
 
 
 ## History ##
+### v0.4.9 ###
+* Pull Request #59
+
 ### v0.4.8 ###
 * Issue #58
 
