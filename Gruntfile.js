@@ -98,7 +98,7 @@ function jsdocCommand( jsdoc ) {
 
 var tasks = {
 	shell  : {
-		options   : {
+		options  : {
 			stdout : true,
 			stderr : true
 		},
@@ -115,25 +115,29 @@ var tasks = {
 		 * @name shell:dox
 		 * @memberOf module:Gruntfile
 		 */
-		dox       : {
+		dox      : {
 			command : jsdocCommand( projectDocs )
 		},
-		release : {
+		release1 : {
 			command : [
 				"touch gruntfile.js",
 				"git add .",
 				'git commit -m "ready for release"',
-				"npm version patch",
+			].join( ";" )
+
+		},
+		release2 : {
+			command : ["npm version patch",
 				"git push",
 				"git push --tags",
 				"npm publish"
-			].join("&&")
+			].join( "&&" )
 		}
 	},
 	jsdoc  : {
 		testdocs : {
 			src     : ['fixtures/**.js', "./README.md"],
-			jsdoc: "./node_modules/jsdoc/jsdoc.js",
+			jsdoc   : "./node_modules/jsdoc/jsdoc.js",
 			options : {
 				destination : './testdocs',
 				rescurse    : true,
@@ -189,7 +193,6 @@ var tasks = {
 
 module.exports = function ( grunt ) {
 	tasks.jsdocConf = grunt.file.readJSON( 'template/jsdoc.conf.json' );
-
 
 	grunt.initConfig( tasks );
 
@@ -323,16 +326,15 @@ module.exports = function ( grunt ) {
 function applyTheme( grunt, definition ) {
 	//noinspection JSHint
 
-
 	var webProtocol = tasks.jsdocConf.templates.protocol || "//";
-	 console.info(webProtocol);
+	console.info( webProtocol );
 	var done = this.async();
 	async.waterfall( [
 		function ( cb ) {
 			getBootSwatchComponent( definition.less, function ( err, swatch ) {
 				if ( err ) {return cb( err );}
 				var fullPath = path.join( __dirname, "styles/bootswatch.less" );
-				fs.writeFile( fullPath, swatch.replace( "http://", webProtocol), cb );
+				fs.writeFile( fullPath, swatch.replace( "http://", webProtocol ), cb );
 			} );
 		},
 		function ( cb ) {
