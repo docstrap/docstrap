@@ -14,7 +14,7 @@ $.fn.toc = function(options) {
       var elScrollTo = $(e.target).attr('href');
       var $el = $(elScrollTo);
 
-      $('body,html').animate({ scrollTop: $el.offset().top }, 400, 'swing', function() {
+      $('body,html').animate({ scrollTop: ($el.offset().top - 70)  }, 400, 'swing', function() {
         location.hash = elScrollTo;
       });
     }
@@ -92,7 +92,11 @@ jQuery.fn.toc.defaults = {
     return $heading.text();
   },
   itemClass: function(i, heading, $heading, prefix) {
-    return prefix + '-' + $heading[0].tagName.toLowerCase();
+    var className = $heading.attr('class');
+    if (className) {
+      className = className.replace(/ /g, '_');
+    }
+    return prefix + '-' + $heading[0].tagName.toLowerCase() + (className ? '-' + className : '');
   }
 
 };
