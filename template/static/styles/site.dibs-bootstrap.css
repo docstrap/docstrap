@@ -5828,6 +5828,8 @@ dl > dd > .description {
     position: fixed;
     top: 70px;
     right: 15px;
+    height: 750px;
+    overflow: auto;
   }
 
 }
