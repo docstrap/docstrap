@@ -143,6 +143,17 @@
 				showMenu : true,
 				enableDoclinks : true
 			} );
+
+			// Offset the scroll position if there is a hash to
+			// account for the navbar
+		    var hash = window.location.hash;
+		    setTimeout(function () {
+		        var scrollPosition = $(window).scrollTop();
+		        if (hash) {
+		            $(window).scrollTop(scrollPosition - 70);
+		        }
+		    }, 300);
+
 		} );
 	 </script>
 
