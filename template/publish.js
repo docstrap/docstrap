@@ -44,8 +44,11 @@ var navOptions = {
 	outputSourcePath      : conf.outputSourcePath,
 	dateFormat            : conf.dateFormat,
 	analytics             : conf.analytics || null,
-	highlightTutorialCode : conf.highlightTutorialCode
+	highlightTutorialCode : conf.highlightTutorialCode,
+	useDeepStructure	  : conf.navUseDeepStructure || false
 };
+
+var jsRootDirectories = conf.jsRootDirectories || [];
 
 var navigationMaster = {
 	index     : {
@@ -266,6 +269,61 @@ function attachModuleSymbols( doclets, modules ) {
 }
 
 /**
+ * Builds out the structure in a navigation array for a nav element. The elements
+ * will either be string anchors or an object with two keys: segmentName and members.
+ * Members are navigation elements belonging to that path segment.
+ * 
+ * @param  {array<object>} membersArray
+ * @param  {array<string>} pathArr
+ * @return {array<string|object>}
+ */
+function buildMembersNavigationStructure ( membersArray, pathArr ) {
+	if (!pathArr || !pathArr.length) {
+		return membersArray;
+	}
+
+	pathArr = pathArr.slice(0);
+	var nextPathSegment = pathArr.shift();
+	var nextMembersObj;
+	var nextMembersArray;
+	var i;
+	for (i = 0; i < membersArray.length; i++) {
+		if (typeof membersArray[i] === 'object' && membersArray[i].segmentName === nextPathSegment) {
+			nextMembersArray = membersArray[i].members;
+			break;
+		}
+	}
+
+	if (!nextMembersArray) {
+		nextMembersObj = { segmentName: nextPathSegment, members: [] };
+		nextMembersArray = nextMembersObj.members;
+		membersArray.push(nextMembersObj);
+	}
+
+	return buildMembersNavigationStructure( nextMembersArray, pathArr );
+}
+
+/**
+ * @param  {object} member A navigation member object
+ * @return {array<string>}
+ *       An array of path segments with jsRootDirectories removed
+ */
+function getNavDirectoryArr( member ) {
+	var shortpath = member.meta.shortpath;
+	var i = 0;
+	var len = jsRootDirectories.length;
+	var arr;
+	for (i; i < len; i++) {
+		if (shortpath.substring(0, jsRootDirectories[i].length) === jsRootDirectories[i]) {
+			shortpath = shortpath.substring(jsRootDirectories[i].length + 1);
+		}
+	}
+	arr = shortpath.split('/');
+	arr.pop();
+	return arr;
+}
+
+/**
  * Create the navigation sidebar.
  * @param {object} members The members that will be used to create the sidebar.
  * @param {array<object>} members.classes
@@ -306,10 +364,19 @@ function buildNav( members ) {
 
 	if ( members.classes.length ) {
 
-		members.classes.forEach( function ( c ) {
+		members.classes.forEach( function ( c, index ) {
 			if ( !hasOwnProp.call( seen, c.longname ) ) {
+				var pathArr, membersArray;
 
-				nav.class.members.push( linkto( c.longname, c.longname.replace("module:", "") ) );
+				if ( navOptions.useDeepStructure ) {
+					pathArr = getNavDirectoryArr( c );
+					membersArray = buildMembersNavigationStructure( nav.class.members, pathArr );
+				} else {
+					membersArray = nav.class.members;
+				}
+
+				membersArray.push( linkto( c.longname, c.longname.replace("module:", "") ) );
+
 			}
 			seen[c.longname] = true;
 		} );
