@@ -113,7 +113,7 @@
     <?js } ?>
 
     <?js
-        var methods = self.find({kind: 'function', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
+        var methods = self.findMethodInheritedLast( title, doc );
         if (methods && methods.length && methods.forEach) {
     ?>
         <h3 class="subsection-title">Methods</h3>
