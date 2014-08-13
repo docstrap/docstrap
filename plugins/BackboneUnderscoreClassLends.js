@@ -33,16 +33,20 @@ _.extend(BackboneModuleParser.prototype, {
         segs = last.split('.');
         return _.first(segs);
     },
-    _getMatches: function (regex, source) {
+    _getAllMatches: function (regex, source) {
         source = source || this.newSource;
-        return regex.exec(source);
-    },
-    _getFirstMatch: function (regex, source) {
-        var matches = this._getMatches(regex, source);
-        if (matches && matches.length) {
-            return matches[1];
+        var rawMatches = source.match(regex);
+        var i = 0;
+        var len = rawMatches ? rawMatches.length : 0;
+        var allMatches = [];
+        var grouped;
+        for (i; i < len; i++) {
+            grouped = regex.exec(rawMatches[i]);
+            if (grouped && grouped.length === 4) {
+                allMatches.push(grouped);
+            }
         }
-        return null;
+        return allMatches;
     },
     _findFileClassNames: function () {
         var matches = this.origSource.match(regexes.FILE_CLASS_NAME);
@@ -64,72 +68,63 @@ _.extend(BackboneModuleParser.prototype, {
             return self.fileName === cn;
         });
     },
-    _matchesAreForClassName: function (matches) {
-        return matches && matches.length > 1 && matches[2] === this.primaryFileClassName;
+    _testExtendMatches: function (matches) {
+        return matches && matches.length >= 4 && !!this._getClassNameFromMatches(matches);
     },
-    _findBackboneExtendSegments: function () {
-        var matches = this._getMatches(regexes.BACKBONE_EXTEND);
-        if (this._testExtendMatches(matches)) {
-            return [matches[1], matches[3]];
+    _replaceExtendRegex: function (regex, segs, className, isProto) {
+        var protoStr = isProto ? '.prototype */' : ' */';
+        return this.newSource.replace(regex, segs.join('/** @lends ' + className + protoStr));
+    },
+    _getSegmentsForMatches: function (matches) {
+        return [matches[1], matches[3]];
+    },
+    _getClassNameFromMatches: function (matches) {
+        var className = matches[2];
+        if (this.fileClassNames.indexOf(className) > -1) {
+            return className;
         }
         return null;
     },
-    _testExtendMatches: function (matches) {
-        return matches && matches.length >= 4 && matches[2] === this.primaryFileClassName;
-    },
-    _replaceExtendRegex: function (regex, segs, isProto) {
-        var protoStr = isProto ? '.prototype */' : ' */';
-        return this.newSource.replace(regex, segs.join('/** @lends ' + this.primaryFileClassName + protoStr));
+    _replaceExtendTypeForRegex: function (regex, isPrototype) {
+        var allMatches = this._getAllMatches(regex);
+        var i = 0;
+        var source = this.newSource;
+        var className;
+        for (i; i < allMatches.length; i++) {
+            if (this._testExtendMatches(allMatches[i])) {
+                className = this._getClassNameFromMatches(allMatches[i]);
+                if (className) {
+                    source = this._replaceExtendRegex(regex, this._getSegmentsForMatches(allMatches[i]), className, isPrototype);
+                }
+            }
+        }
+        return source;
     },
     _replaceBackboneExtend: function () {
-        var segs = this.backboneExtendSegments;
-        return this._replaceExtendRegex(regexes.BACKBONE_EXTEND, segs, true);
+        // var segs = this.backboneExtendSegments;
+        // return this._replaceExtendRegex(regexes.BACKBONE_EXTEND, segs, true);
+        return this._replaceExtendTypeForRegex(regexes.BACKBONE_EXTEND, true);
     },
     _replaceUnderscoreProtoExtend: function () {
-        var segs = this.underscoreProtoExtendSegments;
-        return this._replaceExtendRegex(regexes.UNDERSCORE_EXTEND_PROTOTYPE, segs, true);
+        // var segs = this.underscoreProtoExtendSegments;
+        // return this._replaceExtendRegex(regexes.UNDERSCORE_EXTEND_PROTOTYPE, segs, true);
+        return this._replaceExtendTypeForRegex(regexes.UNDERSCORE_EXTEND_PROTOTYPE, true);
     },
     _replaceUnderscoreStaticExtend: function () {
-        var segs = this.underscoreStaticExtendSegments;
-        return this._replaceExtendRegex(regexes.UNDERSCORE_EXTEND_STATIC, segs, false);
-    },
-    _findUnderscoreProtoExtendSegments: function () {
-        var matches = this._getMatches(regexes.UNDERSCORE_EXTEND_PROTOTYPE);
-        if (this._testExtendMatches(matches)) {
-            return [matches[1], matches[3]];
-        }
-        return null;
-    },
-    _findUnderscoreStaticExtendSegments: function () {
-        var matches = this._getMatches(regexes.UNDERSCORE_EXTEND_STATIC);
-        if (this._testExtendMatches(matches)) {
-            return [matches[1], matches[3]];
-        }
-        return null;
+        // var segs = this.underscoreStaticExtendSegments;
+        // return this._replaceExtendRegex(regexes.UNDERSCORE_EXTEND_STATIC, segs, false);
+        return this._replaceExtendTypeForRegex(regexes.UNDERSCORE_EXTEND_STATIC, false);
     },
     parse: function () {
 
         this.fileClassNames = this._findFileClassNames();
-        this.primaryFileClassName = this._findPrimaryClassName();
-        if (!this.primaryFileClassName) {
+        if (!this.fileClassNames.length) {
             return this.newSource;
         }
 
-        this.backboneExtendSegments = this._findBackboneExtendSegments();
-
-        if (this.backboneExtendSegments) {
-            this.newSource = this._replaceBackboneExtend();
-        }
-
-        this.underscoreProtoExtendSegments = this._findUnderscoreProtoExtendSegments();
-        if (this.underscoreProtoExtendSegments) {
-            this.newSource = this._replaceUnderscoreProtoExtend();
-        }
-
-        this.underscoreStaticExtendSegments = this._findUnderscoreStaticExtendSegments();
-        if (this.underscoreStaticExtendSegments) {
-            this.newSource = this._replaceUnderscoreStaticExtend(this.underscoreStaticExtendSegments);
-        }
+        this.newSource = this._replaceBackboneExtend();
+        this.newSource = this._replaceUnderscoreProtoExtend();
+        this.newSource = this._replaceUnderscoreStaticExtend();
 
         return this.newSource;
     }
