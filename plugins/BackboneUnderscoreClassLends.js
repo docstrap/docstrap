@@ -49,7 +49,7 @@ _.extend(BackboneModuleParser.prototype, {
         var classNames = [];
         if (matches && matches.length) {
             _.each(matches, function (match) {
-                classNames.push(match.replace('/\* ?@class /', ''));
+                classNames.push(match.replace(/\* ?@class /, ''));
             });
         }
         return classNames;
