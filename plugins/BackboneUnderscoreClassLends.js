@@ -14,8 +14,15 @@
 
 var _ = require('underscore');
 
+var SHOULD_LOG = false;
+var log = function (label, value) {
+    if (SHOULD_LOG) {
+        console.log(label, value);
+    }
+};
+
 var regexes = {
-    BACKBONE_EXTEND: /(\/\*\*[\s\S]+?(?:@class ([A-Za-z_]+)?)[\s\S]+?\*\/\n[\s]*(?:var )?(?:[A-Za-z_]+ ?= ?)?(?:module\.exports ?= ?)?[A-Za-z_]+\.extend\()(\{)/g,
+    BACKBONE_EXTEND: /(\/\*\*(?:[ \S]*\n)(?: *\*[\S ]*\n)* \* @class ([A-Za-z_\.]+) *\n(?: *\*[\S ]*\n)* *\*\/ ?\n(?:var )?(?:[A-Za-z_]+ ?= ?)?(?:module\.exports ?= ?)?[A-Za-z_]+\.extend\()(\{)/g,
     UNDERSCORE_EXTEND_PROTOTYPE: /(_\.extend\(\s*([A-Za-z_]+)\.prototype\s*,\s*)(\{)/g,
     UNDERSCORE_EXTEND_STATIC: /(_\.extend\(\s*([A-Za-z_]+)\s*,\s*)(\{)/g,
     FILE_CLASS_NAME: /\* ?@class ([A-Za-z]+)/g
@@ -42,17 +49,20 @@ _.extend(BackboneModuleParser.prototype, {
         var i = 0;
         var len = rawMatches ? rawMatches.length : 0;
         var allMatches = [];
-        var grouped;
+        var result;
         for (i; i < len; i++) {
-            grouped = regex.exec(rawMatches[i]);
-            if (grouped && grouped.length === 4) {
-                allMatches.push(grouped);
+            regex.lastIndex = 0;
+            result = regex.exec(rawMatches[i]);
+            if (result && result.length === 4) {
+                allMatches.push(result);
             }
         }
+        log('ALL Matches', allMatches);
         return allMatches;
     },
     _findFileClassNames: function () {
         var matches = this.origSource.match(regexes.FILE_CLASS_NAME);
+        log('matches for class names', matches);
         var classNames = [];
         if (matches && matches.length) {
             _.each(matches, function (match) {
@@ -75,6 +85,7 @@ _.extend(BackboneModuleParser.prototype, {
         return matches && matches.length >= 4 && !!this._getClassNameFromMatches(matches);
     },
     _replaceExtendRegex: function (regex, segs, className, isProto) {
+        regex.lastIndex = 0;
         var protoStr = isProto ? '.prototype */' : ' */';
         return this.newSource.replace(regex, segs.join('/** @lends ' + className + protoStr));
     },
@@ -135,7 +146,15 @@ _.extend(BackboneModuleParser.prototype, {
 
 exports.handlers = {
     beforeParse: function (e) {
-        var parsed = new BackboneModuleParser(e.filename, e.source).parse();
+        if (e.filename.indexOf('/ShipmentCostView.js') > -1) {
+            SHOULD_LOG = true;
+            //console.log('==========PARSED ========', parsed);
+        }
+        var parser = new BackboneModuleParser(e.filename, e.source);
+        var parsed = parser.parse();
+        //log("PARSED", parsed);
+        SHOULD_LOG = false;
+
         e.source = parsed;
     }
 };
