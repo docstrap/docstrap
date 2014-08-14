@@ -15,7 +15,7 @@
 var _ = require('underscore');
 
 var regexes = {
-    BACKBONE_EXTEND: /(\/\*\*(?:[ \S]*\n)(?: *\*[\S ]*\n)* \* @class ([A-Za-z_\.]+) *\n(?: *\*[\S ]*\n)* *\*\/ ?\n(?:var )?(?:[A-Za-z_]+ ?= ?)?(?:module\.exports ?= ?)?[A-Za-z_]+\.extend\()(\{)/g,
+    BACKBONE_EXTEND: /(\/\*\*(?:[ \S]*\n)(?: *\*[\S ]*\n)* \* @class ([A-Za-z_\.]+) *\n(?: *\*[\S ]*\n)* *\*\/ ?\n(?:var )?(?:[A-Za-z_]+ ?= ?)?(?:module\.exports ?= ?)?[A-Za-z\._]+\.extend\()(\{)/g,
     UNDERSCORE_EXTEND_PROTOTYPE: /(_\.extend\(\s*([A-Za-z_]+)\.prototype\s*,\s*)(\{)/g,
     UNDERSCORE_EXTEND_STATIC: /(_\.extend\(\s*([A-Za-z_]+)\s*,\s*)(\{)/g,
     FILE_CLASS_NAME: /\* ?@class ([A-Za-z]+)/g
