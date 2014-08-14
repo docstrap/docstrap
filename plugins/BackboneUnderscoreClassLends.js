@@ -14,13 +14,6 @@
 
 var _ = require('underscore');
 
-var SHOULD_LOG = false;
-var log = function (label, value) {
-    if (SHOULD_LOG) {
-        console.log(label, value);
-    }
-};
-
 var regexes = {
     BACKBONE_EXTEND: /(\/\*\*(?:[ \S]*\n)(?: *\*[\S ]*\n)* \* @class ([A-Za-z_\.]+) *\n(?: *\*[\S ]*\n)* *\*\/ ?\n(?:var )?(?:[A-Za-z_]+ ?= ?)?(?:module\.exports ?= ?)?[A-Za-z_]+\.extend\()(\{)/g,
     UNDERSCORE_EXTEND_PROTOTYPE: /(_\.extend\(\s*([A-Za-z_]+)\.prototype\s*,\s*)(\{)/g,
@@ -57,12 +50,10 @@ _.extend(BackboneModuleParser.prototype, {
                 allMatches.push(result);
             }
         }
-        log('ALL Matches', allMatches);
         return allMatches;
     },
     _findFileClassNames: function () {
         var matches = this.origSource.match(regexes.FILE_CLASS_NAME);
-        log('matches for class names', matches);
         var classNames = [];
         if (matches && matches.length) {
             _.each(matches, function (match) {
@@ -146,14 +137,8 @@ _.extend(BackboneModuleParser.prototype, {
 
 exports.handlers = {
     beforeParse: function (e) {
-        if (e.filename.indexOf('/ShipmentCostView.js') > -1) {
-            SHOULD_LOG = true;
-            //console.log('==========PARSED ========', parsed);
-        }
         var parser = new BackboneModuleParser(e.filename, e.source);
         var parsed = parser.parse();
-        //log("PARSED", parsed);
-        SHOULD_LOG = false;
 
         e.source = parsed;
     }
