@@ -1,8 +1,11 @@
 /**
  * Created by james on 8/13/14.
  *
- * Inserts @lends tags for backbone.extend and _.extend
- * modules. If you have a 
+ * Inserts @lends tags for backbone.<pseudoclass>.extend and _.extend
+ * modules. If you have a module that declasres a class with a @class
+ * tag, this will look for a matching '.extend' and then insert the 
+ * appropriate @lends tag before object containing prototype or static
+ * properties.
  * 
  */
 /*jslint node:true, vars:true */
