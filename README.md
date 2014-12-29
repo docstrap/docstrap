@@ -254,9 +254,13 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 * [hyperandroid](https://github.com/hyperandroid)
 * [vmadman](https://github.com/vmadman)
 * [whitelynx](https://github.com/whitelynx)
+* [tswaters](https://github.com/tswaters)
 
 
 ## History ##
+### v0.4.13 ###
+* Issue #68
+
 ### v0.4.11 ###
 * Pull Request #59
 

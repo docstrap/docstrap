@@ -369,6 +369,11 @@ function buildNav( members ) {
 			}
 			seen[g.longname] = true;
 		} );
+
+		// even if there are no links, provide a link to the global page.
+		if ( nav.global.members.length === 0 ) {
+			nav.global.members.push( linkto( "global", "Global" ) );
+		}
 	}
 
 	var topLevelNav = [];
