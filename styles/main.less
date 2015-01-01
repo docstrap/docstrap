@@ -22,17 +22,17 @@
 	max-height       : 300px;
 	overflow         : auto;
 	width            : 300px;
-	background-color : @navbarInverseBackground;
+	background-color : @navbar-inverse-bg;
 	a, a:visited {
-	  color : @navbarInverseLinkColor;
+	  color : @navbar-inverse-link-color;
 	}
 	a:hover {
-	  color            : @navbarInverseLinkColorHover;
-	  background-color : @navbarInverseLinkBackgroundHover;
+	  color            : @navbar-inverse-link-hover-color;
+	  background-color : @navbar-inverse-link-hover-bg;
 	}
 	a:active {
-	  color            : @navbarInverseLinkColorActive;
-	  background-color : @navbarInverseLinkBackgroundActive;
+	  color            : @navbar-inverse-link-active-color;
+	  background-color : @navbar-inverse-link-active-bg;
 	}
 	a {
 	  padding-left  : 0;
@@ -47,49 +47,56 @@
 #toc {
   position   : fixed;
   top        : @headerHeight;
-  width      : 29%;
+  right      : 0;
   max-height : 82%;
   overflow   : auto;
-  .border-radius(5px);
-  border     : 1px @navbarBackground solid;
+  .border-top-radius(5px);
+  .border-right-radius(5px);
+  .border-bottom-radius(5px);
+  .border-left-radius(5px);
+  border     : 1px @navbar-default-bg solid;
   padding    : 5px;
 
   .toc-active {
-	background-color : @navbarInverseLinkBackgroundActive;
-	color            : @navbarInverseLinkColorActive;
-	.border-radius(3px);
+	background-color : @navbar-inverse-link-active-bg;
+	color            : @navbar-inverse-link-active-color;
+  .border-top-radius(3px);
+  .border-right-radius(3px);
+  .border-bottom-radius(3px);
+  .border-left-radius(3px);
 	a, a:hover, a:active, a:visited {
-	  background-color : @navbarInverseLinkBackgroundActive;
-	  color            : @navbarInverseLinkColorActive;
+	  background-color : @navbar-inverse-link-active-bg;
+	  color            : @navbar-inverse-link-active-color;
 	}
+  }
+
+  .toc-h1 {
+    margin-left  : 2px;
+    margin-right : 2px;
+  }
+
+  .toc-h2 {
+    margin-left  : 7px;
+    margin-right : 7px;
+  }
+
+  .toc-h3 {
+    margin-left  : 14px;
+    margin-right : 7px;
+  }
+
+  .toc-h4 {
+    margin-left  : 21px;
+    margin-right : 7px;
   }
 }
 
 
-.toc-h1 {
-  margin-left  : 2px;
-  margin-right : 2px;
-}
-
-.toc-h2 {
-  margin-left  : 7px;
-  margin-right : 7px;
-}
-
-.toc-h3 {
-  margin-left  : 14px;
-  margin-right : 7px;
-}
-
-.toc-h4 {
-  margin-left  : 21px;
-  margin-right : 7px;
-}
 
 .copyright {
   font-size  : 90%;
   text-align : center;
-  color      : @navbarInverseBackground;
+  color      : @navbar-inverse-bg;
   width      : 100%;
   display    : block;
 }
@@ -97,14 +104,14 @@
 .jsdoc-message {
   font-size  : 90%;
   text-align : center;
-  color      : @navbarInverseBackground;
+  color      : @navbar-inverse-bg;
   width      : 100%;
   display    : block;
 }
 
 .page-title {
   font-size      : 220%;
-  color          : @navbarInverseBackground;
+  color          : @navbar-inverse-bg;
   font-weight    : 700;
   padding-top    : 10px;
   padding-bottom : 7px;
@@ -112,14 +119,14 @@
 }
 
 footer {
-  border-top  : 1px solid  @navbarInverseBackgroundHighlight;
+  border-top  : 1px solid  @navbar-inverse-link-hover-bg;
   padding-top : 15px;
 }
 
 code {
   background-color : none;
   border           : none;
-  color            : @orange;
+  color            : orange;
 }
 
 .buffered-name {
@@ -128,8 +135,8 @@ code {
 }
 
 .member-collapsed {
-  background-color : @navbarInverseBackground;
-  color            : @navbarInverseText;
+  background-color : @navbar-inverse-bg;
+  color            : @navbar-inverse-color;
 }
 
 .member-open {
@@ -140,7 +147,10 @@ code {
 .member {
   .transition(background-color 0.5s linear);
   .transition(color 0.5s linear);
-  .border-radius(5px);
+  .border-top-radius(5px);
+  .border-right-radius(5px);
+  .border-bottom-radius(5px);
+  .border-left-radius(5px);
   padding : 3px;
   margin-top:5px;
   margin-bottom:5px;
@@ -164,7 +174,10 @@ code {
 }
 
 .sunlight-line-number-margin {
-  border-radius : 0;
+  .border-top-radius(0);
+  .border-right-radius(0);
+  .border-bottom-radius(0);
+  .border-left-radius(0);
   border-width  : 0 1px 0 0;
   font-size     : 12px;
   line-height   : 15px;
