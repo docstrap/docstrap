@@ -43,6 +43,13 @@ var self = this;
 	</dd>
 	<?js } ?>
 
+    <?js if (data.overrides) { ?>
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <?js= this.linkto(data.overrides, this.htmlsafe(data.overrides)) ?>
+    </li></ul></dd>
+    <?js } ?>
+
     <?js if (data.implementations && data.implementations.length) { ?>
     <dt class="implementations">Implementations:</dt>
     <dd class="implementations"><ul>
