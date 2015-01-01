@@ -59,14 +59,6 @@
         <?js }); ?></ul>
     <?js } ?>
 
-    <?js if (doc.mixes && doc.mixes.length) { ?>
-        <h3 class="subsection-title">Mixes In</h3>
-
-        <ul><?js doc.mixes.forEach(function(a) { ?>
-            <li><?js= self.linkto(a, a) ?></li>
-        <?js }); ?></ul>
-    <?js } ?>
-
     <?js if (doc.requires && doc.requires.length) { ?>
         <h3 class="subsection-title">Requires</h3>
 
@@ -84,6 +76,18 @@
         <dl><?js classes.forEach(function(c) { ?>
             <dt><?js= self.linkto(c.longname, c.name) ?></dt>
             <dd><?js if (c.summary) { ?><?js= c.summary ?><?js } ?></dd>
+        <?js }); ?></dl>
+    <?js } ?>
+
+    <?js
+        var mixins = self.find({kind: 'mixin', memberof: doc.longname});
+        if (doc.kind !== 'globalobj' && mixins && mixins.length) {
+    ?>
+        <h3 class="subsection-title">Mixins</h3>
+
+        <dl><?js mixins.forEach(function(m) { ?>
+            <dt><?js= self.linkto(m.longname, m.name) ?></dt>
+            <dd><?js if (m.summary) { ?><?js= m.summary ?><?js } ?></dd>
         <?js }); ?></dl>
     <?js } ?>
 
