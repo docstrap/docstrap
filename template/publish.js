@@ -7,6 +7,7 @@
 /*global env: true */
 
 var template = require( 'jsdoc/template' ),
+	doop = require('jsdoc/util/doop'),
 	fs = require( 'jsdoc/fs' ),
 	_ = require( 'underscore' ),
 	path = require( 'jsdoc/path' ),
@@ -257,17 +258,31 @@ function generateSourceFiles( sourceFiles ) {
 function attachModuleSymbols( doclets, modules ) {
 	var symbols = {};
 
-	// build a lookup table
-	doclets.forEach( function ( symbol ) {
-		symbols[symbol.longname] = symbol;
-	} );
+    // build a lookup table
+    doclets.forEach(function(symbol) {
+        symbols[symbol.longname] = symbols[symbol.longname] || [];
+        symbols[symbol.longname].push(symbol);
+    });
 
-	return modules.map( function ( module ) {
-		if ( symbols[module.longname] ) {
-			module.module = symbols[module.longname];
-			module.module.name = module.module.name.replace( 'module:', 'require("' ) + '")';
-		}
-	} );
+    return modules.map(function(module) {
+        if (symbols[module.longname]) {
+            module.modules = symbols[module.longname]
+                // Only show symbols that have a description. Make an exception for classes, because
+                // we want to show the constructor-signature heading no matter what.
+                .filter(function(symbol) {
+                    return symbol.description || symbol.kind === 'class';
+                })
+                .map(function(symbol) {
+                    symbol = doop(symbol);
+
+                    if (symbol.kind === 'class' || symbol.kind === 'function') {
+                        symbol.name = symbol.name.replace('module:', '(require("') + '"))';
+                    }
+
+                    return symbol;
+                });
+        }
+    });
 }
 
 /**
