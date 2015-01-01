@@ -258,6 +258,10 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 
 ## History ##
+
+### v0.4.14 ###
+* Issue #69
+
 ### v0.4.13 ###
 * Issue #68
 
