@@ -100,19 +100,22 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	option to `"inline"`. Otherwise set it to `"vertical"` to make them regular stacked dropdowns.
 *   __theme__
 	This is the name of the them you want to use **in all lowercase**. The valid options are
-	+ `amelia`
 	+ `cerulean`
 	+ `cosmo`
 	+ `cyborg`
+	+ `darkly`
 	+ `flatly`
 	+ `journal`
+	+ `lumen`
+	+ `paper`
 	+ `readable`
+	+ `sandstone`
 	+ `simplex`
 	+ `slate`
 	+ `spacelab`
-	+ `spruce`
 	+ `superhero`
 	+ `united`
+	+ `yeti`
 *   __linenums__
 	When true, line numbers will appear in the source code listing. If you have
 	[also turned that on](http://usejsdoc.org/about-configuring-jsdoc.html).
