@@ -7,6 +7,7 @@
 /*global env: true */
 
 var template = require( 'jsdoc/template' ),
+	doop = require('jsdoc/util/doop'),
 	fs = require( 'jsdoc/fs' ),
 	_ = require( 'underscore' ),
 	path = require( 'jsdoc/path' ),
@@ -77,6 +78,11 @@ var navigationMaster = {
 	event    : {
 		title   : "Events",
 		link    : helper.getUniqueFilename( "events.list" ),
+		members : []
+	},
+	interface    : {
+		title   : "Interfaces",
+		link    : helper.getUniqueFilename( "interfaces.list" ),
 		members : []
 	},
 	tutorial : {
@@ -252,17 +258,31 @@ function generateSourceFiles( sourceFiles ) {
 function attachModuleSymbols( doclets, modules ) {
 	var symbols = {};
 
-	// build a lookup table
-	doclets.forEach( function ( symbol ) {
-		symbols[symbol.longname] = symbol;
-	} );
+    // build a lookup table
+    doclets.forEach(function(symbol) {
+        symbols[symbol.longname] = symbols[symbol.longname] || [];
+        symbols[symbol.longname].push(symbol);
+    });
 
-	return modules.map( function ( module ) {
-		if ( symbols[module.longname] ) {
-			module.module = symbols[module.longname];
-			module.module.name = module.module.name.replace( 'module:', 'require("' ) + '")';
-		}
-	} );
+    return modules.map(function(module) {
+        if (symbols[module.longname]) {
+            module.modules = symbols[module.longname]
+                // Only show symbols that have a description. Make an exception for classes, because
+                // we want to show the constructor-signature heading no matter what.
+                .filter(function(symbol) {
+                    return symbol.description || symbol.kind === 'class';
+                })
+                .map(function(symbol) {
+                    symbol = doop(symbol);
+
+                    if (symbol.kind === 'class' || symbol.kind === 'function') {
+                        symbol.name = symbol.name.replace('module:', '(require("') + '"))';
+                    }
+
+                    return symbol;
+                });
+        }
+    });
 }
 
 /**
@@ -272,6 +292,7 @@ function attachModuleSymbols( doclets, modules ) {
  * @param {array<object>} members.externals
  * @param {array<object>} members.globals
  * @param {array<object>} members.mixins
+ * @param {array<object>} members.interfaces
  * @param {array<object>} members.modules
  * @param {array<object>} members.namespaces
  * @param {array<object>} members.tutorials
@@ -346,6 +367,18 @@ function buildNav( members ) {
 			if ( !hasOwnProp.call( seen, m.longname ) ) {
 
 				nav.mixin.members.push( linkto( m.longname, m.longname.replace("module:", "") ) );
+			}
+			seen[m.longname] = true;
+		} );
+
+	}
+
+	if ( members.interfaces.length ) {
+
+		members.interfaces.forEach( function ( m ) {
+			if ( !hasOwnProp.call( seen, m.longname ) ) {
+
+				nav.interface.members.push( linkto( m.longname, m.longname.replace("module:", "") ) );
 			}
 			seen[m.longname] = true;
 		} );
@@ -600,6 +633,12 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 		], navigationMaster.mixin.link );
 	}
 
+	if ( view.nav.interface && view.nav.interface.members.length ) {
+		generate( 'interface', view.nav.interface.title, [
+			{kind : 'sectionIndex', contents : view.nav.interface}
+		], navigationMaster.interface.link );
+	}
+
 	if ( view.nav.external && view.nav.external.members.length ) {
 		generate( 'external', view.nav.external.title, [
 			{kind : 'sectionIndex', contents : view.nav.external}
@@ -629,6 +668,7 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 	var modules = taffy( members.modules );
 	var namespaces = taffy( members.namespaces );
 	var mixins = taffy( members.mixins );
+	var interfaces = taffy( members.interfaces );
 	var externals = taffy( members.externals );
 
 	for ( var longname in helper.longnameToUrl ) {
@@ -651,6 +691,11 @@ exports.publish = function ( taffyData, opts, tutorials ) {
 			var myMixins = helper.find( mixins, {longname : longname} );
 			if ( myMixins.length ) {
 				generate( 'mixin', 'Mixin: ' + myMixins[0].name, myMixins, helper.longnameToUrl[longname] );
+			}
+
+			var myInterfaces = helper.find( interfaces, {longname : longname} );
+			if ( myInterfaces.length ) {
+				generate( 'interface', 'Interface: ' + myInterfaces[0].name, myInterfaces, helper.longnameToUrl[longname] );
 			}
 
 			var myExternals = helper.find( externals, {longname : longname} );

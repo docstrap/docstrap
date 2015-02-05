@@ -43,6 +43,41 @@ var self = this;
 	</dd>
 	<?js } ?>
 
+    <?js if (data.overrides) { ?>
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <?js= this.linkto(data.overrides, this.htmlsafe(data.overrides)) ?>
+    </li></ul></dd>
+    <?js } ?>
+
+    <?js if (data.implementations && data.implementations.length) { ?>
+    <dt class="implementations">Implementations:</dt>
+    <dd class="implementations"><ul>
+        <?js data.implementations.forEach(function(impl) { ?>
+            <li><?js= self.linkto(impl, self.htmlsafe(impl)) ?></li>
+        <?js }); ?>
+    </ul></dd>
+    <?js } ?>
+
+    <?js if (data.implements && data.implements.length) { ?>
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        <?js data.implements.forEach(function(impl) { ?>
+            <li><?js= self.linkto(impl, self.htmlsafe(impl)) ?></li>
+        <?js }); ?>
+    </ul></dd>
+    <?js } ?>
+
+    <?js if (data.mixes && data.mixes.length) { ?>
+        <dt class="mixes">Mixes In:</dt>
+
+        <dd class="mixes"><ul>
+        <?js data.mixes.forEach(function(a) { ?>
+            <li><?js= self.linkto(a, a) ?></li>
+        <?js }); ?>
+        </ul></dd>
+    <?js } ?>
+
 	<?js if (data.deprecated) { ?>
 	<dt class="important tag-deprecated">Deprecated:</dt>
 	<?js
