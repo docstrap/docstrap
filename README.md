@@ -12,7 +12,7 @@ and feel options for your documentation, along with a simple search. Additionall
 you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.
 
 ## New ##
-__0.4.15 Major update__. Amazing help from [tswaters](https://github.com/tswaters) to solve a bunch of little problems and a to bring the codebase up to Bootstrap3.
+__0.5.2 Major update__. Amazing help from [tswaters](https://github.com/tswaters) to solve a bunch of little problems and a to bring the codebase up to Bootstrap3.
 Make sure you are running the latest version of JSDoc before using this build.
 
 Again huge, huge thanks to [tswaters](https://github.com/tswaters). Make sure you send him thanks or a tip!!!!!
