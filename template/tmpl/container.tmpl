@@ -3,7 +3,7 @@
     docs.forEach(function(doc, i) {
 ?>
 <?js if (doc.kind === 'mainpage' || (doc.kind === 'package')) { ?>
-	<?js if (i === 0){ ?>
+	<?js if (i === 0 && title !== 'Index'){ ?>
 	<span class="page-title"><?js= title ?></span>
 	<?js } ?>
 	<?js= self.partial('mainpage.tmpl', doc) ?>
