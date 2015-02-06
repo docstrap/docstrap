@@ -4,6 +4,7 @@
   },
   "plugins": ["plugins/markdown"],
   "templates": {
+    "logoFile": null,
     "cleverLinks": false,
     "monospaceLinks": false,
     "dateFormat": "ddd MMM Do YYYY",
