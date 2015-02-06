@@ -6732,6 +6732,9 @@ button.close {
   font-weight: 500;
   font-size: 115%;
 }
+img .branding-logo {
+  max-height: 40px;
+}
 #toc {
   position: fixed;
   top: 62px;
