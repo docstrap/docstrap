@@ -6834,7 +6834,10 @@ a.list-group-item-danger.active:focus {
   font-size: 115%;
 }
 img.branding-logo {
-  max-height: 40px;
+  max-height: 30px;
+  display: inline-block;
+  padding: 0px;
+  margin: -3px 5px 0 0;
 }
 #toc {
   position: fixed;
