@@ -16,7 +16,7 @@ var template = require( 'jsdoc/template' ),
     handle = require( 'jsdoc/util/error' ).handle,
     helper = require( 'jsdoc/util/templateHelper' ),
 // jsdoc node support is still a bit odd
-    moment = require( "./moment" ),
+    moment = require( "moment" ),
     htmlsafe = helper.htmlsafe,
     linkto = helper.linkto,
     resolveAuthorLinks = helper.resolveAuthorLinks,
