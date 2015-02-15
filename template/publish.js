@@ -190,25 +190,12 @@ function addAttribs( f ) {
 }
 
 function shortenPaths( files, commonPrefix ) {
-//  // always use forward slashes
-//  var regexp = new RegExp( '\\\\', 'g' );
-//
-//  var prefix = commonPrefix.toLowerCase().replace( regexp, "/" );
-//
-//  Object.keys( files ).forEach( function ( file ) {
-//      files[file].shortened = files[file]
-//          .resolved
-//          .toLowerCase()
-//          .replace( regexp, '/' )
-//          .replace( prefix, '' );
-//  } );
 
     Object.keys(files).forEach(function(file) {
         files[file].shortened = files[file].resolved.replace(commonPrefix, '')
             // always use forward slashes
             .replace(/\\/g, '/');
     });
-
 
     return files;
 }
@@ -363,12 +350,20 @@ function buildNav( members ) {
 
     var seen = {};
     var nav = navigationMaster;
+    var pathArr;
+    var membersArray;
     if ( members.modules.length ) {
-
         members.modules.forEach( function ( m ) {
             if ( !hasOwnProp.call( seen, m.longname ) ) {
 
-                nav.module.members.push( linkto( m.longname, m.longname.replace("module:", "") ) );
+                if ( navOptions.useDeepStructure ) {
+                    pathArr = getNavDirectoryArr( m );
+                    membersArray = buildMembersNavigationStructure( nav.module.members, pathArr );
+                } else {
+                    membersArray = nav.module.members;
+                }
+
+                membersArray.push( linkto( m.longname, m.longname.replace("module:", "") ) );
             }
             seen[m.longname] = true;
         } );
@@ -378,7 +373,6 @@ function buildNav( members ) {
 
         members.externals.forEach( function ( e ) {
             if ( !hasOwnProp.call( seen, e.longname ) ) {
-
                 nav.external.members.push( linkto( e.longname, e.name.replace( /(^"|"$)/g, '' ) ) );
             }
             seen[e.longname] = true;
@@ -389,7 +383,6 @@ function buildNav( members ) {
 
         members.classes.forEach( function ( c, index ) {
             if ( !hasOwnProp.call( seen, c.longname ) ) {
-                var pathArr, membersArray;
 
                 if ( navOptions.useDeepStructure ) {
                     pathArr = getNavDirectoryArr( c );
@@ -435,7 +428,15 @@ function buildNav( members ) {
         members.mixins.forEach( function ( m ) {
             if ( !hasOwnProp.call( seen, m.longname ) ) {
 
-                nav.mixin.members.push( linkto( m.longname, m.longname.replace("module:", "") ) );
+                if ( navOptions.useDeepStructure ) {
+                    pathArr = getNavDirectoryArr( m );
+                    membersArray = buildMembersNavigationStructure( nav.mixin.members, pathArr );
+                } else {
+                    membersArray = nav.mixin.members;
+                }
+
+                membersArray.push( linkto( m.longname, m.longname.replace("module:", "") ) );
+
             }
             seen[m.longname] = true;
         } );
@@ -445,7 +446,6 @@ function buildNav( members ) {
     if ( members.tutorials.length ) {
 
         members.tutorials.forEach( function ( t ) {
-
             nav.tutorial.members.push( tutoriallink( t.name ) );
         } );
 

@@ -5868,7 +5868,23 @@ dl > dd > .description {
 .toc-shim {
   padding-top: 70px;
 }
-
+.method-wrapper {
+  padding: 10px;
+  border-bottom: 2px solid #eee;
+}
+.method-name-wrapper {
+  margin: 10px 0;
+}
+.method-wrapper:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.method-name {
+   font-size: 110%;
+}
+.method-body-wrapper {
+   margin-left: 3%;
+   margin-top: 15px;
+}
 
 @media (min-width: 992px) {
 

@@ -2,7 +2,7 @@
 var data = obj;
 var self = this;
 ?>
-<dt>
+<dt class="method-name-wrapper">
     <code class="method-name name<?js= (kind) ? ' ' + kind + '-name' : '' ?>" id="<?js= id ?>">
         <?js= data.attribs + (kind === 'class' ? 'new ' : '') + '<span class="method-basic-name">' + name + '</span>' + (kind !== 'event' ? ('<span class="method-signature">' + data.signature + '</span>') : '') ?>
     </code>
@@ -11,7 +11,7 @@ var self = this;
     <p class="summary"><?js= summary ?></p>
     <?js } ?>
 </dt>
-<dd>
+<dd class="method-body-wrapper">
     
     <?js if (data && data.description) { ?>
     <div class="description">
