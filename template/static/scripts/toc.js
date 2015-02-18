@@ -12,7 +12,7 @@ $.fn.toc = function(options) {
     if (opts.smoothScrolling) {
       e.preventDefault();
       var elScrollTo = $(e.target).attr('href');
-      var $el = $(elScrollTo);
+      var $el = $(elScrollTo.replace('#.', '#\\.'));
 
       $('body,html').animate({ scrollTop: ($el.offset().top - 70)  }, 400, 'swing', function() {
         location.hash = elScrollTo;
