@@ -236,8 +236,8 @@ module.exports = function ( grunt ) {
 	 */
 	grunt.registerTask( "apply", "Applies the theme in the conf file and applies it to the styles directory", function () {
 		var def = {
-			less          : "http://bootswatch.com/2/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
-			lessVariables : "http://bootswatch.com/2/" + tasks.jsdocConf.templates.theme + "/variables.less"
+			less          : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
+			lessVariables : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/variables.less"
 		};
 		grunt.registerTask( "swatch-apply", sys.partial( applyTheme, grunt, def ) );
 		grunt.task.run( ["swatch-apply"] );
@@ -329,7 +329,6 @@ function applyTheme( grunt, definition ) {
 	//noinspection JSHint
 
 	var webProtocol = tasks.jsdocConf.templates.protocol || "//";
-	console.info( webProtocol );
 	var done = this.async();
 	async.waterfall( [
 		function ( cb ) {
@@ -363,7 +362,7 @@ function getBootSwatchList( done ) {
 	var options = {
 		hostname : 'api.bootswatch.com',
 		port     : 80,
-		path     : '/',
+		path     : '/3/',
 		method   : 'GET'
 	};
 	var body = "";
@@ -398,6 +397,7 @@ function getBootSwatchList( done ) {
  * @private
  */
 function getBootSwatchComponent( url, done ) {
+	console.info(url);
 	var body = "";
 	var req = http.request( url, function ( res ) {
 		res.setEncoding( 'utf8' );

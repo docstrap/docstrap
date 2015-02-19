@@ -12,13 +12,10 @@ and feel options for your documentation, along with a simple search. Additionall
 you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.
 
 ## New ##
-* Courtesy [whitelynx](https://github.com/whitelynx), you can now also select [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) 
-for code blocks.
-* Read about Google Analytics (tip of the hat to [pocesar](https://github.com/pocesar))
-support and major syntax highlight changes. 
-* As of version 0.4.0, DocStrap only supports the node version of JSDoc and will no longer support the Java version of JSDoc
-* New options in `jsdoc.conf.json` to provide greater control over the output of source files. See `outputSourceFiles` and `sourceRootPath`
-* Several updated components for the development environment
+__0.5.2 Major update__. Amazing help from [tswaters](https://github.com/tswaters) to solve a bunch of little problems and a to bring the codebase up to Bootstrap3.
+Make sure you are running the latest version of JSDoc before using this build.
+
+Again huge, huge thanks to [tswaters](https://github.com/tswaters). Make sure you send him thanks or a tip!!!!!
 
 
 ## Features ##
@@ -28,7 +25,7 @@ support and major syntax highlight changes.
 * Customizable
 
 ### What It Looks Like ###
-Here are examples of this template with the different Bootswatch themes:
+Here are examples of this template with the different Bootswatch themes (you can find more on the bootswatch web site):
 
 + [Amelia](http://terryweiss.github.io/docstrap/themes/amelia)
 + [Cerulean](http://terryweiss.github.io/docstrap/themes/cerulean)
@@ -49,7 +46,7 @@ To change your theme, just change it in the `conf.json` file. See below for deta
 
 If you manage your own version of jsdoc:
 
-``` 
+```
 {@lang bash}
 npm install ink-docstrap
 ```
@@ -57,9 +54,9 @@ npm install ink-docstrap
 When using [grunt](http://gruntjs.com/), please look at [grunt-jsdoc](https://github.com/krampstudio/grunt-jsdoc) which includes
 docstrap
 
-```  
+```
 {@lang bash}
-npm install grunt-jsdoc 
+npm install grunt-jsdoc
 ```
 
 ## Configuring the template ##
@@ -67,7 +64,7 @@ npm install grunt-jsdoc
 DocStrap ships with a `conf.json` file in the template/ directory. It is just a regular old
 [JSDoc configuration file](http://usejsdoc.org/about-configuring-jsdoc.html), but with the following new options:
 
-``` 
+```
 {@lang javascript}
 "templates": {
 	"systemName"            : "{string}",
@@ -100,19 +97,22 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	option to `"inline"`. Otherwise set it to `"vertical"` to make them regular stacked dropdowns.
 *   __theme__
 	This is the name of the them you want to use **in all lowercase**. The valid options are
-	+ `amelia`
 	+ `cerulean`
 	+ `cosmo`
 	+ `cyborg`
+	+ `darkly`
 	+ `flatly`
 	+ `journal`
+	+ `lumen`
+	+ `paper`
 	+ `readable`
+	+ `sandstone`
 	+ `simplex`
 	+ `slate`
 	+ `spacelab`
-	+ `spruce`
 	+ `superhero`
 	+ `united`
+	+ `yeti`
 *   __linenums__
 	When true, line numbers will appear in the source code listing. If you have
 	[also turned that on](http://usejsdoc.org/about-configuring-jsdoc.html).
@@ -135,7 +135,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 *   __dateFormat__ The date format to use when printing dates. It accepts any format string understood by [moment.js](http://momentjs.com/docs/#/displaying/format/)
 *   __highlightTutorialCode__ Boolean used to determine whether to treat code blocks in "tutorial" markdown as examples and highlight them
 *   __syntaxTheme__ String that determines the theme used for code blocks. Default value is `"default"`. It can be any value supported
-    at [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) which right now consists of...uh...`"default"` and `"dark"`, 
+    at [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) which right now consists of...uh...`"default"` and `"dark"`,
     but at least you have it if you need it.
 
 ## Controlling Syntax Highlighting ##
@@ -145,7 +145,7 @@ include other languages to make your examples as expressive as possible. So, Doc
 which can appear inside any example block in source code, or in any fenced code block in markdown: `{@lang languageName}`, where
 _`language`_ can be any of the languages supported by [Sunlight](http://sunlightjs.com/)
 
-Look at this: 
+Look at this:
 For an example of this thing in action [this](http://terryweiss.github.io/docstrap/themes/readable/#toc7) )__
 
 
@@ -153,7 +153,7 @@ The syntax for adding the tag is as follows. When in markdown, add the tag on th
 
 \`\`\`
 
-`{@lang language}` 
+`{@lang language}`
 
 `This is my code`
 
@@ -166,10 +166,10 @@ When in a doclet add the tag just after the `@example` tag like this:
 `<div>This is the most interesting web site ever</div>`
 
 
-These are the supported languages. 
- 
+These are the supported languages.
+
 * ActionScript
-* bash 
+* bash
 * C/C++
 * C♯
 * CSS
@@ -203,12 +203,12 @@ Fetch the source using `git` or grab the [zip file from github.](https://github.
 it somewhere. Everything that follows happens in the unzip directory.
 
 Next, prepare the environment:
-     
-    bower install     
 
-and         
-   
-    npm install     
+    bower install
+
+and
+
+    npm install
 
 When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, uses [less](http://lesscss.org/).
 The way it works is that `./styles/main.less` pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,
@@ -218,7 +218,7 @@ to keep your changes to the `main.less` file.
 
 To compile your changes to `main.less` and any other files it loads up,
 
-	grunt less 	
+	grunt less
 
 The output is will be put in `./template/static/styles/site.<theme-name>.css`. The next time you create your documentation, it
 will have the new css file included.
@@ -226,7 +226,7 @@ will have the new css file included.
 To apply a different template to the `styles` directory to modify, open up the `conf.json` in the template directory and
 change the `theme` option to the theme you want. Then
 
-	grunt apply 
+	grunt apply
 
 And the new theme will be in `variables.less`, `bootswatch.less`. Don't forget to compile your changes using `grunt apply` to
 get that change into the template.
@@ -254,9 +254,20 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 * [hyperandroid](https://github.com/hyperandroid)
 * [vmadman](https://github.com/vmadman)
 * [whitelynx](https://github.com/whitelynx)
+* [tswaters](https://github.com/tswaters)
 
 
 ## History ##
+### v0.4.15 ###
+* PR Issue #76
+* PR Issue #77
+
+### v0.4.14 ###
+* Issue #69
+
+### v0.4.13 ###
+* Issue #68
+
 ### v0.4.11 ###
 * Pull Request #59
 

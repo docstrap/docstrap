@@ -7,14 +7,16 @@ $.fn.toc = function(options) {
   var headings = $(opts.selectors, container);
   var headingOffsets = [];
   var activeClassName = opts.prefix+'-active';
+  var navbarHeight = $('.navbar').height();
 
   var scrollTo = function(e) {
     if (opts.smoothScrolling) {
       e.preventDefault();
-      var elScrollTo = $(e.target).attr('href');
-      var $el = $(elScrollTo.replace('#.', '#\\.'));
+      var elScrollTo = $(e.target).attr('href').replace('#.', '#\\.');
+      var $el = $(elScrollTo);
+      var offsetTop = $el.offset().top - navbarHeight;
 
-      $('body,html').animate({ scrollTop: ($el.offset().top - 70)  }, 400, 'swing', function() {
+      $('body,html').animate({ scrollTop: offsetTop }, 400, 'swing', function() {
         location.hash = elScrollTo;
       });
     }
@@ -34,8 +36,10 @@ $.fn.toc = function(options) {
       for (var i = 0, c = headingOffsets.length; i < c; i++) {
         if (headingOffsets[i] >= top) {
           $('li', self).removeClass(activeClassName);
-          highlighted = $('li:eq('+(i-1)+')', self).addClass(activeClassName);
-          opts.onHighlight(highlighted);
+          if (i > 0) {
+            highlighted = $('li:eq('+(i-1)+')', self).addClass(activeClassName);
+            opts.onHighlight(highlighted);
+          }
           break;
         }
       }
@@ -92,11 +96,7 @@ jQuery.fn.toc.defaults = {
     return $heading.text();
   },
   itemClass: function(i, heading, $heading, prefix) {
-    var className = $heading.attr('class');
-    if (className) {
-      className = className.replace(/ /g, '_');
-    }
-    return prefix + '-' + $heading[0].tagName.toLowerCase() + (className ? '-' + className : '');
+    return prefix + '-' + $heading[0].tagName.toLowerCase();
   }
 
 };

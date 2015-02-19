@@ -1,12 +1,12 @@
 {
   "name": "ink-docstrap",
-  "version": "0.4.12",
+  "version": "0.5.2",
   "decription": "A template for JSDoc3 based on Bootstrap and Bootswatch",
   "devDependencies": {
     "async": "~0.2.8",
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-less": "~0.5.1",
+    "grunt-contrib-less": "~0.9.0",
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-jsdoc": "^0.5.4",
     "grunt-shell": "~0.2.2",

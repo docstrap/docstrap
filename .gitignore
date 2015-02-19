@@ -8,6 +8,4 @@ dox*
 testdocs/*
 themes*
 npm-debug.log
-
-
-
+.DS_Store

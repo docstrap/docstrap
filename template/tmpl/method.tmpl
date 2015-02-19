@@ -2,16 +2,14 @@
 var data = obj;
 var self = this;
 ?>
-<dt class="method-name-wrapper">
-    <code class="method-name name<?js= (kind) ? ' ' + kind + '-name' : '' ?>" id="<?js= id ?>">
-        <?js= data.attribs + (kind === 'class' ? 'new ' : '') + '<span class="method-basic-name">' + name + '</span>' + (kind !== 'event' ? ('<span class="method-signature">' + data.signature + '</span>') : '') ?>
-    </code>
+<dt>
+    <h4 class="name" id="<?js= id ?>"><?js= data.attribs + (kind === 'class' ? 'new ' : '') + name + (kind !== 'event' ? data.signature : '') ?></h4>
     
     <?js if (data.summary) { ?>
     <p class="summary"><?js= summary ?></p>
     <?js } ?>
 </dt>
-<dd class="method-body-wrapper">
+<dd>
     
     <?js if (data && data.description) { ?>
     <div class="description">
@@ -19,8 +17,13 @@ var self = this;
     </div>
     <?js } ?>
 
+    <?js if (data.augments && data.alias && data.alias.indexOf('module:') === 0) { ?>
+        <h5>Extends:</h5>
+        <?js= self.partial('augments.tmpl', data) ?>
+    <?js } ?>
+
     <?js if (kind === 'event' && data && data.type && data.type.names) {?>
-        <h5 class="method-doc-label">Type:</h5>
+        <h5>Type:</h5>
         <ul>
             <li>
                 <?js= self.partial('type.tmpl', data.type.names) ?>
@@ -29,40 +32,46 @@ var self = this;
     <?js } ?>
     
     <?js if (data['this']) { ?>
-        <h5 class="method-doc-label">This:</h5>
+        <h5>This:</h5>
         <ul><li><?js= this.linkto(data['this'], data['this']) ?></li></ul>
     <?js } ?>
-    
-    <?js if (data.params && params.length) { ?>
-        <h5 class="method-doc-label method-params-label">Parameters:</h5>
+    <?js if (data.params && data.params.length) { ?>
+        <h5>Parameters:</h5>
         <?js= this.partial('params.tmpl', params) ?>
     <?js } ?>
     
     <?js= this.partial('details.tmpl', data) ?>
     
+    <?js if (data.kind !== 'module' && data.requires && data.requires.length) { ?>
+    <h5>Requires:</h5>
+    <ul><?js data.requires.forEach(function(r) { ?>
+        <li><?js= self.linkto(r) ?></li>
+    <?js }); ?></ul>
+    <?js } ?>
+
     <?js if (data.fires && fires.length) { ?>
-    <h5 class="method-doc-label">Fires:</h5>
+    <h5>Fires:</h5>
     <ul><?js fires.forEach(function(f) { ?>
         <li><?js= self.linkto(f) ?></li>
     <?js }); ?></ul>
     <?js } ?>
 
     <?js if (data.listens && listens.length) { ?>
-    <h5 class="method-doc-label">Listens to Events:</h5>
+    <h5>Listens to Events:</h5>
     <ul><?js listens.forEach(function(f) { ?>
         <li><?js= self.linkto(f) ?></li>
     <?js }); ?></ul>
     <?js } ?>
 
     <?js if (data.listeners && listeners.length) { ?>
-    <h5 class="method-doc-label">Listeners of This Event:</h5>
+    <h5>Listeners of This Event:</h5>
     <ul><?js listeners.forEach(function(f) { ?>
         <li><?js= self.linkto(f) ?></li>
     <?js }); ?></ul>
     <?js } ?>
     
     <?js if (data.exceptions && exceptions.length) { ?>
-    <h5 class="method-doc-label">Throws:</h5>
+    <h5>Throws:</h5>
     <?js if (exceptions.length > 1) { ?><ul><?js
         exceptions.forEach(function(r) { ?>
             <li><?js= self.partial('exceptions.tmpl', r) ?></li>
@@ -74,26 +83,19 @@ var self = this;
     } } ?>
     
     <?js if (data.returns && returns.length) { ?>
-    <div class="method-returns-wrapper">
-        <h5 class="method-doc-label">Returns:</h5>
-        <div class="method-returns">
-        <?js if (returns.length > 1) { ?>
-        <ul>
-        <?js returns.forEach(function(r) { ?>
-                <li><?js= self.partial('returns.tmpl', r) ?></li>
-        <?js }); ?>
-        </ul>
-        <?js } else {
-            returns.forEach(function(r) { ?>
-                <?js= self.partial('returns.tmpl', r) ?>
-            <?js });
-        } ?>
-        </div>
-    </div> 
-    <?js } ?>
+    <h5>Returns:</h5>
+    <?js if (returns.length > 1) { ?><ul><?js
+        returns.forEach(function(r) { ?>
+            <li><?js= self.partial('returns.tmpl', r) ?></li>
+        <?js });
+    ?></ul><?js } else {
+        returns.forEach(function(r) { ?>
+            <?js= self.partial('returns.tmpl', r) ?>
+        <?js });
+    } } ?>
     
     <?js if (data.examples && examples.length) { ?>
-        <h5 class="method-doc-label">Example<?js= examples.length > 1? 's':'' ?></h5>
+        <h5>Example<?js= examples.length > 1? 's':'' ?></h5>
         <?js= this.partial('examples.tmpl', examples) ?>
     <?js } ?>
 </dd>
