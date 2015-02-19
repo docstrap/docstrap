@@ -4,7 +4,7 @@
   },
   "plugins": ["plugins/markdown"],
   "templates": {
-    "logoFile": null,
+    "logoFile": "",
     "cleverLinks": false,
     "monospaceLinks": false,
     "dateFormat": "ddd MMM Do YYYY",
@@ -14,7 +14,7 @@
     "footer": "",
     "copyright": "DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.",
     "navType": "vertical",
-    "theme": "cosmo",
+    "theme": "yeti",
     "linenums": true,
     "collapseSymbols": false,
     "inverseNav": true,
