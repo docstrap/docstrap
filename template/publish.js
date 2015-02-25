@@ -46,7 +46,8 @@ var navOptions = {
   outputSourcePath: conf.outputSourcePath,
   dateFormat: conf.dateFormat,
   analytics: conf.analytics || null,
-  highlightTutorialCode: conf.highlightTutorialCode
+  highlightTutorialCode: conf.highlightTutorialCode,
+  methodHeadingReturns: conf.methodHeadingReturns === true
 };
 
 var navigationMaster = {
@@ -104,6 +105,12 @@ var navigationMaster = {
   }
 };
 
+var prefixSymbols = {
+  "static": ".",
+  "instance": "#",
+  "global": ""
+};
+
 function find(spec) {
   return helper.find(data, spec);
 }
@@ -152,6 +159,10 @@ function needsSignature(doclet) {
   return needsSig;
 }
 
+function addPrefixSymbol(f) {
+  f.prefixSymbol = prefixSymbols[f.scope] || "";
+}
+
 function addSignatureParams(f) {
   var params = helper.getSignatureParams(f, 'optional');
 
@@ -159,9 +170,14 @@ function addSignatureParams(f) {
 }
 
 function addSignatureReturns(f) {
-  var returnTypes = helper.getSignatureReturns(f);
+  if (navOptions.methodHeadingReturns) {
+    var returnTypes = helper.getSignatureReturns(f);
 
-  f.signature = '<span class="signature">' + (f.signature || '') + '</span>' + '<span class="type-signature">' + (returnTypes.length ? ' &rarr; {' + returnTypes.join('|') + '}' : '') + '</span>';
+    f.signature = '<span class="signature">' + (f.signature || '') + '</span>' + '<span class="type-signature">' + (returnTypes.length ? ' &rarr; {' + returnTypes.join('|') + '}' : '') + '</span>';
+  }
+  else {
+    f.signature = f.signature || '';
+  }
 }
 
 function addSignatureTypes(f) {
@@ -566,12 +582,14 @@ exports.publish = function(taffyData, opts, tutorials) {
       addSignatureParams(doclet);
       addSignatureReturns(doclet);
       addAttribs(doclet);
+      addPrefixSymbol(doclet);
     }
   });
 
   // do this after the urls have all been generated
   data().each(function(doclet) {
     doclet.ancestors = getAncestorLinks(doclet);
+    addPrefixSymbol(doclet);
 
     if (doclet.kind === 'member') {
       addSignatureTypes(doclet);

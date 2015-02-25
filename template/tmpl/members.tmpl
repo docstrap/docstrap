@@ -1,9 +1,12 @@
 <?js
 var data = obj;
 var self = this;
+//TODO find where to put data.attribs
+//same with signature
+//(data.signature ? data.signature : '')
 ?>
 <dt class="name" id="<?js= id ?>">
-    <h4><?js= data.attribs + name + (data.signature ? data.signature : '') ?></h4>
+    <h4><?js= data.prefixSymbol + name ?></h4>
 
     <?js if (data.summary) { ?>
     <p class="summary"><?js= summary ?></p>
@@ -17,12 +20,7 @@ var self = this;
     <?js } ?>
 
     <?js if (data && data.type && data.type.names) {?>
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                <?js= self.partial('type.tmpl', data.type.names) ?>
-            </li>
-        </ul>
+        <h5>Type: <?js= self.partial('type.tmpl', data.type.names) ?></h5>
     <?js } ?>
 
     <?js= this.partial('details.tmpl', data) ?>

@@ -1,0 +1,12 @@
+<?js
+	var returns = obj;
+	var self = this;
+	var outputArray = [];
+	returns.forEach(function(ret) {
+		if (ret.type && ret.type.names)
+		{
+			outputArray.push( self.partial('type.tmpl', ret.type.names) );
+		}
+	})
+?>
+<h5>Returns: <?js= outputArray.join("|") ?></h5>
