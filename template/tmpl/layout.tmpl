@@ -46,7 +46,6 @@
 	<div class="col-md-12">
 	<?js } ?>
 		<div id="main">
-    		<h1 class="page-title"><?js= title ?></h1>
 			<?js= content ?>
 		</div>
 	</div>
@@ -96,7 +95,8 @@ $( function () {
 
 	$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
-			return $( heading ).attr( "id" ) || ( prefix + i );
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
 		},
 		selectors   : "h1,h2,h3,h4",
 		showAndHide : false,
