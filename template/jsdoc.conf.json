@@ -4,21 +4,23 @@
   },
   "plugins": ["plugins/markdown"],
   "templates": {
+    "logoFile": "",
     "cleverLinks": false,
     "monospaceLinks": false,
     "dateFormat": "ddd MMM Do YYYY",
-    "outputSourceFiles": true,
-    "outputSourcePath": true,
+    "outputSourceFiles": false,
+    "outputSourcePath": false,
     "systemName": "DocStrap",
     "footer": "",
     "copyright": "DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.",
     "navType": "vertical",
-    "theme": "cosmo",
+    "theme": "yeti",
     "linenums": true,
     "collapseSymbols": false,
     "inverseNav": true,
     "highlightTutorialCode": true,
-    "protocol": "html://"
+    "protocol": "html://",
+    "methodHeadingReturns": false
   },
   "markdown": {
     "parser": "gfm",

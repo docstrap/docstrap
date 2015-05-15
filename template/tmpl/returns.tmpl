@@ -1,6 +1,12 @@
 <?js
 var data = obj;
-if (data && data.description) {
+?><?js
+if (data && data.description)
+{
+	?><div class="param-desc">
+    		<?js= description ?>
+	</div><?js
+}
 ?>
 <div class="param-desc">
     <?js= description ?>

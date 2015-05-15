@@ -6808,30 +6808,36 @@ a.list-group-item-danger.active:focus {
   padding-left: 20px;
   padding-right: 20px;
 }
-.navbar .dropdown-menu {
+.navbar.navbar-inverse .dropdown-menu {
   padding: 20px;
   max-height: 300px;
   overflow: auto;
   width: 300px;
   background-color: #00bc8c;
 }
-.navbar .dropdown-menu a,
-.navbar .dropdown-menu a:visited {
+.navbar.navbar-inverse .dropdown-menu a,
+.navbar.navbar-inverse .dropdown-menu a:visited {
   color: #ffffff;
 }
-.navbar .dropdown-menu a:hover {
+.navbar.navbar-inverse .dropdown-menu a:hover {
   color: #375a7f;
   background-color: transparent;
 }
-.navbar .dropdown-menu a:active {
+.navbar.navbar-inverse .dropdown-menu a:active {
   color: #ffffff;
   background-color: #00a379;
 }
-.navbar .dropdown-menu a {
+.navbar.navbar-inverse .dropdown-menu a {
   padding-left: 0;
   padding-right: 5px;
   font-weight: 500;
   font-size: 115%;
+}
+img.branding-logo {
+  max-height: 30px;
+  display: inline-block;
+  padding: 0px;
+  margin: -3px 5px 0 0;
 }
 #toc {
   position: fixed;
