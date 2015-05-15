@@ -1,0 +1,10 @@
+<?js
+var self = this;
+var impls = obj;
+var interfaceLinks = [];
+impls.forEach(function(impl) {
+	interfaceLinks.push(  self.linkto( impl, self.htmlsafe(impl) )  );
+});
+impls = impls.join("|");
+?>
+<h5 class="implements">Implements: <?js= interfaceLinks ?></h5>
