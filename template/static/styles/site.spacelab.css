@@ -6702,7 +6702,7 @@ button.close {
 }
 #main {
   margin-top: 62px;
-  margin-left: 200px;
+  margin-left: 300px;
 }
 .navbar-fixed-top .navbar-inner {
   padding-left: 20px;
@@ -6744,13 +6744,14 @@ img.branding-logo {
   top: 62px;
   left: 0;
   max-height: 82%;
-  overflow: auto;
+  overflow: visible;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   border: 1px #eeeeee solid;
   padding: 5px;
+  max-width: 280;
 }
 #toc .toc-active {
   background-color: #6c737e;
