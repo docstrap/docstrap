@@ -6702,6 +6702,7 @@ button.close {
 }
 #main {
   margin-top: 62px;
+  margin-left: 200px;
 }
 .navbar-fixed-top .navbar-inner {
   padding-left: 20px;
@@ -6741,7 +6742,7 @@ img.branding-logo {
 #toc {
   position: fixed;
   top: 62px;
-  right: 0;
+  left: 0;
   max-height: 82%;
   overflow: auto;
   border-top-right-radius: 5px;
@@ -6752,8 +6753,8 @@ img.branding-logo {
   padding: 5px;
 }
 #toc .toc-active {
-  background-color: transparent;
-  color: #ffffff;
+  background-color: #6c737e;
+  color: #fff;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -6763,8 +6764,8 @@ img.branding-logo {
 #toc .toc-active a:hover,
 #toc .toc-active a:active,
 #toc .toc-active a:visited {
-  background-color: transparent;
-  color: #ffffff;
+  background-color: #6c737e;
+  color: #fff;
 }
 #toc .toc-h1 {
   margin-left: 2px;
