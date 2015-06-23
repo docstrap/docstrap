@@ -6701,8 +6701,9 @@ button.close {
   color: #fff;
 }
 #main {
+  position: relative;
   margin-top: 62px;
-  margin-left: 300px;
+  margin-left: 200px;
 }
 .navbar-fixed-top .navbar-inner {
   padding-left: 20px;
@@ -6751,7 +6752,7 @@ img.branding-logo {
   border-top-left-radius: 5px;
   border: 1px #eeeeee solid;
   padding: 5px;
-  max-width: 280;
+  max-width: 240px;
 }
 #toc .toc-active {
   background-color: #6c737e;
