@@ -372,7 +372,6 @@ function buildNav(members) {
   }
 
   if (members.namespaces.length) {
-
     members.namespaces.forEach(function(n) {
       if (!hasOwnProp.call(seen, n.longname)) {
 
@@ -441,6 +440,7 @@ function buildNav(members) {
       });
     }
   });
+
   nav.topLevelNav = topLevelNav;
 }
 
