@@ -175,10 +175,13 @@ optgroup {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+  border: 1px solid black;
+  width: 100%;
 }
 td,
 th {
-  padding: 0;
+    border: 1px solid black;
+    padding: 10px 10px 10px 10px;
 }
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
