@@ -2,6 +2,11 @@
 
 var fs = require("fs");
 
+/**
+ * This module provides functionality for include tag. @include tag
+ * accepts only one argument which is the path relative to the folder
+ * where jsdoc is executed (usually root folder of the documented project).
+ */
 exports.handlers = {
     jsdocCommentFound: function(e) {
         var comment = e.comment,
