@@ -92,6 +92,11 @@ var navigationMaster = {
     link: helper.getUniqueFilename("tutorials.list"),
     members: []
   },
+  article: {
+    title: "Articles",
+    link: helper.getUniqueFilename("articles.list"),
+    members: []
+  },  
   global: {
     title: "Global",
     link: globalUrl,
@@ -409,8 +414,15 @@ function buildNav(members) {
   if (members.tutorials.length) {
 
     members.tutorials.forEach(function(t) {
-
-      nav.tutorial.members.push(tutoriallink(t.name));
+      if (!t.isArticle) {
+        nav.tutorial.members.push(tutoriallink(t.name));
+      } else {
+        if (t.children) {
+          t.children.forEach(function(article) {
+            nav.article.members.push(tutoriallink(article.name));
+          }); 
+        }
+      }
     });
 
   }
@@ -445,11 +457,32 @@ function buildNav(members) {
 }
 
 /**
+ * This method mark all articles from the given hierarchy of tutorials. By convention, articles must be placed under
+ * articles tutorial.
+ */
+function markArticles(tutorials, isArticle) {
+  for (var idx = 0; tutorials.children && idx < tutorials.children.length; idx++) {
+    var tutorial = tutorials.children[idx]; 
+
+    if (tutorial.longname == "articles") {
+      tutorial.isArticle = true;
+
+      markArticles(tutorial, true);
+
+      continue;
+    }
+
+    tutorial.isArticle = isArticle;
+  }
+}
+
+/**
  @param {TAFFY} taffyData See <http://taffydb.com/>.
  @param {object} opts
  @param {Tutorial} tutorials
  */
 exports.publish = function(taffyData, opts, tutorials) {
+  markArticles(tutorials, false);
   data = taffyData;
 
   conf['default'] = conf['default'] || {};
@@ -789,6 +822,7 @@ exports.publish = function(taffyData, opts, tutorials) {
   function generateTutorial(title, tutorial, filename) {
     var tutorialData = {
       title: title,
+      isArticle: tutorial.isArticle,
       header: tutorial.title,
       content: tutorial.parse(),
       children: tutorial.children,
