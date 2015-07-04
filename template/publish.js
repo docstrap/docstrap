@@ -17,6 +17,7 @@ var template = require('jsdoc/template'),
   helper = require('jsdoc/util/templateHelper'),
   moment = require("moment"),
   includeTagModule = require("../plugins/IncludeTag"),
+  articleTagModule = require("../plugins/ArticleTag"),
   htmlsafe = helper.htmlsafe,
   linkto = helper.linkto,
   resolveAuthorLinks = helper.resolveAuthorLinks,
@@ -49,6 +50,8 @@ var navOptions = {
   highlightTutorialCode: conf.highlightTutorialCode,
   methodHeadingReturns: conf.methodHeadingReturns === true
 };
+
+var indexedArticles = {};
 
 var navigationMaster = {
   index: {
@@ -96,7 +99,7 @@ var navigationMaster = {
     title: "Articles",
     link: helper.getUniqueFilename("articles.list"),
     members: []
-  },  
+  },
   global: {
     title: "Global",
     link: globalUrl,
@@ -412,7 +415,6 @@ function buildNav(members) {
   }
 
   if (members.tutorials.length) {
-
     members.tutorials.forEach(function(t) {
       t.content = includeTagModule.replaceIncludeTag(t.content);
 
@@ -422,11 +424,13 @@ function buildNav(members) {
         if (t.children) {
           t.children.forEach(function(article) {
             nav.article.members.push(tutoriallink(article.name));
+            indexedArticles[article.name] = article;
           }); 
         }
       }
     });
 
+    populateRelatedArticles(members.tutorials);
   }
 
   if (members.globals.length) {
@@ -476,6 +480,27 @@ function markArticles(tutorials, isArticle) {
 
     tutorial.isArticle = isArticle;
   }
+}
+
+/**
+ * This method populates related articles attribute belonging to each tutorial from a given list of tutorials. It also
+ * goes recursively into each tutorial children array.
+ */
+function populateRelatedArticles(tutorials) {
+  tutorials.forEach(function(t) {
+    var articles = articleTagModule.extractArticleNames(t.content);
+    
+    t.content = articles.content;
+    t.relatedArticles = [];
+
+    articles.names.forEach(function(name) {
+      t.relatedArticles.push(indexedArticles[name]);
+    });
+
+    if (t.children && t.children.length > 0) {
+      populateRelatedArticles(t.children);
+    }
+  });
 }
 
 /**
@@ -827,6 +852,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     var tutorialData = {
       title: title,
       isArticle: tutorial.isArticle,
+      relatedArticles: tutorial.relatedArticles,
       header: tutorial.title,
       content: tutorial.parse(),
       children: tutorial.children,
