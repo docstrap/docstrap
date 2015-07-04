@@ -14,6 +14,22 @@
 
 <article>
     <?js= content ?>
+
+    <?js if (relatedArticles && relatedArticles.length > 0) { ?> 
+    <h2>Related articles</h2>
+    <?js } ?>
+
+    <?js 
+        var self = this;
+
+        if (relatedArticles) {
+            relatedArticles.forEach(function(article) {
+    ?>
+            <h3><?js= self.tutoriallink(article.name) ?></h3>
+    <?js
+            });
+        }
+    ?>
 </article>
 
 </section>

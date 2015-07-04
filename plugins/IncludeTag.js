@@ -7,6 +7,9 @@ var fs = require("fs"),
 
 /**
  * This method replaces @include tags with the actual content from external file passed as parameter.
+ * @param {String} content The content in which we want to replace include tags with their actual external links content.
+ * param {Boolean} forceMarkdownParse tells if the external content must be parsed using markdown parser.
+ * @returns {String} The newly generated content with all include tags replaced by the external content where they point.
  */
 function replaceIncludeTag(content, forceMarkdownParse) {
     var includes = content.match(includeRegex),
