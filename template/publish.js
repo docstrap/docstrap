@@ -15,8 +15,8 @@ var template = require('jsdoc/template'),
   taffy = require('taffydb').taffy,
   handle = require('jsdoc/util/error').handle,
   helper = require('jsdoc/util/templateHelper'),
-  // jsdoc node support is still a bit odd
   moment = require("moment"),
+  includeTagModule = require("../plugins/IncludeTag"),
   htmlsafe = helper.htmlsafe,
   linkto = helper.linkto,
   resolveAuthorLinks = helper.resolveAuthorLinks,
@@ -414,6 +414,8 @@ function buildNav(members) {
   if (members.tutorials.length) {
 
     members.tutorials.forEach(function(t) {
+      t.content = includeTagModule.replaceIncludeTag(t.content);
+
       if (!t.isArticle) {
         nav.tutorial.members.push(tutoriallink(t.name));
       } else {
@@ -754,11 +756,13 @@ exports.publish = function(taffyData, opts, tutorials) {
       kind: 'package'
     });
 
+  var indexBody = includeTagModule.replaceIncludeTag(opts.readme, true);
+
   generate('index', 'Index',
     packages.concat(
       [{
         kind: 'mainpage',
-        readme: opts.readme,
+        readme: indexBody,
         longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'
       }]
     ).concat(files),
