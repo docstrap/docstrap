@@ -6748,7 +6748,7 @@ img.branding-logo {
   top: 62px;
   left: 0;
   max-height: 82%;
-  overflow: overflow;
+  overflow: auto;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
