@@ -55,7 +55,9 @@
 	<div class="clearfix"></div>
 
 	<div class="col-md-3">
-		<div id="toc" class="col-md-3"></div>
+		<div id="fixedMenu" class="col-md-3"><?js= fixedMenu ?></div>
+
+		<!--<div id="toc" class="col-md-3"></div>-->
 	</div>
 
 </div>
@@ -91,7 +93,7 @@ $( function () {
 		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
 	} );
 
-	$( "#toc" ).toc( {
+	/*$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
 			var id = $( heading ).attr( "id" );
 			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
@@ -102,7 +104,24 @@ $( function () {
 	} );
 
 	$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
-	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );*/
+
+	$( "#fixedMenu" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "h1,h2,h3,h4",
+		container: $("#fixedMenu"),
+		showAndHide : false,
+		scrollTo    : "100px",
+		activeLinks: true
+	} );
+
+	$( "#fixedMenu>ul" ).addClass( "nav nav-pills nav-stacked" );
+	
+	$( "#main span[id^='fixedMenu']" ).addClass("toc-shim");
+
 	$( '.dropdown-toggle' ).dropdown();
 	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
 

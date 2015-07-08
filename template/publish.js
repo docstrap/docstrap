@@ -16,6 +16,7 @@ var template = require('jsdoc/template'),
   handle = require('jsdoc/util/error').handle,
   helper = require('jsdoc/util/templateHelper'),
   moment = require("moment"),
+  parseMarkdown = require('jsdoc/util/markdown').getParser(),
   includeTagModule = require("../plugins/IncludeTag"),
   articleTagModule = require("../plugins/ArticleTag"),
   htmlsafe = helper.htmlsafe,
@@ -240,7 +241,8 @@ function generate(docType, title, docs, filename, resolveLinks) {
   var docData = {
     title: title,
     docs: docs,
-    docType: docType
+    docType: docType,
+    fixedMenu: view.fixedMenu
   };
 
   var outpath = path.join(outdir, filename),
@@ -504,6 +506,15 @@ function populateRelatedArticles(tutorials) {
 }
 
 /**
+ * 
+ */
+function readFixedMenu(menuPath) {
+  var content = fs.readFileSync(menuPath);
+
+  return parseMarkdown(content.toString());
+}
+
+/**
  @param {TAFFY} taffyData See <http://taffydb.com/>.
  @param {object} opts
  @param {Tutorial} tutorials
@@ -703,6 +714,8 @@ exports.publish = function(taffyData, opts, tutorials) {
   buildNav(members);
   view.nav = navigationMaster;
   view.navOptions = navOptions;
+  view.fixedMenu = readFixedMenu(opts.fixedMenu);
+
   attachModuleSymbols(find({
       kind: ['class', 'function'],
       longname: {
@@ -856,6 +869,7 @@ exports.publish = function(taffyData, opts, tutorials) {
       header: tutorial.title,
       content: tutorial.parse(),
       children: tutorial.children,
+      fixedMenu: view.fixedMenu,
       docs: null
     };
 

@@ -6788,6 +6788,53 @@ img.branding-logo {
   margin-left: 21px;
   margin-right: 7px;
 }
+
+#fixedMenu {
+  position: fixed;
+  top: 62px;
+  left: 0;
+  max-height: 82%;
+  overflow: auto;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border: 1px #eeeeee solid;
+  padding: 5px;
+  max-width: 240px;
+}
+#fixedMenu .toc-active {
+  background-color: #6c737e;
+  color: #fff;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+#fixedMenu .toc-active a,
+#fixedMenu .toc-active a:hover,
+#fixedMenu .toc-active a:active,
+#fixedMenu .toc-active a:visited {
+  background-color: #6c737e;
+  color: #fff;
+}
+#fixedMenu .toc-h1 {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+#fixedMenu .toc-h2 {
+  margin-left: 7px;
+  margin-right: 7px;
+}
+#fixedMenu .toc-h3 {
+  margin-left: 14px;
+  margin-right: 7px;
+}
+#fixedMenu .toc-h4 {
+  margin-left: 21px;
+  margin-right: 7px;
+}
+
 .copyright {
   font-size: 90%;
   text-align: center;

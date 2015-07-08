@@ -2,10 +2,10 @@
 $.fn.toc = function(options) {
   var self = this;
   var opts = $.extend({}, jQuery.fn.toc.defaults, options);
-
   var container = $(opts.container);
   var tocs = [];
   var headings = $(opts.selectors, container);
+
   var headingOffsets = [];
   var activeClassName = opts.prefix+'-active';
   var navbarHeight = $('.navbar').height();
@@ -58,8 +58,10 @@ $.fn.toc = function(options) {
   if (opts.highlightOnScroll) {
     $(window).bind('scroll', highlightOnScroll);
     $(window).bind('load, resize', function() {
-      calcHadingOffsets();
-      highlightOnScroll();
+      if (!opts.activeLinks) {
+        calcHadingOffsets();
+        highlightOnScroll();
+      }
     });
   }
 
@@ -71,16 +73,32 @@ $.fn.toc = function(options) {
     headings.each(function(i, heading) {
       var $h = $(heading);
 
-      var anchor = $('<span/>').attr('id', opts.anchorName(i, heading, opts.prefix) + ANCHOR_PREFIX).insertBefore($h);
+      var anchor = $('<span/>').attr('id', opts.anchorName(i, heading, opts.prefix) + ANCHOR_PREFIX).insertBefore($h),
+        tocHref = '#' + opts.anchorName(i, heading, opts.prefix);
+
+      if (opts.activeLinks) {
+        $(heading).find("a").each(function(i, aTag) {
+          var aTagHref = $(aTag).attr("href");
+          
+          if (!aTagHref) {
+            return;
+          }
+
+          tocHref = aTagHref;
+        });
+      }
 
       //build TOC item
       var a = $('<a/>')
         .text(opts.headerText(i, heading, $h))
-        .attr('href', '#' + opts.anchorName(i, heading, opts.prefix))
-        .bind('click', function(e) {
+        .attr('href', tocHref);
+
+      if (!opts.activeLinks) {
+        a.bind('click', function(e) {
           scrollTo(e);
           el.trigger('selected', $(this).attr('href'));
-        });
+        });        
+      }
 
       var li = $('<li/>')
         .addClass(opts.itemClass(i, heading, $h, opts.prefix))
@@ -92,7 +110,9 @@ $.fn.toc = function(options) {
     });
     el.html(ul);
 
-    calcHadingOffsets();
+    if (!opts.activeLinks) {
+      calcHadingOffsets();
+    }
   });
 
 
