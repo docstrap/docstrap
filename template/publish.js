@@ -94,12 +94,14 @@ var navigationMaster = {
   tutorial: {
     title: "Tutorials",
     link: helper.getUniqueFilename("tutorials.list"),
-    members: []
+    members: [],
+    hidden: true
   },
   article: {
     title: "Articles",
     link: helper.getUniqueFilename("articles.list"),
-    members: []
+    members: [],
+    hidden: true
   },
   global: {
     title: "Global",
@@ -453,6 +455,10 @@ function buildNav(members) {
   var topLevelNav = [];
   _.each(nav, function(entry, name) {
     if (entry.members.length > 0 && name !== "index") {
+      if (entry.hidden) {
+        return;
+      } 
+
       topLevelNav.push({
         title: entry.title,
         link: entry.link,
