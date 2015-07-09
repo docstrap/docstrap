@@ -6791,6 +6791,7 @@ img.branding-logo {
 
 #fixedMenu {
   position: fixed;
+  display: none;
   top: 62px;
   left: 0;
   max-height: 82%;

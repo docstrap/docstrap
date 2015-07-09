@@ -66,7 +66,6 @@ $.fn.toc = function(options) {
   }
 
   return this.each(function() {
-    //build TOC
     var el = $(this);
     var ul = $('<ul/>');
 
@@ -88,7 +87,6 @@ $.fn.toc = function(options) {
         });
       }
 
-      //build TOC item
       var a = $('<a/>')
         .text(opts.headerText(i, heading, $h))
         .attr('href', tocHref);
@@ -108,14 +106,18 @@ $.fn.toc = function(options) {
 
       ul.append(li);
     });
+
     el.html(ul);
 
     if (!opts.activeLinks) {
       calcHadingOffsets();
     }
+
+    console.log("Here I am.");
+    if (opts.showContainerWhenReady) {
+      el.show();
+    }
   });
-
-
 
 };
 
@@ -136,8 +138,9 @@ jQuery.fn.toc.defaults = {
   },
   itemClass: function(i, heading, $heading, prefix) {
     return prefix + '-' + $heading[0].tagName.toLowerCase();
-  }
-
+  },
+  activeLinks: false,
+  showContainerWhenReady: false
 };
 
 })(jQuery);
