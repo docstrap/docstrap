@@ -6704,8 +6704,7 @@ button.close {
   color: #fff;
 }
 #main {
-  position: relative;
-  margin-top: 62px;
+  margin-top: 60px;
   margin-left: 200px;
 }
 .navbar-fixed-top .navbar-inner {
@@ -6803,6 +6802,7 @@ img.branding-logo {
   border: 1px #eeeeee solid;
   padding: 5px;
   max-width: 240px;
+  line-height: 100%;
 }
 #fixedMenu .toc-active {
   background-color: #6c737e;
@@ -6822,18 +6822,22 @@ img.branding-logo {
 #fixedMenu .toc-h1 {
   margin-left: 2px;
   margin-right: 2px;
+  font-size: 20px;
 }
 #fixedMenu .toc-h2 {
-  margin-left: 7px;
+  margin-left: 22px;
   margin-right: 7px;
+  font-size: 16px;
 }
 #fixedMenu .toc-h3 {
-  margin-left: 14px;
+  margin-left: 32px;
   margin-right: 7px;
+  font-size: 14px;
 }
 #fixedMenu .toc-h4 {
-  margin-left: 21px;
+  margin-left: 37px;
   margin-right: 7px;
+  font-size: 14px;
 }
 
 .copyright {
