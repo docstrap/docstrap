@@ -23,7 +23,7 @@
  */
 var path = require( "path" );
 var sys = require( "lodash" );
-var http = require( "http" );
+var request = require('request');
 var async = require( "async" );
 var fs = require( "fs" );
 
@@ -359,31 +359,12 @@ function applyTheme( grunt, definition ) {
  * @private
  */
 function getBootSwatchList( done ) {
-	var options = {
-		hostname : 'api.bootswatch.com',
-		port     : 80,
-		path     : '/3/',
-		method   : 'GET'
-	};
-	var body = "";
-	var req = http.request( options, function ( res ) {
-		res.setEncoding( 'utf8' );
-		res.on( 'data', function ( chunk ) {
-			body += chunk;
-		} );
-
-		res.on( 'end', function () {
-			done( null, JSON.parse( body ) );
-		} );
-		res.on( 'error', function ( e ) {
-			done( 'problem with response: ' + e.message );
-		} );
-	} );
-
-	req.on( 'error', function ( e ) {
-		done( 'problem with request: ' + e.message );
-	} );
-	req.end();
+	request('http://api.bootswatch.com/3/', function(error, response, body) {
+		if (error) {
+			return done(error);
+		}
+		done(null, JSON.parse(body));
+	});
 }
 
 /**
@@ -398,24 +379,10 @@ function getBootSwatchList( done ) {
  */
 function getBootSwatchComponent( url, done ) {
 	var body = "";
-	url = url.replace("https:", "http:");
-	var req = http.request( url, function ( res ) {
-		res.setEncoding( 'utf8' );
-		res.on( 'data', function ( chunk ) {
-			body += chunk;
-		} );
-
-		res.on( 'end', function () {
-			done( null, body );
-		} );
-		res.on( 'error', function ( e ) {
-			done( 'problem with response: ' + e.message );
-		} );
-	} );
-
-	req.on( 'error', function ( e ) {
-		done( 'problem with request: ' + e.message );
-	} );
-	req.end();
+	var req = request(url, function ( error, response, body ) {
+		if (error) {
+			return done(error);
+		}
+		done(null, body);
+	});
 }
-

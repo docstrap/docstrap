@@ -11,7 +11,8 @@
     "grunt-jsdoc": "^0.5.4",
     "grunt-shell": "~0.2.2",
     "jsdoc": "~3.3.0-alpha5",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "request": "^2.58.0"
   },
   "license": "MIT",
   "keywords": [
