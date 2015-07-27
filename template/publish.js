@@ -135,6 +135,32 @@ function tutoriallink(tutorial) {
   });
 }
 
+/**
+ * This function receives an html into which it replaces all {@tutorial  ...} tags with the correct link.
+ * @param  {String} html The html fragment where it is possible to find tutorial tags.
+ * @return {String} The  new fragment without tutorial tags.
+ */
+function replaceTutorialTag(html) {
+      var re = /\{@tutorial (.*?)\}/i;
+      var m;
+
+      do {
+          m = re.exec(html);
+
+          if (m) {
+              var tutorialId = m[1];
+
+              var tutorialStr = "{@tutorial " + tutorialId + "}";
+
+              while (html.indexOf(tutorialStr) != -1) {
+                html = html.replace(tutorialStr, tutoriallink(tutorialId));
+              }
+          }
+      } while (m);
+
+      return html;
+}
+
 function getAncestorLinks(doclet) {
   return helper.getAncestorLinks(data, doclet);
 }
@@ -253,6 +279,10 @@ function generate(docType, title, docs, filename, resolveLinks) {
 
   if (resolveLinks) {
     html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
+  }
+
+  if (docType == "source") {
+      html = replaceTutorialTag(html);
   }
 
   searchableDocuments[filename] = {
