@@ -113,7 +113,6 @@ $.fn.toc = function(options) {
       calcHadingOffsets();
     }
 
-    console.log("Here I am.");
     if (opts.showContainerWhenReady) {
       el.show();
     }

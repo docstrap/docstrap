@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <link type="text/css" rel="stylesheet" href="styles/sunlight.<%= navOptions.syntaxTheme %>.css">
+
+    <link type="text/css" rel="stylesheet" href="styles/site.<%= navOptions.theme %>.css">
+</head>
+
+<body style="background: transparent;">
+    <input type="text" id="tfSearchCriteria" class="form-control" placeholder="Search here ..." />
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="scripts/docstrap.lib.js"></script>
+    <script src="scripts/lunr.min.js"></script>
+    <script src="scripts/fulltext-search.js"></script>
+
+    <script type="text/x-docstrap-searchdb">
+    <%= searchableDocuments %>
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Searcher.init();
+        });
+
+        $("#tfSearchCriteria").keyup(function(evt) {
+            if (evt.keyCode != 13) {
+                return;
+            }
+
+            var criteria = evt.target.value;
+
+            if (!criteria) {
+                return;
+            }
+
+            var results = Searcher.search(criteria);
+
+            window.top.postMessage({"results": results, "msgid": "docstrap.quicksearch.done"}, "*");
+        });
+    </script>
+</body>
+</html>
