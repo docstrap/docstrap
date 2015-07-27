@@ -795,6 +795,12 @@ exports.publish = function(taffyData, opts, tutorials) {
     // yes, you can use {@link} in tutorials too!
     html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
 
+    searchableDocuments[filename] = {
+      "id": filename,
+      "title": title,
+      "body": htmlsafe(html)
+    };
+
     fs.writeFileSync(tutorialPath, html, 'utf8');
   }
 
