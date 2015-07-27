@@ -99,6 +99,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="scripts/bootstrap-dropdown.js"></script>
 <script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
 
 <script>
 $( function () {
@@ -224,54 +225,8 @@ $( function () {
 <?js } ?>
 
 <script type="text/javascript">
-	function displaySearchResults(results) {
-		var resultsHolder = $($("#searchResults").find(".modal-body")),
-		      fragment = document.createDocumentFragment(),
-		      resultsList = document.createElement("ul");
-
-		resultsHolder.empty();
-
-		for (var idx = 0; idx < results.length; idx++) {
-			var result = results[idx],
-			       item = document.createElement("li"),
-			       link = document.createElement("a");
-
-			link.href = result.id;
-			link.innerHTML = result.title;
-
-			item.appendChild(link)
-			resultsList.appendChild(item);
-		}
-
-		fragment.appendChild(resultsList);
-		resultsHolder.append(fragment);
-
-		$("#searchResults").modal({"show": true});
-	}
-
 	$(document).ready(function() {
-		var quickSearch = $(document.createElement("iframe")),
-		       topNavigation = $("#topNavigation");
-
-		quickSearch.attr("src", "quicksearch.html");
-		quickSearch.css("width", "300px");
-		quickSearch.css("height", "50px");
-		quickSearch.css("float", "right");
-		quickSearch.css("border", "none");
-
-		topNavigation.append(quickSearch);
-
-		window.top.addEventListener("message", function(msg) {
-			var msgData = msg.data;
-
-			if (msgData.msgid != "docstrap.quicksearch.done") {
-				return;
-			}
-
-			var results = msg.data.results || [];
-
-			displaySearchResults(results);
-		});
+		SearcherDisplay.init();
 	});
 </script>
 
