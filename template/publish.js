@@ -48,6 +48,7 @@ var navOptions = {
   highlightTutorialCode: conf.highlightTutorialCode,
   methodHeadingReturns: conf.methodHeadingReturns === true
 };
+var searchableDocuments = {};
 
 var navigationMaster = {
   index: {
@@ -230,6 +231,12 @@ function generate(docType, title, docs, filename, resolveLinks) {
   if (resolveLinks) {
     html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
   }
+
+  searchableDocuments[filename] = {
+    "id": filename,
+    "title": title,
+    "body": htmlsafe(html)
+  };
 
   fs.writeFileSync(outpath, html, 'utf8');
 }
@@ -799,5 +806,21 @@ exports.publish = function(taffyData, opts, tutorials) {
     });
   }
 
+  function generateQuickTextSearch(templatePath, searchableDocuments, navOptions) {
+      var data = {
+          searchableDocuments: JSON.stringify(searchableDocuments),
+          navOptions: navOptions
+      };
+
+      var tmplString = fs.readFileSync(templatePath + "/quicksearch.tmpl").toString(),
+            tmpl = _.template(tmplString);
+
+      var html = tmpl(data),
+            outpath = path.join(outdir, "quicksearch.html");
+
+      fs.writeFileSync(outpath, html, "utf8");
+  }
+
   saveChildren(tutorials);
+  generateQuickTextSearch(templatePath + '/tmpl', searchableDocuments, navOptions);
 };

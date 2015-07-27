@@ -22,7 +22,7 @@
 		<a class="navbar-brand" href="<?js= this.nav.index.link ?>"><?js if(this.navOptions.logoFile) { ?><img class="branding-logo" src="<?js= this.navOptions.logoFile ?>"
 		alt="logo"/><?js } ?><?js= this.nav.index.title ?></a>
 	</div>
-	<div class="navbar-collapse">
+	<div class="navbar-collapse" id="topNavigation">
 		<ul class="nav navbar-nav">
 			<?js this.nav.topLevelNav.forEach(function(entry){ ?>
 			<li class="dropdown">
@@ -34,6 +34,7 @@
 			<?js }); ?>
 		</ul>
 	</div>
+
 </div>
 </div>
 
@@ -62,6 +63,20 @@
 </div>
 </div>
 
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
 
 <footer>
 <?js if (that.navOptions.footer.length > 0){ ?>
@@ -81,6 +96,7 @@
 
 <!--<script src="scripts/sunlight.js"></script>-->
 <script src="scripts/docstrap.lib.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="scripts/bootstrap-dropdown.js"></script>
 <script src="scripts/toc.js"></script>
 
@@ -206,6 +222,58 @@ $( function () {
 	ga( 'send', 'pageview' );
 </script>
 <?js } ?>
+
+<script type="text/javascript">
+	function displaySearchResults(results) {
+		var resultsHolder = $($("#searchResults").find(".modal-body")),
+		      fragment = document.createDocumentFragment(),
+		      resultsList = document.createElement("ul");
+
+		resultsHolder.empty();
+
+		for (var idx = 0; idx < results.length; idx++) {
+			var result = results[idx],
+			       item = document.createElement("li"),
+			       link = document.createElement("a");
+
+			link.href = result.id;
+			link.innerHTML = result.title;
+
+			item.appendChild(link)
+			resultsList.appendChild(item);
+		}
+
+		fragment.appendChild(resultsList);
+		resultsHolder.append(fragment);
+
+		$("#searchResults").modal({"show": true});
+	}
+
+	$(document).ready(function() {
+		var quickSearch = $(document.createElement("iframe")),
+		       topNavigation = $("#topNavigation");
+
+		quickSearch.attr("src", "quicksearch.html");
+		quickSearch.css("width", "300px");
+		quickSearch.css("height", "50px");
+		quickSearch.css("float", "right");
+		quickSearch.css("border", "none");
+
+		topNavigation.append(quickSearch);
+
+		window.top.addEventListener("message", function(msg) {
+			var msgData = msg.data;
+
+			if (msgData.msgid != "docstrap.quicksearch.done") {
+				return;
+			}
+
+			var results = msg.data.results || [];
+
+			displaySearchResults(results);
+		});
+	});
+</script>
 
 </body>
 </html>
