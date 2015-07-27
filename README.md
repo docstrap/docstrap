@@ -4,6 +4,15 @@
 
 [![NPM](https://nodei.co/npm/ink-docstrap.png?downloads=true)](https://nodei.co/npm/ink-docstrap/)
 
+# Differences from docstrap
+
+In comparison with docstrap, this fork provides:
+
+* Improve styling for tables and other elements.
+* Fix some bugs in generated sidebar used for navigation. 
+* Support for @include tag. This allows extraction of various texts from code to separate files.
+* Support for @article tag. This tag is similar to tutorial but is more intuitive for humans. Moreover articles can be nested in contextual sidebar navigation panels.
+
 # DocStrap [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) #
 
 DocStrap is [Bootstrap](http://twitter.github.io/bootstrap/index.html) based template for [JSDoc3](http://usejsdoc.org/).

@@ -15,8 +15,10 @@ var template = require('jsdoc/template'),
   taffy = require('taffydb').taffy,
   handle = require('jsdoc/util/error').handle,
   helper = require('jsdoc/util/templateHelper'),
-  // jsdoc node support is still a bit odd
-  moment = require("./moment"),
+  moment = require("moment"),
+  parseMarkdown = require('jsdoc/util/markdown').getParser(),
+  includeTagModule = require("../plugins/IncludeTag"),
+  articleTagModule = require("../plugins/ArticleTag"),
   htmlsafe = helper.htmlsafe,
   linkto = helper.linkto,
   resolveAuthorLinks = helper.resolveAuthorLinks,
@@ -49,6 +51,9 @@ var navOptions = {
   highlightTutorialCode: conf.highlightTutorialCode,
   methodHeadingReturns: conf.methodHeadingReturns === true
 };
+
+var indexedArticles = {};
+var searchableDocuments = {};
 
 var navigationMaster = {
   index: {
@@ -90,7 +95,14 @@ var navigationMaster = {
   tutorial: {
     title: "Tutorials",
     link: helper.getUniqueFilename("tutorials.list"),
-    members: []
+    members: [],
+    hidden: true
+  },
+  article: {
+    title: "Articles",
+    link: helper.getUniqueFilename("articles.list"),
+    members: [],
+    hidden: true
   },
   global: {
     title: "Global",
@@ -121,6 +133,32 @@ function tutoriallink(tutorial) {
     classname: 'disabled',
     prefix: 'Tutorial: '
   });
+}
+
+/**
+ * This function receives an html into which it replaces all {@tutorial  ...} tags with the correct link.
+ * @param  {String} html The html fragment where it is possible to find tutorial tags.
+ * @return {String} The  new fragment without tutorial tags.
+ */
+function replaceTutorialTag(html) {
+      var re = /\{@tutorial (.*?)\}/i;
+      var m;
+
+      do {
+          m = re.exec(html);
+
+          if (m) {
+              var tutorialId = m[1];
+
+              var tutorialStr = "{@tutorial " + tutorialId + "}";
+
+              while (html.indexOf(tutorialStr) != -1) {
+                html = html.replace(tutorialStr, tutoriallink(tutorialId));
+              }
+          }
+      } while (m);
+
+      return html;
 }
 
 function getAncestorLinks(doclet) {
@@ -232,7 +270,8 @@ function generate(docType, title, docs, filename, resolveLinks) {
   var docData = {
     title: title,
     docs: docs,
-    docType: docType
+    docType: docType,
+    fixedMenu: view.fixedMenu
   };
 
   var outpath = path.join(outdir, filename),
@@ -241,6 +280,16 @@ function generate(docType, title, docs, filename, resolveLinks) {
   if (resolveLinks) {
     html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
   }
+
+  if (docType == "source") {
+      html = replaceTutorialTag(html);
+  }
+
+  searchableDocuments[filename] = {
+    "id": filename,
+    "title": title,
+    "body": htmlsafe(html)
+  };
 
   fs.writeFileSync(outpath, html, 'utf8');
 }
@@ -372,7 +421,6 @@ function buildNav(members) {
   }
 
   if (members.namespaces.length) {
-
     members.namespaces.forEach(function(n) {
       if (!hasOwnProp.call(seen, n.longname)) {
 
@@ -408,12 +456,22 @@ function buildNav(members) {
   }
 
   if (members.tutorials.length) {
-
     members.tutorials.forEach(function(t) {
+      t.content = includeTagModule.replaceIncludeTag(t.content);
 
-      nav.tutorial.members.push(tutoriallink(t.name));
+      if (!t.isArticle) {
+        nav.tutorial.members.push(tutoriallink(t.name));
+      } else {
+        if (t.children) {
+          t.children.forEach(function(article) {
+            nav.article.members.push(tutoriallink(article.name));
+            indexedArticles[article.name] = article;
+          }); 
+        }
+      }
     });
 
+    populateRelatedArticles(members.tutorials);
   }
 
   if (members.globals.length) {
@@ -434,6 +492,10 @@ function buildNav(members) {
   var topLevelNav = [];
   _.each(nav, function(entry, name) {
     if (entry.members.length > 0 && name !== "index") {
+      if (entry.hidden) {
+        return;
+      } 
+
       topLevelNav.push({
         title: entry.title,
         link: entry.link,
@@ -441,7 +503,58 @@ function buildNav(members) {
       });
     }
   });
+
   nav.topLevelNav = topLevelNav;
+}
+
+/**
+ * This method mark all articles from the given hierarchy of tutorials. By convention, articles must be placed under
+ * articles tutorial.
+ */
+function markArticles(tutorials, isArticle) {
+  for (var idx = 0; tutorials.children && idx < tutorials.children.length; idx++) {
+    var tutorial = tutorials.children[idx]; 
+
+    if (tutorial.longname == "articles") {
+      tutorial.isArticle = true;
+
+      markArticles(tutorial, true);
+
+      continue;
+    }
+
+    tutorial.isArticle = isArticle;
+  }
+}
+
+/**
+ * This method populates related articles attribute belonging to each tutorial from a given list of tutorials. It also
+ * goes recursively into each tutorial children array.
+ */
+function populateRelatedArticles(tutorials) {
+  tutorials.forEach(function(t) {
+    var articles = articleTagModule.extractArticleNames(t.content);
+    
+    t.content = articles.content;
+    t.relatedArticles = [];
+
+    articles.names.forEach(function(name) {
+      t.relatedArticles.push(indexedArticles[name]);
+    });
+
+    if (t.children && t.children.length > 0) {
+      populateRelatedArticles(t.children);
+    }
+  });
+}
+
+/**
+ * This method reads the fixed menu from the given path and return the rendered html content.
+ */
+function readFixedMenu(menuPath) {
+  var content = fs.readFileSync(menuPath);
+
+  return parseMarkdown(content.toString());
 }
 
 /**
@@ -450,6 +563,7 @@ function buildNav(members) {
  @param {Tutorial} tutorials
  */
 exports.publish = function(taffyData, opts, tutorials) {
+  markArticles(tutorials, false);
   data = taffyData;
 
   conf['default'] = conf['default'] || {};
@@ -643,6 +757,8 @@ exports.publish = function(taffyData, opts, tutorials) {
   buildNav(members);
   view.nav = navigationMaster;
   view.navOptions = navOptions;
+  view.fixedMenu = readFixedMenu(opts.fixedMenu);
+
   attachModuleSymbols(find({
       kind: ['class', 'function'],
       longname: {
@@ -721,11 +837,13 @@ exports.publish = function(taffyData, opts, tutorials) {
       kind: 'package'
     });
 
+  var indexBody = includeTagModule.replaceIncludeTag(opts.readme, true);
+
   generate('index', 'Index',
     packages.concat(
       [{
         kind: 'mainpage',
-        readme: opts.readme,
+        readme: indexBody,
         longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'
       }]
     ).concat(files),
@@ -789,9 +907,12 @@ exports.publish = function(taffyData, opts, tutorials) {
   function generateTutorial(title, tutorial, filename) {
     var tutorialData = {
       title: title,
+      isArticle: tutorial.isArticle,
+      relatedArticles: tutorial.relatedArticles,
       header: tutorial.title,
       content: tutorial.parse(),
       children: tutorial.children,
+      fixedMenu: view.fixedMenu,
       docs: null
     };
 
@@ -801,16 +922,38 @@ exports.publish = function(taffyData, opts, tutorials) {
     // yes, you can use {@link} in tutorials too!
     html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
 
+    searchableDocuments[filename] = {
+      "id": filename,
+      "title": title,
+      "body": htmlsafe(html)
+    };
+
     fs.writeFileSync(tutorialPath, html, 'utf8');
   }
 
   // tutorials can have only one parent so there is no risk for loops
   function saveChildren(node) {
     node.children.forEach(function(child) {
-      generateTutorial('tutorial' + child.title, child, helper.tutorialToUrl(child.name));
+      generateTutorial(child.title, child, helper.tutorialToUrl(child.name));
       saveChildren(child);
     });
   }
 
+  function generateQuickTextSearch(templatePath, searchableDocuments, navOptions) {
+      var data = {
+          searchableDocuments: JSON.stringify(searchableDocuments),
+          navOptions: navOptions
+      };
+
+      var tmplString = fs.readFileSync(templatePath + "/quicksearch.tmpl").toString(),
+            tmpl = _.template(tmplString);
+
+      var html = tmpl(data),
+            outpath = path.join(outdir, "quicksearch.html");
+
+      fs.writeFileSync(outpath, html, "utf8");
+  }
+
   saveChildren(tutorials);
+  generateQuickTextSearch(templatePath + '/tmpl', searchableDocuments, navOptions);
 };

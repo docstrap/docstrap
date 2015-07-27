@@ -175,10 +175,13 @@ optgroup {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-}
+  border: 1px solid black;
+  width: 100%;
+}v
 td,
 th {
-  padding: 0;
+    border: 1px solid black;
+    padding: 10px 10px 10px 10px;
 }
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
@@ -5747,6 +5750,8 @@ button.close {
 .modal-body {
   position: relative;
   padding: 20px;
+  overflow: auto;
+  height: 300px;
 }
 .modal-footer {
   padding: 20px;
@@ -6701,7 +6706,8 @@ button.close {
   color: #fff;
 }
 #main {
-  margin-top: 62px;
+  margin-top: 60px;
+  margin-left: 200px;
 }
 .navbar-fixed-top .navbar-inner {
   padding-left: 20px;
@@ -6741,7 +6747,7 @@ img.branding-logo {
 #toc {
   position: fixed;
   top: 62px;
-  right: 0;
+  left: 0;
   max-height: 82%;
   overflow: auto;
   border-top-right-radius: 5px;
@@ -6750,10 +6756,11 @@ img.branding-logo {
   border-top-left-radius: 5px;
   border: 1px #eeeeee solid;
   padding: 5px;
+  max-width: 240px;
 }
 #toc .toc-active {
-  background-color: transparent;
-  color: #ffffff;
+  background-color: #6c737e;
+  color: #fff;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -6763,8 +6770,8 @@ img.branding-logo {
 #toc .toc-active a:hover,
 #toc .toc-active a:active,
 #toc .toc-active a:visited {
-  background-color: transparent;
-  color: #ffffff;
+  background-color: #6c737e;
+  color: #fff;
 }
 #toc .toc-h1 {
   margin-left: 2px;
@@ -6782,6 +6789,59 @@ img.branding-logo {
   margin-left: 21px;
   margin-right: 7px;
 }
+
+#fixedMenu {
+  position: fixed;
+  display: none;
+  top: 62px;
+  left: 0;
+  max-height: 82%;
+  overflow: auto;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  border: 1px #eeeeee solid;
+  padding: 5px;
+  max-width: 240px;
+  line-height: 100%;
+}
+#fixedMenu .toc-active {
+  background-color: #6c737e;
+  color: #fff;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+}
+#fixedMenu .toc-active a,
+#fixedMenu .toc-active a:hover,
+#fixedMenu .toc-active a:active,
+#fixedMenu .toc-active a:visited {
+  background-color: #6c737e;
+  color: #fff;
+}
+#fixedMenu .toc-h1 {
+  margin-left: 2px;
+  margin-right: 2px;
+  font-size: 20px;
+}
+#fixedMenu .toc-h2 {
+  margin-left: 22px;
+  margin-right: 7px;
+  font-size: 16px;
+}
+#fixedMenu .toc-h3 {
+  margin-left: 32px;
+  margin-right: 7px;
+  font-size: 14px;
+}
+#fixedMenu .toc-h4 {
+  margin-left: 37px;
+  margin-right: 7px;
+  font-size: 14px;
+}
+
 .copyright {
   font-size: 90%;
   text-align: center;

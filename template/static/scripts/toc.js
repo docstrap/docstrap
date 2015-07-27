@@ -2,10 +2,10 @@
 $.fn.toc = function(options) {
   var self = this;
   var opts = $.extend({}, jQuery.fn.toc.defaults, options);
-
   var container = $(opts.container);
   var tocs = [];
   var headings = $(opts.selectors, container);
+
   var headingOffsets = [];
   var activeClassName = opts.prefix+'-active';
   var navbarHeight = $('.navbar').height();
@@ -58,29 +58,45 @@ $.fn.toc = function(options) {
   if (opts.highlightOnScroll) {
     $(window).bind('scroll', highlightOnScroll);
     $(window).bind('load, resize', function() {
-      calcHadingOffsets();
-      highlightOnScroll();
+      if (!opts.activeLinks) {
+        calcHadingOffsets();
+        highlightOnScroll();
+      }
     });
   }
 
   return this.each(function() {
-    //build TOC
     var el = $(this);
     var ul = $('<ul/>');
 
     headings.each(function(i, heading) {
       var $h = $(heading);
 
-      var anchor = $('<span/>').attr('id', opts.anchorName(i, heading, opts.prefix) + ANCHOR_PREFIX).insertBefore($h);
+      var anchor = $('<span/>').attr('id', opts.anchorName(i, heading, opts.prefix) + ANCHOR_PREFIX).insertBefore($h),
+        tocHref = '#' + opts.anchorName(i, heading, opts.prefix);
 
-      //build TOC item
+      if (opts.activeLinks) {
+        $(heading).find("a").each(function(i, aTag) {
+          var aTagHref = $(aTag).attr("href");
+          
+          if (!aTagHref) {
+            return;
+          }
+
+          tocHref = aTagHref;
+        });
+      }
+
       var a = $('<a/>')
         .text(opts.headerText(i, heading, $h))
-        .attr('href', '#' + opts.anchorName(i, heading, opts.prefix))
-        .bind('click', function(e) {
+        .attr('href', tocHref);
+
+      if (!opts.activeLinks) {
+        a.bind('click', function(e) {
           scrollTo(e);
           el.trigger('selected', $(this).attr('href'));
-        });
+        });        
+      }
 
       var li = $('<li/>')
         .addClass(opts.itemClass(i, heading, $h, opts.prefix))
@@ -90,12 +106,17 @@ $.fn.toc = function(options) {
 
       ul.append(li);
     });
+
     el.html(ul);
 
-    calcHadingOffsets();
+    if (!opts.activeLinks) {
+      calcHadingOffsets();
+    }
+
+    if (opts.showContainerWhenReady) {
+      el.show();
+    }
   });
-
-
 
 };
 
@@ -116,8 +137,9 @@ jQuery.fn.toc.defaults = {
   },
   itemClass: function(i, heading, $heading, prefix) {
     return prefix + '-' + $heading[0].tagName.toLowerCase();
-  }
-
+  },
+  activeLinks: false,
+  showContainerWhenReady: false
 };
 
 })(jQuery);
