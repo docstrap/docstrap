@@ -15,6 +15,7 @@ $.fn.toc = function(options) {
     if (opts.smoothScrolling) {
       e.preventDefault();
       var elScrollTo = $(e.target).attr('href');
+      elScrollTo = elScrollTo.replace('.', '\\.');
       var $el = $(elScrollTo + ANCHOR_PREFIX);
       var offsetTop = $el.offset().top - (navbarHeight + opts.navbarOffset);
 
