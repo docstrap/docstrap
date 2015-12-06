@@ -104,20 +104,26 @@ var navigationMaster = {
   }
 };
 
-function find( spec ) {
-	return helper.find( data, spec );
+function find(spec) {
+  return helper.find(data, spec);
 }
 
-function tutoriallink( tutorial ) {
-	return helper.toTutorial( tutorial, null, { tag : 'em', classname : 'disabled', prefix : 'Tutorial: ' } );
+function tutoriallink(tutorial) {
+  return helper.toTutorial(tutorial, null, {
+    tag: 'em',
+    classname: 'disabled',
+    prefix: 'Tutorial: '
+  });
 }
 
 function getAncestorLinks(doclet) {
   return helper.getAncestorLinks(data, doclet);
 }
 
-function hashToLink( doclet, hash ) {
-	if ( !/^(#.+)/.test( hash ) ) { return hash; }
+function hashToLink(doclet, hash) {
+  if (!/^(#.+)/.test(hash)) {
+    return hash;
+  }
 
   var url = helper.createLink(doclet);
 
@@ -152,7 +158,7 @@ function addSignatureParams(f) {
   f.signature = (f.signature || '') + '(' + params.join(', ') + ')';
 }
 
-function addSignatureReturns( f ) {
+function addSignatureReturns(f) {
 	var returnTypes = helper.getSignatureReturns( f );
 
 	f.signature = '<span class="signature">' + (f.signature || '') + '</span>' + '<span class="type-signature">' + (returnTypes.length ? ' &rarr; {' + returnTypes.join( '|' ) + '}' : '') + '</span>';
@@ -585,12 +591,12 @@ exports.publish = function(taffyData, opts, tutorials) {
       addSignatureParams(doclet);
       addSignatureReturns(doclet);
       addAttribs(doclet);
-		}
-	} );
+    }
+  });
 
-	// do this after the urls have all been generated
-	data().each( function ( doclet ) {
-		doclet.ancestors = getAncestorLinks( doclet );
+  // do this after the urls have all been generated
+  data().each(function(doclet) {
+    doclet.ancestors = getAncestorLinks(doclet);
 
     if (doclet.kind === 'member') {
       addSignatureTypes(doclet);
@@ -615,12 +621,17 @@ exports.publish = function(taffyData, opts, tutorials) {
   view.htmlsafe = htmlsafe;
   view.moment = moment;
 
-	// once for all
-	buildNav( members );
-	view.nav = navigationMaster;
-	view.navOptions = navOptions;
-	attachModuleSymbols( find( { kind : ['class', 'function'], longname : {left : 'module:'} } ),
-		members.modules );
+  // once for all
+  buildNav(members);
+  view.nav = navigationMaster;
+  view.navOptions = navOptions;
+  attachModuleSymbols(find({
+      kind: ['class', 'function'],
+      longname: {
+        left: 'module:'
+      }
+    }),
+    members.modules);
 
   // only output pretty-printed source files if requested; do this before generating any other
   // pages, so the other pages can link to the source files
@@ -628,66 +639,79 @@ exports.publish = function(taffyData, opts, tutorials) {
     generateSourceFiles(sourceFiles);
   }
 
-	if ( members.globals.length ) {
-		generate( 'global', 'Global', [
-			{kind : 'globalobj'}
-		], globalUrl );
-	}
+  if (members.globals.length) {
+    generate('global', 'Global', [{
+      kind: 'globalobj'
+    }], globalUrl);
+  }
 
-	// some browsers can't make the dropdown work
-	if ( view.nav.module && view.nav.module.members.length ) {
-		generate( 'module', view.nav.module.title, [
-			{kind : 'sectionIndex', contents : view.nav.module}
-		], navigationMaster.module.link );
-	}
+  // some browsers can't make the dropdown work
+  if (view.nav.module && view.nav.module.members.length) {
+    generate('module', view.nav.module.title, [{
+      kind: 'sectionIndex',
+      contents: view.nav.module
+    }], navigationMaster.module.link);
+  }
 
-	if ( view.nav.class && view.nav.class.members.length ) {
-		generate( 'class', view.nav.class.title, [
-			{kind : 'sectionIndex', contents : view.nav.class}
-		], navigationMaster.class.link );
-	}
+  if (view.nav.class && view.nav.class.members.length) {
+    generate('class', view.nav.class.title, [{
+      kind: 'sectionIndex',
+      contents: view.nav.class
+    }], navigationMaster.class.link);
+  }
 
-	if ( view.nav.namespace && view.nav.namespace.members.length ) {
-		generate( 'namespace', view.nav.namespace.title, [
-			{kind : 'sectionIndex', contents : view.nav.namespace}
-		], navigationMaster.namespace.link );
-	}
+  if (view.nav.namespace && view.nav.namespace.members.length) {
+    generate('namespace', view.nav.namespace.title, [{
+      kind: 'sectionIndex',
+      contents: view.nav.namespace
+    }], navigationMaster.namespace.link);
+  }
 
-	if ( view.nav.mixin && view.nav.mixin.members.length ) {
-		generate( 'mixin', view.nav.mixin.title, [
-			{kind : 'sectionIndex', contents : view.nav.mixin}
-		], navigationMaster.mixin.link );
-	}
+  if (view.nav.mixin && view.nav.mixin.members.length) {
+    generate('mixin', view.nav.mixin.title, [{
+      kind: 'sectionIndex',
+      contents: view.nav.mixin
+    }], navigationMaster.mixin.link);
+  }
 
-	if ( view.nav.interface && view.nav.interface.members.length ) {
-		generate( 'interface', view.nav.interface.title, [
-			{kind : 'sectionIndex', contents : view.nav.interface}
-		], navigationMaster.interface.link );
-	}
+  if (view.nav.interface && view.nav.interface.members.length) {
+    generate('interface', view.nav.interface.title, [{
+      kind: 'sectionIndex',
+      contents: view.nav.interface
+    }], navigationMaster.interface.link);
+  }
 
-	if ( view.nav.external && view.nav.external.members.length ) {
-		generate( 'external', view.nav.external.title, [
-			{kind : 'sectionIndex', contents : view.nav.external}
-		], navigationMaster.external.link );
-	}
+  if (view.nav.external && view.nav.external.members.length) {
+    generate('external', view.nav.external.title, [{
+      kind: 'sectionIndex',
+      contents: view.nav.external
+    }], navigationMaster.external.link);
+  }
 
-	if ( view.nav.tutorial && view.nav.tutorial.members.length ) {
-		generate( 'tutorial', view.nav.tutorial.title, [
-			{kind : 'sectionIndex', contents : view.nav.tutorial}
-		], navigationMaster.tutorial.link );
-	}
+  if (view.nav.tutorial && view.nav.tutorial.members.length) {
+    generate('tutorial', view.nav.tutorial.title, [{
+      kind: 'sectionIndex',
+      contents: view.nav.tutorial
+    }], navigationMaster.tutorial.link);
+  }
 
-	// index page displays information from package.json and lists files
-	var files = find( {kind : 'file'} ),
-		packages = find( {kind : 'package'} );
+  // index page displays information from package.json and lists files
+  var files = find({
+      kind: 'file'
+    }),
+    packages = find({
+      kind: 'package'
+    });
 
-	generate( 'index', 'Index',
-		packages.concat(
-			[
-				{kind : 'mainpage', readme : opts.readme, longname : (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'}
-			]
-		).concat( files ),
-		indexUrl );
+  generate('index', 'Index',
+    packages.concat(
+      [{
+        kind: 'mainpage',
+        readme: opts.readme,
+        longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'
+      }]
+    ).concat(files),
+    indexUrl);
 
   // set up the lists that we'll use to generate pages
   var classes = taffy(members.classes);
@@ -697,39 +721,51 @@ exports.publish = function(taffyData, opts, tutorials) {
   var interfaces = taffy(members.interfaces);
   var externals = taffy(members.externals);
 
-	for ( var longname in helper.longnameToUrl ) {
-		if ( hasOwnProp.call( helper.longnameToUrl, longname ) ) {
-			var myClasses = helper.find( classes, {longname : longname} );
-			if ( myClasses.length ) {
-				generate( 'class', 'Class: ' + myClasses[0].name, myClasses, helper.longnameToUrl[longname] );
-			}
+  for (var longname in helper.longnameToUrl) {
+    if (hasOwnProp.call(helper.longnameToUrl, longname)) {
+      var myClasses = helper.find(classes, {
+        longname: longname
+      });
+      if (myClasses.length) {
+        generate('class', 'Class: ' + myClasses[0].name, myClasses, helper.longnameToUrl[longname]);
+      }
 
-			var myModules = helper.find( modules, {longname : longname} );
-			if ( myModules.length ) {
-				generate( 'module', 'Module: ' + myModules[0].name, myModules, helper.longnameToUrl[longname] );
-			}
+      var myModules = helper.find(modules, {
+        longname: longname
+      });
+      if (myModules.length) {
+        generate('module', 'Module: ' + myModules[0].name, myModules, helper.longnameToUrl[longname]);
+      }
 
-			var myNamespaces = helper.find( namespaces, {longname : longname} );
-			if ( myNamespaces.length ) {
-				generate( 'namespace', 'Namespace: ' + myNamespaces[0].name, myNamespaces, helper.longnameToUrl[longname] );
-			}
+      var myNamespaces = helper.find(namespaces, {
+        longname: longname
+      });
+      if (myNamespaces.length) {
+        generate('namespace', 'Namespace: ' + myNamespaces[0].name, myNamespaces, helper.longnameToUrl[longname]);
+      }
 
-			var myMixins = helper.find( mixins, {longname : longname} );
-			if ( myMixins.length ) {
-				generate( 'mixin', 'Mixin: ' + myMixins[0].name, myMixins, helper.longnameToUrl[longname] );
-			}
+      var myMixins = helper.find(mixins, {
+        longname: longname
+      });
+      if (myMixins.length) {
+        generate('mixin', 'Mixin: ' + myMixins[0].name, myMixins, helper.longnameToUrl[longname]);
+      }
 
-			var myInterfaces = helper.find( interfaces, {longname : longname} );
-			if ( myInterfaces.length ) {
-				generate( 'interface', 'Interface: ' + myInterfaces[0].name, myInterfaces, helper.longnameToUrl[longname] );
-			}
+      var myInterfaces = helper.find(interfaces, {
+        longname: longname
+      });
+      if (myInterfaces.length) {
+        generate('interface', 'Interface: ' + myInterfaces[0].name, myInterfaces, helper.longnameToUrl[longname]);
+      }
 
-			var myExternals = helper.find( externals, {longname : longname} );
-			if ( myExternals.length ) {
-				generate( 'external', 'External: ' + myExternals[0].name, myExternals, helper.longnameToUrl[longname] );
-			}
-		}
-	}
+      var myExternals = helper.find(externals, {
+        longname: longname
+      });
+      if (myExternals.length) {
+        generate('external', 'External: ' + myExternals[0].name, myExternals, helper.longnameToUrl[longname]);
+      }
+    }
+  }
 
   // TODO: move the tutorial functions to templateHelper.js
   function generateTutorial(title, tutorial, filename) {
