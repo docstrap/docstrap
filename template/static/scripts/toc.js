@@ -15,7 +15,7 @@ $.fn.toc = function(options) {
     if (opts.smoothScrolling) {
       e.preventDefault();
       var elScrollTo = $(e.target).attr('href');
-      var $el = $(elScrollTo + ANCHOR_PREFIX);
+      var $el = $(elScrollTo.replace('#.', '#\\.') + ANCHOR_PREFIX);
       var offsetTop = $el.offset().top - (navbarHeight + opts.navbarOffset);
 
       $('body,html').animate({ scrollTop: offsetTop }, 400, 'swing', function() {
