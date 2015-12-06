@@ -19,7 +19,8 @@
     "collapseSymbols": false,
     "inverseNav": true,
     "highlightTutorialCode": true,
-    "protocol": "html://"
+    "protocol": "html://",
+    "methodHeadingReturns": false
   },
   "markdown": {
     "parser": "gfm",

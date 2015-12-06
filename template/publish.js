@@ -46,7 +46,8 @@ var navOptions = {
   outputSourcePath: conf.outputSourcePath,
   dateFormat: conf.dateFormat,
   analytics: conf.analytics || null,
-	highlightTutorialCode : conf.highlightTutorialCode
+  highlightTutorialCode: conf.highlightTutorialCode,
+  methodHeadingReturns: conf.methodHeadingReturns === true
 };
 
 var navigationMaster = {
@@ -159,9 +160,14 @@ function addSignatureParams(f) {
 }
 
 function addSignatureReturns(f) {
-	var returnTypes = helper.getSignatureReturns( f );
+  if (navOptions.methodHeadingReturns) {
+    var returnTypes = helper.getSignatureReturns(f);
 
-	f.signature = '<span class="signature">' + (f.signature || '') + '</span>' + '<span class="type-signature">' + (returnTypes.length ? ' &rarr; {' + returnTypes.join( '|' ) + '}' : '') + '</span>';
+    f.signature = '<span class="signature">' + (f.signature || '') + '</span>' + '<span class="type-signature">' + (returnTypes.length ? ' &rarr; {' + returnTypes.join('|') + '}' : '') + '</span>';
+  }
+  else {
+    f.signature = f.signature || '';
+  }
 }
 
 function addSignatureTypes(f) {
