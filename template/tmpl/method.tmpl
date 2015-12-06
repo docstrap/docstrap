@@ -5,8 +5,8 @@ var self = this;
 ?>
 <hr>
 <dt>
-    <h4 class="name" id="<?js= id ?>"><?js=   (kind === 'class' ? 'new ' : '') + data.prefixSymbol + name + (kind !== 'event' ? data.signature : '') ?></h4>
-
+    <h4 class="name" id="<?js= id ?>"><?js= data.attribs + (kind === 'class' ? 'new ' : '') + name + (kind !== 'event' ? data.signature : '') ?></h4>
+    
     <?js if (data.summary) { ?>
     <p class="summary"><?js= summary ?></p>
     <?js } ?>
@@ -25,7 +25,12 @@ var self = this;
     <?js } ?>
 
     <?js if (kind === 'event' && data && data.type && data.type.names) {?>
-        <h5>Type: <?js= self.partial('type.tmpl', data.type.names) ?></h5>
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                <?js= self.partial('type.tmpl', data.type.names) ?>
+            </li>
+        </ul>
     <?js } ?>
 
     <?js if (data['this']) { ?>
@@ -80,7 +85,7 @@ var self = this;
     } } ?>
 
     <?js if (data.returns && returns.length) { ?>
-    <?js= this.partial('returnsHeading.tmpl', returns) ?>
+    <h5>Returns:</h5>
     <?js if (returns.length > 1) { ?><ul><?js
         returns.forEach(function(r) { ?>
             <li><?js= self.partial('returns.tmpl', r) ?></li>

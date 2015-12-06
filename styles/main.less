@@ -1,7 +1,6 @@
 @import "../bower_components/bootstrap/less/bootstrap.less";
 @import "variables.less";
 @import "bootswatch.less";
-@import url("//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700");
 
 @headerHeight: 62px;
 
@@ -17,7 +16,7 @@
 
 }
 
-.navbar.navbar-inverse {
+.navbar {
   .dropdown-menu {
 	padding          : 20px;
 	max-height       : 300px;
@@ -42,13 +41,7 @@
 	  font-size     : 115%;
 	}
   }
-}
 
-img.branding-logo{
-  max-height: 30px;
-  display: inline-block;
-  padding: 0px;
-  margin: -3px 5px 0 0;
 }
 
 #toc {
@@ -57,7 +50,11 @@ img.branding-logo{
   right      : 0;
   max-height : 82%;
   overflow   : auto;
-  border-left     : 1px @navbar-default-bg solid;
+  .border-top-radius(5px);
+  .border-right-radius(5px);
+  .border-bottom-radius(5px);
+  .border-left-radius(5px);
+  border     : 1px @navbar-default-bg solid;
   padding    : 5px;
 
   .toc-active {
@@ -94,9 +91,19 @@ img.branding-logo{
   }
 }
 
-.copyright, .jsdoc-message {
-  font-size  : 50%;
-  text-align : left;
+
+
+.copyright {
+  font-size  : 90%;
+  text-align : center;
+  color      : @navbar-inverse-bg;
+  width      : 100%;
+  display    : block;
+}
+
+.jsdoc-message {
+  font-size  : 90%;
+  text-align : center;
   color      : @navbar-inverse-bg;
   width      : 100%;
   display    : block;
@@ -112,6 +119,7 @@ img.branding-logo{
 }
 
 footer {
+  border-top  : 1px solid  @navbar-inverse-link-hover-bg;
   padding-top : 15px;
 }
 
@@ -174,21 +182,4 @@ code {
   font-size     : 12px;
   line-height   : 15px;
   padding       : 12px 4px !important;
-}
-
-dd {
-  margin-bottom: 3em;
-  border-bottom: 1px solid @gray-light;
-}
-
-p.code-caption {
-  width: 92%;
-}
-
-.sunlight-menu {
-  margin-top: -2em;
-}
-
-.sunlight-code-container {
-  margin-bottom: 3em;
 }
