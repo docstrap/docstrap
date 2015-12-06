@@ -2,7 +2,6 @@
 	"tags"      : {
 		"allowUnknownTags" : true
 	},
-	"plugins"   : ["plugins/markdown"],
 	"source"    : {
 		"include" : [
 			"fixtures/",
