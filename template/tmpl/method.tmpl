@@ -1,12 +1,11 @@
 <?js
 var data = obj;
 var self = this;
-//TODO put data.attribs somewhere
 ?>
 <hr>
 <dt>
-    <h4 class="name" id="<?js= id ?>"><?js=   (kind === 'class' ? 'new ' : '') + data.prefixSymbol + name + (kind !== 'event' ? data.signature : '') ?></h4>
-
+    <h4 class="name" id="<?js= id ?>"><?js= data.attribs + (kind === 'class' ? 'new ' : '') + name + (kind !== 'event' ? data.signature : '') ?></h4>
+    
     <?js if (data.summary) { ?>
     <p class="summary"><?js= summary ?></p>
     <?js } ?>
@@ -80,7 +79,7 @@ var self = this;
     } } ?>
 
     <?js if (data.returns && returns.length) { ?>
-    <?js= this.partial('returnsHeading.tmpl', returns) ?>
+    <h5>Returns:</h5>
     <?js if (returns.length > 1) { ?><ul><?js
         returns.forEach(function(r) { ?>
             <li><?js= self.partial('returns.tmpl', r) ?></li>

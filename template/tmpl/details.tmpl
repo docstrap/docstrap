@@ -60,7 +60,12 @@ var self = this;
     <?js } ?>
 
     <?js if (data.implements && data.implements.length) { ?>
-      <?js= self.partial("implements.tmpl", data.implements) ?>
+    <dt class="implements">Implements:</dt>
+    <dd class="implements"><ul>
+        <?js data.implements.forEach(function(impl) { ?>
+            <li><?js= self.linkto(impl, self.htmlsafe(impl)) ?></li>
+        <?js }); ?>
+    </ul></dd>
     <?js } ?>
 
     <?js if (data.mixes && data.mixes.length) { ?>
