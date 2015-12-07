@@ -15,8 +15,9 @@ var template = require('jsdoc/template'),
   taffy = require('taffydb').taffy,
   handle = require('jsdoc/util/error').handle,
   helper = require('jsdoc/util/templateHelper'),
-  // jsdoc node support is still a bit odd
   moment = require("./moment"),
+  includeTagModule = require("../plugins/IncludeTag"),
+  articleTagModule = require("../plugins/ArticleTag"),
   htmlsafe = helper.htmlsafe,
   linkto = helper.linkto,
   resolveAuthorLinks = helper.resolveAuthorLinks,
@@ -49,6 +50,8 @@ var navOptions = {
   highlightTutorialCode: conf.highlightTutorialCode,
   methodHeadingReturns: conf.methodHeadingReturns === true
 };
+
+var indexedArticles = {};
 
 var navigationMaster = {
   index: {
@@ -90,7 +93,14 @@ var navigationMaster = {
   tutorial: {
     title: "Tutorials",
     link: helper.getUniqueFilename("tutorials.list"),
-    members: []
+    members: [],
+    hidden: true
+  },
+  article: {
+    title: "Articles",
+    link: helper.getUniqueFilename("articles.list"),
+    members: [],
+    hidden: true
   },
   global: {
     title: "Global",
@@ -398,12 +408,22 @@ function buildNav(members) {
   }
 
   if (members.tutorials.length) {
-
     members.tutorials.forEach(function(t) {
+      t.content = includeTagModule.replaceIncludeTag(t.content);
 
-      nav.tutorial.members.push(tutoriallink(t.name));
+      if (!t.isArticle) {
+        nav.tutorial.members.push(tutoriallink(t.name));
+      } else {
+        if (t.children) {
+          t.children.forEach(function(article) {
+            nav.article.members.push(tutoriallink(article.name));
+            indexedArticles[article.name] = article;
+          }); 
+        }
+      }
     });
 
+    populateRelatedArticles(members.tutorials);
   }
 
   if (members.globals.length) {
@@ -424,6 +444,10 @@ function buildNav(members) {
   var topLevelNav = [];
   _.each(nav, function(entry, name) {
     if (entry.members.length > 0 && name !== "index") {
+      if (entry.hidden) {
+        return;
+      } 
+
       topLevelNav.push({
         title: entry.title,
         link: entry.link,
@@ -435,11 +459,53 @@ function buildNav(members) {
 }
 
 /**
+ * This method mark all articles from the given hierarchy of tutorials. By convention, articles must be placed under
+ * articles tutorial.
+ */
+function markArticles(tutorials, isArticle) {
+  for (var idx = 0; tutorials.children && idx < tutorials.children.length; idx++) {
+    var tutorial = tutorials.children[idx]; 
+
+    if (tutorial.longname == "articles") {
+      tutorial.isArticle = true;
+
+      markArticles(tutorial, true);
+
+      continue;
+    }
+
+    tutorial.isArticle = isArticle;
+  }
+}
+
+/**
+ * This method populates related articles attribute belonging to each tutorial from a given list of tutorials. It also
+ * goes recursively into each tutorial children array.
+ */
+function populateRelatedArticles(tutorials) {
+  tutorials.forEach(function(t) {
+    var articles = articleTagModule.extractArticleNames(t.content);
+    
+    t.content = articles.content;
+    t.relatedArticles = [];
+
+    articles.names.forEach(function(name) {
+      t.relatedArticles.push(indexedArticles[name]);
+    });
+
+    if (t.children && t.children.length > 0) {
+      populateRelatedArticles(t.children);
+    }
+  });
+}
+
+/**
  @param {TAFFY} taffyData See <http://taffydb.com/>.
  @param {object} opts
  @param {Tutorial} tutorials
  */
 exports.publish = function(taffyData, opts, tutorials) {
+  markArticles(tutorials, false);
   data = taffyData;
 
   conf['default'] = conf['default'] || {};
@@ -709,11 +775,13 @@ exports.publish = function(taffyData, opts, tutorials) {
       kind: 'package'
     });
 
+  var indexBody = includeTagModule.replaceIncludeTag(opts.readme, true);
+
   generate('index', 'Index',
     packages.concat(
       [{
         kind: 'mainpage',
-        readme: opts.readme,
+        readme: indexBody,
         longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page'
       }]
     ).concat(files),
@@ -777,6 +845,8 @@ exports.publish = function(taffyData, opts, tutorials) {
   function generateTutorial(title, tutorial, filename) {
     var tutorialData = {
       title: title,
+      isArticle: tutorial.isArticle,
+      relatedArticles: tutorial.relatedArticles,
       header: tutorial.title,
       content: tutorial.parse(),
       children: tutorial.children,
