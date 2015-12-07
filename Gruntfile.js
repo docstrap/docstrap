@@ -398,6 +398,7 @@ function getBootSwatchList( done ) {
  */
 function getBootSwatchComponent( url, done ) {
 	var body = "";
+	url = url.replace("https:", "http:");
 	var req = http.request( url, function ( res ) {
 		res.setEncoding( 'utf8' );
 		res.on( 'data', function ( chunk ) {
