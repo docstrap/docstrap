@@ -28,11 +28,11 @@
     "email": "me@terryweiss.net"
   },
   "bugs": {
-    "url": "https://github.com/terryweiss/docstrap/issues"
+    "url": "https://github.com/docstrap/docstrap/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/terryweiss/docstrap.git"
+    "url": "https://github.com/docstrap/docstrap.git"
   },
   "main": "./template/publish.js",
   "dependencies": {

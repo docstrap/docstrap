@@ -27,19 +27,19 @@ Again huge, huge thanks to [tswaters](https://github.com/tswaters). Make sure yo
 ### What It Looks Like ###
 Here are examples of this template with the different Bootswatch themes (you can find more on the bootswatch web site):
 
-+ [Amelia](http://terryweiss.github.io/docstrap/themes/amelia)
-+ [Cerulean](http://terryweiss.github.io/docstrap/themes/cerulean)
-+ [Cosmo](http://terryweiss.github.io/docstrap/themes/cosmo)
-+ [Cyborg](http://terryweiss.github.io/docstrap/themes/cyborg)
-+ [Flatly](http://terryweiss.github.io/docstrap/themes/flatly)
-+ [Journal](http://terryweiss.github.io/docstrap/themes/journal)
-+ [Readable](http://terryweiss.github.io/docstrap/themes/readable)
-+ [Simplex](http://terryweiss.github.io/docstrap/themes/simplex)
-+ [Slate](http://terryweiss.github.io/docstrap/themes/slate)
-+ [Spacelab](http://terryweiss.github.io/docstrap/themes/spacelab)
-+ [Spruce](http://terryweiss.github.io/docstrap/themes/spruce)
-+ [Superhero](http://terryweiss.github.io/docstrap/themes/superhero)
-+ [United](http://terryweiss.github.io/docstrap/themes/united)
++ [Amelia](http://docstrap.github.io/docstrap/themes/amelia)
++ [Cerulean](http://docstrap.github.io/docstrap/themes/cerulean)
++ [Cosmo](http://docstrap.github.io/docstrap/themes/cosmo)
++ [Cyborg](http://docstrap.github.io/docstrap/themes/cyborg)
++ [Flatly](http://docstrap.github.io/docstrap/themes/flatly)
++ [Journal](http://docstrap.github.io/docstrap/themes/journal)
++ [Readable](http://docstrap.github.io/docstrap/themes/readable)
++ [Simplex](http://docstrap.github.io/docstrap/themes/simplex)
++ [Slate](http://docstrap.github.io/docstrap/themes/slate)
++ [Spacelab](http://docstrap.github.io/docstrap/themes/spacelab)
++ [Spruce](http://docstrap.github.io/docstrap/themes/spruce)
++ [Superhero](http://docstrap.github.io/docstrap/themes/superhero)
++ [United](http://docstrap.github.io/docstrap/themes/united)
 
 To change your theme, just change it in the `conf.json` file. See below for details.
 ## Ooooh, I want it! How do I get it?##
@@ -146,7 +146,7 @@ which can appear inside any example block in source code, or in any fenced code 
 _`language`_ can be any of the languages supported by [Sunlight](http://sunlightjs.com/)
 
 Look at this:
-For an example of this thing in action [this](http://terryweiss.github.io/docstrap/themes/readable/#toc7) )__
+For an example of this thing in action [this](http://docstrap.github.io/docstrap/themes/readable/#toc7) )__
 
 
 The syntax for adding the tag is as follows. When in markdown, add the tag on the line just after the \`\`\` fence like so:
@@ -199,7 +199,7 @@ These are the supported languages.
 ## Customizing DocStrap ##
 No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.
 First make sure you have [bower](https://github.com/bower/bower) and [grunt-cli](https://github.com/gruntjs/grunt-cli) installed.
-Fetch the source using `git` or grab the [zip file from github.](https://github.com/terryweiss/docstrap/archive/master.zip) and unzip
+Fetch the source using `git` or grab the [zip file from github.](https://github.com/docstrap/docstrap/archive/master.zip) and unzip
 it somewhere. Everything that follows happens in the unzip directory.
 
 Next, prepare the environment:
@@ -336,7 +336,7 @@ If you like DocStrap, be sure and check out these excellent projects and support
 
 [Grunt is also MIT](https://github.com/gruntjs/grunt-cli/blob/master/LICENSE-MIT)
 
-DocStrap [is licensed under the MIT license.](https://github.com/terryweiss/docstrap/blob/master/LICENSE.md)
+DocStrap [is licensed under the MIT license.](https://github.com/docstrap/docstrap/blob/master/LICENSE.md)
 
 [Sunlight uses the WTFPL](http://sunlightjs.com/)
 
