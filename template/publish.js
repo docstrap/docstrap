@@ -17,6 +17,7 @@ var template = require('jsdoc/template'),
   helper = require('jsdoc/util/templateHelper'),
   // jsdoc node support is still a bit odd
   moment = require("./moment"),
+  parseMarkdown = require('jsdoc/util/markdown').getParser(),
   htmlsafe = helper.htmlsafe,
   linkto = helper.linkto,
   resolveAuthorLinks = helper.resolveAuthorLinks,
@@ -115,6 +116,32 @@ function tutoriallink(tutorial) {
     classname: 'disabled',
     prefix: 'Tutorial: '
   });
+}
+
+/**
+ * This function receives an html into which it replaces all {@tutorial  ...} tags with the correct link.
+ * @param  {String} html The html fragment where it is possible to find tutorial tags.
+ * @return {String} The  new fragment without tutorial tags.
+ */
+function replaceTutorialTag(html) {
+      var re = /\{@tutorial (.*?)\}/i;
+      var m;
+
+      do {
+          m = re.exec(html);
+
+          if (m) {
+              var tutorialId = m[1];
+
+              var tutorialStr = "{@tutorial " + tutorialId + "}";
+
+              while (html.indexOf(tutorialStr) != -1) {
+                html = html.replace(tutorialStr, tutoriallink(tutorialId));
+              }
+          }
+      } while (m);
+
+      return html;
 }
 
 function getAncestorLinks(doclet) {
@@ -222,7 +249,8 @@ function generate(docType, title, docs, filename, resolveLinks) {
   var docData = {
     title: title,
     docs: docs,
-    docType: docType
+    docType: docType,
+    fixedMenu: view.fixedMenu
   };
 
   var outpath = path.join(outdir, filename),
@@ -231,6 +259,10 @@ function generate(docType, title, docs, filename, resolveLinks) {
   if (resolveLinks) {
     html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
   }
+  if (docType == "source") {
+      html = replaceTutorialTag(html);
+  }
+
 
   fs.writeFileSync(outpath, html, 'utf8');
 }
@@ -435,6 +467,15 @@ function buildNav(members) {
 }
 
 /**
+ * 
+ */
+function readFixedMenu(menuPath) {
+  var content = fs.readFileSync(menuPath);
+
+  return parseMarkdown(content.toString());
+}
+
+/**
  @param {TAFFY} taffyData See <http://taffydb.com/>.
  @param {object} opts
  @param {Tutorial} tutorials
@@ -631,6 +672,8 @@ exports.publish = function(taffyData, opts, tutorials) {
   buildNav(members);
   view.nav = navigationMaster;
   view.navOptions = navOptions;
+  view.fixedMenu = readFixedMenu(opts.fixedMenu);
+
   attachModuleSymbols(find({
       kind: ['class', 'function'],
       longname: {
@@ -780,6 +823,7 @@ exports.publish = function(taffyData, opts, tutorials) {
       header: tutorial.title,
       content: tutorial.parse(),
       children: tutorial.children,
+      fixedMenu: view.fixedMenu,
       docs: null
     };
 
