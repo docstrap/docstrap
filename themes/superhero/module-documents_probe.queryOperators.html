@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>DocStrap Class: queryOperators</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.superhero.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">DocStrap</a>
+	</div>
+	<div class="navbar-collapse">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-base.html">base</a></li><li><a href="module-base_chains.html">base/chains</a></li><li><a href="module-documents_binder.html">documents/binder</a></li><li><a href="module-documents_model.html">documents/model</a></li><li><a href="module-documents_probe.html">documents/probe</a></li><li><a href="module-documents_schema.html">documents/schema</a></li><li><a href="module-ink_collector.html">ink/collector</a></li><li><a href="module-mixins_bussable.html">mixins/bussable</a></li><li><a href="module-mixins_signalable.html">mixins/signalable</a></li><li><a href="module-strings_format.html">strings/format</a></li><li><a href="module-utils_logger.html">utils/logger</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="base.html">base</a></li><li><a href="base_chains.html">base/chains</a></li><li><a href="documents_model.html">documents/model</a></li><li><a href="module-documents_probe.queryOperators.html">documents/probe.queryOperators</a></li><li><a href="module-documents_probe.updateOperators.html">documents/probe.updateOperators</a></li><li><a href="module-ink_collector-ACollector.html">ink/collector~ACollector</a></li><li><a href="module-ink_collector-CollectorBase.html">ink/collector~CollectorBase</a></li><li><a href="module-ink_collector-OCollector.html">ink/collector~OCollector</a></li><li><a href="module-mixins_signalable-Signal.html">mixins/signalable~Signal</a></li><li><a href="utils_logger.Logger.html">utils/logger.Logger</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="mixins.list.html" class="dropdown-toggle" data-toggle="dropdown">Mixins<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="documents_schema.html">documents/schema</a></li><li><a href="mixins_bussable.html">mixins/bussable</a></li><li><a href="mixins_signalable.html">mixins/signalable</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-Brush Teeth.html">Brush Teeth</a></li><li><a href="tutorial-Drive Car.html">Drive Car</a></li><li><a href="tutorial-Fence Test.html">Fence Test</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+</div>
+
+
+<div class="container">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Class: queryOperators</h1>
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="module-documents_probe.html">documents/probe</a>.</span>
+        
+        queryOperators
+        </h2>
+        
+            <div class="class-description"><p>This is not actually a class, but an artifact of the documentation system</p></div>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="queryOperators"><span class="type-signature"></span>new queryOperators()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>These are the supported query operators</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-999">line 999</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<hr>
+<dt class="name" id=".$all">
+    <h4><span class="type-signature">&lt;static> </span>$all<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$all</code> checks to see if all of the members of the query are included in an array
+<code>{array: {$all: [val1, val2, val3]}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-389">line 389</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;categories&quot; : {$all : [&quot;cat4&quot;, &quot;cat2&quot;, &quot;cat1&quot;]}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$and">
+    <h4><span class="type-signature">&lt;static> </span>$and<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Returns true if all of the conditions of the query are met
+<code>{$and: [query1, query2, query3]}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-579">line 579</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {$and : [
+     {&quot;name.first&quot; : &quot;Mildred&quot;},
+     {&quot;name.last&quot; : &quot;Graves&quot;}
+]} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$elemMatch">
+    <h4><span class="type-signature">&lt;static> </span>$elemMatch<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>This is like $all except that it works with an array of objects or value. It checks to see the array matches all
+of the conditions of the query
+<code>{array: {$elemMatch: {path: value, path: {$operation: value2}}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-552">line 552</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {attr : {$elemMatch : [
+ {color : &quot;red&quot;, &quot;hand&quot; : &quot;left&quot;}
+]}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$eq">
+    <h4><span class="type-signature">&lt;static> </span>$eq<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$eq</code> performs a <code>===</code> comparison by comparing the value directly if it is an atomic value.
+otherwise if it is an array, it checks to see if the value looked for is in the array.
+<code>{field: value}</code> or <code>{field: {$eq : value}}</code> or <code>{array: value}</code> or <code>{array: {$eq : value}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-347">line 347</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {categories : &quot;cat1&quot;} );
+// is the same as
+probe.find( data, {categories : {$eq: &quot;cat1&quot;}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$exists">
+    <h4><span class="type-signature">&lt;static> </span>$exists<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$exists</code> Sees if a field exists.
+<code>{field: {$exists: true|false}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-493">line 493</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;name.middle&quot; : {$exists : true}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$gt">
+    <h4><span class="type-signature">&lt;static> </span>$gt<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$gt</code> Sees if a field is greater than the value
+<code>{field: {$gt: value}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-409">line 409</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;age&quot; : {$gt : 24}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$gte">
+    <h4><span class="type-signature">&lt;static> </span>$gte<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$gte</code> Sees if a field is greater than or equal to the value
+<code>{field: {$gte: value}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-422">line 422</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;age&quot; : {$gte : 50}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$in">
+    <h4><span class="type-signature">&lt;static> </span>$in<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$in</code> Sees if a field has one of the values in the query
+<code>{field: {$in: [test1, test2, test3,...]}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-461">line 461</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;age&quot; : {$in : [24, 28, 60]}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$lt">
+    <h4><span class="type-signature">&lt;static> </span>$lt<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$lt</code> Sees if a field is less than the value
+<code>{field: {$lt: value}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-435">line 435</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;age&quot; : {$lt : 24}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$lte">
+    <h4><span class="type-signature">&lt;static> </span>$lte<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$lte</code> Sees if a field is less than or equal to the value
+<code>{field: {$lte: value}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-448">line 448</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;age&quot; : {$lte : 50}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$mod">
+    <h4><span class="type-signature">&lt;static> </span>$mod<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Checks equality to a modulus operation on a field
+<code>{field: {$mod: [divisor, remainder]}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-506">line 506</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;age&quot; : {$mod : [2, 0]}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$ne">
+    <h4><span class="type-signature">&lt;static> </span>$ne<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$ne</code> performs a <code>!==</code> comparison by comparing the value directly if it is an atomic value. Otherwise, if it is an array
+this is performs a &quot;not in array&quot;.
+'{field: {$ne : value}}<code>or '{array: {$ne : value}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-369">line 369</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;name.first&quot; : {$ne : &quot;Sheryl&quot;}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$nin">
+    <h4><span class="type-signature">&lt;static> </span>$nin<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p><code>$nin</code> Sees if a field has none of the values in the query
+<code>{field: {$nin: [test1, test2, test3,...]}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-477">line 477</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;age&quot; : {$nin : [24, 28, 60]}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$nor">
+    <h4><span class="type-signature">&lt;static> </span>$nor<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Returns true if none of the conditions of the query are met
+<code>{$nor: [query1, query2, query3]}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-635">line 635</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {$nor : [
+     {&quot;age&quot; : {$in : [24, 28, 60]}},
+     {categories : &quot;cat1&quot;}
+]} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$not">
+    <h4><span class="type-signature">&lt;static> </span>$not<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Logical NOT on the conditions of the query
+<code>{$not: [query1, query2, query3]}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-662">line 662</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {$not : {&quot;age&quot; : {$lt : 24}}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$or">
+    <h4><span class="type-signature">&lt;static> </span>$or<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Returns true if any of the conditions of the query are met
+<code>{$or: [query1, query2, query3]}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-608">line 608</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {$or : [
+     &quot;age&quot; : {$in : [24, 28, 60]}},
+     {categories : &quot;cat1&quot;}
+]} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$regex">
+    <h4><span class="type-signature">&lt;static> </span>$regex<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Performs a regular expression test againts the field
+<code>{field: {$regex: re, $options: reOptions}}</code></p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-538">line 538</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {&quot;name.first&quot; : {$regex : &quot;m*&quot;, $options : &quot;i&quot;}} );</pre>
+
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt class="name" id=".$size">
+    <h4><span class="type-signature">&lt;static> </span>$size<span class="type-signature"></span></h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Compares the size of the field/array to the query. This can be used on arrays, strings and objects (where it will count keys)
+<code>{'field|array</code>: {$size: value}}`</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="documents_probe.js.html">documents/probe.js</a>,
+				 <a href="documents_probe.js.html#sunlight-1-line-525">line 525</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+        <h5>Example</h5>
+        
+    <pre class="sunlight-highlight-javascript">var probe = require(&quot;documents/probe&quot;);
+probe.find( data, {attr : {$size : 3}} );</pre>
+
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	DocStrap Copyright © 2012-2013 The contributors to the JSDoc3 and DocStrap projects.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a>
+	on Mon Dec 7th 2015 using the <a
+	href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<!--<script src="scripts/sunlight.js"></script>-->
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/bootstrap-dropdown.js"></script>
+<script src="scripts/toc.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			lang = "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "h1,h2,h3,h4",
+		showAndHide : false,
+                navbarOffset: 10,
+		smoothScrolling: true
+	} );
+
+	$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+</body>
+</html>

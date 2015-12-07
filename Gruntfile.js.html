@@ -15,49 +15,43 @@
 </head>
 
 <body>
-<div class="container-fluid">
-	<div class="navbar navbar-fixed-top navbar-inverse">
-		<div class="navbar-inner">
-			<a class="brand" href="index.html">DocStrap</a>
-			<ul class="nav">
-				
-				<li class="dropdown">
-					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
-						class="caret"></b></a>
 
-					<ul class="dropdown-menu ">
-						
-						<li>
-							<a href="module-Gruntfile.html">Gruntfile</a>
-						</li>
-						
-						<li>
-							<a href="publish.html">template/publish</a>
-						</li>
-						
-
-					</ul>
-				</li>
-				
-			</ul>
-		</div>
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">DocStrap</a>
 	</div>
+	<div class="navbar-collapse">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-Gruntfile.html">Gruntfile</a></li><li><a href="module-template_publish.html">template/publish</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+</div>
 
-	<div class="row-fluid">
 
-		
-			<div class="span12">
-				
-				<div id="main">
-					
+<div class="container">
+<div class="row">
 
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
 
 		<h1 class="page-title">Source: Gruntfile.js</h1>
     
 <section>
-	<article>
-		<pre
-			class="sunlight-highlight-javascript linenums">"use strict";
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">"use strict";
 /**
  * @fileOverview Gruntfile tasks. These tasks are intended to help you when modifying the template. If you are
  * just using the template, don't sweat this stuff. To use these tasks, you must install grunt, if you haven't already,
@@ -157,7 +151,7 @@ function jsdocCommand( jsdoc ) {
 
 var tasks = {
 	shell  : {
-		options   : {
+		options  : {
 			stdout : true,
 			stderr : true
 		},
@@ -174,24 +168,29 @@ var tasks = {
 		 * @name shell:dox
 		 * @memberOf module:Gruntfile
 		 */
-		dox       : {
+		dox      : {
 			command : jsdocCommand( projectDocs )
 		},
-		release : {
+		release1 : {
 			command : [
+				"touch Gruntfile.js",
 				"git add .",
 				'git commit -m "ready for release"',
-				"npm version patch",
+			].join( ";" )
+
+		},
+		release2 : {
+			command : ["npm version patch",
 				"git push",
 				"git push --tags",
 				"npm publish"
-			].join("&amp;&amp;")
+			].join( "&amp;&amp;" )
 		}
 	},
 	jsdoc  : {
 		testdocs : {
 			src     : ['fixtures/**.js', "./README.md"],
-			jsdoc: "./node_modules/jsdoc/jsdoc.js",
+			jsdoc   : "./node_modules/jsdoc/jsdoc.js",
 			options : {
 				destination : './testdocs',
 				rescurse    : true,
@@ -248,7 +247,6 @@ var tasks = {
 module.exports = function ( grunt ) {
 	tasks.jsdocConf = grunt.file.readJSON( 'template/jsdoc.conf.json' );
 
-
 	grunt.initConfig( tasks );
 
 	grunt.loadNpmTasks( 'grunt-contrib-less' );
@@ -291,8 +289,8 @@ module.exports = function ( grunt ) {
 	 */
 	grunt.registerTask( "apply", "Applies the theme in the conf file and applies it to the styles directory", function () {
 		var def = {
-			less          : "http://bootswatch.com/2/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
-			lessVariables : "http://bootswatch.com/2/" + tasks.jsdocConf.templates.theme + "/variables.less"
+			less          : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
+			lessVariables : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/variables.less"
 		};
 		grunt.registerTask( "swatch-apply", sys.partial( applyTheme, grunt, def ) );
 		grunt.task.run( ["swatch-apply"] );
@@ -362,6 +360,8 @@ module.exports = function ( grunt ) {
 		} );
 
 	} );
+
+	grunt.registerTask( "release", "Create the project documentation", ["shell:release1", "shell:release2"] );
 };
 
 /**
@@ -381,16 +381,14 @@ module.exports = function ( grunt ) {
 function applyTheme( grunt, definition ) {
 	//noinspection JSHint
 
-
 	var webProtocol = tasks.jsdocConf.templates.protocol || "//";
-	 console.info(webProtocol);
 	var done = this.async();
 	async.waterfall( [
 		function ( cb ) {
 			getBootSwatchComponent( definition.less, function ( err, swatch ) {
 				if ( err ) {return cb( err );}
 				var fullPath = path.join( __dirname, "styles/bootswatch.less" );
-				fs.writeFile( fullPath, swatch.replace( "http://", webProtocol), cb );
+				fs.writeFile( fullPath, swatch.replace( "http://", webProtocol ), cb );
 			} );
 		},
 		function ( cb ) {
@@ -417,7 +415,7 @@ function getBootSwatchList( done ) {
 	var options = {
 		hostname : 'api.bootswatch.com',
 		port     : 80,
-		path     : '/',
+		path     : '/3/',
 		method   : 'GET'
 	};
 	var body = "";
@@ -453,6 +451,7 @@ function getBootSwatchList( done ) {
  */
 function getBootSwatchComponent( url, done ) {
 	var body = "";
+	url = url.replace("https:", "http:");
 	var req = http.request( url, function ( res ) {
 		res.setEncoding( 'utf8' );
 		res.on( 'data', function ( chunk ) {
@@ -474,104 +473,108 @@ function getBootSwatchComponent( url, done ) {
 }
 
 </pre>
-	</article>
+    </article>
 </section>
 
 
 
 
 
-				</div>
-
-				<div class="clearfix"></div>
-				<footer>
-					
-					
-		<span class="copyright">
-		DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.
-		</span>
-					<br />
-					
-		<span class="jsdoc-message">
-		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Mon Jul 7th 2014 using the <a
-			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
-		</span>
-				</footer>
-			</div>
-
-			
-			<br clear="both">
 		</div>
-
 	</div>
-	<!--<script src="scripts/sunlight.js"></script>-->
-	<script src="scripts/docstrap.lib.js"></script>
-	<script src="scripts/bootstrap-dropdown.js"></script>
-	<script src="scripts/toc.js"></script>
 
-	<script>
-		$( function () {
-			$( "[id*='$']" ).each( function () {
-				var $this = $( this );
+	<div class="clearfix"></div>
 
-				$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-			} );
-
-			$( "#toc" ).toc( {
-				anchorName  : function ( i, heading, prefix ) {
-					return $( heading ).attr( "id" ) || ( prefix + i );
-				},
-				selectors   : "h1,h2,h3,h4",
-				showAndHide : false,
-				scrollTo    : "100px"
-			} );
-
-			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
-			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-			$( '.dropdown-toggle' ).dropdown();
-//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
-
-			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
-				var $this = $( this );
-
-				var example = $this.find( "code" );
-				exampleText = example.html();
-				var lang = /{@lang (.*?)}/.exec( exampleText );
-				if ( lang && lang[1] ) {
-					exampleText = exampleText.replace( lang[0], "" );
-					example.html( exampleText );
-					lang = lang[1];
-				} else {
-					lang = "javascript";
-				}
-
-				if ( lang ) {
-
-					$this
-						.addClass( "sunlight-highlight-" + lang )
-						.addClass( "linenums" )
-						.html( example.html() );
-
-				}
-			} );
-
-			Sunlight.highlightAll( {
-				lineNumbers : true,
-				showMenu : true,
-				enableDoclinks : true
-			} );
-		} );
-	 </script>
-
-
-
-	<!--Navigation and Symbol Display-->
 	
 
+</div>
+</div>
 
-	<!--Google Analytics-->
-	
+
+<footer>
+
+
+	<span class="copyright">
+	DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a>
+	on Mon Dec 7th 2015 using the <a
+	href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<!--<script src="scripts/sunlight.js"></script>-->
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/bootstrap-dropdown.js"></script>
+<script src="scripts/toc.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			lang = "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "h1,h2,h3,h4",
+		showAndHide : false,
+                navbarOffset: 10,
+		smoothScrolling: true
+	} );
+
+	$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
+
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
 
 </body>
 </html>
