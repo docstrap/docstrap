@@ -2,6 +2,7 @@
 	"tags"      : {
 		"allowUnknownTags" : true
 	},
+	"plugins"   : ["plugins/markdown"],
 	"templates" : {
 		"cleverLinks"           : false,
 		"monospaceLinks"        : false,
