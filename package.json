@@ -3,15 +3,14 @@
   "version": "0.5.3",
   "decription": "A template for JSDoc3 based on Bootstrap and Bootswatch",
   "devDependencies": {
-    "async": "~0.2.8",
+    "async": "~1.5.0",
     "grunt": "~0.4.1",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-less": "~0.9.0",
-    "grunt-contrib-uglify": "^0.4.0",
-    "grunt-jsdoc": "^0.5.4",
-    "grunt-shell": "~0.2.2",
-    "jsdoc": "~3.3.0-alpha5",
-    "lodash": "~2.4.1",
+    "grunt-contrib-copy": "~0.8.2",
+    "grunt-contrib-less": "~1.1.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-shell": "~1.1.2",
+    "jsdoc": "~3.4.0",
+    "lodash": "~3.10.1",
     "request": "^2.58.0"
   },
   "license": "MIT",
@@ -37,6 +36,6 @@
   },
   "main": "./template/publish.js",
   "dependencies": {
-    "moment": "~2.6.0"
+    "moment": "~2.10.6"
   }
 }

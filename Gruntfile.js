@@ -22,7 +22,7 @@
  * @requires fs
  */
 var path = require( "path" );
-var sys = require( "lodash" );
+var _ = require( "lodash" );
 var request = require('request');
 var async = require( "async" );
 var fs = require( "fs" );
@@ -87,7 +87,7 @@ function jsdocCommand( jsdoc ) {
 	cmd.push( "-d " + path.resolve( jsdoc.dest ) );
 	cmd.push( "-t " + path.resolve( jsdoc.template ) );
 	cmd.push( "-c " + path.resolve( jsdoc.config ) );
-	sys.each( jsdoc.src, function ( src ) {
+	_.each( jsdoc.src, function ( src ) {
 		cmd.push( path.resolve( src ) );
 	} );
 	cmd.unshift( path.resolve( "./node_modules/jsdoc/jsdoc" ) );
@@ -104,7 +104,7 @@ var tasks = {
 		},
 		/**
 		 * TASK: Create the a documentation set for testing changes to the template
-		 * @name jsdoc:testdocs
+		 * @name shell:testdocs
 		 * @memberOf module:Gruntfile
 		 */
 		testdocs : {
@@ -200,7 +200,6 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-shell' );
 	grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-	grunt.loadNpmTasks( 'grunt-jsdoc' );
 
 	grunt.registerTask( "default", ["docs"] );
 
@@ -239,7 +238,7 @@ module.exports = function ( grunt ) {
 			less          : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
 			lessVariables : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/variables.less"
 		};
-		grunt.registerTask( "swatch-apply", sys.partial( applyTheme, grunt, def ) );
+		grunt.registerTask( "swatch-apply", _.partial( applyTheme, grunt, def ) );
 		grunt.task.run( ["swatch-apply"] );
 	} );
 	/**
@@ -255,10 +254,10 @@ module.exports = function ( grunt ) {
 		getBootSwatchList( function ( err, list ) {
 			if ( err ) {return done( err );}
 
-			sys.each( list.themes, function ( entry ) {
+			_.each( list.themes, function ( entry ) {
 
 				toRun.push( "swatch" + entry.name );
-				grunt.registerTask( "swatch" + entry.name, sys.partial( applyTheme, grunt, entry ) );
+				grunt.registerTask( "swatch" + entry.name, _.partial( applyTheme, grunt, entry ) );
 
 				var key = "template/static/styles/site." + entry.name.toLowerCase() + ".css";
 				var def = {};
@@ -284,12 +283,12 @@ module.exports = function ( grunt ) {
 		getBootSwatchList( function ( err, list ) {
 			if ( err ) {return done( err );}
 
-			sys.each( list.themes, function ( entry ) {
+			_.each( list.themes, function ( entry ) {
 				var conf = grunt.file.readJSON( './fixtures/example.conf.json' );
 				conf.templates.theme = entry.name.toLowerCase();
 				grunt.file.write( "tmp/example.conf." + conf.templates.theme + ".json", JSON.stringify( conf, null, 4 ) );
 
-				var jsdenv = sys.cloneDeep( jsdocExamplePages );
+				var jsdenv = _.cloneDeep( jsdocExamplePages );
 				jsdenv.config = "./tmp/example.conf." + conf.templates.theme + ".json";
 				jsdenv.dest = "./themes/" + conf.templates.theme;
 				tasks.shell["example" + conf.templates.theme] = {
