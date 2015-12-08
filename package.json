@@ -3,7 +3,7 @@
   "version": "0.5.3",
   "decription": "A template for JSDoc3 based on Bootstrap and Bootswatch",
   "devDependencies": {
-    "async": "~0.2.8",
+    "async": "~1.5.0",
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-less": "~0.9.0",
@@ -11,7 +11,7 @@
     "grunt-jsdoc": "^0.5.4",
     "grunt-shell": "~0.2.2",
     "jsdoc": "~3.4.0",
-    "lodash": "~2.4.1",
+    "lodash": "~3.10.1",
     "request": "^2.58.0"
   },
   "license": "MIT",
