@@ -104,7 +104,7 @@ var tasks = {
 		},
 		/**
 		 * TASK: Create the a documentation set for testing changes to the template
-		 * @name jsdoc:testdocs
+		 * @name shell:testdocs
 		 * @memberOf module:Gruntfile
 		 */
 		testdocs : {
@@ -200,7 +200,6 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-shell' );
 	grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
-	grunt.loadNpmTasks( 'grunt-jsdoc' );
 
 	grunt.registerTask( "default", ["docs"] );
 
