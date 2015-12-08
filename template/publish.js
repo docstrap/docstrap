@@ -104,6 +104,12 @@ var navigationMaster = {
   }
 };
 
+var prefixSymbols = {
+  "static": ".",
+  "instance": "#",
+  "global": ""
+};
+
 function find(spec) {
   return helper.find(data, spec);
 }
@@ -150,6 +156,10 @@ function needsSignature(doclet) {
   }
 
   return needsSig;
+}
+
+function addPrefixSymbol(f) {
+  f.prefixSymbol = prefixSymbols[f.scope] || "";
 }
 
 function addSignatureParams(f) {
@@ -596,12 +606,14 @@ exports.publish = function(taffyData, opts, tutorials) {
       addSignatureParams(doclet);
       addSignatureReturns(doclet);
       addAttribs(doclet);
+      addPrefixSymbol(doclet);
     }
   });
 
   // do this after the urls have all been generated
   data().each(function(doclet) {
     doclet.ancestors = getAncestorLinks(doclet);
+    addPrefixSymbol(doclet);
 
     if (doclet.kind === 'member') {
       addSignatureTypes(doclet);
