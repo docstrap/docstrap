@@ -51,7 +51,7 @@ If you manage your own version of jsdoc:
 npm install ink-docstrap
 ```
 
-When using [grunt](http://gruntjs.com/), please look at [grunt-jsdoc](https://github.com/krampstudio/grunt-jsdoc) which includes
+When using [grunt](http://gruntjs.com/), please look at [grunt-jsdoc](https://github.com/krampstudio/grunt-jsdoc) which you can use with
 docstrap
 
 ```
