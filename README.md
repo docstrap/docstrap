@@ -341,7 +341,7 @@ DocStrap [is licensed under the MIT license.](https://github.com/docstrap/docstr
 [Sunlight uses the WTFPL](http://sunlightjs.com/)
 
 ## License ##
-DocStrap Copyright (c) 2012-2014 Terry Weiss. All rights reserved.
+DocStrap Copyright (c) 2012-2015 Terry Weiss & Contributors. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
