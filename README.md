@@ -18,7 +18,6 @@ you even more flexibility to tweak the template to your needs. It will also make
 ### What It Looks Like ###
 Here are examples of this template with the different Bootswatch themes:
 
-+ [Amelia](http://docstrap.github.io/docstrap/themes/amelia)
 + [Cerulean](http://docstrap.github.io/docstrap/themes/cerulean)
 + [Cosmo](http://docstrap.github.io/docstrap/themes/cosmo)
 + [Cyborg](http://docstrap.github.io/docstrap/themes/cyborg)
@@ -31,7 +30,6 @@ Here are examples of this template with the different Bootswatch themes:
 + [Simplex](http://docstrap.github.io/docstrap/themes/simplex)
 + [Slate](http://docstrap.github.io/docstrap/themes/slate)
 + [Spacelab](http://docstrap.github.io/docstrap/themes/spacelab)
-+ [Spruce](http://docstrap.github.io/docstrap/themes/spruce)
 + [Superhero](http://docstrap.github.io/docstrap/themes/superhero)
 + [United](http://docstrap.github.io/docstrap/themes/united)
 + [Yeti](http://docstrap.github.io/docstrap/themes/yeti)
