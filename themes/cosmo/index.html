@@ -89,19 +89,14 @@
 
     <section class="readme-section">
         <article><p><a href="https://nodei.co/npm/ink-docstrap/"><img src="https://nodei.co/npm/ink-docstrap.png?downloads=true" alt="NPM"></a></p>
-<h1>DocStrap <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></h1><p>DocStrap is <a href="http://twitter.github.io/bootstrap/index.html">Bootstrap</a> based template for <a href="http://usejsdoc.org/">JSDoc3</a>.
-In addition, it includes all of the themes from <a href="http://bootswatch.com/">Bootswatch</a> giving you a great deal of look
-and feel options for your documentation, along with a simple search. Additionally, it adds some options to the conf.json file that gives
-you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.</p>
-<h2>New</h2><p><strong>0.5.2 Major update</strong>. Amazing help from <a href="https://github.com/tswaters">tswaters</a> to solve a bunch of little problems and a to bring the codebase up to Bootstrap3.
-Make sure you are running the latest version of JSDoc before using this build.</p>
-<p>Again huge, huge thanks to <a href="https://github.com/tswaters">tswaters</a>. Make sure you send him thanks or a tip!!!!!</p>
+<h1>DocStrap <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></h1><p>DocStrap is <a href="http://twitter.github.io/bootstrap/index.html">Bootstrap</a> based template for <a href="http://usejsdoc.org/">JSDoc3</a>.<br>In addition, it includes all of the themes from <a href="http://bootswatch.com/">Bootswatch</a> giving you a great deal of look<br>and feel options for your documentation, along with a simple search. Additionally, it adds some options to the conf.json file that gives<br>you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.</p>
 <h2>Features</h2><ul>
-<li>Right side TOC for navigation in pages, with quick search</li>
+<li>Right side TOC for navigation in pages</li>
 <li>Themed</li>
 <li>Customizable</li>
+<li>Syntax highlighting</li>
 </ul>
-<h3>What It Looks Like</h3><p>Here are examples of this template with the different Bootswatch themes (you can find more on the bootswatch web site):</p>
+<h3>What It Looks Like</h3><p>Here are examples of this template with the different Bootswatch themes:</p>
 <ul>
 <li><a href="http://docstrap.github.io/docstrap/themes/amelia">Amelia</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/cerulean">Cerulean</a></li>
@@ -109,24 +104,23 @@ Make sure you are running the latest version of JSDoc before using this build.</
 <li><a href="http://docstrap.github.io/docstrap/themes/cyborg">Cyborg</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/flatly">Flatly</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/journal">Journal</a></li>
+<li><a href="http://docstrap.github.io/docstrap/themes/lumen">Lumen</a></li>
+<li><a href="http://docstrap.github.io/docstrap/themes/paper">Paper</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/readable">Readable</a></li>
+<li><a href="http://docstrap.github.io/docstrap/themes/sandstone">Sandstone</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/simplex">Simplex</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/slate">Slate</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/spacelab">Spacelab</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/spruce">Spruce</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/superhero">Superhero</a></li>
 <li><a href="http://docstrap.github.io/docstrap/themes/united">United</a></li>
+<li><a href="http://docstrap.github.io/docstrap/themes/yeti">Yeti</a></li>
 </ul>
 <p>To change your theme, just change it in the <code>conf.json</code> file. See below for details.</p>
 <h2>Ooooh, I want it! How do I get it?</h2><p>If you manage your own version of jsdoc:</p>
-<pre class="prettyprint source"><code>{@lang bash}
-npm install ink-docstrap</code></pre><p>When using <a href="http://gruntjs.com/">grunt</a>, please look at <a href="https://github.com/krampstudio/grunt-jsdoc">grunt-jsdoc</a> which includes
-docstrap</p>
-<pre class="prettyprint source"><code>{@lang bash}
-npm install grunt-jsdoc</code></pre><h2>Configuring the template</h2><p>DocStrap ships with a <code>conf.json</code> file in the template/ directory. It is just a regular old
-<a href="http://usejsdoc.org/about-configuring-jsdoc.html">JSDoc configuration file</a>, but with the following new options:</p>
-<pre class="prettyprint source"><code>{@lang javascript}
-&quot;templates&quot;: {
+<pre class="prettyprint source lang-bash"><code>npm install ink-docstrap</code></pre><p>When using <a href="http://gruntjs.com/">grunt</a>, please look at <a href="https://github.com/krampstudio/grunt-jsdoc">grunt-jsdoc</a> which you can use with<br>docstrap</p>
+<pre class="prettyprint source lang-bash"><code>npm install grunt-jsdoc</code></pre><h2>Configuring the template</h2><p>DocStrap ships with a <code>conf.json</code> file in the template/ directory. It is just a regular old<br><a href="http://usejsdoc.org/about-configuring-jsdoc.html">JSDoc configuration file</a>, but with the following new options:</p>
+<pre class="prettyprint source lang-javascript"><code>&quot;templates&quot;: {
     &quot;systemName&quot;            : &quot;{string}&quot;,
     &quot;footer&quot;                : &quot;{string}&quot;,
     &quot;copyright&quot;             :  &quot;{string}&quot;,
@@ -141,18 +135,11 @@ npm install grunt-jsdoc</code></pre><h2>Configuring the template</h2><p>DocStrap
     &quot;highlightTutorialCode&quot; : &quot;{boolean}&quot;,
     &quot;syntaxTheme&quot;           : &quot;{string}&quot;
 }</code></pre><h3>Options</h3><ul>
-<li><strong>systemName</strong>
-The name of the system being documented. This will appear in the page title for each page</li>
-<li><strong>footer</strong>
-Any markup want to appear in the footer of each page. This is not processed at all, just printed exactly as you enter it</li>
-<li><strong>copyright</strong>
-You can add a copyright message below the footer and above the JSDoc timestamp at the bottom of the page</li>
-<li><strong>navType</strong>
-The template uses top level navigation with dropdowns for the contents of each category. On large systems these dropdowns
-can get large enough to expand beyond the page. To make the dropdowns render wider and stack the entries vertically, set this
-option to <code>&quot;inline&quot;</code>. Otherwise set it to <code>&quot;vertical&quot;</code> to make them regular stacked dropdowns.</li>
-<li><strong>theme</strong>
-This is the name of the them you want to use <strong>in all lowercase</strong>. The valid options are<ul>
+<li><strong>systemName</strong><br>The name of the system being documented. This will appear in the page title for each page</li>
+<li><strong>footer</strong><br>Any markup want to appear in the footer of each page. This is not processed at all, just printed exactly as you enter it</li>
+<li><strong>copyright</strong><br>You can add a copyright message below the footer and above the JSDoc timestamp at the bottom of the page</li>
+<li><strong>navType</strong><br>The template uses top level navigation with dropdowns for the contents of each category. On large systems these dropdowns<br>can get large enough to expand beyond the page. To make the dropdowns render wider and stack the entries vertically, set this<br>option to <code>&quot;inline&quot;</code>. Otherwise set it to <code>&quot;vertical&quot;</code> to make them regular stacked dropdowns.</li>
+<li><strong>theme</strong><br>This is the name of the them you want to use <strong>in all lowercase</strong>. The valid options are<ul>
 <li><code>cerulean</code></li>
 <li><code>cosmo</code></li>
 <li><code>cyborg</code></li>
@@ -171,48 +158,26 @@ This is the name of the them you want to use <strong>in all lowercase</strong>. 
 <li><code>yeti</code></li>
 </ul>
 </li>
-<li><strong>linenums</strong>
-When true, line numbers will appear in the source code listing. If you have
-<a href="http://usejsdoc.org/about-configuring-jsdoc.html">also turned that on</a>.</li>
-<li><strong>collapseSymbols</strong>
-If your pages have a large number of symbols, it can be easy to get lost in all the text. If you turn this to <code>true</code>
-all of the symbols in the page will roll their contents up so that you just get a list of symbols that can be expanded
-and collapsed.</li>
-<li><strong>analytics</strong> Add a <a href="http://www.google.com/analytics">Google Analytics</a> code to the template output
-<em>e.g.</em> <code>&quot;analytics&quot;:{&quot;ua&quot;:&quot;UA-XXXXX-XXX&quot;, &quot;domain&quot;:&quot;XXXX&quot;}</code><ul>
+<li><strong>linenums</strong><br>When true, line numbers will appear in the source code listing. If you have<br><a href="http://usejsdoc.org/about-configuring-jsdoc.html">also turned that on</a>.</li>
+<li><strong>collapseSymbols</strong><br>If your pages have a large number of symbols, it can be easy to get lost in all the text. If you turn this to <code>true</code><br>all of the symbols in the page will roll their contents up so that you just get a list of symbols that can be expanded<br>and collapsed.</li>
+<li><strong>analytics</strong> Add a <a href="http://www.google.com/analytics">Google Analytics</a> code to the template output<br><em>e.g.</em> <code>&quot;analytics&quot;:{&quot;ua&quot;:&quot;UA-XXXXX-XXX&quot;, &quot;domain&quot;:&quot;XXXX&quot;}</code><ul>
 <li><strong>ua</strong> The google agent (see Google Analytics help for details)</li>
 <li><strong>domain</strong> The domain being served. (see Google Analytics help for details)</li>
 </ul>
 </li>
-<li><strong>inverseNav</strong>
-Bootstrap navbars come in two flavors, regular and inverse where inverse is generally higher contrast. Set this to <code>true</code> to
-use the inverse header.</li>
-<li><strong>outputSourceFiles</strong>
-When true, the system will produce source pretty printed file listings with a link from the documentation.</li>
-<li><strong>outputSourcePath</strong>
-When <code>outputSourceFiles</code> is <code>false</code>, you may still want to name the file even without a link to the pretty printed output.
-Set  this to <code>true</code> when <code>outputSourceFiles</code> is <code>false</code>. <code>outputSourceFiles</code> when <code>true</code> takes precedence over this setting.</li>
+<li><strong>inverseNav</strong><br>Bootstrap navbars come in two flavors, regular and inverse where inverse is generally higher contrast. Set this to <code>true</code> to<br>use the inverse header.</li>
+<li><strong>outputSourceFiles</strong><br>When true, the system will produce source pretty printed file listings with a link from the documentation.</li>
+<li><strong>outputSourcePath</strong><br>When <code>outputSourceFiles</code> is <code>false</code>, you may still want to name the file even without a link to the pretty printed output.<br>Set  this to <code>true</code> when <code>outputSourceFiles</code> is <code>false</code>. <code>outputSourceFiles</code> when <code>true</code> takes precedence over this setting.</li>
 <li><strong>dateFormat</strong> The date format to use when printing dates. It accepts any format string understood by <a href="http://momentjs.com/docs/#/displaying/format/">moment.js</a></li>
 <li><strong>highlightTutorialCode</strong> Boolean used to determine whether to treat code blocks in &quot;tutorial&quot; markdown as examples and highlight them</li>
-<li><strong>syntaxTheme</strong> String that determines the theme used for code blocks. Default value is <code>&quot;default&quot;</code>. It can be any value supported
-at <a href="https://github.com/tmont/sunlight/tree/master/src/themes">sunlight themes</a> which right now consists of...uh...<code>&quot;default&quot;</code> and <code>&quot;dark&quot;</code>,
-but at least you have it if you need it.</li>
+<li><strong>syntaxTheme</strong> String that determines the theme used for code blocks. Default value is <code>&quot;default&quot;</code>. It can be any value supported<br>at <a href="https://github.com/tmont/sunlight/tree/master/src/themes">sunlight themes</a> which right now consists of...uh...<code>&quot;default&quot;</code> and <code>&quot;dark&quot;</code>,<br>but at least you have it if you need it.</li>
 </ul>
-<h2>Controlling Syntax Highlighting</h2><p>Of course this is intended to document JS. But JS often interacts with other languages, most commonly <code>HTML</code>, but also any
-language on the server including PHP, C# and other C-like languages. The point is that when you write examples, you may want to
-include other languages to make your examples as expressive as possible. So, DocStrap introduces a new documentation tag
-which can appear inside any example block in source code, or in any fenced code block in markdown: <code>{@lang languageName}</code>, where
-<em><code>language</code></em> can be any of the languages supported by <a href="http://sunlightjs.com/">Sunlight</a></p>
-<p>Look at this:
-For an example of this thing in action <a href="http://docstrap.github.io/docstrap/themes/readable/#toc7">this</a> )__</p>
-<p>The syntax for adding the tag is as follows. When in markdown, add the tag on the line just after the ``` fence like so:</p>
-<p>```</p>
-<p><code>{@lang language}</code></p>
-<p><code>This is my code</code></p>
-<p>```</p>
-<p>When in a doclet add the tag just after the <code>@example</code> tag like this:</p>
-<p><code>@example {@lang xml}</code></p>
-<p><code>&lt;div&gt;This is the most interesting web site ever&lt;/div&gt;</code></p>
+<h2>Syntax Highlighting Language</h2><p>The default language will be JavaScript, but there are a couple of ways to secify the language.</p>
+<p>DocStrap support the language specified in the standard way e.g.</p>
+<pre class="prettyprint source"><code>```html
+&lt;html>&lt;/html></code></pre><p>DocStrap also introduces a new documentation tag which can appear inside any example block in source code,<br>or in any fenced code block in markdown: <code>{@lang languageName}</code>, where<br><em><code>language</code></em> can be any of the languages supported by <a href="http://sunlightjs.com/">Sunlight</a></p>
+<p>When in a doclet, add the tag just after the <code>@example</code> tag like this:</p>
+<p><code>@example {@lang xml}</code><br><code>&lt;div&gt;This is the most interesting web site ever&lt;/div&gt;</code></p>
 <p>These are the supported languages.</p>
 <ul>
 <li>ActionScript</li>
@@ -242,28 +207,17 @@ For an example of this thing in action <a href="http://docstrap.github.io/docstr
 <li>VB.NET</li>
 <li>XML (HTML)</li>
 </ul>
-<h2>Customizing DocStrap</h2><p>No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.
-First make sure you have <a href="https://github.com/bower/bower">bower</a> and <a href="https://github.com/gruntjs/grunt-cli">grunt-cli</a> installed.
-Fetch the source using <code>git</code> or grab the <a href="https://github.com/docstrap/docstrap/archive/master.zip">zip file from github.</a> and unzip
-it somewhere. Everything that follows happens in the unzip directory.</p>
+<h2>Customizing DocStrap</h2><p>No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.<br>First make sure you have <a href="https://github.com/bower/bower">bower</a> and <a href="https://github.com/gruntjs/grunt-cli">grunt-cli</a> installed.<br>Fetch the source using <code>git</code> or grab the <a href="https://github.com/docstrap/docstrap/archive/master.zip">zip file from github.</a> and unzip<br>it somewhere. Everything that follows happens in the unzip directory.</p>
 <p>Next, prepare the environment:</p>
 <pre class="prettyprint source"><code>bower install</code></pre><p>and</p>
-<pre class="prettyprint source"><code>npm install</code></pre><p>When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, uses <a href="http://lesscss.org/">less</a>.
-The way it works is that <code>./styles/main.less</code> pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,
-etc, that you would want. There are two more files in that directory, <code>variables.less</code>, <code>bootswatch.less</code>. These are the
-theme files and you can modify them, but keep in mind that if you apply a new theme (see below) those files will be overwritten. It is best
-to keep your changes to the <code>main.less</code> file.</p>
+<pre class="prettyprint source"><code>npm install</code></pre><p>When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, uses <a href="http://lesscss.org/">less</a>.<br>The way it works is that <code>./styles/main.less</code> pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,<br>etc, that you would want. There are two more files in that directory, <code>variables.less</code>, <code>bootswatch.less</code>. These are the<br>theme files and you can modify them, but keep in mind that if you apply a new theme (see below) those files will be overwritten. It is best<br>to keep your changes to the <code>main.less</code> file.</p>
 <p>To compile your changes to <code>main.less</code> and any other files it loads up,</p>
-<pre class="prettyprint source"><code>grunt less</code></pre><p>The output is will be put in <code>./template/static/styles/site.&lt;theme-name&gt;.css</code>. The next time you create your documentation, it
-will have the new css file included.</p>
-<p>To apply a different template to the <code>styles</code> directory to modify, open up the <code>conf.json</code> in the template directory and
-change the <code>theme</code> option to the theme you want. Then</p>
-<pre class="prettyprint source"><code>grunt apply</code></pre><p>And the new theme will be in <code>variables.less</code>, <code>bootswatch.less</code>. Don't forget to compile your changes using <code>grunt apply</code> to
-get that change into the template.</p>
-<p><strong>NOTE</strong> that these steps are not necessary to just change the theme, this is only to modify the theme. If all you want to do is
-change the theme, just update conf.json with the new theme and build your docs!</p>
+<pre class="prettyprint source"><code>grunt less</code></pre><p>The output is will be put in <code>./template/static/styles/site.&lt;theme-name&gt;.css</code>. The next time you create your documentation, it<br>will have the new css file included.</p>
+<p>To apply a different template to the <code>styles</code> directory to modify, open up the <code>conf.json</code> in the template directory and<br>change the <code>theme</code> option to the theme you want. Then</p>
+<pre class="prettyprint source"><code>grunt apply</code></pre><p>And the new theme will be in <code>variables.less</code>, <code>bootswatch.less</code>. Don't forget to compile your changes using <code>grunt apply</code> to<br>get that change into the template.</p>
+<p><strong>NOTE</strong> that these steps are not necessary to just change the theme, this is only to modify the theme. If all you want to do is<br>change the theme, just update conf.json with the new theme and build your docs!</p>
 <h2>Contributing</h2><p>Yes! Contribute! Test! Share your ideas! Report Bugs!</p>
-<h3>Contributers</h3><p><em>Huge</em> thanks to all contributors. If your name should be here, but isn't, please let me know</p>
+<h3>Contributers</h3><p><em>Huge</em> thanks to all contributors. If your name should be here, but isn't, please let us know</p>
 <ul>
 <li><a href="https://github.com/marklagendijk">marklagendijk</a></li>
 <li><a href="https://github.com/michaelward82">michaelward82</a></li>
@@ -279,8 +233,24 @@ change the theme, just update conf.json with the new theme and build your docs!<
 <li><a href="https://github.com/vmadman">vmadman</a></li>
 <li><a href="https://github.com/whitelynx">whitelynx</a></li>
 <li><a href="https://github.com/tswaters">tswaters</a></li>
+<li><a href="https://github.com/lukeapage">lukeapage</a></li>
 </ul>
-<h2>History</h2><h3>v0.4.15</h3><ul>
+<h2>History</h2><h2>0.5.4</h2><ul>
+<li>Fix layout glitch on hte bottom of code samples</li>
+<li>Support for specifying the language for fenced code blocks in the normal way</li>
+<li>Fix the active item in some themes, which was missing a background</li>
+<li>Tables get marked as tables</li>
+<li>Dependency updates</li>
+</ul>
+<h2>0.5.3</h2><ul>
+<li>Removed duplicate headers</li>
+<li>Remove &quot;Index&quot; header</li>
+<li>re-fixed navigation</li>
+<li>removed some dubious features (now pr's that can be re-added with a little polishing)</li>
+</ul>
+<h2>0.5.2</h2><p>Major update__. Amazing help from <a href="https://github.com/tswaters">tswaters</a> to solve a bunch of little problems and a to bring the codebase up to Bootstrap3.<br>Make sure you are running the latest version of JSDoc before using this build.</p>
+<p>Again huge, huge thanks to <a href="https://github.com/tswaters">tswaters</a>. Make sure you send him thanks or a tip!!!!!</p>
+<h3>v0.4.15</h3><ul>
 <li>PR Issue #76</li>
 <li>PR Issue #77</li>
 </ul>
@@ -349,25 +319,10 @@ change the theme, just update conf.json with the new theme and build your docs!<
 <p><a href="https://github.com/gruntjs/grunt-cli/blob/master/LICENSE-MIT">Grunt is also MIT</a></p>
 <p>DocStrap <a href="https://github.com/docstrap/docstrap/blob/master/LICENSE.md">is licensed under the MIT license.</a></p>
 <p><a href="http://sunlightjs.com/">Sunlight uses the WTFPL</a></p>
-<h2>License</h2><p>DocStrap Copyright (c) 2012-2014 Terry Weiss. All rights reserved.</p>
-<p>Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the &quot;Software&quot;), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:</p>
-<p>The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.</p></article>
+<h2>License</h2><p>DocStrap Copyright (c) 2012-2015 Terry Weiss &amp; Contributors. All rights reserved.</p>
+<p>Permission is hereby granted, free of charge, to any person<br>obtaining a copy of this software and associated documentation<br>files (the &quot;Software&quot;), to deal in the Software without<br>restriction, including without limitation the rights to use,<br>copy, modify, merge, publish, distribute, sublicense, and/or sell<br>copies of the Software, and to permit persons to whom the<br>Software is furnished to do so, subject to the following<br>conditions:</p>
+<p>The above copyright notice and this permission notice shall be<br>included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,<br>EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES<br>OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND<br>NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT<br>HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,<br>WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING<br>FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR<br>OTHER DEALINGS IN THE SOFTWARE.</p></article>
     </section>
 
 
@@ -395,12 +350,12 @@ OTHER DEALINGS IN THE SOFTWARE.</p></article>
 
 
 	<span class="copyright">
-	DocStrap Copyright © 2012-2013 The contributors to the JSDoc3 and DocStrap projects.
+	DocStrap Copyright © 2012-2015 The contributors to the JSDoc3 and DocStrap projects.
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a>
-	on Mon Dec 7th 2015 using the <a
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	on Wed Dec 9th 2015 using the <a
 	href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
 </footer>
@@ -429,7 +384,8 @@ $( function () {
 			example.html( exampleText );
 			lang = lang[1];
 		} else {
-			lang = "javascript";
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
 		}
 
 		if ( lang ) {
@@ -464,6 +420,10 @@ $( function () {
 	$( '.dropdown-toggle' ).dropdown();
 	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
 
+  $( "table" ).each( function () {
+    var $this = $( this );
+    $this.addClass('table');
+  } );
 
 } );
 </script>

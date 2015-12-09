@@ -76,10 +76,7 @@
         base
         </h2>
         
-            <div class="class-description"><p>The base of all classes in the system, this is one of the few pure &quot;classes&quot; in core the of the system. It is a
-pretty clean little class whose primary purpose is to surface the composition chains and a basis for storing
-options on mixin and subclass instances. Options are handled at the instance rather than the prototype level
-so that multiple instances don't compete for default values.</p></div>
+            <div class="class-description"><p>The base of all classes in the system, this is one of the few pure &quot;classes&quot; in core the of the system. It is a<br>pretty clean little class whose primary purpose is to surface the composition chains and a basis for storing<br>options on mixin and subclass instances. Options are handled at the instance rather than the prototype level<br>so that multiple instances don't compete for default values.</p></div>
         
     
 </header>
@@ -209,9 +206,23 @@ so that multiple instances don't compete for default values.</p></div>
 <dd>
     
     <div class="description">
-        <p>The <code>close</code> method asks an object to shut itself down in a way that will allow it to be reopened, unlike the
-<a href="base_chains.html#end">end method</a> which will call the destroy method which should make the object unusable, but also
-devoid of all resources whereas <code>close</code> may still keep some resources open.</p>
+        <p>The <code>close</code> method asks an object to shut itself down in a way that will allow it to be reopened, unlike the<br><a href="base_chains.html#end">end method</a> which will call the destroy method which should make the object unusable, but also<br>devoid of all resources whereas <code>close</code> may still keep some resources open.</p>
+<table>
+<thead>
+<tr>
+<th>Heading 1</th>
+<th>Heading 2</th>
+<th>Heading 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bar</td>
+<td>Food</td>
+<td>This is a table</td>
+</tr>
+</tbody>
+</table>
 <p>This uses the <code>before</code> chain which means the last one defined in the first one destroyed</p>
     </div>
     
@@ -298,8 +309,7 @@ devoid of all resources whereas <code>close</code> may still keep some resources
 <dd>
     
     <div class="description">
-        <p>If you are using the open/close paradigm for an object that can kind of go dormant on <a href="base_chains.html#close">base/chains#close</a> and can be &quot;reopened&quot;
-again later, here is where the &quot;open&quot; code will go.</p>
+        <p>If you are using the open/close paradigm for an object that can kind of go dormant on <a href="base_chains.html#close">base/chains#close</a> and can be &quot;reopened&quot;<br>again later, here is where the &quot;open&quot; code will go.</p>
 <p>This used the <code>after</code> chain which means that the first one defined is the first one destroyed.</p>
     </div>
     
@@ -351,7 +361,7 @@ again later, here is where the &quot;open&quot; code will go.</p>
 		<ul class="dummy">
 			<li>
 				<a href="base_chains.js.html">base/chains.js</a>,
-				 <a href="base_chains.js.html#sunlight-1-line-49">line 49</a>
+				 <a href="base_chains.js.html#sunlight-1-line-53">line 53</a>
 			</li>
 		</ul>
 	</dd>
@@ -393,8 +403,7 @@ again later, here is where the &quot;open&quot; code will go.</p>
 
     
     <div class="description">
-        <p>Add a default option to a class. The default options are only set if there is not already a
-value for the option.</p>
+        <p>Add a default option to a class. The default options are only set if there is not already a<br>value for the option.</p>
     </div>
     
 
@@ -684,9 +693,7 @@ value for the option.</p>
 
     
     <div class="description">
-        <p>Called when it is time to get rid of all of your instance level references and objects and events. You can
-define this method on your own classes without having to call the superclass instance. It is called by
-<code>instance.end()</code> automatically</p>
+        <p>Called when it is time to get rid of all of your instance level references and objects and events. You can<br>define this method on your own classes without having to call the superclass instance. It is called by<br><code>instance.end()</code> automatically</p>
     </div>
     
 
@@ -788,9 +795,7 @@ define this method on your own classes without having to call the superclass ins
 
     
     <div class="description">
-        <p>Call this to close your object and dispose of all maintained resources. You can define this method on your
-own classes without having to call the superclass instance, however it is reccomended that you put
-all disposal code in <code>destroy()</code>. You must be disciplined about calling this on your instances.</p>
+        <p>Call this to close your object and dispose of all maintained resources. You can define this method on your<br>own classes without having to call the superclass instance, however it is reccomended that you put<br>all disposal code in <code>destroy()</code>. You must be disciplined about calling this on your instances.</p>
     </div>
     
 
@@ -912,12 +917,12 @@ all disposal code in <code>destroy()</code>. You must be disciplined about calli
 
 
 	<span class="copyright">
-	DocStrap Copyright © 2012-2013 The contributors to the JSDoc3 and DocStrap projects.
+	DocStrap Copyright © 2012-2015 The contributors to the JSDoc3 and DocStrap projects.
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a>
-	on Mon Dec 7th 2015 using the <a
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	on Wed Dec 9th 2015 using the <a
 	href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
 </footer>
@@ -946,7 +951,8 @@ $( function () {
 			example.html( exampleText );
 			lang = lang[1];
 		} else {
-			lang = "javascript";
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
 		}
 
 		if ( lang ) {
@@ -981,6 +987,10 @@ $( function () {
 	$( '.dropdown-toggle' ).dropdown();
 	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
 
+  $( "table" ).each( function () {
+    var $this = $( this );
+    $this.addClass('table');
+  } );
 
 } );
 </script>

@@ -7,7 +7,7 @@ $.fn.toc = function(options) {
   var tocs = [];
   var headings = $(opts.selectors, container);
   var headingOffsets = [];
-  var activeClassName = opts.prefix+'-active';
+  var activeClassName = 'active';
   var navbarHeight = $('.navbar').height();
   var ANCHOR_PREFIX = "__anchor";
 
@@ -16,6 +16,7 @@ $.fn.toc = function(options) {
       e.preventDefault();
       var elScrollTo = $(e.target).attr('href');
       var $el = $(elScrollTo.replace('#.', '#\\.') + ANCHOR_PREFIX);
+
       var offsetTop = $el.offset().top - (navbarHeight + opts.navbarOffset);
 
       $('body,html').animate({ scrollTop: offsetTop }, 400, 'swing', function() {
@@ -44,7 +45,7 @@ $.fn.toc = function(options) {
       var top = $(window).scrollTop(),
         highlighted;
       for (var i = 0, c = headingOffsets.length; i < c; i++) {
-        if (headingOffsets[i] >= top) {
+        if (headingOffsets[i] >= top || (headingOffsets[i + 1] && headingOffsets[i + 1] > top)) {
           $('li', self).removeClass(activeClassName);
           if (i >= 0) {
             highlighted = tocs[i].addClass(activeClassName);
@@ -57,7 +58,7 @@ $.fn.toc = function(options) {
   };
   if (opts.highlightOnScroll) {
     $(window).bind('scroll', highlightOnScroll);
-    $(window).bind('load, resize', function() {
+    $(window).bind('load resize', function() {
       calcHadingOffsets();
       highlightOnScroll();
     });
