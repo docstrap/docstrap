@@ -4,11 +4,8 @@ Mauris sit amet risus non ligula lacinia iaculis. Sed ornare tellus velit, vel e
 
 Quisque elementum sapien id neque volutpat cursus non mattis velit.
 
- 
 
-	
 ```
-
 $mod       : function ( qu, value ) {
 		var operands = sys.flatten( qu.operands );
 		if ( operands.length !== 2 ) {
@@ -26,6 +23,14 @@ $mod       : function ( qu, value ) {
 {@lang bash}
 #!/bin/bash
 echo Please, enter your firstname and lastname
-read FN LN 
+read FN LN
 echo "Hi! $LN, $FN !"
-```                
+```
+
+```bash
+#!/bin/bash
+echo Please, enter your firstname and lastname
+read FN LN
+echo "Hi! $LN, $FN !"
+```
+

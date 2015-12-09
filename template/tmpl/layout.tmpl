@@ -103,7 +103,8 @@ $( function () {
 			example.html( exampleText );
 			lang = lang[1];
 		} else {
-			lang = "javascript";
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
 		}
 
 		if ( lang ) {

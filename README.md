@@ -1,7 +1,7 @@
 
 [![NPM](https://nodei.co/npm/ink-docstrap.png?downloads=true)](https://nodei.co/npm/ink-docstrap/)
 
-# DocStrap [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) #
+# DocStrap [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 DocStrap is [Bootstrap](http://twitter.github.io/bootstrap/index.html) based template for [JSDoc3](http://usejsdoc.org/).
 In addition, it includes all of the themes from [Bootswatch](http://bootswatch.com/) giving you a great deal of look
@@ -13,9 +13,10 @@ you even more flexibility to tweak the template to your needs. It will also make
 * Right side TOC for navigation in pages
 * Themed
 * Customizable
+* Syntax highlighting
 
 ### What It Looks Like ###
-Here are examples of this template with the different Bootswatch themes (you can find more on the bootswatch web site):
+Here are examples of this template with the different Bootswatch themes:
 
 + [Amelia](http://docstrap.github.io/docstrap/themes/amelia)
 + [Cerulean](http://docstrap.github.io/docstrap/themes/cerulean)
@@ -23,29 +24,32 @@ Here are examples of this template with the different Bootswatch themes (you can
 + [Cyborg](http://docstrap.github.io/docstrap/themes/cyborg)
 + [Flatly](http://docstrap.github.io/docstrap/themes/flatly)
 + [Journal](http://docstrap.github.io/docstrap/themes/journal)
++ [Lumen](http://docstrap.github.io/docstrap/themes/lumen)
++ [Paper](http://docstrap.github.io/docstrap/themes/paper)
 + [Readable](http://docstrap.github.io/docstrap/themes/readable)
++ [Sandstone](http://docstrap.github.io/docstrap/themes/sandstone)
 + [Simplex](http://docstrap.github.io/docstrap/themes/simplex)
 + [Slate](http://docstrap.github.io/docstrap/themes/slate)
 + [Spacelab](http://docstrap.github.io/docstrap/themes/spacelab)
 + [Spruce](http://docstrap.github.io/docstrap/themes/spruce)
 + [Superhero](http://docstrap.github.io/docstrap/themes/superhero)
 + [United](http://docstrap.github.io/docstrap/themes/united)
++ [Yeti](http://docstrap.github.io/docstrap/themes/yeti)
 
 To change your theme, just change it in the `conf.json` file. See below for details.
-## Ooooh, I want it! How do I get it?##
+
+## Ooooh, I want it! How do I get it? ##
 
 If you manage your own version of jsdoc:
 
-```
-{@lang bash}
+```bash
 npm install ink-docstrap
 ```
 
 When using [grunt](http://gruntjs.com/), please look at [grunt-jsdoc](https://github.com/krampstudio/grunt-jsdoc) which you can use with
 docstrap
 
-```
-{@lang bash}
+```bash
 npm install grunt-jsdoc
 ```
 
@@ -54,8 +58,7 @@ npm install grunt-jsdoc
 DocStrap ships with a `conf.json` file in the template/ directory. It is just a regular old
 [JSDoc configuration file](http://usejsdoc.org/about-configuring-jsdoc.html), but with the following new options:
 
-```
-{@lang javascript}
+```javascript
 "templates": {
 	"systemName"            : "{string}",
 	"footer"                : "{string}",
@@ -128,33 +131,25 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
     at [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) which right now consists of...uh...`"default"` and `"dark"`,
     but at least you have it if you need it.
 
-## Controlling Syntax Highlighting ##
-Of course this is intended to document JS. But JS often interacts with other languages, most commonly `HTML`, but also any
-language on the server including PHP, C# and other C-like languages. The point is that when you write examples, you may want to
-include other languages to make your examples as expressive as possible. So, DocStrap introduces a new documentation tag
-which can appear inside any example block in source code, or in any fenced code block in markdown: `{@lang languageName}`, where
+## Syntax Highlighting Language ##
+
+The default language will be JavaScript, but there are a couple of ways to secify the language.
+
+DocStrap support the language specified in the standard way e.g.
+
+```
+```html
+<html></html>
+```
+
+DocStrap also introduces a new documentation tag which can appear inside any example block in source code,
+or in any fenced code block in markdown: `{@lang languageName}`, where
 _`language`_ can be any of the languages supported by [Sunlight](http://sunlightjs.com/)
 
-Look at this:
-For an example of this thing in action [this](http://docstrap.github.io/docstrap/themes/readable/#toc7) )__
-
-
-The syntax for adding the tag is as follows. When in markdown, add the tag on the line just after the \`\`\` fence like so:
-
-\`\`\`
-
-`{@lang language}`
-
-`This is my code`
-
-\`\`\`
-
-When in a doclet add the tag just after the `@example` tag like this:
+When in a doclet, add the tag just after the `@example` tag like this:
 
 `@example {@lang xml}`
-
 `<div>This is the most interesting web site ever</div>`
-
 
 These are the supported languages.
 
@@ -229,7 +224,7 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ### Contributers ###
 
-*Huge* thanks to all contributors. If your name should be here, but isn't, please let me know
+*Huge* thanks to all contributors. If your name should be here, but isn't, please let us know
 
 * [marklagendijk](https://github.com/marklagendijk)
 * [michaelward82](https://github.com/michaelward82)
@@ -245,12 +240,14 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 * [vmadman](https://github.com/vmadman)
 * [whitelynx](https://github.com/whitelynx)
 * [tswaters](https://github.com/tswaters)
+* [lukeapage](https://github.com/lukeapage)
 
 
 ## History ##
 
 ## 0.5.4 (WIP) ##
 
+ * Support for specifying the language for fenced code blocks in the normal way
  * Fix the active item in some themes, which was missing a background
  * Tables get marked as tables
  * Dependency updates
