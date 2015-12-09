@@ -6854,6 +6854,7 @@ img.branding-logo {
   padding: 0px;
   margin: -3px 5px 0 0;
 }
+/* TODO - just make toc use bootstrap elements and classes for its template?*/
 #toc {
   position: fixed;
   top: 62px;
@@ -6866,21 +6867,6 @@ img.branding-logo {
   border-top-left-radius: 5px;
   border: 1px #fff solid;
   padding: 5px;
-}
-#toc .toc-active {
-  background-color: #e74b47;
-  color: #fff;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
-}
-#toc .toc-active a,
-#toc .toc-active a:hover,
-#toc .toc-active a:active,
-#toc .toc-active a:visited {
-  background-color: #e74b47;
-  color: #fff;
 }
 #toc .toc-h1 {
   margin-left: 2px;

@@ -50,6 +50,7 @@ img.branding-logo{
   margin: -3px 5px 0 0;
 }
 
+/* TODO - just make toc use bootstrap elements and classes for its template?*/
 #toc {
   position   : fixed;
   top        : @headerHeight;
@@ -62,19 +63,6 @@ img.branding-logo{
   .border-left-radius(5px);
   border     : 1px @navbar-default-bg solid;
   padding    : 5px;
-
-  .toc-active {
-	background-color : @navbar-inverse-link-active-bg;
-	color            : @navbar-inverse-link-active-color;
-  .border-top-radius(3px);
-  .border-right-radius(3px);
-  .border-bottom-radius(3px);
-  .border-left-radius(3px);
-	a, a:hover, a:active, a:visited {
-	  background-color : @navbar-inverse-link-active-bg;
-	  color            : @navbar-inverse-link-active-color;
-	}
-  }
 
   .toc-h1 {
     margin-left  : 2px;

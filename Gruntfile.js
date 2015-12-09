@@ -173,18 +173,14 @@ var tasks = {
 		template : {
 			files : {
 				'template/static/scripts/docstrap.lib.js' : [
-					'bower_components/jquery/jquery.min.js',
+					'bower_components/jquery/dist/jquery.min.js',
 					'bower_components/sunlight/src/sunlight.js',
 					'bower_components/sunlight/src/lang/sunlight.xml.js',
 					'bower_components/sunlight/src/**/*.js',
-//					'bower_components/sunlight/src/lang/*.js',
-//					'bower_components/sunlight/src/plugins/*.js',
 
 					'bower_components/jquery.scrollTo/jquery.scrollTo.min.js',
 					'bower_components/jquery.localScroll/jquery.localScroll.min.js',
-					'bower_components/bootstrap/js/bootstrap-dropdown.js',
-					'bower_components/toc/toc.js',
-					'bower_components/toc/copyright.js'
+					'bower_components/bootstrap/js/bootstrap-dropdown.js'
 				]
 			}
 		}
