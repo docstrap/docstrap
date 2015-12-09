@@ -1,7 +1,4 @@
 
-
-
-
 [![NPM](https://nodei.co/npm/ink-docstrap.png?downloads=true)](https://nodei.co/npm/ink-docstrap/)
 
 # DocStrap [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) #
@@ -11,16 +8,9 @@ In addition, it includes all of the themes from [Bootswatch](http://bootswatch.c
 and feel options for your documentation, along with a simple search. Additionally, it adds some options to the conf.json file that gives
 you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.
 
-## New ##
-__0.5.2 Major update__. Amazing help from [tswaters](https://github.com/tswaters) to solve a bunch of little problems and a to bring the codebase up to Bootstrap3.
-Make sure you are running the latest version of JSDoc before using this build.
-
-Again huge, huge thanks to [tswaters](https://github.com/tswaters). Make sure you send him thanks or a tip!!!!!
-
-
 ## Features ##
 
-* Right side TOC for navigation in pages, with quick search
+* Right side TOC for navigation in pages
 * Themed
 * Customizable
 
@@ -258,6 +248,26 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 
 ## History ##
+
+## 0.5.4 (WIP) ##
+
+ * Fix the active item in some themes, which was missing a background
+ * Tables get marked as tables
+ * Dependency updates
+
+## 0.5.3 ##
+
+ * Removed duplicate headers
+ * Remove "Index" header
+ * re-fixed navigation
+ * removed some dubious features (now pr's that can be re-added with a little polishing)
+
+## 0.5.2 ##
+Major update__. Amazing help from [tswaters](https://github.com/tswaters) to solve a bunch of little problems and a to bring the codebase up to Bootstrap3.
+Make sure you are running the latest version of JSDoc before using this build.
+
+Again huge, huge thanks to [tswaters](https://github.com/tswaters). Make sure you send him thanks or a tip!!!!!
+
 ### v0.4.15 ###
 * PR Issue #76
 * PR Issue #77
