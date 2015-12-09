@@ -1,12 +1,11 @@
 {
   "name": "ink-docstrap",
-  "version": "0.1.0",
+  "version": "0.5.3",
   "dependencies": {
-    "jquery": "~2.0.0",
-    "darkstrap": "git://github.com/danneu/darkstrap.git#~0.9.2",
+    "jquery": "~2.1.0",
     "toc": "~0.1.2",
     "sunlight": "https://github.com/tmont/sunlight.git",
-    "jquery.localScroll": "~1.2.8",
-    "bootstrap": "~3.3.1"
+    "jquery.localScroll": "~1.4.0",
+    "bootstrap": "~3.3.6"
   }
 }
