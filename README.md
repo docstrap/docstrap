@@ -245,8 +245,9 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
-## 0.5.4 (WIP) ##
+## 0.5.4 ##
 
+ * Fix layout glitch on hte bottom of code samples
  * Support for specifying the language for fenced code blocks in the normal way
  * Fix the active item in some themes, which was missing a background
  * Tables get marked as tables

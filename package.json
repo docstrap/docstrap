@@ -1,6 +1,6 @@
 {
   "name": "ink-docstrap",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "decription": "A template for JSDoc3 based on Bootstrap and Bootswatch",
   "devDependencies": {
     "async": "~1.5.0",
