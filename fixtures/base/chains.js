@@ -17,6 +17,10 @@ var Chains = dcl( null, {declaredClass : "base/chains"} );
  * [end method]{@link base/chains#end} which will call the destroy method which should make the object unusable, but also
  * devoid of all resources whereas `close` may still keep some resources open.
  *
+ * | Heading 1 | Heading 2 | Heading 3       |
+ * |-----------|-----------|-----------------|
+ * | Bar       | Food      | This is a table |
+ *
  * This uses the `before` chain which means the last one defined in the first one destroyed
  * @memberOf base/chains#
  * @name close
