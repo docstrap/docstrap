@@ -15,17 +15,17 @@
   },
   "license": "MIT",
   "keywords": [
-    "docstrap",
-    "jsdoc3",
     "bootstrap",
     "bootswatch",
-    "theme",
+    "docstrap",
     "documentation",
-    "jsdoc"
+    "jsdoc",
+    "jsdoc3",
+    "theme"
   ],
   "author": {
-    "name": "Terry Weiss",
-    "email": "me@terryweiss.net"
+    "email": "me@terryweiss.net",
+    "name": "Terry Weiss"
   },
   "bugs": {
     "url": "https://github.com/docstrap/docstrap/issues"
@@ -36,6 +36,7 @@
   },
   "main": "./template/publish.js",
   "dependencies": {
-    "moment": "~2.10.6"
+    "moment": "~2.10.6",
+    "sanitize-html": "^1.11.2"
   }
 }
