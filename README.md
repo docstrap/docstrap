@@ -91,7 +91,6 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	+ `cerulean`
 	+ `cosmo`
 	+ `cyborg`
-	+ `darkly`
 	+ `flatly`
 	+ `journal`
 	+ `lumen`
