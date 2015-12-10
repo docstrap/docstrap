@@ -129,7 +129,9 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
     at [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) which right now consists of...uh...`"default"` and `"dark"`,
     but at least you have it if you need it.
 
-## Syntax Highlighting Language ##
+## Syntax Highlighting ##
+
+### Language ###
 
 The default language will be JavaScript, but there are a couple of ways to secify the language.
 
@@ -178,6 +180,15 @@ These are the supported languages.
 * VB.NET
 * XML (HTML)
 
+### Example Caption ###
+
+If you want a caption to your example, add it in a HTML caption before your example e.g.
+
+```
+@example <caption>my caption</caption>
+{@lang xml}
+<mycode></mycode>
+```
 
 ## Customizing DocStrap ##
 No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.

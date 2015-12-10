@@ -471,11 +471,11 @@ exports.publish = function(taffyData, opts, tutorials) {
 
     if (doclet.examples) {
       doclet.examples = doclet.examples.map(function(example) {
-        var caption, code, lang;
+        var caption, lang;
 
         if (example.match(/^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i)) {
           caption = RegExp.$1;
-          code = RegExp.$3;
+          example = RegExp.$3;
         }
 
         var lang = /{@lang (.*?)}/.exec(example);
@@ -490,7 +490,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 
         return {
           caption: caption || '',
-          code: code || example,
+          code: example,
           lang: (lang && navOptions.highlightTutorialCode) ? lang : "javascript"
         };
       });

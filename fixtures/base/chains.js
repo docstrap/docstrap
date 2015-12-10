@@ -35,6 +35,11 @@ dcl.chainBefore( Chains, "close" );
  * This uses the `before` chain which means the last one defined in the first one destroyed
  * @memberOf base/chains#
  * @name end
+ *
+ * @example  <caption>Add this to your application.properties.</caption>
+ * {@lang bash}
+ * foo=bar
+ *
  */
 dcl.chainBefore( Chains, "end" );
 /**
