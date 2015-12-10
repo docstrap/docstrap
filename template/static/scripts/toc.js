@@ -14,17 +14,21 @@ $.fn.toc = function(options) {
   var scrollTo = function(e) {
     if (opts.smoothScrolling) {
       e.preventDefault();
-      var elScrollTo = $(e.target).attr('href');
-      var $el = $(elScrollTo.replace('#.', '#\\.') + ANCHOR_PREFIX);
+      var target = $(e.target);
+      if (target.prop('tagName').toLowerCase() !== "a") {
+        target = target.parent();
+      }
+      var elScrollToId = target.attr('href').replace(/^#/, '') + ANCHOR_PREFIX;
+      var $el = $(document.getElementById(elScrollToId));
 
       var offsetTop = $el.offset().top - (navbarHeight + opts.navbarOffset);
 
       $('body,html').animate({ scrollTop: offsetTop }, 400, 'swing', function() {
-        location.hash = elScrollTo;
+        location.hash = '#' + elScrollToId;
       });
     }
-    $('li', self).removeClass(activeClassName);
-    $(e.target).parent().addClass(activeClassName);
+    $('a', self).removeClass(activeClassName);
+    target.addClass(activeClassName);
   };
 
   var calcHadingOffsets = function() {
@@ -46,7 +50,7 @@ $.fn.toc = function(options) {
         highlighted;
       for (var i = 0, c = headingOffsets.length; i < c; i++) {
         if (headingOffsets[i] >= top || (headingOffsets[i + 1] && headingOffsets[i + 1] > top)) {
-          $('li', self).removeClass(activeClassName);
+          $('a', self).removeClass(activeClassName);
           if (i >= 0) {
             highlighted = tocs[i].addClass(activeClassName);
             opts.onHighlight(highlighted);
@@ -67,37 +71,35 @@ $.fn.toc = function(options) {
   return this.each(function() {
     //build TOC
     var el = $(this);
-    var ul = $('<ul/>');
+    var ul = $('<div class="list-group">');
 
     headings.each(function(i, heading) {
       var $h = $(heading);
 
       var anchor = $('<span/>').attr('id', opts.anchorName(i, heading, opts.prefix) + ANCHOR_PREFIX).insertBefore($h);
 
+      var span = $('<span/>')
+        .text(opts.headerText(i, heading, $h));
+
       //build TOC item
-      var a = $('<a/>')
-        .text(opts.headerText(i, heading, $h))
+      var a = $('<a class="list-group-item"/>')
+        .append(span)
         .attr('href', '#' + opts.anchorName(i, heading, opts.prefix))
         .bind('click', function(e) {
           scrollTo(e);
           el.trigger('selected', $(this).attr('href'));
         });
 
-      var li = $('<li/>')
-        .addClass(opts.itemClass(i, heading, $h, opts.prefix))
-        .append(a);
+      span.addClass(opts.itemClass(i, heading, $h, opts.prefix));
 
-      tocs.push(li);
+      tocs.push(a);
 
-      ul.append(li);
+      ul.append(a);
     });
     el.html(ul);
 
     calcHadingOffsets();
   });
-
-
-
 };
 
 
