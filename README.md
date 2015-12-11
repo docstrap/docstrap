@@ -82,7 +82,6 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	"outputSourceFiles"     : "{boolean}" ,
 	"outputSourcePath"      : "{boolean}",
 	"dateFormat"            : "{string}",
-	"highlightTutorialCode" : "{boolean}",
 	"syntaxTheme"           : "{string}"
 }
 
@@ -136,7 +135,6 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	When `outputSourceFiles` is `false`, you may still want to name the file even without a link to the pretty printed output.
 	Set  this to `true` when `outputSourceFiles` is `false`. `outputSourceFiles` when `true` takes precedence over this setting.
 *   __dateFormat__ The date format to use when printing dates. It accepts any format string understood by [moment.js](http://momentjs.com/docs/#/displaying/format/)
-*   __highlightTutorialCode__ Boolean used to determine whether to treat code blocks in "tutorial" markdown as examples and highlight them
 *   __syntaxTheme__ String that determines the theme used for code blocks. Default value is `"default"`. It can be any value supported
     at [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) which right now consists of...uh...`"default"` and `"dark"`,
     but at least you have it if you need it.
@@ -272,6 +270,7 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
  * Bump to follow semver (initial development is well and truly over)
  * Corrected list of themes
  * Added Search
+ * Remove highlightTutorialCode option - it didnt work
 
 ## 0.5.4 ##
 

@@ -22,8 +22,7 @@
 		"theme"                 : "cosmo",
 		"linenums"              : true,
 		"collapseSymbols"       : false,
-		"inverseNav"            : true,
-		"highlightTutorialCode" : true
+		"inverseNav"            : true
 	},
 	"markdown"  : {
 		"parser"   : "gfm",

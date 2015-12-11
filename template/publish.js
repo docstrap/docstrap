@@ -46,7 +46,6 @@ var navOptions = {
   outputSourcePath: conf.outputSourcePath,
   dateFormat: conf.dateFormat,
   analytics: conf.analytics || null,
-  highlightTutorialCode: conf.highlightTutorialCode,
   methodHeadingReturns: conf.methodHeadingReturns === true
 };
 var searchableDocuments = {};
@@ -517,7 +516,7 @@ exports.publish = function(taffyData, opts, tutorials) {
         return {
           caption: caption || '',
           code: example,
-          lang: (lang && navOptions.highlightTutorialCode) ? lang : "javascript"
+          lang: lang || "javascript"
         };
       });
     }
