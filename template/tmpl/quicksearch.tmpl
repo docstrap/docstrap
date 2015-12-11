@@ -1,14 +1,7 @@
 <html>
-
 <head>
-    <link type="text/css" rel="stylesheet" href="styles/sunlight.<%= navOptions.syntaxTheme %>.css">
-
-    <link type="text/css" rel="stylesheet" href="styles/site.<%= navOptions.theme %>.css">
 </head>
-
 <body style="background: transparent;">
-    <input type="text" id="tfSearchCriteria" class="form-control" placeholder="Search here ..." />
-
     <script src="scripts/docstrap.lib.js"></script>
     <script src="scripts/lunr.min.js"></script>
     <script src="scripts/fulltext-search.js"></script>
@@ -22,20 +15,16 @@
             Searcher.init();
         });
 
-        $("#tfSearchCriteria").keyup(function(evt) {
-            if (evt.keyCode != 13) {
+        $(window).on("message", function(msg) {
+            var msgData = msg.originalEvent.data;
+
+            if (msgData.msgid != "docstrap.quicksearch.start") {
                 return;
             }
 
-            var criteria = evt.target.value;
+            var results = Searcher.search(msgData.searchTerms);
 
-            if (!criteria) {
-                return;
-            }
-
-            var results = Searcher.search(criteria);
-
-            window.top.postMessage({"results": results, "msgid": "docstrap.quicksearch.done"}, "*");
+            window.parent.postMessage({"results": results, "msgid": "docstrap.quicksearch.done"}, "*");
         });
     </script>
 </body>
