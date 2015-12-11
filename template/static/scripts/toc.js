@@ -34,7 +34,11 @@ $.fn.toc = function(options) {
   var calcHadingOffsets = function() {
     headingOffsets = [];
     headings.each(function(i, heading) {
-      var top = $(heading).prev("span").offset().top - (navbarHeight + opts.navbarOffset);
+      var anchorSpan = $(heading).prev("span");
+      var top = 0;
+      if (anchorSpan.length) {
+        top = anchorSpan.offset().top - (navbarHeight + opts.navbarOffset);
+      }
       headingOffsets.push(top > 0 ? top : 0);
     });
   }
