@@ -22,7 +22,7 @@
 		<a class="navbar-brand" href="<?js= this.nav.index.link ?>"><?js if(this.navOptions.logoFile) { ?><img class="branding-logo" src="<?js= this.navOptions.logoFile ?>"
 		alt="logo"/><?js } ?><?js= this.nav.index.title ?></a>
 	</div>
-	<div class="navbar-collapse">
+	<div class="navbar-collapse" id="topNavigation">
 		<ul class="nav navbar-nav">
 			<?js this.nav.topLevelNav.forEach(function(entry){ ?>
 			<li class="dropdown">
@@ -33,7 +33,18 @@
 			</li>
 			<?js }); ?>
 		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
 	</div>
+
 </div>
 </div>
 
@@ -62,6 +73,20 @@
 </div>
 </div>
 
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
 
 <footer>
 <?js if (that.navOptions.footer.length > 0){ ?>
@@ -79,10 +104,9 @@
 </span>
 </footer>
 
-<!--<script src="scripts/sunlight.js"></script>-->
 <script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/bootstrap-dropdown.js"></script>
 <script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
 
 <script>
 $( function () {
@@ -137,12 +161,11 @@ $( function () {
 	$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
 	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
 	$( '.dropdown-toggle' ).dropdown();
-	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
 
-  $( "table" ).each( function () {
-    var $this = $( this );
-    $this.addClass('table');
-  } );
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
 
 } );
 </script>
@@ -206,6 +229,12 @@ $( function () {
 	ga( 'send', 'pageview' );
 </script>
 <?js } ?>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
 
 </body>
 </html>

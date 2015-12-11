@@ -11,6 +11,7 @@ you even more flexibility to tweak the template to your needs. It will also make
 ## Features ##
 
 * Right side TOC for navigation in pages
+* Integrated offline search
 * Themed
 * Customizable
 * Syntax highlighting
@@ -249,9 +250,16 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 * [whitelynx](https://github.com/whitelynx)
 * [tswaters](https://github.com/tswaters)
 * [lukeapage](https://github.com/lukeapage)
+* [rcosnita](https://github.com/rcosnita)
 
 
 ## History ##
+
+## 1.0.0 ##
+
+ * Bump to follow semver (initial development is well and truly over)
+ * Corrected list of themes
+ * Added Search
 
 ## 0.5.4 ##
 
