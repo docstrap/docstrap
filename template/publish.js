@@ -486,7 +486,10 @@ exports.publish = function(taffyData, opts, tutorials) {
   helper.setTutorials(tutorials);
 
   data = helper.prune(data);
-  data.sort('longname, version, since');
+  if (opts.sort || opts.sort === undefined) {
+    var sortOrder = typeof opts.sort === 'string' ? opts.sort : 'longname, version, since';
+    data.sort(sortOrder);
+  }
   helper.addEventListeners(data);
 
   var sourceFiles = {};

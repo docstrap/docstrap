@@ -82,7 +82,8 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	"outputSourceFiles"     : "{boolean}" ,
 	"outputSourcePath"      : "{boolean}",
 	"dateFormat"            : "{string}",
-	"syntaxTheme"           : "{string}"
+	"syntaxTheme"           : "{string}",
+	"sort"					: "{boolean|string}"
 }
 
 ```
@@ -138,6 +139,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 *   __syntaxTheme__ String that determines the theme used for code blocks. Default value is `"default"`. It can be any value supported
     at [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) which right now consists of...uh...`"default"` and `"dark"`,
     but at least you have it if you need it.
+*  __sort__ Defaults to true. Specifies whether jsdoc should sort data or use file order. Can also be a string and if so it is passed to jsdoc directly. The default string is `"longname, version, since"`.
 
 ## Syntax Highlighting ##
 
