@@ -46,11 +46,23 @@ npm install ink-docstrap
 ```
 
 When using [grunt](http://gruntjs.com/), please look at [grunt-jsdoc](https://github.com/krampstudio/grunt-jsdoc) which you can use with
-docstrap
+docstrap.
+
+### Command Line Example ###
 
 ```bash
-npm install grunt-jsdoc
+jsdoc -c path/to/conf.json -t ./node_modules/ink-docstrap/template -R README.md -r .
 ```
+
+The `-c` sets the config, and the docstrap README does talk about the options you can put in templates that docstrap is supposed to look for.
+
+The `-t` sets the template. This is the option you need to set to get the docstrap template to be used.
+
+The `-R` sets a markdown file to be the front page of the documentation.
+
+The `-r` tells jsdoc to run recursively.
+
+The `.` says from current directory.
 
 ## Configuring the template ##
 
