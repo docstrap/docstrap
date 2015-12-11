@@ -21,7 +21,7 @@
 	<div class="navbar-header">
 		<a class="navbar-brand" href="index.html">DocStrap</a>
 	</div>
-	<div class="navbar-collapse">
+	<div class="navbar-collapse" id="topNavigation">
 		<ul class="nav navbar-nav">
 			
 			<li class="dropdown">
@@ -32,7 +32,18 @@
 			</li>
 			
 		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
 	</div>
+
 </div>
 </div>
 
@@ -71,6 +82,7 @@
 <h1>DocStrap <a href="http://gruntjs.com/"><img src="https://cdn.gruntjs.com/builtwith.png" alt="Built with Grunt"></a></h1><p>DocStrap is <a href="http://twitter.github.io/bootstrap/index.html">Bootstrap</a> based template for <a href="http://usejsdoc.org/">JSDoc3</a>.<br>In addition, it includes all of the themes from <a href="http://bootswatch.com/">Bootswatch</a> giving you a great deal of look<br>and feel options for your documentation, along with a simple search. Additionally, it adds some options to the conf.json file that gives<br>you even more flexibility to tweak the template to your needs. It will also make your teeth whiter.</p>
 <h2>Features</h2><ul>
 <li>Right side TOC for navigation in pages</li>
+<li>Integrated offline search</li>
 <li>Themed</li>
 <li>Customizable</li>
 <li>Syntax highlighting</li>
@@ -95,8 +107,13 @@
 </ul>
 <p>To change your theme, just change it in the <code>conf.json</code> file. See below for details.</p>
 <h2>Ooooh, I want it! How do I get it?</h2><p>If you manage your own version of jsdoc:</p>
-<pre class="prettyprint source lang-bash"><code>npm install ink-docstrap</code></pre><p>When using <a href="http://gruntjs.com/">grunt</a>, please look at <a href="https://github.com/krampstudio/grunt-jsdoc">grunt-jsdoc</a> which you can use with<br>docstrap</p>
-<pre class="prettyprint source lang-bash"><code>npm install grunt-jsdoc</code></pre><h2>Configuring the template</h2><p>DocStrap ships with a <code>conf.json</code> file in the template/ directory. It is just a regular old<br><a href="http://usejsdoc.org/about-configuring-jsdoc.html">JSDoc configuration file</a>, but with the following new options:</p>
+<pre class="prettyprint source lang-bash"><code>npm install ink-docstrap</code></pre><p>When using <a href="http://gruntjs.com/">grunt</a>, please look at <a href="https://github.com/krampstudio/grunt-jsdoc">grunt-jsdoc</a> which you can use with<br>docstrap.</p>
+<h3>Command Line Example</h3><pre class="prettyprint source lang-bash"><code>jsdoc -c path/to/conf.json -t ./node_modules/ink-docstrap/template -R README.md -r .</code></pre><p>The <code>-c</code> sets the config, and the docstrap README does talk about the options you can put in templates that docstrap is supposed to look for.</p>
+<p>The <code>-t</code> sets the template. This is the option you need to set to get the docstrap template to be used.</p>
+<p>The <code>-R</code> sets a markdown file to be the front page of the documentation.</p>
+<p>The <code>-r</code> tells jsdoc to run recursively.</p>
+<p>The <code>.</code> says from current directory.</p>
+<h2>Configuring the template</h2><p>DocStrap ships with a <code>conf.json</code> file in the template/ directory. It is just a regular old<br><a href="http://usejsdoc.org/about-configuring-jsdoc.html">JSDoc configuration file</a>, but with the following new options:</p>
 <pre class="prettyprint source lang-javascript"><code>&quot;templates&quot;: {
     &quot;systemName&quot;            : &quot;{string}&quot;,
     &quot;footer&quot;                : &quot;{string}&quot;,
@@ -109,7 +126,6 @@
     &quot;outputSourceFiles&quot;     : &quot;{boolean}&quot; ,
     &quot;outputSourcePath&quot;      : &quot;{boolean}&quot;,
     &quot;dateFormat&quot;            : &quot;{string}&quot;,
-    &quot;highlightTutorialCode&quot; : &quot;{boolean}&quot;,
     &quot;syntaxTheme&quot;           : &quot;{string}&quot;
 }</code></pre><h3>Options</h3><ul>
 <li><strong>systemName</strong><br>The name of the system being documented. This will appear in the page title for each page</li>
@@ -120,7 +136,6 @@
 <li><code>cerulean</code></li>
 <li><code>cosmo</code></li>
 <li><code>cyborg</code></li>
-<li><code>darkly</code></li>
 <li><code>flatly</code></li>
 <li><code>journal</code></li>
 <li><code>lumen</code></li>
@@ -146,10 +161,9 @@
 <li><strong>outputSourceFiles</strong><br>When true, the system will produce source pretty printed file listings with a link from the documentation.</li>
 <li><strong>outputSourcePath</strong><br>When <code>outputSourceFiles</code> is <code>false</code>, you may still want to name the file even without a link to the pretty printed output.<br>Set  this to <code>true</code> when <code>outputSourceFiles</code> is <code>false</code>. <code>outputSourceFiles</code> when <code>true</code> takes precedence over this setting.</li>
 <li><strong>dateFormat</strong> The date format to use when printing dates. It accepts any format string understood by <a href="http://momentjs.com/docs/#/displaying/format/">moment.js</a></li>
-<li><strong>highlightTutorialCode</strong> Boolean used to determine whether to treat code blocks in &quot;tutorial&quot; markdown as examples and highlight them</li>
 <li><strong>syntaxTheme</strong> String that determines the theme used for code blocks. Default value is <code>&quot;default&quot;</code>. It can be any value supported<br>at <a href="https://github.com/tmont/sunlight/tree/master/src/themes">sunlight themes</a> which right now consists of...uh...<code>&quot;default&quot;</code> and <code>&quot;dark&quot;</code>,<br>but at least you have it if you need it.</li>
 </ul>
-<h2>Syntax Highlighting Language</h2><p>The default language will be JavaScript, but there are a couple of ways to secify the language.</p>
+<h2>Syntax Highlighting</h2><h3>Language</h3><p>The default language will be JavaScript, but there are a couple of ways to secify the language.</p>
 <p>DocStrap support the language specified in the standard way e.g.</p>
 <pre class="prettyprint source"><code>```html
 &lt;html>&lt;/html></code></pre><p>DocStrap also introduces a new documentation tag which can appear inside any example block in source code,<br>or in any fenced code block in markdown: <code>{@lang languageName}</code>, where<br><em><code>language</code></em> can be any of the languages supported by <a href="http://sunlightjs.com/">Sunlight</a></p>
@@ -184,7 +198,10 @@
 <li>VB.NET</li>
 <li>XML (HTML)</li>
 </ul>
-<h2>Customizing DocStrap</h2><p>No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.<br>First make sure you have <a href="https://github.com/bower/bower">bower</a> and <a href="https://github.com/gruntjs/grunt-cli">grunt-cli</a> installed.<br>Fetch the source using <code>git</code> or grab the <a href="https://github.com/docstrap/docstrap/archive/master.zip">zip file from github.</a> and unzip<br>it somewhere. Everything that follows happens in the unzip directory.</p>
+<h3>Example Caption</h3><p>If you want a caption to your example, add it in a HTML caption before your example e.g.</p>
+<pre class="prettyprint source"><code>@example &lt;caption>my caption&lt;/caption>
+{@lang xml}
+&lt;mycode>&lt;/mycode></code></pre><h2>Customizing DocStrap</h2><p>No template can meet every need and customizing templates is a favorite pastime of....well, no-one, but you may need to anyway.<br>First make sure you have <a href="https://github.com/bower/bower">bower</a> and <a href="https://github.com/gruntjs/grunt-cli">grunt-cli</a> installed.<br>Fetch the source using <code>git</code> or grab the <a href="https://github.com/docstrap/docstrap/archive/master.zip">zip file from github.</a> and unzip<br>it somewhere. Everything that follows happens in the unzip directory.</p>
 <p>Next, prepare the environment:</p>
 <pre class="prettyprint source"><code>bower install</code></pre><p>and</p>
 <pre class="prettyprint source"><code>npm install</code></pre><p>When that is done, you have all of the tools to start modifying the template. The template, like Bootstrap, uses <a href="http://lesscss.org/">less</a>.<br>The way it works is that <code>./styles/main.less</code> pulls in the bootstrap files uncompiled so that you have access to all of bootstraps mixins, colors,<br>etc, that you would want. There are two more files in that directory, <code>variables.less</code>, <code>bootswatch.less</code>. These are the<br>theme files and you can modify them, but keep in mind that if you apply a new theme (see below) those files will be overwritten. It is best<br>to keep your changes to the <code>main.less</code> file.</p>
@@ -211,8 +228,15 @@
 <li><a href="https://github.com/whitelynx">whitelynx</a></li>
 <li><a href="https://github.com/tswaters">tswaters</a></li>
 <li><a href="https://github.com/lukeapage">lukeapage</a></li>
+<li><a href="https://github.com/rcosnita">rcosnita</a></li>
 </ul>
-<h2>History</h2><h2>0.5.4</h2><ul>
+<h2>History</h2><h2>1.0.0</h2><ul>
+<li>Bump to follow semver (initial development is well and truly over)</li>
+<li>Corrected list of themes</li>
+<li>Added Search</li>
+<li>Remove highlightTutorialCode option - it didnt work</li>
+</ul>
+<h2>0.5.4</h2><ul>
 <li>Fix layout glitch on hte bottom of code samples</li>
 <li>Support for specifying the language for fenced code blocks in the normal way</li>
 <li>Fix the active item in some themes, which was missing a background</li>
@@ -322,6 +346,20 @@
 </div>
 </div>
 
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
 
 <footer>
 
@@ -332,15 +370,14 @@
 
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
-	on Wed Dec 9th 2015 using the <a
+	on Fri Dec 11th 2015 using the <a
 	href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
 </footer>
 
-<!--<script src="scripts/sunlight.js"></script>-->
 <script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/bootstrap-dropdown.js"></script>
 <script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
 
 <script>
 $( function () {
@@ -395,12 +432,11 @@ $( function () {
 	$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
 	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
 	$( '.dropdown-toggle' ).dropdown();
-	//			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
 
-  $( "table" ).each( function () {
-    var $this = $( this );
-    $this.addClass('table');
-  } );
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
 
 } );
 </script>
@@ -412,6 +448,12 @@ $( function () {
 
 <!--Google Analytics-->
 
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
 
 </body>
 </html>
