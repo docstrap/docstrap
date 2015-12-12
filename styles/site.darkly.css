@@ -7018,49 +7018,19 @@ a.list-group-item-danger.active:focus {
   padding-left: 20px;
   padding-right: 20px;
 }
-.navbar .dropdown-menu {
-  padding: 20px;
-  max-height: 300px;
-  overflow: auto;
-  width: 300px;
-  background-color: #00bc8c;
-}
-.navbar .dropdown-menu a,
-.navbar .dropdown-menu a:visited {
-  color: #fff;
-}
-.navbar .dropdown-menu a:hover {
-  color: #375a7f;
-  background-color: transparent;
-}
-.navbar .dropdown-menu a:active {
-  color: #fff;
-  background-color: #00a379;
-}
-.navbar .dropdown-menu a {
-  padding-left: 0;
-  padding-right: 5px;
-  font-weight: 500;
-  font-size: 115%;
-}
 img.branding-logo {
   max-height: 30px;
   display: inline-block;
   padding: 0px;
   margin: -3px 5px 0 0;
 }
-/* TODO - just make toc use bootstrap elements and classes for its template?*/
 #toc {
   position: fixed;
   top: 62px;
   right: 0;
   max-height: 82%;
+  max-height: calc(100% - 72px);
   overflow: auto;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
-  border: 1px #375a7f solid;
   padding: 5px;
 }
 #toc .toc-h1 {
