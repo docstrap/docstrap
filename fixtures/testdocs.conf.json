@@ -30,7 +30,7 @@
 	},
 	"opts"      : {
 		"private"     : true,
-		"recurse": true,
+		"recurse"     : true,
 		"lenient"     : true,
 		"destination" : "testdocs/",
 		"template"    : "template/"

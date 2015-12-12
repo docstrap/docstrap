@@ -13,34 +13,6 @@
 	padding-left  : 20px;
 	padding-right : 20px;
   }
-
-}
-
-.navbar {
-  .dropdown-menu {
-	padding          : 20px;
-	max-height       : 300px;
-	overflow         : auto;
-	width            : 300px;
-	background-color : @navbar-inverse-bg;
-	a, a:visited {
-	  color : @navbar-inverse-link-color;
-	}
-	a:hover {
-	  color            : @navbar-inverse-link-hover-color;
-	  background-color : @navbar-inverse-link-hover-bg;
-	}
-	a:active {
-	  color            : @navbar-inverse-link-active-color;
-	  background-color : @navbar-inverse-link-active-bg;
-	}
-	a {
-	  padding-left  : 0;
-	  padding-right : 5px;
-	  font-weight   : 500;
-	  font-size     : 115%;
-	}
-  }
 }
 
 img.branding-logo{
@@ -50,18 +22,14 @@ img.branding-logo{
   margin: -3px 5px 0 0;
 }
 
-/* TODO - just make toc use bootstrap elements and classes for its template?*/
 #toc {
   position   : fixed;
   top        : @headerHeight;
   right      : 0;
+  @toc-bottom: @headerHeight + 10px;
   max-height : 82%;
+  max-height : ~"calc(100% - @{toc-bottom})";
   overflow   : auto;
-  .border-top-radius(5px);
-  .border-right-radius(5px);
-  .border-bottom-radius(5px);
-  .border-left-radius(5px);
-  border     : 1px @navbar-default-bg solid;
   padding    : 5px;
 
   .toc-h1 {
@@ -84,8 +52,6 @@ img.branding-logo{
     margin-right : 7px;
   }
 }
-
-
 
 .copyright {
   font-size  : 90%;
@@ -148,9 +114,8 @@ code {
   padding : 3px;
   margin-top:5px;
   margin-bottom:5px;
-
-
 }
+
 .member-name{
   padding-top: 100px !important;
   margin-top: -100px !important;
