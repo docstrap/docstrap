@@ -267,6 +267,11 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.0.1 ##
+
+ * Tweak side nav and dropdowns to be the bootswatch style
+ * Make the documentation responsive
+
 ## 1.0.0 ##
 
  * Bump to follow semver (initial development is well and truly over)
