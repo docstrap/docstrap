@@ -409,7 +409,7 @@ function buildNav(members) {
 
   }
 
-  if (members.interfaces.length) {
+  if (members.interfaces && members.interfaces.length) {
 
     members.interfaces.forEach(function(m) {
       if (!hasOwnProp.call(seen, m.longname)) {
