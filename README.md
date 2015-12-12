@@ -267,6 +267,10 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.0.2 ##
+
+ * Support older jsdoc by not looking in "interfaces"
+
 ## 1.0.1 ##
 
  * Tweak side nav and dropdowns to be the bootswatch style
