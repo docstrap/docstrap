@@ -6970,3 +6970,55 @@ code {
   line-height: 15px;
   padding: 9.5px 4px !important;
 }
+.dropdown-menu {
+  overflow-y: auto;
+  max-height: 150px;
+}
+@media (min-height: 300px) {
+  .dropdown-menu {
+    max-height: 238px;
+  }
+}
+@media (min-height: 400px) {
+  .dropdown-menu {
+    max-height: 338px;
+  }
+}
+@media (min-height: 500px) {
+  .dropdown-menu {
+    max-height: 438px;
+  }
+}
+@media (min-height: 600px) {
+  .dropdown-menu {
+    max-height: 538px;
+  }
+}
+@media (min-height: 700px) {
+  .dropdown-menu {
+    max-height: 638px;
+  }
+}
+@media (min-height: 900px) {
+  .dropdown-menu {
+    max-height: 838px;
+  }
+}
+@media (min-height: 1100px) {
+  .dropdown-menu {
+    max-height: 1038px;
+  }
+}
+@media (min-height: 1300px) {
+  .dropdown-menu {
+    max-height: 1238px;
+  }
+}
+.dropdown-menu {
+  max-height: calc(38vh);
+}
+@media (max-width: 768px) {
+  .dropdown-menu {
+    max-height: none;
+  }
+}
