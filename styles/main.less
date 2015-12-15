@@ -142,3 +142,51 @@ code {
   line-height   : 15px;
   padding       : ((@line-height-computed - 1) / 2) 4px !important
 }
+
+.dropdown-menu {
+  overflow-y: auto;
+  max-height: 150px; // when very small height, big width
+}
+
+// media queries for browsers not supporting calc and vh. probably not necessary
+@media (min-height: 300px) {
+  .dropdown-menu {
+    max-height: 300px - @headerHeight;
+  }
+}
+
+@media (min-height: 400px) {
+  .dropdown-menu {
+    max-height: 400px - @headerHeight;
+  }
+}
+
+@media (min-height: 500px) {
+  .dropdown-menu {
+    max-height: 500px - @headerHeight;
+  }
+}
+
+@media (min-height: 600px) {
+  .dropdown-menu {
+    max-height: 600px - @headerHeight;
+  }
+}
+
+@media (min-height: 700px) {
+  .dropdown-menu {
+    max-height: 700px - @headerHeight;
+  }
+}
+
+// using calc and vh to get accurate value
+.dropdown-menu {
+  max-height: ~"calc(100vh - @{headerHeight})";
+}
+
+// switch off max height if collapsed
+@media (max-width: 768px) {
+  .dropdown-menu {
+    max-height: none;
+  }
+}
