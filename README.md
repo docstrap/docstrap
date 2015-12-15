@@ -267,6 +267,10 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.0.3 ##
+
+ * Drop-down shows a scrollbar when too big (regression in 1.0.1)
+
 ## 1.0.2 ##
 
  * Support older jsdoc by not looking in "interfaces"
