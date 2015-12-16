@@ -269,6 +269,12 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.0.4 ##
+
+ * Search results no longer erroneously included in side navbar
+ * Tutorials now get page titles consistent with everything else
+ * Improvements to the highlighted nav heading
+
 ## 1.0.3 ##
 
  * Drop-down shows a scrollbar when too big (regression in 1.0.1)
