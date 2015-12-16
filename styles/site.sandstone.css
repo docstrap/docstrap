@@ -7026,23 +7026,8 @@ code {
     max-height: 638px;
   }
 }
-@media (min-height: 900px) {
-  .dropdown-menu {
-    max-height: 838px;
-  }
-}
-@media (min-height: 1100px) {
-  .dropdown-menu {
-    max-height: 1038px;
-  }
-}
-@media (min-height: 1300px) {
-  .dropdown-menu {
-    max-height: 1238px;
-  }
-}
 .dropdown-menu {
-  max-height: calc(38vh);
+  max-height: calc(100vh - 62px);
 }
 @media (max-width: 768px) {
   .dropdown-menu {

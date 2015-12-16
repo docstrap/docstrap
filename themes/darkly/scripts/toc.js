@@ -10,28 +10,32 @@ $.fn.toc = function(options) {
   var activeClassName = 'active';
   var navbarHeight = $('.navbar').height();
   var ANCHOR_PREFIX = "__anchor";
+  var maxScrollTo;
+  var visibleHeight;
+  var headerHeight = 10; // so if the header is readable, its counted as shown
 
   var scrollTo = function(e) {
-    if (opts.smoothScrolling) {
-      e.preventDefault();
-      var target = $(e.target);
-      if (target.prop('tagName').toLowerCase() !== "a") {
-        target = target.parent();
-      }
-      var elScrollToId = target.attr('href').replace(/^#/, '') + ANCHOR_PREFIX;
-      var $el = $(document.getElementById(elScrollToId));
-
-      var offsetTop = $el.offset().top - (navbarHeight + opts.navbarOffset);
-
-      $('body,html').animate({ scrollTop: offsetTop }, 400, 'swing', function() {
-        location.hash = '#' + elScrollToId;
-      });
+    e.preventDefault();
+    var target = $(e.target);
+    if (target.prop('tagName').toLowerCase() !== "a") {
+      target = target.parent();
     }
+    var elScrollToId = target.attr('href').replace(/^#/, '') + ANCHOR_PREFIX;
+    var $el = $(document.getElementById(elScrollToId));
+
+    var offsetTop = Math.min(maxScrollTo, $el.offset().top - (navbarHeight + opts.navbarOffset));
+
+    $('body,html').animate({ scrollTop: offsetTop }, 400, 'swing', function() {
+      location.hash = '#' + elScrollToId;
+    });
+
     $('a', self).removeClass(activeClassName);
     target.addClass(activeClassName);
   };
 
   var calcHadingOffsets = function() {
+    maxScrollTo = $("body").height() - $(window).height();
+    visibleHeight = $(window).height() - navbarHeight;
     headingOffsets = [];
     headings.each(function(i, heading) {
       var anchorSpan = $(heading).prev("span");
@@ -52,8 +56,19 @@ $.fn.toc = function(options) {
     timeout = setTimeout(function() {
       var top = $(window).scrollTop(),
         highlighted;
-      for (var i = 0, c = headingOffsets.length; i < c; i++) {
-        if (headingOffsets[i] >= top || (headingOffsets[i + 1] && headingOffsets[i + 1] > top)) {
+      for (var i = headingOffsets.length - 1; i >= 0; i--) {
+        var isActive = tocs[i].hasClass(activeClassName);
+        // at the end of the page, allow any shown header
+        if (isActive && headingOffsets[i] >= maxScrollTo && top >= maxScrollTo) {
+          return;
+        }
+        // if we have got to the first heading or the heading is the first one visible
+        if (i === 0 || (headingOffsets[i] + headerHeight >= top && (headingOffsets[i - 1] + headerHeight <= top))) {
+          // in the case that a heading takes up more than the visible height e.g. we are showing
+          // only the one above, highlight the one above
+          if (i > 0 && headingOffsets[i] - visibleHeight >= top) {
+            i--;
+          }
           $('a', self).removeClass(activeClassName);
           if (i >= 0) {
             highlighted = tocs[i].addClass(activeClassName);
