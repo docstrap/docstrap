@@ -828,7 +828,7 @@ exports.publish = function(taffyData, opts, tutorials) {
   // tutorials can have only one parent so there is no risk for loops
   function saveChildren(node) {
     node.children.forEach(function(child) {
-      generateTutorial('tutorial' + child.title, child, helper.tutorialToUrl(child.name));
+      generateTutorial('Tutorial: ' + child.title, child, helper.tutorialToUrl(child.name));
       saveChildren(child);
     });
   }
