@@ -269,6 +269,11 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.0.5 ##
+
+ * Navigation to anchor links now works in IE (with some flicker)
+ * links to other pages now work (with some flicker in some browsers)
+
 ## 1.0.4 ##
 
  * Search results no longer erroneously included in side navbar
