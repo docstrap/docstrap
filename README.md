@@ -76,6 +76,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	"systemName"            : "{string}",
 	"footer"                : "{string}",
 	"copyright"             :  "{string}",
+	"includeDate"           : "{boolean}",
 	"navType"               : "{vertical|inline}",
 	"theme"                 : "{theme}",
 	"linenums"              : "{boolean}",
@@ -97,6 +98,8 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	Any markup want to appear in the footer of each page. This is not processed at all, just printed exactly as you enter it
 *   __copyright__
 	You can add a copyright message below the footer and above the JSDoc timestamp at the bottom of the page
+*   __includeDate__
+	By default, the current date is always shown in the footer of the generated documentation. You can omit the current date by setting this option to `false`
 *   __navType__
 	The template uses top level navigation with dropdowns for the contents of each category. On large systems these dropdowns
 	can get large enough to expand beyond the page. To make the dropdowns render wider and stack the entries vertically, set this
