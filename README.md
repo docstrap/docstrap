@@ -272,6 +272,10 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.1.0 ##
+
+ * Added includeDate option
+
 ## 1.0.5 ##
 
  * Navigation to anchor links now works in IE (with some flicker)
