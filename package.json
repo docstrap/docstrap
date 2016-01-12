@@ -10,7 +10,7 @@
     "grunt-contrib-uglify": "~0.11.0",
     "grunt-shell": "~1.1.2",
     "jsdoc": "~3.4.0",
-    "lodash": "~3.10.1",
+    "lodash": "~4.0.0",
     "request": "^2.58.0"
   },
   "license": "MIT",
