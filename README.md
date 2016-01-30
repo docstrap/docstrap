@@ -272,6 +272,11 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.1.1 ##
+
+ * Bootswatch update
+ * Add viewport meta tag to html for better mobile experience
+
 ## 1.1.0 ##
 
  * Added includeDate option
