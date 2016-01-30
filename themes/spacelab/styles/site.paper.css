@@ -7297,6 +7297,10 @@ input[type="checkbox"]:disabled:checked:after,
   border-color: transparent;
   background-color: transparent;
 }
+.form-group-lg select,
+.form-group-lg select.form-control {
+  line-height: 1.5;
+}
 .nav-tabs > li > a,
 .nav-tabs > li > a:focus {
   margin-right: 0;
