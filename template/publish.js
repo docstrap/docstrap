@@ -505,9 +505,10 @@ exports.publish = function(taffyData, opts, tutorials) {
       doclet.examples = doclet.examples.map(function(example) {
         var caption, lang;
 
-        if (example.match(/^\s*<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+)$/i)) {
-          caption = RegExp.$1;
-          example = RegExp.$3;
+        // allow using a markdown parser on the examples captions (surrounded by useless HTML p tags)
+        if (example.match(/^\s*(<p>)?<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+?)(<\/p>)?$/i)) {
+          caption = RegExp.$2;
+          example = RegExp.$4 + (RegExp.$1 ? '' : RegExp.$5);
         }
 
         var lang = /{@lang (.*?)}/.exec(example);
