@@ -36,7 +36,7 @@
   },
   "main": "./template/publish.js",
   "dependencies": {
-    "moment": "^2.11.1",
+    "moment": "^2.11.2",
     "sanitize-html": "^1.11.3"
   }
 }
