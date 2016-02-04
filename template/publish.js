@@ -481,7 +481,10 @@ exports.publish = function(taffyData, opts, tutorials) {
   helper.registerLink('global', globalUrl);
 
   // set up templating
-  view.layout = 'layout.tmpl';
+  // set up templating
+  view.layout = conf['default'].layoutFile ?
+    path.getResourcePath(path.dirname(conf['default'].layoutFile),
+    path.basename(conf['default'].layoutFile) ) : 'layout.tmpl';
 
   // set up tutorials for helper
   helper.setTutorials(tutorials);
