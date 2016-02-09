@@ -542,8 +542,11 @@ exports.publish = function(taffyData, opts, tutorials) {
         shortened: null
       };
 
-      sourceFilePaths.push(sourcePath);
-
+      //Check to see if the array of source file paths already contains
+      // the source path, if not then add it
+      if (sourceFilePaths.indexOf(sourcePath) === -1) {
+          sourceFilePaths.push(sourcePath)
+      }
     }
   });
 
