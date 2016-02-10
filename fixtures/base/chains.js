@@ -36,7 +36,7 @@ dcl.chainBefore( Chains, "close" );
  * @memberOf base/chains#
  * @name end
  *
- * @example  <caption>Add this to your application.properties.</caption>
+ * @example  <caption>Add *this* to your application.properties.</caption>
  * {@lang bash}
  * foo=bar
  *

@@ -506,7 +506,7 @@ exports.publish = function(taffyData, opts, tutorials) {
         var caption, lang;
 
         // allow using a markdown parser on the examples captions (surrounded by useless HTML p tags)
-        if (example.match(/^\s*(<p>)?<caption>([\s\S]+?)<\/caption>(\s*[\n\r])([\s\S]+?)(<\/p>)?$/i)) {
+        if (example.match(/^\s*(<p>)?<caption>([\s\S]+?)<\/caption>(\s*)([\s\S]+?)(<\/p>)?$/i)) {
           caption = RegExp.$2;
           example = RegExp.$4 + (RegExp.$1 ? '' : RegExp.$5);
         }
