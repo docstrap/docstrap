@@ -274,7 +274,9 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## 1.1.2 ##
 
+ * Allow example captions to contain markdown if configured in the markdown config `includeTags` section.
  * Fixes full path used as source URL for projects with one source file
+ * Allow users to update the default template layout file
 
 ## 1.1.1 ##
 
