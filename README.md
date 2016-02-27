@@ -272,6 +272,11 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.1.3 ##
+
+ * Get sort option from navOptions as per docs
+ * tweaks from bootswatch
+
 ## 1.1.2 ##
 
  * Allow example captions to contain markdown if configured in the markdown config `includeTags` section.
