@@ -47,7 +47,8 @@ var navOptions = {
   outputSourcePath: conf.outputSourcePath,
   dateFormat: conf.dateFormat,
   analytics: conf.analytics || null,
-  methodHeadingReturns: conf.methodHeadingReturns === true
+  methodHeadingReturns: conf.methodHeadingReturns === true,
+  sort: conf.sort
 };
 var searchableDocuments = {};
 
@@ -490,9 +491,12 @@ exports.publish = function(taffyData, opts, tutorials) {
   helper.setTutorials(tutorials);
 
   data = helper.prune(data);
-  if (opts.sort || opts.sort === undefined) {
-    var sortOrder = typeof opts.sort === 'string' ? opts.sort : 'longname, version, since';
-    data.sort(sortOrder);
+
+  var sortOption = navOptions.sort === undefined ? opts.sort : navOptions.sort;
+  sortOption = sortOption === undefined ? true : sortOption;
+  sortOption = sortOption === true ? 'longname, version, since' : sortOption;
+  if (sortOption) {
+    data.sort(sortOption);
   }
   helper.addEventListeners(data);
 
