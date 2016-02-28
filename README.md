@@ -272,6 +272,10 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.1.4 ##
+
+ * Remove the unreadable orange on pre/code tags and use a dark red. Remove white background as is readable on black or white.
+
 ## 1.1.3 ##
 
  * Get sort option from navOptions as per docs
