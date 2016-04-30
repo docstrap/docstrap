@@ -44,6 +44,7 @@ var navOptions = {
   inverseNav: conf.inverseNav,
   outputSourceFiles: conf.outputSourceFiles === true,
   sourceRootPath: conf.sourceRootPath,
+  disablePackagePath: conf.disablePackagePath,
   outputSourcePath: conf.outputSourcePath,
   dateFormat: conf.dateFormat,
   analytics: conf.analytics || null,
@@ -559,7 +560,7 @@ exports.publish = function(taffyData, opts, tutorials) {
   var packageInfo = (find({
     kind: 'package'
   }) || [])[0];
-  if (packageInfo && packageInfo.name) {
+  if (navOptions.disablePackagePath !== true && packageInfo && packageInfo.name) {
     outdir = path.join(outdir, packageInfo.name, packageInfo.version);
   }
   fs.mkPath(outdir);
