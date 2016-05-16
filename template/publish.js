@@ -158,7 +158,26 @@ function needsSignature(doclet) {
 function addSignatureParams(f) {
   var params = helper.getSignatureParams(f, 'optional');
 
-  f.signature = (f.signature || '') + '(' + params.join(', ') + ')';
+  f.signature = (f.signature || '') + '(';
+  
+  for (var i = 0, l = params.length; i < l; i++) {
+    var element = params[i];
+    var seperator = (i > 0) ? ', ' : '';
+
+    if (!/class=["|']optional["|']/i.test(element)) {
+      f.signature += seperator + element;
+    } else {
+      f.signature += element.replace(/<span class=[\"|']optional[\"|']>(.*?)<\/span>/i, "$`["+seperator+"$1$']");
+    }
+    
+  }
+  
+  params.forEach(function (element) {
+    
+    
+  });
+
+  f.signature += ')';
 }
 
 function addSignatureReturns(f) {
