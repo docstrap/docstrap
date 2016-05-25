@@ -577,7 +577,11 @@ exports.publish = function(taffyData, opts, tutorials) {
     kind: 'package'
   }) || [])[0];
   if (navOptions.disablePackagePath !== true && packageInfo && packageInfo.name) {
-    outdir = path.join(outdir, packageInfo.name, packageInfo.version);
+    if (packageInfo.version) {
+      outdir = path.join(outdir, packageInfo.name, packageInfo.version);
+    } else {
+      outdir = path.join(outdir, packageInfo.name);
+    }
   }
   fs.mkPath(outdir);
 
