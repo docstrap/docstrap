@@ -272,6 +272,12 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.2.0 ##
+
+ * Add square brackets around optional parameters
+ * new option disablePackagePath option which if true makes docstrap not append the package and version to the out path
+ * allow version to be missing in package.json
+
 ## 1.1.4 ##
 
  * Remove the unreadable orange on pre/code tags and use a dark red. Remove white background as is readable on black or white.
