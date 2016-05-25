@@ -34,7 +34,7 @@ var Bussable = Base.compose( [Base], /** @lends mixins/bussable# */{
 	 * Subscribe to an event
 	 * @param {string} channel The channel to subscribe to
 	 * @param {string} topic The topic to subscribe to
-	 * @param {callback} callback What to do when you get the event
+	 * @param {callback} [callback] What to do when you get the event
 	 * @returns {object} The subscription definition
 	 */
 	subscribe : function ( channel, topic, callback ) {
@@ -47,8 +47,8 @@ var Bussable = Base.compose( [Base], /** @lends mixins/bussable# */{
 	/**
 	 * Subscribe to an event once
 	 * @param {string} channel The channel to subscribe to
-	 * @param {string} topic The topic to subscribe to
-	 * @param {callback} callback What to do when you get the event
+	 * @param {string} [topic] The topic to subscribe to
+	 * @param {callback} [callback] What to do when you get the event
 	 * @returns {object} The subscription definition
 	 */
 	once : function ( channel, topic, callback ) {
@@ -61,9 +61,10 @@ var Bussable = Base.compose( [Base], /** @lends mixins/bussable# */{
 
 	/**
 	 * Publish an event on the system bus
-	 * @param {string} channel The channel to publish to
-	 * @param {string} topic The topic to publish to
-	 * @param {object=} options What to pass to the event
+	 * @param {string} [channel='2'] The channel to publish to
+	 * @param {string} [topic=1] The topic to publish to
+	 * @param {object} [options={}] What to pass to the event
+	 * @param {boolean} [options.ha=2] Test sub prop
 	 */
 	publish : function ( channel, topic, options ) {
 		this.log.trace( "Bussable publish" );
