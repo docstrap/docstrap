@@ -272,6 +272,10 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.2.1 ##
+
+ * Update lunr dependency used for searching
+
 ## 1.2.0 ##
 
  * Add square brackets around optional parameters
