@@ -25,7 +25,8 @@ var template = require('jsdoc/template'),
   conf = env.conf.templates || {},
   data,
   view,
-  outdir = env.opts.destination;
+  outdir = env.opts.destination,
+  searchEnabled = conf.search !== false;
 
 var globalUrl = helper.getUniqueFilename('global');
 var indexUrl = helper.getUniqueFilename('index');
@@ -49,7 +50,8 @@ var navOptions = {
   dateFormat: conf.dateFormat,
   analytics: conf.analytics || null,
   methodHeadingReturns: conf.methodHeadingReturns === true,
-  sort: conf.sort
+  sort: conf.sort,
+  search: searchEnabled
 };
 var searchableDocuments = {};
 
@@ -161,7 +163,7 @@ function addSignatureParams(f) {
   var params = helper.getSignatureParams(f, optionalClass);
 
   f.signature = (f.signature || '') + '(';
-  
+
   for (var i = 0, l = params.length; i < l; i++) {
     var element = params[i];
     var seperator = (i > 0) ? ', ' : '';
@@ -172,7 +174,7 @@ function addSignatureParams(f) {
       var regExp = new RegExp("<span class=[\"|']"+optionalClass+"[\"|']>(.*?)<\\/span>", "i");
       f.signature += element.replace(regExp, " $`["+seperator+"$1$']");
     }
-    
+
   }
 
   f.signature += ')';
@@ -269,11 +271,13 @@ function generate(docType, title, docs, filename, resolveLinks) {
     html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
   }
 
-  searchableDocuments[filename] = {
-    "id": filename,
-    "title": title,
-    "body": searchData(html)
-  };
+  if (searchEnabled) {
+    searchableDocuments[filename] = {
+      "id": filename,
+      "title": title,
+      "body": searchData(html)
+    };
+  }
 
   fs.writeFileSync(outpath, html, 'utf8');
 }
@@ -849,11 +853,13 @@ exports.publish = function(taffyData, opts, tutorials) {
     // yes, you can use {@link} in tutorials too!
     html = helper.resolveLinks(html); // turn {@link foo} into <a href="foodoc.html">foo</a>
 
-    searchableDocuments[filename] = {
-      "id": filename,
-      "title": title,
-      "body": searchData(html)
-    };
+    if (searchEnabled) {
+      searchableDocuments[filename] = {
+        "id": filename,
+        "title": title,
+        "body": searchData(html)
+      };
+    }
 
     fs.writeFileSync(tutorialPath, html, 'utf8');
   }
@@ -882,5 +888,8 @@ exports.publish = function(taffyData, opts, tutorials) {
   }
 
   saveChildren(tutorials);
-  generateQuickTextSearch(templatePath + '/tmpl', searchableDocuments, navOptions);
+
+  if (searchEnabled) {
+      generateQuickTextSearch(templatePath + '/tmpl', searchableDocuments, navOptions);
+  }
 };

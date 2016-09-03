@@ -86,7 +86,8 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 	"outputSourcePath"      : "{boolean}",
 	"dateFormat"            : "{string}",
 	"syntaxTheme"           : "{string}",
-	"sort"					: "{boolean|string}"
+	"sort"					: "{boolean|string}",
+	"search"                : "{boolean}" 
 }
 
 ```
@@ -145,6 +146,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
     at [sunlight themes](https://github.com/tmont/sunlight/tree/master/src/themes) which right now consists of...uh...`"default"` and `"dark"`,
     but at least you have it if you need it.
 *  __sort__ Defaults to true. Specifies whether jsdoc should sort data or use file order. Can also be a string and if so it is passed to jsdoc directly. The default string is `"longname, version, since"`.
+*  __search__ By default, the template includes a quick search box. For large APIs, the search database can be too expensive to load. If needed you can disable this feature setting this option to false. 
 
 ## Syntax Highlighting ##
 
