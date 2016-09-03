@@ -38,16 +38,18 @@
 			</li>
 			
 		</ul>
-		<div class="col-sm-3 col-md-3">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        
 	</div>
 
 </div>
@@ -95,7 +97,8 @@ var template = require('jsdoc/template'),
   conf = env.conf.templates || {},
   data,
   view,
-  outdir = env.opts.destination;
+  outdir = env.opts.destination,
+  searchEnabled = conf.search !== false;
 
 var globalUrl = helper.getUniqueFilename('global');
 var indexUrl = helper.getUniqueFilename('index');
@@ -119,7 +122,8 @@ var navOptions = {
   dateFormat: conf.dateFormat,
   analytics: conf.analytics || null,
   methodHeadingReturns: conf.methodHeadingReturns === true,
-  sort: conf.sort
+  sort: conf.sort,
+  search: searchEnabled
 };
 var searchableDocuments = {};
 
@@ -231,7 +235,7 @@ function addSignatureParams(f) {
   var params = helper.getSignatureParams(f, optionalClass);
 
   f.signature = (f.signature || '') + '(';
-  
+
   for (var i = 0, l = params.length; i &lt; l; i++) {
     var element = params[i];
     var seperator = (i > 0) ? ', ' : '';
@@ -242,7 +246,7 @@ function addSignatureParams(f) {
       var regExp = new RegExp("&lt;span class=[\"|']"+optionalClass+"[\"|']>(.*?)&lt;\\/span>", "i");
       f.signature += element.replace(regExp, " $`["+seperator+"$1$']");
     }
-    
+
   }
 
   f.signature += ')';
@@ -339,11 +343,13 @@ function generate(docType, title, docs, filename, resolveLinks) {
     html = helper.resolveLinks(html); // turn {@link foo} into &lt;a href="foodoc.html">foo&lt;/a>
   }
 
-  searchableDocuments[filename] = {
-    "id": filename,
-    "title": title,
-    "body": searchData(html)
-  };
+  if (searchEnabled) {
+    searchableDocuments[filename] = {
+      "id": filename,
+      "title": title,
+      "body": searchData(html)
+    };
+  }
 
   fs.writeFileSync(outpath, html, 'utf8');
 }
@@ -919,11 +925,13 @@ exports.publish = function(taffyData, opts, tutorials) {
     // yes, you can use {@link} in tutorials too!
     html = helper.resolveLinks(html); // turn {@link foo} into &lt;a href="foodoc.html">foo&lt;/a>
 
-    searchableDocuments[filename] = {
-      "id": filename,
-      "title": title,
-      "body": searchData(html)
-    };
+    if (searchEnabled) {
+      searchableDocuments[filename] = {
+        "id": filename,
+        "title": title,
+        "body": searchData(html)
+      };
+    }
 
     fs.writeFileSync(tutorialPath, html, 'utf8');
   }
@@ -952,7 +960,10 @@ exports.publish = function(taffyData, opts, tutorials) {
   }
 
   saveChildren(tutorials);
-  generateQuickTextSearch(templatePath + '/tmpl', searchableDocuments, navOptions);
+
+  if (searchEnabled) {
+      generateQuickTextSearch(templatePath + '/tmpl', searchableDocuments, navOptions);
+  }
 };
 </pre>
     </article>
@@ -972,20 +983,22 @@ exports.publish = function(taffyData, opts, tutorials) {
 </div>
 </div>
 
-<div class="modal fade" id="searchResults">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Search results</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
 
@@ -997,7 +1010,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on Wed Jun 1st 2016
+		on Sat Sep 3rd 2016
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
@@ -1005,7 +1018,9 @@ exports.publish = function(taffyData, opts, tutorials) {
 
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
 
 <script>
 $( function () {
@@ -1015,7 +1030,7 @@ $( function () {
 		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
 	} );
 
-	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
 		var $this = $( this );
 
 		var example = $this.find( "code" );
@@ -1051,8 +1066,7 @@ $( function () {
 	} );
 	$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
-			var id = $( heading ).attr( "id" );
-			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+			return $( heading ).attr( "id" ) || ( prefix + i );
 		},
 		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
 		showAndHide : false,
@@ -1078,11 +1092,13 @@ $( function () {
 <!--Google Analytics-->
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		SearcherDisplay.init();
-	});
-</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
 
 </body>
 </html>

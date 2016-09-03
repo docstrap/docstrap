@@ -59,16 +59,18 @@
 			</li>
 			
 		</ul>
-		<div class="col-sm-3 col-md-3">
-            <form class="navbar-form" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        
 	</div>
 
 </div>
@@ -211,7 +213,7 @@
             
 <hr>
 <dt class="name" id=".$all">
-    <h4><span class="type-signature">&lt;static> </span>$all<span class="type-signature"></span></h4>
+    <h4 id=".$all"><span class="type-signature">&lt;static> </span>$all<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -288,7 +290,7 @@ probe.find( data, {&quot;categories&quot; : {$all : [&quot;cat4&quot;, &quot;cat
             
 <hr>
 <dt class="name" id=".$and">
-    <h4><span class="type-signature">&lt;static> </span>$and<span class="type-signature"></span></h4>
+    <h4 id=".$and"><span class="type-signature">&lt;static> </span>$and<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -368,7 +370,7 @@ probe.find( data, {$and : [
             
 <hr>
 <dt class="name" id=".$elemMatch">
-    <h4><span class="type-signature">&lt;static> </span>$elemMatch<span class="type-signature"></span></h4>
+    <h4 id=".$elemMatch"><span class="type-signature">&lt;static> </span>$elemMatch<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -447,7 +449,7 @@ probe.find( data, {attr : {$elemMatch : [
             
 <hr>
 <dt class="name" id=".$eq">
-    <h4><span class="type-signature">&lt;static> </span>$eq<span class="type-signature"></span></h4>
+    <h4 id=".$eq"><span class="type-signature">&lt;static> </span>$eq<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -526,7 +528,7 @@ probe.find( data, {categories : {$eq: &quot;cat1&quot;}} );</pre>
             
 <hr>
 <dt class="name" id=".$exists">
-    <h4><span class="type-signature">&lt;static> </span>$exists<span class="type-signature"></span></h4>
+    <h4 id=".$exists"><span class="type-signature">&lt;static> </span>$exists<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -603,7 +605,7 @@ probe.find( data, {&quot;name.middle&quot; : {$exists : true}} );</pre>
             
 <hr>
 <dt class="name" id=".$gt">
-    <h4><span class="type-signature">&lt;static> </span>$gt<span class="type-signature"></span></h4>
+    <h4 id=".$gt"><span class="type-signature">&lt;static> </span>$gt<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -680,7 +682,7 @@ probe.find( data, {&quot;age&quot; : {$gt : 24}} );</pre>
             
 <hr>
 <dt class="name" id=".$gte">
-    <h4><span class="type-signature">&lt;static> </span>$gte<span class="type-signature"></span></h4>
+    <h4 id=".$gte"><span class="type-signature">&lt;static> </span>$gte<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -757,7 +759,7 @@ probe.find( data, {&quot;age&quot; : {$gte : 50}} );</pre>
             
 <hr>
 <dt class="name" id=".$in">
-    <h4><span class="type-signature">&lt;static> </span>$in<span class="type-signature"></span></h4>
+    <h4 id=".$in"><span class="type-signature">&lt;static> </span>$in<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -834,7 +836,7 @@ probe.find( data, {&quot;age&quot; : {$in : [24, 28, 60]}} );</pre>
             
 <hr>
 <dt class="name" id=".$lt">
-    <h4><span class="type-signature">&lt;static> </span>$lt<span class="type-signature"></span></h4>
+    <h4 id=".$lt"><span class="type-signature">&lt;static> </span>$lt<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -911,7 +913,7 @@ probe.find( data, {&quot;age&quot; : {$lt : 24}} );</pre>
             
 <hr>
 <dt class="name" id=".$lte">
-    <h4><span class="type-signature">&lt;static> </span>$lte<span class="type-signature"></span></h4>
+    <h4 id=".$lte"><span class="type-signature">&lt;static> </span>$lte<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -988,7 +990,7 @@ probe.find( data, {&quot;age&quot; : {$lte : 50}} );</pre>
             
 <hr>
 <dt class="name" id=".$mod">
-    <h4><span class="type-signature">&lt;static> </span>$mod<span class="type-signature"></span></h4>
+    <h4 id=".$mod"><span class="type-signature">&lt;static> </span>$mod<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1065,7 +1067,7 @@ probe.find( data, {&quot;age&quot; : {$mod : [2, 0]}} );</pre>
             
 <hr>
 <dt class="name" id=".$ne">
-    <h4><span class="type-signature">&lt;static> </span>$ne<span class="type-signature"></span></h4>
+    <h4 id=".$ne"><span class="type-signature">&lt;static> </span>$ne<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1142,7 +1144,7 @@ probe.find( data, {&quot;name.first&quot; : {$ne : &quot;Sheryl&quot;}} );</pre>
             
 <hr>
 <dt class="name" id=".$nin">
-    <h4><span class="type-signature">&lt;static> </span>$nin<span class="type-signature"></span></h4>
+    <h4 id=".$nin"><span class="type-signature">&lt;static> </span>$nin<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1219,7 +1221,7 @@ probe.find( data, {&quot;age&quot; : {$nin : [24, 28, 60]}} );</pre>
             
 <hr>
 <dt class="name" id=".$nor">
-    <h4><span class="type-signature">&lt;static> </span>$nor<span class="type-signature"></span></h4>
+    <h4 id=".$nor"><span class="type-signature">&lt;static> </span>$nor<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1299,7 +1301,7 @@ probe.find( data, {$nor : [
             
 <hr>
 <dt class="name" id=".$not">
-    <h4><span class="type-signature">&lt;static> </span>$not<span class="type-signature"></span></h4>
+    <h4 id=".$not"><span class="type-signature">&lt;static> </span>$not<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1376,7 +1378,7 @@ probe.find( data, {$not : {&quot;age&quot; : {$lt : 24}}} );</pre>
             
 <hr>
 <dt class="name" id=".$or">
-    <h4><span class="type-signature">&lt;static> </span>$or<span class="type-signature"></span></h4>
+    <h4 id=".$or"><span class="type-signature">&lt;static> </span>$or<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1456,7 +1458,7 @@ probe.find( data, {$or : [
             
 <hr>
 <dt class="name" id=".$regex">
-    <h4><span class="type-signature">&lt;static> </span>$regex<span class="type-signature"></span></h4>
+    <h4 id=".$regex"><span class="type-signature">&lt;static> </span>$regex<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1533,7 +1535,7 @@ probe.find( data, {&quot;name.first&quot; : {$regex : &quot;m*&quot;, $options :
             
 <hr>
 <dt class="name" id=".$size">
-    <h4><span class="type-signature">&lt;static> </span>$size<span class="type-signature"></span></h4>
+    <h4 id=".$size"><span class="type-signature">&lt;static> </span>$size<span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1635,20 +1637,22 @@ probe.find( data, {attr : {$size : 3}} );</pre>
 </div>
 </div>
 
-<div class="modal fade" id="searchResults">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Search results</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 
 <footer>
 
@@ -1660,7 +1664,7 @@ probe.find( data, {attr : {$size : 3}} );</pre>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
 	
-		on Wed Jun 1st 2016
+		on Sat Sep 3rd 2016
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
@@ -1668,7 +1672,9 @@ probe.find( data, {attr : {$size : 3}} );</pre>
 
 <script src="scripts/docstrap.lib.js"></script>
 <script src="scripts/toc.js"></script>
-<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
 
 <script>
 $( function () {
@@ -1678,7 +1684,7 @@ $( function () {
 		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
 	} );
 
-	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
 		var $this = $( this );
 
 		var example = $this.find( "code" );
@@ -1714,8 +1720,7 @@ $( function () {
 	} );
 	$( "#toc" ).toc( {
 		anchorName  : function ( i, heading, prefix ) {
-			var id = $( heading ).attr( "id" );
-			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+			return $( heading ).attr( "id" ) || ( prefix + i );
 		},
 		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
 		showAndHide : false,
@@ -1741,11 +1746,13 @@ $( function () {
 <!--Google Analytics-->
 
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		SearcherDisplay.init();
-	});
-</script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
 
 </body>
 </html>
