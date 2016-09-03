@@ -274,6 +274,13 @@ Yes! Contribute! Test! Share your ideas! Report Bugs!
 
 ## History ##
 
+## 1.3.0 ##
+
+ * Update dependencies and update CSS
+ * Fixed TOC labels for members
+ * Apply code highlighting to code blocks in markdown
+ * Added an option to disable search
+
 ## 1.2.1 ##
 
  * Update lunr dependency used for searching
