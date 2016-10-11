@@ -75,7 +75,7 @@ window.SearcherDisplay = (function($) {
                 link.href = result.id;
                 link.innerHTML = result.title;
 
-                item.appendChild(link)
+                item.appendChild(link);
                 resultsList.appendChild(item);
             }
 
