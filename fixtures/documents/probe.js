@@ -998,16 +998,18 @@ exports.mixin = function ( obj, collection ) {
 
 /**
  * These are the supported query operators
+ * This is not actually a class, but an artifact of the documentation system
  *
  * @memberOf module:documents/probe
  * @name queryOperators
- * @class This is not actually a class, but an artifact of the documentation system
+ * @class notActuallyAClass
  */
 
 /**
  * These are the supported update operators
+ * This is not actually a class, but an artifact of the documentation system
  *
  * @memberOf module:documents/probe
  * @name updateOperators
- * @class This is not actually a class, but an artifact of the documentation system
+ * @class notActuallyAClass
  */
