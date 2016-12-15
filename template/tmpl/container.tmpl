@@ -1,5 +1,6 @@
 <?js
     var self = this;
+    var indexHeaderPlaced = false;
     docs.forEach(function(doc, i) {
 ?>
 <?js if (doc.kind === 'mainpage' || (doc.kind === 'package')) { ?>
@@ -12,7 +13,10 @@
 		<h1 class="page-title"><?js= title ?></h1>
     <?js= self.partial('source.tmpl', doc) ?>
 <?js } else { ?>
-	<h1 class="page-title"><?js= title ?></h1>
+	<?js if ( !indexHeaderPlaced ) { 
+		indexHeaderPlaced=true;?>
+		<h1 class="page-title"><?js= title ?></h1>
+	<?js } ?>		
 <section>
 
 <header>
