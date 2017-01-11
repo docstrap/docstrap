@@ -13,9 +13,9 @@ var self = this;
 <dd>
 
     <?js if (data && data.description) { ?>
-    <div class="description">
-        @(<?js= data.description ?>)
-    </div>
+        <div class="description">
+            @(<?js= data.description ?>)
+        </div>
     <?js } ?>
 
     <?js if (data.augments && data.alias && data.alias.indexOf('module:') === 0) { ?>
