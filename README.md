@@ -152,7 +152,7 @@ DocStrap ships with a `conf.json` file in the template/ directory. It is just a 
 
 ### Language ###
 
-The default language will be JavaScript, but there are a couple of ways to secify the language.
+The default language will be JavaScript, but there are a couple of ways to specify the language.
 
 DocStrap support the language specified in the standard way e.g.
 
