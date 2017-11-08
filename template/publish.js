@@ -521,6 +521,25 @@ exports.publish = function(taffyData, opts, tutorials) {
   }
   helper.addEventListeners(data);
 
+  // Add a list of all doclets which fire an event to that event
+  // filter events
+  data({
+    kind: 'event'
+  })
+    // for each event
+    .each(function(eventDoclet) {      
+      data()
+        // find doclets firing that event and add to the list
+        .each(function(doclet) {
+          if (doclet.fires && doclet.fires.indexOf(eventDoclet.name) !== -1) {
+            // make sure a firedBy property is there
+            eventDoclet.firedBy = eventDoclet.firedBy || [];
+            // add the longname of doclet to the list
+            eventDoclet.firedBy.push(doclet.longname);
+          }
+        });
+    });
+
   var sourceFiles = {};
   var sourceFilePaths = [];
   data().each(function(doclet) {
