@@ -597,7 +597,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 		var toFile = fileName.replace( fromDir, outdir );
 		var toDir = fs.toDir( toFile );
 		fs.mkPath( toDir );
-		fs.copyFileSync( fileName, toFile );
+		fs.copyFileSync( fileName, '', toFile );
 	} );
 
     // copy user-specified static files to outdir
