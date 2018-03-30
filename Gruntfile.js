@@ -231,8 +231,8 @@ module.exports = function ( grunt ) {
 	 */
 	grunt.registerTask( "apply", "Applies the theme in the conf file and applies it to the styles directory", function () {
 		var def = {
-			less          : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
-			lessVariables : "http://bootswatch.com/" + tasks.jsdocConf.templates.theme + "/variables.less"
+			less          : "node_modules/bootswatch/" + tasks.jsdocConf.templates.theme + "/bootswatch.less",
+			lessVariables : "node_modules/bootswatch/" + tasks.jsdocConf.templates.theme + "/variables.less"
 		};
 		grunt.registerTask( "swatch-apply", _.partial( applyTheme, grunt, def ) );
 		grunt.task.run( ["swatch-apply"] );
@@ -316,8 +316,8 @@ module.exports = function ( grunt ) {
  *
  * @param {object} grunt The grunt object reference
  * @param {object} definition The swatch definition files
- * @param {string} definition.less The url to the `bootswatch.less` file
- * @param {string} definition.lessVariables The url to the `variables.less` file
+ * @param {string} definition.less The path to the `bootswatch.less` file
+ * @param {string} definition.lessVariables The path to the `variables.less` file
  * @private
  */
 function applyTheme( grunt, definition ) {
@@ -327,18 +327,14 @@ function applyTheme( grunt, definition ) {
 	var done = this.async();
 	async.waterfall( [
 		function ( cb ) {
-			getBootSwatchComponent( definition.less, function ( err, swatch ) {
-				if ( err ) {return cb( err );}
-				var fullPath = path.join( __dirname, "styles/bootswatch.less" );
-				fs.writeFile( fullPath, swatch.replace( "http://", webProtocol ), cb );
-			} );
+			var src = path.resolve( definition.less );
+			var dest = path.resolve( "styles/bootswatch.less" );
+			fs.copyFile( src, dest, cb );
 		},
 		function ( cb ) {
-			getBootSwatchComponent( definition.lessVariables, function ( err, swatch ) {
-				if ( err ) {return cb( err );}
-				var fullPath = path.join( __dirname, "styles/variables.less" );
-				fs.writeFile( fullPath, swatch.replace( "http://", webProtocol ), cb );
-			} );
+			var src = path.resolve( definition.lessVariables );
+			var dest = path.resolve( "styles/variables.less" );
+			fs.copyFile( src, dest, cb );
 		}
 	], done );
 }
@@ -359,25 +355,5 @@ function getBootSwatchList( done ) {
 			return done(error);
 		}
 		done(null, JSON.parse(body));
-	});
-}
-
-/**
- * This method will get one of the components from Bootswatch, which is generally a `less` file or a `lessVariables` file.
- *
- * @see http://news.bootswatch.com/post/22193315172/bootswatch-api
- * @param {string} url The url to retreive from
- * @param {function(err, responseText)} done The callback when complete
- * @param {?object} done.err If an error occurred, you will find it here.
- * @param {string} done.responseText The body of whatever was returned
- * @private
- */
-function getBootSwatchComponent( url, done ) {
-	var body = "";
-	var req = request(url, function ( error, response, body ) {
-		if (error) {
-			return done(error);
-		}
-		done(null, body);
 	});
 }
