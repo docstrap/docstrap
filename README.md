@@ -1,7 +1,7 @@
 
 [![NPM](https://nodei.co/npm/ink-docstrap.png?downloads=true)](https://nodei.co/npm/ink-docstrap/)
 
-[![Dependency Status](https://david-dm.org/docstrap/docstrap.svg)](https://david-dm.org/docstrap/docstrap) [![devDependency Status](https://david-dm.org/docstrap/docstrap/dev-status.svg)](https://david-dm.org/docstrap/docstrap#info=devDependencies)
+[![Dependency Status](https://david-dm.org/docstrap/docstrap.svg)](https://david-dm.org/docstrap/docstrap) [![devDependency Status](https://david-dm.org/docstrap/docstrap/dev-status.svg)](https://david-dm.org/docstrap/docstrap?type=dev)
 
 # DocStrap [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
