@@ -238,15 +238,11 @@ function getPathFromDoclet(doclet) {
 }
 
 function searchData(html) {
-  var startOfContent = html.indexOf("<div class=\"container\">");
+  var startOfContent = html.indexOf("<article>");
   if (startOfContent > 0) {
-    var startOfSecondContent = html.indexOf("<div class=\"container\">", startOfContent + 2);
-    if (startOfSecondContent > 0) {
-      startOfContent = startOfSecondContent;
-    }
     html = html.slice(startOfContent);
   }
-  var endOfContent = html.indexOf("<span class=\"copyright\">");
+  var endOfContent = html.indexOf("</article>");
   if (endOfContent > 0) {
     html = html.substring(0, endOfContent);
   }
