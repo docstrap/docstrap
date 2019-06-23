@@ -59,6 +59,13 @@ var self = this;
     <?js }); ?></ul>
     <?js } ?>
 
+    <?js if (data.firedBy && firedBy.length) { ?>
+    <h5>Fires This Event:</h5>
+    <ul><?js firedBy.forEach(function(f) { ?>
+        <li><?js= self.linkto(f) ?></li>
+    <?js }); ?></ul>
+    <?js } ?>
+
     <?js if (data.listeners && listeners.length) { ?>
     <h5>Listeners of This Event:</h5>
     <ul><?js listeners.forEach(function(f) { ?>
