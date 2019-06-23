@@ -100,7 +100,7 @@
         }
         headingOffsets.push(top > 0 ? top : 0);
       });
-    }
+    };
 
     //highlight on scroll
     var timeout;

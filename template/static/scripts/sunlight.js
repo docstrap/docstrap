@@ -1097,13 +1097,14 @@
 			//transform keywords, operators and custom tokens into a hash map
 			languageData.keywords = createHashMap(languageData.keywords || [], "\\b", languageData.caseInsensitive);
 			languageData.operators = createHashMap(languageData.operators || [], "", languageData.caseInsensitive);
-			for (tokenName in languageData.customTokens) {
-				languageData.customTokens[tokenName] = createHashMap(
-					languageData.customTokens[tokenName].values,
-					languageData.customTokens[tokenName].boundary,
-					languageData.caseInsensitive
-				);
-			}
+            if(languageData.customTokens.length)
+				for (tokenName in languageData.customTokens) {
+					languageData.customTokens[tokenName] = createHashMap(
+						languageData.customTokens[tokenName].values,
+						languageData.customTokens[tokenName].boundary,
+						languageData.caseInsensitive
+					);
+				}
 			
 			//convert the embedded language object to an easier-to-use array
 			embeddedLanguages = [];

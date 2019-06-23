@@ -16,7 +16,7 @@ window.SearcherDisplay = (function($) {
                    body = $("body"),
                    self = this;
 
-            quickSearch.attr("src", "quicksearch.html");
+            quickSearch.attr("src", "/documentation/quicksearch.html");
             quickSearch.css("width", "0px");
             quickSearch.css("height", "0px");
 
@@ -72,10 +72,10 @@ window.SearcherDisplay = (function($) {
                        item = document.createElement("li"),
                        link = document.createElement("a");
 
-                link.href = result.id;
+                link.href = "/documentation/" + result.id.replace(".html","").replace(".js","js").replace(".list","-list");
                 link.innerHTML = result.title;
 
-                item.appendChild(link)
+                item.appendChild(link);
                 resultsList.appendChild(item);
             }
 
