@@ -51,7 +51,8 @@ var navOptions = {
   analytics: conf.analytics || null,
   methodHeadingReturns: conf.methodHeadingReturns === true,
   sort: conf.sort,
-  search: searchEnabled
+  search: searchEnabled,
+  outputFileDeclarations: conf.outputFileDeclarations !== false
 };
 var searchableDocuments = {};
 
