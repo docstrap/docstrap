@@ -19,6 +19,7 @@ window.SearcherDisplay = (function($) {
             quickSearch.attr("src", "quicksearch.html");
             quickSearch.css("width", "0px");
             quickSearch.css("height", "0px");
+            quickSearch.css("border", "0");
 
             body.append(quickSearch);
 
