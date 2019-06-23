@@ -731,6 +731,13 @@ exports.publish = function(taffyData, opts, tutorials) {
     }], navigationMaster.class.link);
   }
 
+  if (view.nav.event && view.nav.event.members.length) {
+    generate('event', view.nav.event.title, [{
+      kind: 'sectionIndex',
+      contents: view.nav.event
+    }], navigationMaster.event.link);
+  }
+
   if (view.nav.namespace && view.nav.namespace.members.length) {
     generate('namespace', view.nav.namespace.title, [{
       kind: 'sectionIndex',
