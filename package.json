@@ -36,6 +36,7 @@
   },
   "main": "./template/publish.js",
   "dependencies": {
+    "bootswatch": "^3.3.7",
     "moment": "^2.14.1",
     "sanitize-html": "^1.13.0"
   }
