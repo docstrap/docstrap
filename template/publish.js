@@ -614,6 +614,7 @@ exports.publish = function(taffyData, opts, tutorials) {
         staticFileScanner = new (require('jsdoc/src/scanner')).Scanner();
 
         staticFilePaths.forEach(function(filePath) {
+            filePath = path.resolve(env.pwd, filePath);
             var extraStaticFiles = staticFileScanner.scan([filePath], 10, staticFileFilter);
 
             extraStaticFiles.forEach(function(fileName) {
