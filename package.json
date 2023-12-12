@@ -37,6 +37,6 @@
   "main": "./template/publish.js",
   "dependencies": {
     "moment": "^2.14.1",
-    "sanitize-html": "^1.13.0"
+    "sanitize-html": "^2.3.1"
   }
 }
